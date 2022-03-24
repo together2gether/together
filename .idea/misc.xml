@@ -3,18 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/item_color.xml" value="0.141" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/item_layout.xml" value="0.141" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/layer_button_checked.xml" value="0.141" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/selector_radio_button.xml" value="0.141" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/item_login.xml" value="0.141" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_item.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_main.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/fragment_1.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/fragment_2.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/fragment_3.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/login.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/menu/menu_bottom.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/activity_item.xml" value="0.175" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/activity_main.xml" value="0.175" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.175" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/login.xml" value="0.1" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/product_item.xml" value="0.175" />
       </map>
     </option>
   </component>
