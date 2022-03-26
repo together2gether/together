@@ -5,6 +5,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <android.widget.Button
+        android:id="@+id/button12"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/arrow" />
+
     <ImageView
         android:id="@+id/imageView9"
         android:layout_width="360dp"

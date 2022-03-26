@@ -57,32 +57,41 @@
                     android:paddingTop="10dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="10dp"
-                    android:text="거래 인원 5/5" />
+                    android:text="거래 인원 5/5"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="구매 가격 : 3000원 / 5개"
-                android:textSize="16sp" />
-
             <RelativeLayout
+                android:id="@+id/relative"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="구매 가격 : 3000원 / 5개"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/textView22"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="구매 주기 : 14일" />
+                    android:layout_below="@id/textView3"
+                    android:text="구매 주기 : 14일"
+                    android:textSize="18sp" />
 
-                <Button
+                <android.widget.Button
                     android:id="@+id/button9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Button" />
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:layout_alignBaseline="@id/textView22"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/profile_button"
+                    android:gravity="center"
+                    android:text="탈퇴"
+                    android:textSize="16sp" />
+
             </RelativeLayout>
 
         </LinearLayout>
