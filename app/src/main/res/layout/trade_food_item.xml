@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="제품1"
+                    android:text="음식1"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -58,15 +58,15 @@
                     android:paddingTop="10dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="10dp"
-                    android:text="현재 1/5명" />
+                    android:text="거래 날짜 2/15" />
             </RelativeLayout>
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="서울 용산구 청파동 2가"
+                android:text="구매 가격 : 3000원 / 숙대점"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -75,15 +75,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:background="@drawable/item_layout"
+        android:orientation="horizontal"
         android:visibility="gone">
+
         <ImageView
-            android:id="@+id/moodImageView2"
+            android:id="@+id/moodImageView3"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_gravity="center_vertical"
-            android:padding="5dp" />
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            app:srcCompat="@drawable/multi" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -104,7 +107,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="제품1"
-                    android:textSize="16sp" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -116,7 +120,7 @@
                     android:paddingTop="10dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="10dp"
-                    android:text="현재 1/5명" />
+                    android:text="거래 날짜 2/15" />
             </RelativeLayout>
 
             <TextView
@@ -124,9 +128,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="서울 용산구 청파동 2가" />
+                android:text="구매 가격 : 3000원 / 숙대점"
+                android:textSize="16sp" />
 
         </LinearLayout>
 
     </LinearLayout>
+
 </androidx.cardview.widget.CardView>
