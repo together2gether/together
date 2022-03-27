@@ -3,10 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/delivery_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/login.xml" value="0.2" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/message_left_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/message_right_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/modify_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/person_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/person_list.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/trade.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/trade_food_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/trade_product_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/menu/menu_bottom.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/activity_item.xml" value="0.175" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/activity_main.xml" value="0.175" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.175" />
