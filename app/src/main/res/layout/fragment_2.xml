@@ -7,8 +7,7 @@
     android:layout_marginLeft="15dp"
     android:layout_marginTop="20dp"
     android:layout_marginRight="15dp"
-    tools:context=".Fragment2"
-    android:background="#ffffff">
+    tools:context=".Fragment2">
 
     <LinearLayout
         android:layout_width="match_parent"
