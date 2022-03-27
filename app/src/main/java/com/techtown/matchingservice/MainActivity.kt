@@ -10,6 +10,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+        var fragment1 = Fragment1()
+        supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
         initNavigationBar()
     }
 
