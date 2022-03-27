@@ -8,7 +8,8 @@
     android:layout_marginTop="20dp"
     android:layout_marginRight="15dp"
     android:orientation="vertical"
-    tools:context=".Fragment1" >
+    tools:context=".Fragment1"
+    android:background="#ffffff">
 
     <RadioGroup
         android:layout_width="wrap_content"
