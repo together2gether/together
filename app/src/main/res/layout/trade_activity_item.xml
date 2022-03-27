@@ -33,17 +33,17 @@
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/textView140"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="음식1"
+                    android:text="활동1"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textView141"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -56,15 +56,13 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textView142"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="구매 가격 : 3000원 / 숙대점"
+                android:text="활동비 : 3000원 / 4명"
                 android:textSize="16sp" />
-
         </LinearLayout>
-
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -76,7 +74,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -86,17 +87,17 @@
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textView137"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="제품1"
+                    android:text="활동1"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/textView138"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -109,15 +110,12 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
+                android:id="@+id/textView139"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="구매 가격 : 3000원 / 숙대점"
                 android:textSize="16sp" />
-
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

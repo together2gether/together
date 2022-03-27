@@ -33,60 +33,7 @@
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="음식1"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/number"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="20dp"
-                    android:paddingBottom="10dp"
-                    android:text="거래 날짜 2/15" />
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="구매 가격 : 3000원 / 숙대점"
-                android:textSize="16sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/item_layout"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/textView4"
+                    android:id="@+id/textView143"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -96,7 +43,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/textView144"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -105,19 +52,41 @@
                     android:paddingTop="10dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="10dp"
-                    android:text="거래 날짜 2/15" />
+                    android:text="거래 인원 5/5"
+                    android:textSize="16sp" />
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/textView6"
+            <RelativeLayout
+                android:id="@+id/relative2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="구매 가격 : 3000원 / 숙대점"
-                android:textSize="16sp" />
+                android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/textView145"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="활동비 : 3000원 / 4명"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView146"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/textView145"
+                    android:text="활동 주기 : 14일"
+                    android:textSize="18sp" />
+
+                <android.widget.Button
+                    android:id="@+id/button43"
+                    android:layout_width="60dp"
+                    android:layout_height="45dp"
+                    android:layout_alignBaseline="@id/textView146"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/profile_button"
+                    android:gravity="center"
+                    android:text="탈퇴"
+                    android:textSize="16sp" />
+            </RelativeLayout>
         </LinearLayout>
-
     </LinearLayout>
-
 </androidx.cardview.widget.CardView>

@@ -22,7 +22,7 @@
             android:id="@+id/textView11"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1.5"
             android:text="포돈 같이 배달시킬 분"
@@ -34,12 +34,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="17dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:text="서울 용산구 청파동2가"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="normal" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/layout2"

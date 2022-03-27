@@ -67,7 +67,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/titleLayout2"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="15dp"
@@ -201,7 +200,24 @@
                 android:layout_gravity="center_vertical"
                 android:text="3/5"
                 android:textSize="20sp" />
+            <android.widget.Button
+                android:id="@+id/button17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="150dp"
+                android:background="@drawable/circle_button"
+                android:text="참여자"
+                android:textSize="16sp" />
         </LinearLayout>
+        <android.widget.Button
+            android:id="@+id/button18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/circle_button"
+            android:drawableLeft="@drawable/bubble"
+            android:text="단체 채팅 보내기"
+            android:textSize="16sp" />
     </LinearLayout>
 
     </ScrollView>
