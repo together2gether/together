@@ -21,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var binding: LoginBinding
     lateinit var googleSigninClient : GoogleSignInClient
-    val TAG = "GOOGLE_LOGIN"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
