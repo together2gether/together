@@ -4,9 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="15dp"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="15dp"
     android:layout_marginRight="15dp"
     android:orientation="vertical">
+
+    <android.widget.Button
+        android:id="@+id/button50"
+        android:layout_width="30dp"
+        android:layout_height="27dp"
+        android:background="@drawable/arrow" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +20,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editTextTextPersonName18"
+            android:id="@+id/editTextTextPersonName43"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
@@ -22,25 +28,18 @@
             android:inputType="textPersonName" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
+            android:id="@+id/imageButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:background="#ffffffff"
             android:src="@drawable/search" />
-    </LinearLayout>
 
-    <fragment
-        android:id="@+id/map"
-        class="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="350dp"
-        android:layout_height="320dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="5dp" />
 </LinearLayout>

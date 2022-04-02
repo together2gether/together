@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         tools:ignore="MissingConstraints">
 
         <android.widget.Button
-            android:id="@+id/button46"
+            android:id="@+id/button44"
             android:layout_width="30dp"
             android:layout_height="27dp"
             android:background="@drawable/arrow"
@@ -25,22 +26,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="거래 내역"
+            android:text="정기구매"
             android:textColor="@android:color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
     </androidx.appcompat.widget.Toolbar>
-
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextTextPersonName18"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="7"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#ffffffff"
+            android:src="@drawable/search" />
+    </LinearLayout>
+
+
+    <fragment
+        android:id="@+id/mapView"
+        android:layout_width="350dp"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="320dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
         android:layout_marginRight="15dp"
-        android:orientation="vertical">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+        android:layout_marginTop="10dp" />
 </LinearLayout>

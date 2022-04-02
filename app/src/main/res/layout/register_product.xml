@@ -1,17 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.widget.Button
-        android:id="@+id/button12"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:background="@drawable/arrow" />
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#bfdeff"
+        app:itemIconTint="#bfdeff"
+        app:itemTextColor="#bfdeff"
+        tools:ignore="MissingConstraints">
+
+        <android.widget.Button
+            android:id="@+id/button49"
+            android:layout_width="30dp"
+            android:layout_height="27dp"
+            android:background="@drawable/arrow"
+            android:backgroundTint="#ffffff" />
+
+        <TextView
+            android:id="@+id/set_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="등록"
+            android:textColor="@android:color/white"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
 
     <ImageView
         android:id="@+id/imageView9"
@@ -19,219 +39,243 @@
         android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="80dp"
         android:background="@drawable/send" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/imageView9">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView9"
-        android:layout_marginTop="0dp"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/editTextTextPersonName3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@drawable/item_chat"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="제목"
-            android:inputType="textPersonName"
-            android:paddingTop="20dp"
-            android:paddingBottom="22dp"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/editTextTextPersonName38"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@drawable/item_chat"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="제품명"
-            android:inputType="textPersonName"
-            android:paddingTop="20dp"
-            android:paddingBottom="22dp"
-            android:textSize="20sp"  />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/item_chat"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editTextTextPersonName5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="#ffffffff"
-                android:ems="5"
-                android:gravity="center_horizontal"
-                android:hint="총 가격"
-                android:inputType="textPersonName"
-                android:paddingTop="18dp"
-                android:paddingBottom="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textView134"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="원 /"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/editTextTextPersonName6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="#ffffffff"
-                android:ems="4"
-                android:gravity="center_horizontal"
-                android:hint="총 개수"
-                android:inputType="textPersonName"
-                android:paddingTop="18dp"
-                android:paddingBottom="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textView135"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="개 /"
-                android:textSize="20sp" />
-
-            <EditText
-                android:id="@+id/editTextTextPersonName7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="#ffffffff"
-                android:ems="4"
-                android:gravity="center_horizontal"
-                android:hint="구매 단위"
-                android:inputType="textPersonName"
-                android:paddingTop="18dp"
-                android:paddingBottom="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textView136"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="개  "
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/item_chat"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editTextTextPersonName8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="#ffffffff"
-                android:ems="5"
-                android:gravity="center_horizontal"
-                android:hint="총 인원"
-                android:inputType="textPersonName"
-                android:paddingTop="18dp"
-                android:paddingBottom="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textView149"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 명"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/item_chat"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editTextTextPersonName9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:background="#ffffffff"
-                android:ems="5"
-                android:gravity="center_horizontal"
-                android:hint="주기"
-                android:inputType="textPersonName"
-                android:paddingTop="18dp"
-                android:paddingBottom="18dp"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/textView150"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 개월"
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/editTextTextPersonName10"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@drawable/item_chat"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="URL"
-            android:inputType="textPersonName"
-            android:paddingTop="20dp"
-            android:paddingBottom="22dp"
-            android:textSize="20sp" />
+            android:layout_below="@+id/imageView9"
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/editTextTextPersonName11"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:background="@drawable/item_chat"
-            android:ems="10"
-            android:gravity="center_horizontal"
-            android:hint="직거래 장소"
-            android:inputType="textPersonName"
-            android:paddingTop="20dp"
-            android:paddingBottom="22dp"
-            android:textSize="20sp" />
+            <EditText
+                android:id="@+id/editTextTextPersonName3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/item_chat"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="제목"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="22dp"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/item_chat"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName38"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:background="#ffffffff"
+                    android:ems="10"
+                    android:gravity="center_horizontal"
+                    android:hint="제품명"
+                    android:inputType="textPersonName"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"
+                    android:textSize="20sp" />
+
+                <android.widget.Button
+                    android:id="@+id/button10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/circle_button"
+                    android:text="최저가 상품 보기" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/item_chat"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="#ffffffff"
+                    android:ems="5"
+                    android:gravity="center_horizontal"
+                    android:hint="총 가격"
+                    android:inputType="textPersonName"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView134"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="원 /"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="#ffffffff"
+                    android:ems="4"
+                    android:gravity="center_horizontal"
+                    android:hint="총 개수"
+                    android:inputType="textPersonName"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView135"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="개 /"
+                    android:textSize="20sp" />
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="#ffffffff"
+                    android:ems="4"
+                    android:gravity="center_horizontal"
+                    android:hint="구매 단위"
+                    android:inputType="textPersonName"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView136"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="개  "
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/item_chat"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="#ffffffff"
+                    android:ems="5"
+                    android:gravity="center_horizontal"
+                    android:hint="총 인원"
+                    android:inputType="textPersonName"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView149"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 명"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/item_chat"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextTextPersonName9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:background="#ffffffff"
+                    android:ems="5"
+                    android:gravity="center_horizontal"
+                    android:hint="주기"
+                    android:inputType="textPersonName"
+                    android:paddingTop="18dp"
+                    android:paddingBottom="18dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textView150"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 개월"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/editTextTextPersonName10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/item_chat"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="URL"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="22dp"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="0dp"
+                android:background="@drawable/item_chat"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="직거래 장소"
+                android:inputType="textPersonName"
+                android:paddingTop="20dp"
+                android:paddingBottom="22dp"
+                android:textSize="20sp" />
+
+            <android.widget.Button
+                android:id="@+id/check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="300dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/circle_button"
+                android:text="저장" />
+
+        </LinearLayout>
 
     </ScrollView>
 
