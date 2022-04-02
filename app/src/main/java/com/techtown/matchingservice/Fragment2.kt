@@ -2,11 +2,16 @@ package com.techtown.matchingservice
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.ColorInt
+import com.google.android.material.chip.Chip
 import com.techtown.matchingservice.databinding.Fragment2Binding
 
 class Fragment2 : Fragment() {
@@ -22,6 +27,26 @@ class Fragment2 : Fragment() {
             val intent = Intent(context, SearchActivity::class.java)
             startActivity(intent)
         }
+        binding.button3.setOnClickListener {
+            val string = binding.edit.text
+            if(string.isNullOrEmpty()){
+                Toast.makeText(context, "chip 이름을 입력해주세요", Toast.LENGTH_LONG).show()
+            } else{
+                binding.chipGroup2.addView(Chip(context).apply{
+                    text = string
+                    chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#ffffff"))
+
+                    chipStrokeColor = ColorStateList.valueOf(Color.parseColor("#cdd9f1"))
+                    chipStrokeWidth = 4f
+                    setTextColor(
+                        ColorStateList.valueOf(Color.parseColor("#000000"))
+                    )
+                    isCloseIconVisible = true
+                    setOnCloseIconClickListener { binding.chipGroup2.removeView(this) }
+                })
+                }
+            }
+
         return view
     }
 }

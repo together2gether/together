@@ -60,16 +60,16 @@
 
     <fragment
         android:id="@+id/mapView"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="350dp"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center_horizontal"
         android:layout_height="320dp"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp" />
 </LinearLayout>

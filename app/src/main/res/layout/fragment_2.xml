@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="15dp"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="15dp"
     android:layout_marginRight="15dp"
     tools:context=".Fragment2">
 
@@ -22,7 +22,7 @@
             <android.widget.Button
                 android:id="@+id/button11"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/circle_button"
                 android:text="등록" />
@@ -34,7 +34,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
@@ -91,34 +91,58 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.chip.ChipGroup
+            <HorizontalScrollView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="5">
+                android:layout_marginRight="10dp"
+                android:layout_weight="5"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp">
 
-                <com.google.android.material.chip.Chip
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroup2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="3dp"
+                    app:chipSpacingHorizontal="10dp"
+                    app:selectionRequired="true"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+
+                    <!--<com.google.android.material.chip.Chip
                     android:id="@+id/chip4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="청파동" />
-            </com.google.android.material.chip.ChipGroup>
+                    android:text="청파동"
+                    app:chipBackgroundColor="#ffffff"
+                    app:chipStrokeColor="#cdd9f1"
+                    app:chipStrokeWidth="2dp"
+                    app:closeIconVisible="true" />-->
+                </com.google.android.material.chip.ChipGroup>
+            </HorizontalScrollView>
 
             <android.widget.Button
                 android:id="@+id/button3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.1"
-                android:background="#ffffffff"
-                android:backgroundTintMode="add"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/button"
+                android:backgroundTint="#E4E4E4"
                 android:drawableLeft="@drawable/location"
+                android:paddingLeft="5dp"
+                android:paddingTop="5dp"
+                android:paddingRight="5dp"
+                android:paddingBottom="5dp"
                 android:text="지역" />
 
         </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:id="@+id/textView183"
@@ -127,7 +151,7 @@
                 android:layout_marginRight="30dp"
                 android:layout_toLeftOf="@id/textView184"
                 android:text="필요 주문 금액"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -137,10 +161,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="30dp"
                 android:text="총 배달비"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-
 
 
         <androidx.recyclerview.widget.RecyclerView

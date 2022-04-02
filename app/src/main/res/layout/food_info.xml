@@ -55,7 +55,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="15dp"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,9 +92,9 @@
                     android:id="@+id/textView76"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="최소 주문금액 : "
+                    android:text="필요 주문 금액 : "
                     android:textSize="24sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView77"
@@ -116,9 +116,9 @@
                     android:id="@+id/textView78"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="가게 주소 : "
+                    android:text="총 배달비 : "
                     android:textSize="24sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView79"
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:text="배달 주소 : "
                     android:textSize="24sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView81"
@@ -158,23 +158,25 @@
                 android:layout_height="match_parent">
 
                 <android.widget.Button
-                    android:id="@+id/button24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_toLeftOf="@id/button25"
-                    android:background="@drawable/button"
-                    android:text="관심"
-                    android:textSize="20sp" />
-
-                <android.widget.Button
                     android:id="@+id/button25"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentRight="false"
+                    android:layout_marginRight="15dp"
+                    android:layout_toLeftOf="@id/button24"
                     android:background="@drawable/button"
-                    android:text="참여"
-                    android:textSize="20sp"/>
+                    android:text="참여하기"
+                    android:textSize="20sp" />
+
+                <android.widget.Button
+                    android:id="@+id/button24"
+                    android:layout_width="45dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bubble"
+                    android:backgroundTint="@color/main"
+                    android:textSize="20sp" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>

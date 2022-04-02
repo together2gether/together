@@ -13,7 +13,7 @@ class ProductActivity : AppCompatActivity() {
         finish.setOnClickListener {
             finish()
         }
-        val check = findViewById<Button>(R.id.check)
+        val check = findViewById<Button>(R.id.button53)
         check.setOnClickListener {
             finish()
         }

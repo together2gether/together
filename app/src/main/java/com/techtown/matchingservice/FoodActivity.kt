@@ -13,8 +13,8 @@ class FoodActivity : AppCompatActivity() {
         finish.setOnClickListener {
             finish()
         }
-        val check2 = findViewById<Button>(R.id.check2)
-        check2.setOnClickListener {
+        val save = findViewById<Button>(R.id.button54)
+        save.setOnClickListener {
             finish()
         }
     }
