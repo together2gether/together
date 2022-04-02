@@ -27,6 +27,9 @@ class Fragment2 : Fragment() {
             val intent = Intent(context, SearchActivity::class.java)
             startActivity(intent)
         }
+        binding.button11.setOnClickListener {
+            val intent = Intent(context, FoodActivity::class.java)
+        }
         binding.button3.setOnClickListener {
             val string = binding.edit.text
             if(string.isNullOrEmpty()){
