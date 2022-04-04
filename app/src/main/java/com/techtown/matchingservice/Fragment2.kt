@@ -29,6 +29,7 @@ class Fragment2 : Fragment() {
         }
         binding.button11.setOnClickListener {
             val intent = Intent(context, FoodActivity::class.java)
+            startActivity(intent)
         }
         binding.button3.setOnClickListener {
             val string = binding.edit.text
@@ -47,8 +48,8 @@ class Fragment2 : Fragment() {
                     isCloseIconVisible = true
                     setOnCloseIconClickListener { binding.chipGroup2.removeView(this) }
                 })
-                }
             }
+        }
 
         return view
     }

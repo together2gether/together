@@ -85,19 +85,34 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_main.xml" value="0.24564102564102563" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_search.xml" value="0.23385416666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/chatting.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/condition.xml" value="0.23385416666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_activity.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_food.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_product.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/food_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/food_item.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.1" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_2.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_4.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_chat.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group_activity_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group_product_item.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/login.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/low_item.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/person_item.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/person_list.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_item.xml" value="0.23385416666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/recommend_product.xml" value="0.24512820512820513" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_food.xml" value="0.24512820512820513" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_product.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/shopping_item.xml" value="0.24512820512820513" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/trade.xml" value="0.24512820512820513" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/trade_food_item.xml" value="0.24512820512820513" />
       </map>
     </option>
   </component>
