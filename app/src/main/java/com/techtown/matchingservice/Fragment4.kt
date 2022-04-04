@@ -3,11 +3,10 @@ package com.techtown.matchingservice
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.techtown.matchingservice.databinding.Fragment1Binding
+import androidx.fragment.app.Fragment
 import com.techtown.matchingservice.databinding.Fragment4Binding
 
 class Fragment4 : Fragment() {
@@ -19,9 +18,12 @@ class Fragment4 : Fragment() {
     ): View? {
         mBinding = Fragment4Binding.inflate(inflater, container,false)
         val view = binding.root
+        //val mActivity = activity as MainActivity
         binding.button5.setOnClickListener {
             val intent = Intent(context, ModifyInfo::class.java)
             startActivity(intent)
+            //(activity as MainActivity).changeFragment(1)
+
         }
         binding.button8.setOnClickListener {
             val intent = Intent(context, TradeActivity::class.java)
@@ -33,4 +35,5 @@ class Fragment4 : Fragment() {
         }
         return view
     }
+
 }

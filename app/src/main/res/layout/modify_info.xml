@@ -47,27 +47,27 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/imageView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/profile_img"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:layout_marginRight="20dp"
                 android:src="@drawable/man" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName5"
+                android:id="@+id/edit_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@drawable/item_chat"
+                android:hint="닉네임"
                 android:inputType="textNoSuggestions|textMultiLine"
                 android:paddingBottom="10dp"
-                android:text="눈송이"
                 android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <android.widget.Button
-            android:id="@+id/button5"
+            android:id="@+id/btn_changeImg"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="8dp"
@@ -95,7 +95,7 @@
                 android:textStyle="normal" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/edit_Name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -125,7 +125,7 @@
                 android:textStyle="normal" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName7"
+                android:id="@+id/edit_phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -155,7 +155,7 @@
                 android:textStyle="normal" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName8"
+                android:id="@+id/edit_Address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -168,7 +168,7 @@
         </LinearLayout>
 
         <android.widget.Button
-            android:id="@+id/modify"
+            android:id="@+id/btn_modify"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="8dp"

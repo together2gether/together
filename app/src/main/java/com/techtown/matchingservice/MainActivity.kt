@@ -1,12 +1,7 @@
 package com.techtown.matchingservice
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -14,13 +9,34 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.techtown.matchingservice.databinding.ActivityMainBinding
-import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
+    //lateinit var auth: FirebaseAuth
+
+    //val database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+   // val infoRef = database.getReference("usersInfo")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        /*val uid = auth.currentUser!!.uid.toString()
+        infoRef.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userInfo = snapshot.getValue<UsersInfo>()
+                if(userInfo == null){
+                    val info = UsersInfo("","","","","",uid)
+                    infoRef.child(uid).setValue(info)
+                    //moveModifyPage()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        })*/
+
+
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         val ab = supportActionBar!!
@@ -79,4 +95,10 @@ class MainActivity : AppCompatActivity() {
         var title = findViewById<TextView>(R.id.set_date)
         title.setText(ti)
     }
+
+    fun moveModifyPage(){
+        startActivity(Intent(this, ModifyInfo::class.java))
+    }
+
 }
+

@@ -13,19 +13,28 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import com.techtown.matchingservice.MainActivity
-import com.techtown.matchingservice.R
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.LoginBinding
+import com.techtown.matchingservice.model.UsersInfo
 
 class LoginActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     lateinit var binding: LoginBinding
     lateinit var googleSigninClient : GoogleSignInClient
 
+    val database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    val infoRef = database.getReference("usersInfo")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.login)
         auth = FirebaseAuth.getInstance()
+
         binding.googleSigninButton.setOnClickListener {
             //First step
             googleLogin()
@@ -49,7 +58,20 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithCredential(credential).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 if (auth.currentUser!!.isEmailVerified) {
-                    //이메일 인증이 되었을때
+                    val uid = auth.currentUser!!.uid.toString()
+                    infoRef.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val userInfo = snapshot.getValue<UsersInfo>()
+                            if(userInfo == null){
+                                val info = UsersInfo("","","","","",uid)
+                                infoRef.child(uid).setValue(info)
+                                //moveModifyPage()
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
                     moveMainPage(task.result?.user)
                 } else {
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
@@ -72,4 +94,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this,MainActivity::class.java))
         }
     }
+
+
 }
