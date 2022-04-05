@@ -16,10 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import com.techtown.matchingservice.model.UsersInfo
 
 private lateinit var auth: FirebaseAuth
 
@@ -74,17 +78,19 @@ class ModifyInfo : AppCompatActivity() {
                 val user = Firebase.auth.currentUser
                 val userId = user?.uid
                 val userIdSt = userId.toString()
-                /*infoRef.child(userIdSt).addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot){
+
+                if(!profileCheck){
+                    infoRef.child(userIdSt).addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
                             val userInfo = snapshot.getValue<UsersInfo>()
                             if(userInfo == null){
-                                //val info = UserInfo
+                                infoRef.child(userIdSt).child("profileImageUrl").setValue("")
                             }
                         }
-                })*/
-
-                if(profileCheck){
-
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
+                } else {
                     //프로필 변경 하면
                     FirebaseStorage.getInstance()
                         .reference.child("userImages").child("$userIdSt/photo").putFile(imageUri!!).addOnSuccessListener {

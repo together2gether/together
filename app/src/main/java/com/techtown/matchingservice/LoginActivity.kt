@@ -63,8 +63,6 @@ class LoginActivity : AppCompatActivity() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val userInfo = snapshot.getValue<UsersInfo>()
                             if(userInfo == null){
-                                //val info = UsersInfo("","","","","",uid)
-                                //infoRef.child(uid).setValue(info)
                                 moveModifyPage(task.result?.user)
                             }
                             else {

@@ -12,30 +12,10 @@ import com.techtown.matchingservice.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
-    //lateinit var auth: FirebaseAuth
-
-    //val database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
-   // val infoRef = database.getReference("usersInfo")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        /*val uid = auth.currentUser!!.uid.toString()
-        infoRef.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val userInfo = snapshot.getValue<UsersInfo>()
-                if(userInfo == null){
-                    val info = UsersInfo("","","","","",uid)
-                    infoRef.child(uid).setValue(info)
-                    //moveModifyPage()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-        })*/
-
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
