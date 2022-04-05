@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -73,6 +74,15 @@ class ModifyInfo : AppCompatActivity() {
                 val user = Firebase.auth.currentUser
                 val userId = user?.uid
                 val userIdSt = userId.toString()
+                /*infoRef.child(userIdSt).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot){
+                            val userInfo = snapshot.getValue<UsersInfo>()
+                            if(userInfo == null){
+                                //val info = UserInfo
+                            }
+                        }
+                })*/
+
                 if(profileCheck){
 
                     //프로필 변경 하면

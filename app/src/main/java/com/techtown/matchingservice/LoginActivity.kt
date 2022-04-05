@@ -63,16 +63,19 @@ class LoginActivity : AppCompatActivity() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val userInfo = snapshot.getValue<UsersInfo>()
                             if(userInfo == null){
-                                val info = UsersInfo("","","","","",uid)
-                                infoRef.child(uid).setValue(info)
-                                //moveModifyPage()
+                                //val info = UsersInfo("","","","","",uid)
+                                //infoRef.child(uid).setValue(info)
+                                moveModifyPage(task.result?.user)
+                            }
+                            else {
+                                moveMainPage(task.result?.user)
                             }
                         }
 
                         override fun onCancelled(error: DatabaseError) {
                         }
                     })
-                    moveMainPage(task.result?.user)
+
                 } else {
                     Toast.makeText(this, task.exception?.message, Toast.LENGTH_LONG).show()
                 }
@@ -95,5 +98,9 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-
+    fun moveModifyPage(user: FirebaseUser?){
+        if(user!=null){
+            startActivity(Intent(this, ModifyInfo::class.java))
+        }
+    }
 }
