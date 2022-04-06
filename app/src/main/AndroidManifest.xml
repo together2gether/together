@@ -44,7 +44,7 @@
         <activity android:name=".GroupActivity"/>
         <activity android:name=".ProductActivity"/>
         <activity android:name=".FoodActivity"/>
-        <activity android:name=".Product"/>
+        <activity android:name=".ActivityActivity"/>
         <activity android:name=".ConditionActivity"/>
         <activity android:name=".RecommendActivity"/>
     </application>

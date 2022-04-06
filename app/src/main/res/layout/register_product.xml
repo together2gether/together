@@ -52,11 +52,11 @@
             android:id="@+id/btn_addphoto"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="@drawable/addphoto"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/imageView_add_photo_image"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp" />
+            android:background="@drawable/addphoto" />
 
         <ScrollView
             android:layout_width="match_parent"

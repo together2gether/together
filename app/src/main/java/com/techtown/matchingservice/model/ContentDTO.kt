@@ -1,5 +1,7 @@
 package com.techtown.matchingservice.model
 
+import com.google.firebase.firestore.GeoPoint
+
 data class ContentDTO(
     var product : String? = null,
     var imageUrl : String? = null,
@@ -14,7 +16,7 @@ data class ContentDTO(
     var timestamp : Long? = null,
     var ParticipationCount : Int = 0,
     var ParticipationTotal :Int = 0,
-
+    var location : GeoPoint = GeoPoint(37.5466,126.9661),
     //좋아요 누른 유저 관리
     var Participation : MutableMap<String, Boolean> = HashMap()){
     //댓글 관리
