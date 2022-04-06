@@ -112,6 +112,10 @@ class ProductActivity : AppCompatActivity() {
             //Insert timestamp
             contentDTO.timestamp = System.currentTimeMillis()
 
+            //Insert ParticipationTotal
+            var participation : Int = contentDTO.totalNumber / contentDTO.unit
+            contentDTO.ParticipationTotal = participation
+
             firestore?.collection("images")?.document()?.set(contentDTO)
 
             setResult(Activity.RESULT_OK)

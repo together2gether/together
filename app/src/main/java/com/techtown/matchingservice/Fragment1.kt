@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.techtown.matchingservice.databinding.Fragment1Binding
 import com.techtown.matchingservice.databinding.ProductItemBinding
@@ -20,12 +22,15 @@ import com.techtown.matchingservice.model.ContentDTO
 class Fragment1 : Fragment() {
     private lateinit var binding: Fragment1Binding
     var firestore: FirebaseFirestore? = null
+    lateinit var uid : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = Fragment1Binding.inflate(inflater, container, false)
         firestore = FirebaseFirestore.getInstance()
+        uid = FirebaseAuth.getInstance().uid!!
+
 
         binding.imageButton2.setOnClickListener {
             val intent = Intent(context, SearchActivity::class.java)
@@ -101,6 +106,29 @@ class Fragment1 : Fragment() {
             viewHolder.productitemTextviewProductName.text = contentDTOs[position].product
             //place
             viewHolder.productitemTextviewPlace.text = contentDTOs[position].place
+            //Photo
+            Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
+                .into(viewHolder.productItemPhoto)
+            //click
+            viewHolder.productitemCardView.setOnClickListener{
+                Intent(context, Product::class.java).apply {
+                    putExtra("product", contentDTOs[position].product)
+                    putExtra("imageUrl", contentDTOs[position].imageUrl)
+                    putExtra("price", contentDTOs[position].price.toString())
+                    putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
+                    putExtra("cycle", contentDTOs[position].cycle.toString())
+                    putExtra("unit", contentDTOs[position].unit.toString())
+                    putExtra("URL", contentDTOs[position].url)
+                    putExtra("place", contentDTOs[position].place)
+                    putExtra("timestamp", contentDTOs[position].timestamp.toString())
+                    putExtra("participationCount", contentDTOs[position].ParticipationCount.toString())
+                    putExtra("participationTotal", contentDTOs[position].ParticipationTotal.toString())
+                    putExtra("id", contentUidList[position])
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run { context?.startActivity(this) }
+            }
+
+            viewHolder.productitemParticipation.text = contentDTOs[position].ParticipationCount.toString()
 
         }
 

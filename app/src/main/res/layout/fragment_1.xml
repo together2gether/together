@@ -15,39 +15,6 @@
         android:layout_marginRight="15dp"
         android:orientation="vertical"
         tools:context=".Fragment1">
-
-        <!--<RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_radio_button"
-                android:button="@null"
-                android:checked="true"
-                android:paddingLeft="75dp"
-                android:paddingRight="75dp"
-                android:text="활동"
-                android:textAlignment="center"
-                android:textColor="@drawable/selector_radio_text" />
-
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_radio_button"
-                android:button="@null"
-                android:paddingLeft="75dp"
-                android:paddingRight="75dp"
-                android:text="생필품"
-                android:textAlignment="center"
-                android:textColor="@drawable/selector_radio_text" />
-        </RadioGroup>-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -126,15 +93,6 @@
                     android:layout_marginLeft="3dp"
                     android:layout_marginRight="3dp">
 
-                    <!--<com.google.android.material.chip.Chip
-                    android:id="@+id/chip4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="청파동"
-                    app:chipBackgroundColor="#ffffff"
-                    app:chipStrokeColor="#cdd9f1"
-                    app:chipStrokeWidth="2dp"
-                    app:closeIconVisible="true" />-->
                 </com.google.android.material.chip.ChipGroup>
 
             </HorizontalScrollView>
