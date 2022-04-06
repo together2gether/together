@@ -38,6 +38,5 @@ class Product : AppCompatActivity() {
             finish()
         }
 
-
     }
 }

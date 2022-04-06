@@ -127,9 +127,6 @@ class Fragment1 : Fragment() {
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { context?.startActivity(this) }
             }
-
-            viewHolder.productitemParticipation.text = contentDTOs[position].ParticipationCount.toString()
-
         }
 
         override fun getItemCount(): Int {
