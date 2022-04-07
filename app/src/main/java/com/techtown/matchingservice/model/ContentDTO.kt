@@ -4,7 +4,7 @@ import com.google.firebase.firestore.GeoPoint
 
 data class ContentDTO(
     var product : String? = null,
-    var imageUrl : String? = null,
+    var imageUrl : String? =null,
     var price : Int = 0,
     var totalNumber : Int = 0,
     var unit : Int = 0,

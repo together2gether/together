@@ -89,6 +89,7 @@ class Fragment1 : Fragment() {
                         contentUidList.add(snapshot.id)
                     }
                     notifyDataSetChanged()
+
                 }
         }
 
@@ -109,6 +110,10 @@ class Fragment1 : Fragment() {
             //Photo
             Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
                 .into(viewHolder.productItemPhoto)
+
+            var participationCount:String = contentDTOs[position].ParticipationCount.toString()
+
+            viewHolder.productitemParticipation.text = "현재 "+participationCount+" / "+contentDTOs[position].ParticipationTotal.toString()
             //click
             viewHolder.productitemCardView.setOnClickListener{
                 Intent(context, Product::class.java).apply {
@@ -121,7 +126,8 @@ class Fragment1 : Fragment() {
                     putExtra("URL", contentDTOs[position].url)
                     putExtra("place", contentDTOs[position].place)
                     putExtra("timestamp", contentDTOs[position].timestamp.toString())
-                    putExtra("participationCount", contentDTOs[position].ParticipationCount.toString())
+                    putExtra("participationCount", participationCount)
+                    putExtra("uidkey",contentDTOs[position].Participation.containsKey(uid).toString())
                     putExtra("participationTotal", contentDTOs[position].ParticipationTotal.toString())
                     putExtra("id", contentUidList[position])
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
