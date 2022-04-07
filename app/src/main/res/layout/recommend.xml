@@ -20,7 +20,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/editTextTextPersonName43"
+            android:id="@+id/edit_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
@@ -28,7 +28,7 @@
             android:inputType="textPersonName" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/btn_search"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

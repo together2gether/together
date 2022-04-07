@@ -16,7 +16,7 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/chat_img"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_gravity="center_vertical"
@@ -34,16 +34,16 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/textView16"
+                    android:id="@+id/chat_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
                     android:text="눈송이"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -61,7 +61,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/textView18"
+                android:id="@+id/chat_lastMsg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
@@ -114,7 +114,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView20"
+                    android:id="@+id/textView_topName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
