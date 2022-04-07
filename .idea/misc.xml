@@ -77,6 +77,7 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_chat.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group_activity_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chatting.xml" value="0.22" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.175" />
@@ -87,7 +88,10 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/message_left_item.xml" value="0.22" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/message_right_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/modify_info.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.175" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/product_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend.xml" value="0.1" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/register_product.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/shopping_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/trade.xml" value="0.1" />
       </map>
