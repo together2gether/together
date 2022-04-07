@@ -16,13 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar">
         <uses-library android:name="org.apache.http.legacy" android:required="false"/>
-        <meta-data android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyCRqwq0viorUM2QBTPzOX9j-hL61GiPt9s"/>
+        <!--<meta-data android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBsSGVJ9O6wWBGbuPTKJVtJeJT2FEIXVsE"/>-->
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
-        <!--<meta-data
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBdHz_B9UldGFUwUTi5dC8KoD3v6EHKLQM" />-->
+            android:value="AIzaSyB9LqH9e-C_HpjfpU2qqQzrPwT-Y6XJrME" />
 
         <activity
             android:name=".LoginActivity"
