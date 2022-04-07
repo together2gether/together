@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView20"
+        android:id="@+id/textView_topName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
@@ -18,11 +18,11 @@
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/msg_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/relativeLayout"
-        android:layout_below="@id/textView20">
+        android:layout_below="@id/textView_topName">
 
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -46,18 +46,18 @@
             android:src="@drawable/photo" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/editText_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/button4"
+            android:layout_toLeftOf="@id/btn_input"
             android:layout_toRightOf="@id/imageButton2"
             android:background="@drawable/send"
             android:ems="10"
             android:inputType="textPersonName" />
 
         <android.widget.Button
-            android:id="@+id/button4"
+            android:id="@+id/btn_input"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
