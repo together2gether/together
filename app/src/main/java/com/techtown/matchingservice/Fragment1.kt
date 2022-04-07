@@ -130,6 +130,7 @@ class Fragment1 : Fragment() {
                     putExtra("uidkey",contentDTOs[position].Participation.containsKey(uid).toString())
                     putExtra("participationTotal", contentDTOs[position].ParticipationTotal.toString())
                     putExtra("id", contentUidList[position])
+                    putExtra("Uid", contentDTOs[position].uid.toString())
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run { context?.startActivity(this) }
             }
