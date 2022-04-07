@@ -40,7 +40,7 @@ class Product : AppCompatActivity() {
         var docId = intent.getStringExtra("id").toString()
         var tsDoc = firestore?.collection("images")?.document(docId)
         firestore?.runTransaction{
-            transition ->
+                transition ->
             contentdto = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
         }
 
@@ -53,7 +53,7 @@ class Product : AppCompatActivity() {
             contentdto.Participation[uid] = true
             binding.productInfoParticipation.isEnabled=false
             firestore?.runTransaction{
-                transition->
+                    transition->
                 transition.set(tsDoc!!,contentdto!!)
             }
             binding.productInfoParticipationNumber.text=contentdto.ParticipationCount.toString()+" / "+contentdto.ParticipationTotal
