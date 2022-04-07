@@ -23,7 +23,7 @@ class Product : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.product_info)
         uid = FirebaseAuth.getInstance().uid!!
         firestore = FirebaseFirestore.getInstance()
-
+        //여기야
         Glide.with(this).load(intent.getStringExtra("imageUrl").toString())
             .into(binding.productInfoPhoto)
         binding.productInfoProduct.text = intent.getStringExtra("product").toString()
