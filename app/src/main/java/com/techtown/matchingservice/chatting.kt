@@ -8,10 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,8 +40,9 @@ class chatting : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.chatting)
-        val imageView = findViewById<ImageView>(R.id.btn_input)
-        val editText = findViewById<TextView>(R.id.editText_msg)
+
+        val imageView = findViewById<Button>(R.id.btn_input)
+        val editText = findViewById<EditText>(R.id.editText_msg)
 
         //메시지를 보낸 시간
         val time = System.currentTimeMillis()

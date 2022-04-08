@@ -1,5 +1,6 @@
 package com.techtown.matchingservice
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -32,6 +33,8 @@ class Product : AppCompatActivity() {
         binding.productInfoPlace.text = intent.getStringExtra("place").toString()
         binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()
         binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
+        val regist_userid = intent.getStringExtra("Uid").toString()
+
 
         if(intent.getStringExtra("uidkey").toString()=="true"){
             binding.productInfoParticipation.isEnabled=false
@@ -46,6 +49,12 @@ class Product : AppCompatActivity() {
 
         binding.productInfoBack.setOnClickListener(){
             finish()
+        }
+
+        binding.buttonChat.setOnClickListener {
+            val intent = Intent(this, chatting::class.java)
+            intent.putExtra("destinationUid", regist_userid)
+            startActivity(intent)
         }
 
         binding.productInfoParticipation.setOnClickListener(){
