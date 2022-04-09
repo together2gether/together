@@ -7,69 +7,69 @@
 
     </data>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#bfdeff"
-            app:itemIconTint="#bfdeff"
-            app:itemTextColor="#bfdeff"
-            tools:ignore="MissingConstraints">
-
-            <android.widget.Button
-                android:id="@+id/button49"
-                android:layout_width="30dp"
-                android:layout_height="27dp"
-                android:background="@drawable/arrow"
-                android:backgroundTint="#ffffff" />
-
-            <TextView
-                android:id="@+id/set_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="등록"
-                android:textColor="@android:color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-        </androidx.appcompat.widget.Toolbar>
-
-        <ImageView
-            android:id="@+id/imageView_add_photo_image"
-            android:layout_width="360dp"
-            android:layout_height="250dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"
-            android:background="@drawable/send" />
-
-        <Button
-            android:id="@+id/btn_addphoto"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_below="@+id/imageView_add_photo_image"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/addphoto" />
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/btn_addphoto">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#bfdeff"
+                    app:itemIconTint="#bfdeff"
+                    app:itemTextColor="#bfdeff"
+                    tools:ignore="MissingConstraints">
+
+                    <android.widget.Button
+                        android:id="@+id/button49"
+                        android:layout_width="30dp"
+                        android:layout_height="27dp"
+                        android:background="@drawable/arrow"
+                        android:backgroundTint="#ffffff" />
+
+                    <TextView
+                        android:id="@+id/set_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="등록"
+                        android:textColor="@android:color/white"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </androidx.appcompat.widget.Toolbar>
+
+                <ImageView
+                    android:id="@+id/imageView_add_photo_image"
+                    android:layout_width="360dp"
+                    android:layout_height="250dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/send" />
+
+                <Button
+                    android:id="@+id/btn_addphoto"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/addphoto"
+                    android:backgroundTint="#000000" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -77,7 +77,7 @@
 
                     <TextView
                         android:id="@+id/textView11"
-                        android:layout_width="55dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="6dp"
@@ -285,9 +285,10 @@
 
                     <EditText
                         android:id="@+id/editTextPlace"
-                        android:layout_width="310dp"
+                        android:layout_width="210dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
                         android:layout_toRightOf="@id/textView149"
                         android:background="@drawable/button"
                         android:backgroundTint="#81DCDCDC"
@@ -296,6 +297,16 @@
                         android:inputType="textPersonName"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp" />
+
+                    <android.widget.Button
+                        android:id="@+id/address"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/editTextPlace"
+                        android:background="@drawable/button"
+                        android:text="검색" />
                 </RelativeLayout>
 
                 <android.widget.Button
@@ -307,8 +318,6 @@
                     android:text="저장"
                     android:textSize="18sp" />
             </LinearLayout>
+            </LinearLayout>
         </ScrollView>
-
-
-    </RelativeLayout>
 </layout>

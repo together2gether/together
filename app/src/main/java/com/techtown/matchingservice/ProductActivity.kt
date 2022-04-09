@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ProductActivity : AppCompatActivity() {
+    val SUBACTIVITY_REQUEST_CODE =100
     lateinit var binding: RegisterProductBinding
     var storage: FirebaseStorage? = null
     var photoUri: Uri? = null
@@ -39,7 +41,10 @@ class ProductActivity : AppCompatActivity() {
         binding.button10.setOnClickListener {
             val intent = Intent(this, RecommendActivity::class.java)
             startActivity(intent)
-
+        }
+        binding.address.setOnClickListener {
+            val intent = Intent(this, AddressActivity::class.java)
+            resultLauncher.launch(intent)
         }
         //Initiate
         storage = FirebaseStorage.getInstance()
@@ -128,6 +133,13 @@ class ProductActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK)
 
             finish()
+        }
+    }
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val myData: Intent? = result.data
+            val stringData = result.data?.getStringExtra("returnValue")
+            binding.editTextPlace.setText(stringData)
         }
     }
 }
