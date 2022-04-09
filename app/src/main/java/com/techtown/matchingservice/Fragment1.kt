@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,7 +23,7 @@ import com.techtown.matchingservice.model.ContentDTO
 class Fragment1 : Fragment() {
     private lateinit var binding: Fragment1Binding
     var firestore: FirebaseFirestore? = null
-    lateinit var uid : String
+    lateinit var uid: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,10 +57,12 @@ class Fragment1 : Fragment() {
                 })
             }
         }
+        binding.fragment1RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         binding.fragment1RecyclerView.adapter = Fragment1RecyclerviewAdapter()
         binding.fragment1RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
+
     }
 
     inner class CustomViewHolder(var binding: ProductItemBinding) :
@@ -104,11 +107,12 @@ class Fragment1 : Fragment() {
             Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
                 .into(viewHolder.productItemPhoto)
 
-            var participationCount:String = contentDTOs[position].ParticipationCount.toString()
+            var participationCount: String = contentDTOs[position].ParticipationCount.toString()
 
-            viewHolder.productitemParticipation.text = "현재 "+participationCount+" / "+contentDTOs[position].ParticipationTotal.toString()
+            viewHolder.productitemParticipation.text =
+                "현재 " + participationCount + " / " + contentDTOs[position].ParticipationTotal.toString()
             //click
-            viewHolder.productitemCardView.setOnClickListener{
+            viewHolder.productitemCardView.setOnClickListener {
                 Intent(context, Product::class.java).apply {
                     putExtra("product", contentDTOs[position].product)
                     putExtra("imageUrl", contentDTOs[position].imageUrl)
@@ -120,8 +124,14 @@ class Fragment1 : Fragment() {
                     putExtra("place", contentDTOs[position].place)
                     putExtra("timestamp", contentDTOs[position].timestamp.toString())
                     putExtra("participationCount", participationCount)
-                    putExtra("uidkey",contentDTOs[position].Participation.containsKey(uid).toString())
-                    putExtra("participationTotal", contentDTOs[position].ParticipationTotal.toString())
+                    putExtra(
+                        "uidkey",
+                        contentDTOs[position].Participation.containsKey(uid).toString()
+                    )
+                    putExtra(
+                        "participationTotal",
+                        contentDTOs[position].ParticipationTotal.toString()
+                    )
                     putExtra("id", contentUidList[position])
                     putExtra("Uid", contentDTOs[position].uid.toString())
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

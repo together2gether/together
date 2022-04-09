@@ -17,7 +17,7 @@ data class ContentDTO(
     var ParticipationCount : Int = 1,
     var ParticipationTotal :Int = 0,
     var location : GeoPoint = GeoPoint(37.5466,126.9661),
-    //좋아요 누른 유저 관리
+    //참여 누른 유저 관리
     var Participation : MutableMap<String, Boolean> = HashMap()){
     //댓글 관리
     data class Comment(

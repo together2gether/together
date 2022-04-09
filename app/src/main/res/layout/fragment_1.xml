@@ -15,26 +15,6 @@
         android:layout_marginRight="15dp"
         android:orientation="vertical"
         tools:context=".Fragment1">
-<!--        <RelativeLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginBottom="8dp">-->
-
-<!--            <android.widget.Button-->
-<!--                android:id="@+id/button51"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="@drawable/circle_button"-->
-<!--                android:text="조건탐색" />-->
-
-<!--            <android.widget.Button-->
-<!--                android:id="@+id/button52"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="45dp"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:background="@drawable/circle_button"-->
-<!--                android:text="등록" />-->
-<!--        </RelativeLayout>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,6 +26,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:ems="10"
                 android:inputType="textMultiLine|textNoSuggestions" />
 
@@ -99,8 +81,8 @@
 
             <android.widget.Button
                 android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
+                android:layout_width="66dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/button"
                 android:backgroundTint="#E4E4E4"
@@ -109,6 +91,7 @@
                 android:paddingTop="5dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="5dp"
+                android:textSize="13dp"
                 android:text="지역" />
 
 

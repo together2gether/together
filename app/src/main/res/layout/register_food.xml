@@ -1,207 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#bfdeff"
-        app:itemIconTint="#bfdeff"
-        app:itemTextColor="#bfdeff"
-        tools:ignore="MissingConstraints">
+        android:layout_height="match_parent">
 
-        <android.widget.Button
-            android:id="@+id/button48"
-            android:layout_width="30dp"
-            android:layout_height="27dp"
-            android:background="@drawable/arrow"
-            android:backgroundTint="#ffffff" />
-        <TextView
-            android:id="@+id/set_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="등록"
-            android:textColor="@android:color/white"
-            android:textSize="17sp"
-            android:textStyle="bold" />
-    </androidx.appcompat.widget.Toolbar>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="10dp">
-
-        <LinearLayout
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:orientation="vertical">
+            android:background="#bfdeff"
+            app:itemIconTint="#bfdeff"
+            app:itemTextColor="#bfdeff"
+            tools:ignore="MissingConstraints">
+
+            <android.widget.Button
+                android:id="@+id/button48"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:background="@drawable/arrow"
+                android:backgroundTint="#ffffff" />
+
+            <TextView
+                android:id="@+id/set_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="등록"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:layout_marginTop="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
 
-                <RadioGroup
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/radioButton"
+                    <RadioGroup
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:text="배달" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
 
-                    <RadioButton
-                        android:id="@+id/radioButton2"
-                        android:layout_width="match_parent"
+                        <RadioButton
+                            android:id="@+id/radioButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:text="배달" />
+
+                        <RadioButton
+                            android:id="@+id/radioButton2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="쇼핑" />
+                    </RadioGroup>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/textView148"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="쇼핑" />
-                </RadioGroup>
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:text="가게 이름"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/register_food_storeName"
+                        android:layout_width="310dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/textView148"
+                        android:background="@drawable/button"
+                        android:backgroundTint="#81DCDCDC"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp">
+
+                    <TextView
+                        android:id="@+id/textView150"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:text="필요 주문 금액"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/register_food_order_price"
+                        android:layout_width="310dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/textView150"
+                        android:background="@drawable/button"
+                        android:backgroundTint="#81DCDCDC"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp">
+
+                    <TextView
+                        android:id="@+id/textView191"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:text="총 배달비"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/register_food_delivery_price"
+                        android:layout_width="310dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/textView191"
+                        android:background="@drawable/button"
+                        android:backgroundTint="#81DCDCDC"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp">
+
+                    <TextView
+                        android:id="@+id/textView193"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:text="배달 주소"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/register_food_address"
+                        android:layout_width="310dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/textView193"
+                        android:background="@drawable/button"
+                        android:backgroundTint="#81DCDCDC"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </RelativeLayout>
+
+                <android.widget.Button
+                    android:id="@+id/register_food_storage"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/button"
+                    android:text="저장"
+                    android:textSize="18sp" />
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/textView148"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="6dp"
-                    android:gravity="center"
-                    android:text="가게 이름"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName"
-                    android:layout_width="310dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/textView148"
-                    android:background="@drawable/button"
-                    android:backgroundTint="#81DCDCDC"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="13dp">
-
-                <TextView
-                    android:id="@+id/textView150"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="6dp"
-                    android:gravity="center"
-                    android:text="필요 주문 금액"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName30"
-                    android:layout_width="310dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/textView150"
-                    android:background="@drawable/button"
-                    android:backgroundTint="#81DCDCDC"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="13dp">
-
-                <TextView
-                    android:id="@+id/textView191"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="6dp"
-                    android:gravity="center"
-                    android:text="총 배달비"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName31"
-                    android:layout_width="310dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/textView191"
-                    android:background="@drawable/button"
-                    android:backgroundTint="#81DCDCDC"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="numberDecimal"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="13dp">
-
-                <TextView
-                    android:id="@+id/textView193"
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="6dp"
-                    android:gravity="center"
-                    android:text="배달 주소"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <EditText
-                    android:id="@+id/editTextTextPersonName33"
-                    android:layout_width="310dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/textView193"
-                    android:background="@drawable/button"
-                    android:backgroundTint="#81DCDCDC"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:inputType="textPersonName"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </RelativeLayout>
-
-            <android.widget.Button
-                android:id="@+id/button54"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/button"
-                android:text="저장"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
 
-</RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -56,12 +56,13 @@ class ProductActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+
         //Open the album
         binding.btnAddphoto.setOnClickListener {
             var photoPickerIntent = Intent(Intent.ACTION_PICK)
             photoPickerIntent.type = "image/*"
             getContent.launch(photoPickerIntent)
-            binding.button53.setOnClickListener {
+            binding.registerProductStorage.setOnClickListener {
                 contentUpload()
                 finish()
             }

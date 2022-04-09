@@ -10,24 +10,25 @@
         android:id="@+id/productitem_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         app:cardBackgroundColor="#FFFFFFFF"
-        app:cardElevation="5dp">
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/item_layout"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/productItem_photo"
-                android:layout_width="60dp"
-                android:layout_height="90dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:padding="5dp"
@@ -46,13 +47,15 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginBottom="7dp"
                     android:text="아이디"
-                    android:textSize="15sp"/>
+                    android:textSize="13sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical">
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="7dp">
 
                     <TextView
                         android:id="@+id/productitem_textview_product_name"
@@ -61,7 +64,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:text="제품1"
-                        android:textSize="20sp"
+                        android:textSize="17sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -70,11 +73,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:background="@drawable/number"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="10dp"
-                        android:text="현재 1/5명" />
+                        android:padding="10dp"
+                        android:text="현재 1/5명"
+                        android:textSize="13dp" />
                 </RelativeLayout>
 
                 <TextView
@@ -82,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="서울 용산구 청파동 2가"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
