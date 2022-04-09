@@ -32,6 +32,7 @@ class chatting : AppCompatActivity() {
     private var chatRoomUid : String? = null
     private var destinationUid : String? = null
     private var productid : String? = null
+    //private var productname : String? = null
     private var groupchat : String? = null
     private var uid : String? = null
     private var recyclerView : RecyclerView? = null
@@ -42,7 +43,7 @@ class chatting : AppCompatActivity() {
     val db = Firebase.firestore
     val docRef = db.collection("images")
 
-    var groupItem = ContentDTO()
+    //var groupItem = ContentDTO()
     //var groupItem_id : String? = null
 
     var firestore: FirebaseFirestore? = null
@@ -70,13 +71,6 @@ class chatting : AppCompatActivity() {
         } else if (groupchat == "Y"){
             productid = intent.getStringExtra("productid")
             destinationUid = ""
-            docRef.document("$productid").get()
-                .addOnSuccessListener { document ->
-                    if(document != null){
-                        groupItem = document.toObject(ContentDTO::class.java)!!
-                        //groupItem_id = document.id
-                    }
-                }
         } else {
             Toast.makeText(this, "오류", Toast.LENGTH_LONG).show()
         }
@@ -91,10 +85,16 @@ class chatting : AppCompatActivity() {
                 chatModel.users.put(destinationUid!!, true)
                 chatModel.productid = ""
             } else if(groupchat == "Y"){
-                for(users in groupItem.Participation.keys){
-                    chatModel.users.put(users, true)
-                }
-                chatModel.productid = productid
+                docRef.document("$productid").get()
+                    .addOnSuccessListener { document ->
+                        if(document != null){
+                            var groupItem = document.toObject(ContentDTO::class.java)!!
+                            for(users in groupItem!!.Participation.keys){
+                                chatModel.users.put(users, true)
+                            }
+                            chatModel.productid = productid
+                        }
+                    }
             }
 
             val comment = ChatModel.Comment(uid, editText.text.toString(), curTime)
@@ -127,7 +127,7 @@ class chatting : AppCompatActivity() {
                     if(groupchat == "N"){
                         for(item in snapshot.children){
                             val chatModel = item.getValue<ChatModel>()
-                            if(chatModel?.users!!.containsKey(destinationUid)){
+                            if(chatModel?.users!!.containsKey(destinationUid) && chatModel.productid == ""){
                                 chatRoomUid = item.key
                                 val button = findViewById<Button>(R.id.btn_input)
                                 button.isEnabled = true
@@ -154,6 +154,7 @@ class chatting : AppCompatActivity() {
         private val comments = ArrayList<ChatModel.Comment>()
         private var user : UsersInfo? = null
         init{
+
             if(groupchat == "N"){
                 usersRef.child(destinationUid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
@@ -166,8 +167,15 @@ class chatting : AppCompatActivity() {
                     }
                 })
             } else if(groupchat == "Y"){
-                var topName = findViewById<TextView>(R.id.textView_topName)
-                topName.text = groupItem.product.toString()
+                docRef.document("$productid").get()
+                    .addOnSuccessListener { document ->
+                        if(document != null){
+                            var groupItem = document.toObject(ContentDTO::class.java)!!
+                            var productname = groupItem.product.toString()
+                            var topName = findViewById<TextView>(R.id.textView_topName)
+                            topName.text = productname
+                        }
+                    }
                 getMessageList()
             }
         }
@@ -192,7 +200,7 @@ class chatting : AppCompatActivity() {
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
-        ): MessageViewHolder {
+        ): RecyclerViewAdapter.MessageViewHolder {
             val view : View = LayoutInflater.from(parent.context).inflate(R.layout.message_left_item, parent, false)
             return MessageViewHolder(view)
         }
@@ -212,11 +220,28 @@ class chatting : AppCompatActivity() {
                 holder.layout_main.gravity = Gravity.RIGHT
                 holder.textView_time.gravity = Gravity.RIGHT
             } else {
-                Glide.with(holder.itemView.context)
-                    .load(user?.profileImageUrl)
-                    .apply(RequestOptions().circleCrop())
-                    .into(holder.imageView_profile)
-                holder.textView_name.text = user?.name
+                if(groupchat == "Y"){
+                    usersRef.child(comments[position].uid.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            user = snapshot.getValue<UsersInfo>()
+                            Glide.with(holder.itemView.context)
+                                .load(user?.profileImageUrl)
+                                .apply(RequestOptions().circleCrop())
+                                .into(holder.imageView_profile)
+                            holder.textView_name.text = user?.name
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
+                } else {
+                    Glide.with(holder.itemView.context)
+                        .load(user?.profileImageUrl)
+                        .apply(RequestOptions().circleCrop())
+                        .into(holder.imageView_profile)
+                    holder.textView_name.text = user?.name
+                }
                 holder.layout_destination.visibility=View.VISIBLE
                 holder.textView_name.visibility = View.VISIBLE
                 holder.textView_message.setBackgroundResource(R.drawable.left_item_message)

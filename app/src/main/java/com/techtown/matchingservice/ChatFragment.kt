@@ -55,7 +55,7 @@ class ChatFragment : Fragment() {
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.CustomViewHolder>(){
         private val chatModel = ArrayList<ChatModel>()
         private var uid : String? = null
-        private val destinationUsers : ArrayList<String> = arrayListOf()
+        //private val destinationUsers : ArrayList<String> = arrayListOf()
 
         init {
             uid = Firebase.auth.currentUser?.uid.toString()
@@ -87,16 +87,15 @@ class ChatFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-            var p_id : String? = null
+            var p_id = chatModel[position].productid.toString()
             var destinationUid: String? = null
             //채팅바에 있는 유저 모두 체크
-            for(user in chatModel[position].users.keys){
-                if(!user.equals(uid)){
-                    destinationUid = user
-                    destinationUsers.add(destinationUid)
+            if(p_id == ""){
+                for(user in chatModel[position].users.keys){
+                    if(!user.equals(uid)){
+                        destinationUid = user
+                    }
                 }
-            }
-            if(chatModel[position].productid == ""){
                 usersRef.child("$destinationUid").addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
                     }
@@ -110,8 +109,7 @@ class ChatFragment : Fragment() {
                     }
                 })
             } else {
-                p_id = chatModel[position].productid.toString()
-                docRef.document(chatModel[position].productid.toString()).get()
+                docRef.document(p_id).get()
                     .addOnSuccessListener { document ->
                         if(document != null){
                             var item = document.toObject(ContentDTO::class.java)
@@ -129,8 +127,8 @@ class ChatFragment : Fragment() {
             //채팅창 선택 시 이동
             holder.itemView.setOnClickListener{
                 val intent = Intent(context, chatting::class.java)
-                if(chatModel[position].productid == ""){
-                    intent.putExtra("destinationUid", destinationUsers[position])
+                if(p_id == ""){
+                    intent.putExtra("destinationUid", destinationUid.toString())
                     intent.putExtra("groupchat", "N")
                 } else {
                     intent.putExtra("groupchat", "Y")
