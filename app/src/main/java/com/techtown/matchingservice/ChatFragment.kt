@@ -55,7 +55,7 @@ class ChatFragment : Fragment() {
         init {
             uid = Firebase.auth.currentUser?.uid.toString()
             roomsRef.orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object :
-            ValueEventListener{
+                ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
 

@@ -16,6 +16,8 @@ class Product : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid : String
     var contentdto = ContentDTO()
+    var productid : String? = null
+    var regist_userid : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +35,8 @@ class Product : AppCompatActivity() {
         binding.productInfoPlace.text = intent.getStringExtra("place").toString()
         binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()
         binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
-        val regist_userid = intent.getStringExtra("Uid").toString()
+        regist_userid = intent.getStringExtra("Uid").toString()
+        productid = intent.getStringExtra("id").toString()
 
 
         if(intent.getStringExtra("uidkey").toString()=="true"){
@@ -58,6 +61,7 @@ class Product : AppCompatActivity() {
         }
 
         binding.productInfoParticipation.setOnClickListener(){
+
             contentdto.ParticipationCount+=1
             contentdto.Participation[uid] = true
             binding.productInfoParticipation.isEnabled=false
@@ -66,6 +70,13 @@ class Product : AppCompatActivity() {
                 transition.set(tsDoc!!,contentdto!!)
             }
             binding.productInfoParticipationNumber.text=contentdto.ParticipationCount.toString()+" / "+contentdto.ParticipationTotal
+            enterChatroom()
+
         }
+    }
+    fun enterChatroom(){
+        val intent2 = Intent(this, GroupChat::class.java)
+        intent2.putExtra("productid", productid)
+        startActivity(intent2)
     }
 }

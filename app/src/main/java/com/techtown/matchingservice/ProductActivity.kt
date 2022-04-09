@@ -6,16 +6,16 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.techtown.matchingservice.databinding.RegisterProductBinding
@@ -29,6 +29,12 @@ class ProductActivity : AppCompatActivity() {
     var photoUri: Uri? = null
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
+
+    var thisTime : Long? = null
+
+
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private val roomsRef = database.getReference("chatrooms")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +124,8 @@ class ProductActivity : AppCompatActivity() {
 
             //Insert timestamp
             contentDTO.timestamp = System.currentTimeMillis()
+            thisTime = contentDTO.timestamp
+
             val geocoder = Geocoder(this, Locale.getDefault())
             val cor = geocoder.getFromLocationName(binding.editTextPlace.text.toString(),1)
             //var LATLNG = LatLng(cor[0].latitude, cor[0].longitude)
