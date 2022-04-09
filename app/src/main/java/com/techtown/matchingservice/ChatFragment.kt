@@ -35,8 +35,6 @@ class ChatFragment : Fragment() {
     val db = Firebase.firestore
     val docRef = db.collection("images")
 
-    var p_id : String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -89,6 +87,7 @@ class ChatFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+            var p_id : String? = null
             var destinationUid: String? = null
             //채팅바에 있는 유저 모두 체크
             for(user in chatModel[position].users.keys){
