@@ -21,7 +21,6 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import com.techtown.matchingservice.ChatFragment.RecyclerViewAdapter
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.UsersInfo
 import java.text.SimpleDateFormat
@@ -155,6 +154,7 @@ class chatting : AppCompatActivity() {
                 holder.layout_destination.visibility = View.INVISIBLE
                 holder.textView_name.visibility = View.INVISIBLE
                 holder.layout_main.gravity = Gravity.RIGHT
+                holder.textView_time.gravity = Gravity.RIGHT
             } else {
                 Glide.with(holder.itemView.context)
                     .load(user?.profileImageUrl)
