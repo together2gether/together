@@ -2,6 +2,7 @@ package com.techtown.matchingservice
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -38,6 +39,8 @@ class Product : AppCompatActivity() {
         regist_userid = intent.getStringExtra("Uid").toString()
         productid = intent.getStringExtra("id").toString()
 
+        val intent = Intent(this, chatting::class.java)
+
 
         if(intent.getStringExtra("uidkey").toString()=="true"){
             binding.productInfoParticipation.isEnabled=false
@@ -55,7 +58,7 @@ class Product : AppCompatActivity() {
         }
 
         binding.buttonChat.setOnClickListener {
-            val intent = Intent(this, chatting::class.java)
+            intent.putExtra("groupchat", "N")
             intent.putExtra("destinationUid", regist_userid)
             startActivity(intent)
         }
@@ -70,13 +73,31 @@ class Product : AppCompatActivity() {
                 transition.set(tsDoc!!,contentdto!!)
             }
             binding.productInfoParticipationNumber.text=contentdto.ParticipationCount.toString()+" / "+contentdto.ParticipationTotal
-            enterChatroom()
-
+            //enterChatroom()
+            intent.putExtra("groupchat", "Y")
+            intent.putExtra("productid", productid)
+            startActivity(intent)
         }
     }
     fun enterChatroom(){
-        val intent2 = Intent(this, GroupChat::class.java)
+        Intent(this, GroupChat::class.java).apply {
+            putExtra("productid", productid)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }.run { startActivity(this) }
+        Toast.makeText(this, "확인", Toast.LENGTH_LONG).show()
+        /*val intent2 = Intent(this, GroupChat::class.java)
         intent2.putExtra("productid", productid)
-        startActivity(intent2)
+        //Toast.makeText(this, "확인", Toast.LENGTH_LONG).show()
+        startActivity(intent2)*/
+        /*val db = Firebase.firestore
+        val docRef = db.collection("images")
+        docRef.document("$productid").get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    var item = document.toObject(ContentDTO::class.java)
+                    Toast.makeText(this, item?.product, Toast.LENGTH_LONG).show()
+                }
+            }*/
+
     }
 }

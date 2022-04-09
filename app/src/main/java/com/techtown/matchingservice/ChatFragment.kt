@@ -19,8 +19,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.model.ChatModel
+import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
 import java.util.*
 
@@ -29,6 +31,11 @@ class ChatFragment : Fragment() {
     val database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     val roomsRef = database.getReference("chatrooms")
     val usersRef = database.getReference("usersInfo")
+
+    val db = Firebase.firestore
+    val docRef = db.collection("images")
+
+    var p_id : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,18 +97,30 @@ class ChatFragment : Fragment() {
                     destinationUsers.add(destinationUid)
                 }
             }
-            usersRef.child("$destinationUid").addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                }
+            if(chatModel[position].productid == ""){
+                usersRef.child("$destinationUid").addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+                    }
 
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue<UsersInfo>()
-                    Glide.with(holder.itemView.context).load(user?.profileImageUrl)
-                        .apply(RequestOptions().circleCrop())
-                        .into(holder.imageView)
-                    holder.textView_title.text = user?.name
-                }
-            })
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val user = snapshot.getValue<UsersInfo>()
+                        Glide.with(holder.itemView.context).load(user?.profileImageUrl)
+                            .apply(RequestOptions().circleCrop())
+                            .into(holder.imageView)
+                        holder.textView_title.text = user?.name
+                    }
+                })
+            } else {
+                p_id = chatModel[position].productid.toString()
+                docRef.document(chatModel[position].productid.toString()).get()
+                    .addOnSuccessListener { document ->
+                        if(document != null){
+                            var item = document.toObject(ContentDTO::class.java)
+                            holder.textView_title.text = item?.product
+                        }
+                    }
+            }
+
             //메시지 내림차순 정렬 후 마지막 메세지의 키값을 가져옴
             val commentMap = TreeMap<String, ChatModel.Comment>(reverseOrder())
             commentMap.putAll(chatModel[position].comments)
@@ -111,7 +130,13 @@ class ChatFragment : Fragment() {
             //채팅창 선택 시 이동
             holder.itemView.setOnClickListener{
                 val intent = Intent(context, chatting::class.java)
-                intent.putExtra("destinationUid", destinationUsers[position])
+                if(chatModel[position].productid == ""){
+                    intent.putExtra("destinationUid", destinationUsers[position])
+                    intent.putExtra("groupchat", "N")
+                } else {
+                    intent.putExtra("groupchat", "Y")
+                    intent.putExtra("productid", p_id)
+                }
                 context?.startActivity(intent)
             }
         }

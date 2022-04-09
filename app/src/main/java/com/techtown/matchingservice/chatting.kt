@@ -3,7 +3,6 @@ package com.techtown.matchingservice
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +19,11 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.model.ChatModel
+import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
 import java.text.SimpleDateFormat
 import java.util.*
@@ -29,11 +31,21 @@ import java.util.*
 class chatting : AppCompatActivity() {
     private var chatRoomUid : String? = null
     private var destinationUid : String? = null
+    private var productid : String? = null
+    private var groupchat : String? = null
     private var uid : String? = null
     private var recyclerView : RecyclerView? = null
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val roomsRef = database.getReference("chatrooms")
     private val usersRef = database.getReference("usersInfo")
+
+    val db = Firebase.firestore
+    val docRef = db.collection("images")
+
+    var groupItem = ContentDTO()
+    //var groupItem_id : String? = null
+
+    var firestore: FirebaseFirestore? = null
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,15 +60,42 @@ class chatting : AppCompatActivity() {
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
         val curTime = dateFormat.format(Date(time)).toString()
 
-        destinationUid = intent.getStringExtra("destinationUid")
+
+        groupchat = intent.getStringExtra("groupchat")
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = findViewById(R.id.msg_recyclerview)
+        if(groupchat == "N"){
+            destinationUid = intent.getStringExtra("destinationUid")
+            productid = ""
+        } else if (groupchat == "Y"){
+            productid = intent.getStringExtra("productid")
+            destinationUid = ""
+            docRef.document("$productid").get()
+                .addOnSuccessListener { document ->
+                    if(document != null){
+                        groupItem = document.toObject(ContentDTO::class.java)!!
+                        //groupItem_id = document.id
+                    }
+                }
+        } else {
+            Toast.makeText(this, "오류", Toast.LENGTH_LONG).show()
+        }
+
+        firestore = FirebaseFirestore.getInstance()
 
         imageView.setOnClickListener{
-            Log.d("클릭 시 dest", "$destinationUid")
+            //Log.d("클릭 시 dest", "$destinationUid")
             val chatModel = ChatModel()
             chatModel.users.put(uid.toString(), true)
-            chatModel.users.put(destinationUid!!, true)
+            if(groupchat == "N"){
+                chatModel.users.put(destinationUid!!, true)
+                chatModel.productid = ""
+            } else if(groupchat == "Y"){
+                for(users in groupItem.Participation.keys){
+                    chatModel.users.put(users, true)
+                }
+                chatModel.productid = productid
+            }
 
             val comment = ChatModel.Comment(uid, editText.text.toString(), curTime)
             if(chatRoomUid == null){
@@ -69,12 +108,12 @@ class chatting : AppCompatActivity() {
                         roomsRef.child(chatRoomUid.toString()).child("comments").push().setValue(comment)
                         editText.text = null
                     }, 1000L)
-                    Log.d("chatUidNull dest", "$destinationUid")
+                    //Log.d("chatUidNull dest", "$destinationUid")
                 }
             } else {
                 roomsRef.child(chatRoomUid.toString()).child("comments").push().setValue(comment)
                 editText.text = null
-                Log.d("chatUidNotNull dest", "$destinationUid")
+                //Log.d("chatUidNotNull dest", "$destinationUid")
             }
         }
         checkChatRoom()
@@ -84,16 +123,28 @@ class chatting : AppCompatActivity() {
             .addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
-
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for(item in snapshot.children){
-                        val chatModel = item.getValue<ChatModel>()
-                        if(chatModel?.users!!.containsKey(destinationUid)){
-                            chatRoomUid = item.key
-                            val button = findViewById<Button>(R.id.btn_input)
-                            button.isEnabled = true
-                            recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
-                            recyclerView?.adapter = RecyclerViewAdapter()
+                    if(groupchat == "N"){
+                        for(item in snapshot.children){
+                            val chatModel = item.getValue<ChatModel>()
+                            if(chatModel?.users!!.containsKey(destinationUid)){
+                                chatRoomUid = item.key
+                                val button = findViewById<Button>(R.id.btn_input)
+                                button.isEnabled = true
+                                recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
+                                recyclerView?.adapter = RecyclerViewAdapter()
+                            }
+                        }
+                    } else if(groupchat == "Y") {
+                        for(item in snapshot.children){
+                            val chatModel = item.getValue<ChatModel>()
+                            if(chatModel?.productid == productid){
+                                chatRoomUid = item.key
+                                val button = findViewById<Button>(R.id.btn_input)
+                                button.isEnabled = true
+                                recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
+                                recyclerView?.adapter = RecyclerViewAdapter()
+                            }
                         }
                     }
                 }
@@ -103,17 +154,22 @@ class chatting : AppCompatActivity() {
         private val comments = ArrayList<ChatModel.Comment>()
         private var user : UsersInfo? = null
         init{
-            usersRef.child(destinationUid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                }
-
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    user = snapshot.getValue<UsersInfo>()
-                    var topName = findViewById<TextView>(R.id.textView_topName)
-                    topName.text = user?.nickname
-                    getMessageList()
-                }
-            })
+            if(groupchat == "N"){
+                usersRef.child(destinationUid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        user = snapshot.getValue<UsersInfo>()
+                        var topName = findViewById<TextView>(R.id.textView_topName)
+                        topName.text = user?.nickname
+                        getMessageList()
+                    }
+                })
+            } else if(groupchat == "Y"){
+                var topName = findViewById<TextView>(R.id.textView_topName)
+                topName.text = groupItem.product.toString()
+                getMessageList()
+            }
         }
         fun getMessageList(){
             roomsRef.child(chatRoomUid.toString()).child("comments").addValueEventListener(object : ValueEventListener{
@@ -184,3 +240,4 @@ class chatting : AppCompatActivity() {
 
     }
 }
+

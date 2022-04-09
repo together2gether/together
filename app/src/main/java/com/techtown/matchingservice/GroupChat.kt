@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
@@ -38,13 +40,21 @@ class GroupChat : AppCompatActivity(){
     private val roomsRef = database.getReference("chatrooms")
     private val usersRef = database.getReference("usersInfo")
 
+    val db = Firebase.firestore
+    val docRef = db.collection("images")
+
+    var item : ContentDTO? = null
+
     var firestore: FirebaseFirestore? = null
+
+    //var chatUsers : ArrayList<String> = arrayListOf()
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        Toast.makeText(this, "확인", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "확인", Toast.LENGTH_LONG).show()
         super.onCreate(savedInstanceState, persistentState)
         setContentView(R.layout.groupchat)
+
 
         val imageView = findViewById<Button>(R.id.btn_input)
         val editText = findViewById<EditText>(R.id.editText_msg)
@@ -58,12 +68,37 @@ class GroupChat : AppCompatActivity(){
         uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = findViewById(R.id.msg_recyclerview)
 
+        docRef.document("$productid").get()
+            .addOnSuccessListener { document ->
+                if(document!=null){
+                    item = document.toObject(ContentDTO::class.java)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("Firestore", "get failed with ", exception)
+            }
+
+
+        /*var tsDoc = firestore?.collection("images")?.document(productid.toString())
+        firestore?.runTransaction { transition ->
+            item = transition.get(tsDoc!!).toObject(ContentDTO::class.java)
+        }*/
+
+        //val db = Firebase.firestore
+        //val docRef = db.collection("images")
+
         firestore = FirebaseFirestore.getInstance()
 
         imageView.setOnClickListener {
             val chatModel = ChatModel()
             chatModel.productid = productid.toString()
             chatModel.users.put(uid.toString(), true)
+
+            for(users in item!!.Participation.keys){
+                chatModel.users.put(users, true)
+            }
+
+            /*
             var tsDoc = firestore?.collection("images")?.document(productid.toString())
             firestore?.runTransaction {
                 transition ->
@@ -71,7 +106,7 @@ class GroupChat : AppCompatActivity(){
                 for(users in item!!.Participation){
                     chatModel.users.put(uid.toString(), true)
                 }
-            }
+            }*/
             /*firestore?.collection("images")
                 ?.document(productid.toString())
                 ?.addSnapshotListener{ value, error ->
@@ -98,16 +133,35 @@ class GroupChat : AppCompatActivity(){
     }
     private fun checkChatRoom(){
         roomsRef.orderByChild("users/$uid").equalTo(true)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for (item in snapshot.children){
-                        val chatModel = item.getValue<ChatModel>()
+                    for (rooms in snapshot.children){
+                        val chatModel = rooms.getValue<ChatModel>()
                         var alluser = true
 
-                        var tsDoc = firestore?.collection("images")?.document(productid.toString())
+                        for(users in item!!.Participation.keys){
+                            if(!chatModel?.users!!.containsKey(users.toString())){
+                                alluser = false
+                            }
+                        }
+
+                        /*docRef.document("$productid").get()
+                            .addOnSuccessListener { document ->
+                                if(document != null){
+                                    var item = document.toObject(ContentDTO::class.java)
+                                    for(users in item!!.Participation){
+                                        if(!chatModel?.users!!.containsKey(users.toString())){
+                                            alluser = false
+                                        }
+                                    }
+                                }
+                            }*/
+
+
+                        /*var tsDoc = firestore?.collection("images")?.document(productid.toString())
                         firestore?.runTransaction {
                                 transition ->
                             var item = transition.get(tsDoc!!).toObject(ContentDTO::class.java)
@@ -116,7 +170,7 @@ class GroupChat : AppCompatActivity(){
                                     alluser = false
                                 }
                             }
-                        }
+                        }*/
 
                         /*firestore?.collection("images")
                             ?.document(productid.toString())
@@ -129,7 +183,7 @@ class GroupChat : AppCompatActivity(){
                                 }
                             }*/
                         if(alluser){
-                            chatRoomUid = item.key
+                            chatRoomUid = rooms.key
                             val button = findViewById<Button>(R.id.btn_input)
                             button.isEnabled = true
                             recyclerView?.layoutManager = LinearLayoutManager(this@GroupChat)
@@ -143,14 +197,26 @@ class GroupChat : AppCompatActivity(){
         private val comments = ArrayList<ChatModel.Comment>()
         //private var user : UserInfo? = null
         init {
-            var tsDoc = firestore?.collection("images")?.document(productid.toString())
+            var topName = findViewById<TextView>(R.id.textView_topName)
+            topName.text = item?.product.toString()
+            getMessageList()
+            /*docRef.document("$productid").get()
+                .addOnSuccessListener { document ->
+                    if(document != null){
+                        var item = document.toObject(ContentDTO::class.java)
+                        var topName = findViewById<TextView>(R.id.textView_topName)
+                        topName.text = item?.product.toString()
+                        getMessageList()
+                    }
+                }*/
+            /*var tsDoc = firestore?.collection("images")?.document(productid.toString())
             firestore?.runTransaction {
                     transition ->
                 var item = transition.get(tsDoc!!).toObject(ContentDTO::class.java)
                 var topName = findViewById<TextView>(R.id.textView_topName)
                 topName.text = item?.product.toString()
                 getMessageList()
-            }
+            }*/
 
             /*firestore?.collection("images")
                 ?.document(productid.toString())
@@ -237,6 +303,4 @@ class GroupChat : AppCompatActivity(){
             return comments.size
         }
     }
-
-
 }
