@@ -3,6 +3,8 @@ package com.techtown.matchingservice
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
@@ -20,10 +22,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.maps.android.clustering.ClusterManager
 import com.techtown.matchingservice.model.ContentDTO
@@ -186,7 +185,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     fun setLastLocation(lastLocation : Location){
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
-        val markerOptions = MarkerOptions().position(LATLNG).title("Here!")
+        val markerOptions = MarkerOptions().position(LATLNG).title("현재 위치")
         val cameraPosition = CameraPosition.Builder().target(LATLNG).zoom(15.0f).build()
         //mMap.clear()
         mMap.addMarker(markerOptions)

@@ -23,6 +23,7 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_item.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_main.xml" value="0.22056159420289856" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/address.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/chat_item.xml" value="0.1766304347826087" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/chatting.xml" value="0.264" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/delivery_item.xml" value="0.1766304347826087" />
@@ -52,6 +53,7 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/person_list.xml" value="0.16" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/product_info.xml" value="0.264" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/product_item.xml" value="0.22056159420289856" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/recommend.xml" value="0.12132725430597771" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/register.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/register_activity.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/register_food.xml" value="0.24947916666666667" />
@@ -63,12 +65,9 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/trade_item.xml" value="0.24818840579710144" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/trade_product_item.xml" value="0.264" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/menu/menu_bottom.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/drawable/circle_button.xml" value="0.13" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/drawable/circle_button_white.xml" value="0.13" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_main.xml" value="0.24564102564102563" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_search.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/chatting.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_activity.xml" value="0.24947916666666667" />
@@ -82,7 +81,6 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_chat.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group_activity_item.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/menu/menu_bottom.xml" value="0.19814814814814816" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chatting.xml" value="0.22" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.175" />
@@ -90,9 +88,10 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_modify.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/low_item.xml" value="0.1" />
-        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/message_left_item.xml" value="0.22" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/message_left_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/message_right_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/modify_info.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.1734375" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/shopping_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/trade.xml" value="0.1" />
