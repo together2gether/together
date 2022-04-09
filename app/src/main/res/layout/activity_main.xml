@@ -35,6 +35,14 @@
             app:itemTextColor="#bfdeff"
             tools:ignore="MissingConstraints">
 
+            <android.widget.Button
+                android:id="@+id/fragment1_conditional_search"
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_button_white"
+                android:text="조건탐색"
+                android:textSize="12dp" />
+
             <TextView
                 android:id="@+id/set_date"
                 android:layout_width="wrap_content"
@@ -45,9 +53,17 @@
                 android:textSize="17sp"
                 android:textStyle="bold" />
 
+            <android.widget.Button
+                android:id="@+id/fragment1_product_registration"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/circle_button_white"
+                android:text="등록"
+                android:textSize="12dp" />
+
         </androidx.appcompat.widget.Toolbar>
-
-
 
 
         <FrameLayout
@@ -59,8 +75,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="-2dp" >
-
+            android:layout_marginBottom="-2dp">
 
 
         </FrameLayout>

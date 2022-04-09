@@ -36,6 +36,14 @@ class MainActivity : AppCompatActivity() {
                     R.id.tab1 -> {
                         changeTitle("정기구매")
                         var fragment1 = Fragment1()
+                        binding.fragment1ProductRegistration.setOnClickListener {
+                            val intent = Intent(context, ProductActivity::class.java)
+                            startActivity(intent)
+                        }
+                        binding.fragment1ConditionalSearch.setOnClickListener {
+                            val intent = Intent(context, ConditionActivity::class.java)
+                            startActivity(intent)
+                        }
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment1).commit()
                     }

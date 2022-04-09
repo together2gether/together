@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ProductActivity : AppCompatActivity() {
-    val SUBACTIVITY_REQUEST_CODE =100
     lateinit var binding: RegisterProductBinding
     var storage: FirebaseStorage? = null
     var photoUri: Uri? = null

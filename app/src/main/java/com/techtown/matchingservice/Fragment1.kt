@@ -36,14 +36,7 @@ class Fragment1 : Fragment() {
             val intent = Intent(context, SearchActivity::class.java)
             startActivity(intent)
         }
-        binding.button51.setOnClickListener {
-            val intent = Intent(context, ConditionActivity::class.java)
-            startActivity(intent)
-        }
-        binding.button52.setOnClickListener {
-            val intent = Intent(context, ProductActivity::class.java)
-            startActivity(intent)
-        }
+
         binding.button3.setOnClickListener {
             val string = binding.edit.text
             if (string.isNullOrEmpty()) {
