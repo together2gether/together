@@ -2,14 +2,23 @@ package com.techtown.matchingservice
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.ProductInfoBinding
+import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class Product : AppCompatActivity() {
@@ -18,7 +27,13 @@ class Product : AppCompatActivity() {
     lateinit var uid : String
     var contentdto = ContentDTO()
     var productid : String? = null
+    var product_name : String? = null
     var regist_userid : String? = null
+    private var databse = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private val roomsRef = databse.getReference("chatrooms")
+
+    val db = Firebase.firestore
+    val docRef = db.collection("images")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,16 +53,23 @@ class Product : AppCompatActivity() {
         binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
         regist_userid = intent.getStringExtra("Uid").toString()
         productid = intent.getStringExtra("id").toString()
+        product_name = intent.getStringExtra("product").toString()
 
         val intent = Intent(this, chatting::class.java)
 
-
-        if(intent.getStringExtra("uidkey").toString()=="true"){
+        docRef.document("$productid").get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    var item = document.toObject(ContentDTO::class.java)!!
+                    if(item?.Participation!!.containsKey(uid)) binding.productInfoParticipation.isEnabled=false
+                }
+            }
+        /*if(intent.getStringExtra("uidkey").toString()=="true"){
             binding.productInfoParticipation.isEnabled=false
-        }
+        }*/
 
-        var docId = intent.getStringExtra("id").toString()
-        var tsDoc = firestore?.collection("images")?.document(docId)
+        //var docId = intent.getStringExtra("id").toString()
+        var tsDoc = firestore?.collection("images")?.document(productid.toString())
         firestore?.runTransaction{
                 transition ->
             contentdto = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
@@ -67,37 +89,55 @@ class Product : AppCompatActivity() {
 
             contentdto.ParticipationCount+=1
             contentdto.Participation[uid] = true
-            binding.productInfoParticipation.isEnabled=false
+            var tsDoc = firestore?.collection("images")?.document(productid.toString())
             firestore?.runTransaction{
                     transition->
                 transition.set(tsDoc!!,contentdto!!)
             }
             binding.productInfoParticipationNumber.text=contentdto.ParticipationCount.toString()+" / "+contentdto.ParticipationTotal
-            //enterChatroom()
+            var roomId : String? = null
+            if(contentdto.ParticipationCount == 2){
+                val time = System.currentTimeMillis()
+                val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                val curTime = dateFormat.format(Date(time)).toString()
+
+                val chatModel = ChatModel()
+                chatModel.users.put(regist_userid.toString(), true)
+                chatModel.users.put(uid, true)
+                chatModel.productid = productid
+                roomsRef.push().setValue(chatModel)
+                val comment = ChatModel.Comment(regist_userid.toString(), "안녕하세요. 이 곳은 '$product_name' 공동구매를 위한 채팅방 입니다.", curTime)
+                roomsRef.orderByChild("users/$uid").equalTo(true)
+                    .addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            for(item in snapshot.children){
+                                val newChatModel = item.getValue<ChatModel>()
+                                if(newChatModel?.productid == productid){
+                                    roomId = item.key
+                                    roomsRef.child(roomId.toString()).child("comments").push().setValue(comment)
+                                }
+                            }
+                        }
+                    })
+            } else {
+                roomsRef.child(roomId.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var chatModel = snapshot.getValue<ChatModel>()
+                        chatModel?.users!!.put(uid, true)
+                        roomsRef.child(roomId.toString()).setValue(chatModel)
+                    }
+                })
+            }
+
             intent.putExtra("groupchat", "Y")
             intent.putExtra("productid", productid)
             startActivity(intent)
+            binding.productInfoParticipation.isEnabled=false
         }
-    }
-    fun enterChatroom(){
-        Intent(this, GroupChat::class.java).apply {
-            putExtra("productid", productid)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }.run { startActivity(this) }
-        Toast.makeText(this, "확인", Toast.LENGTH_LONG).show()
-        /*val intent2 = Intent(this, GroupChat::class.java)
-        intent2.putExtra("productid", productid)
-        //Toast.makeText(this, "확인", Toast.LENGTH_LONG).show()
-        startActivity(intent2)*/
-        /*val db = Firebase.firestore
-        val docRef = db.collection("images")
-        docRef.document("$productid").get()
-            .addOnSuccessListener { document ->
-                if(document != null){
-                    var item = document.toObject(ContentDTO::class.java)
-                    Toast.makeText(this, item?.product, Toast.LENGTH_LONG).show()
-                }
-            }*/
-
     }
 }

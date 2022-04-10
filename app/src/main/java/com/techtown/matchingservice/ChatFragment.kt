@@ -124,6 +124,29 @@ class ChatFragment : Fragment() {
             val lastMessageKey = commentMap.keys.toTypedArray()[0]
             holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
 
+            /*if(p_id == ""){
+                val commentMap = TreeMap<String, ChatModel.Comment>(reverseOrder())
+                commentMap.putAll(chatModel[position].comments)
+                val lastMessageKey = commentMap.keys.toTypedArray()[0]
+                holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
+            } else {
+                roomsRef.child(p_id).addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        var item = snapshot.getValue<ChatModel>()
+                        if(item!!.comments != null){
+                            val commentMap = TreeMap<String, ChatModel.Comment>(reverseOrder())
+                            commentMap.putAll(chatModel[position].comments)
+                            val lastMessageKey = commentMap.keys.toTypedArray()[0]
+                            holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
+                        }
+                    }
+                })
+            }*/
+
+
+
             //채팅창 선택 시 이동
             holder.itemView.setOnClickListener{
                 val intent = Intent(context, chatting::class.java)
