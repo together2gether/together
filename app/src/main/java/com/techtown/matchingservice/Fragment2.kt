@@ -103,6 +103,7 @@ class Fragment2 : Fragment() {
                     putExtra("orderPrice",deliveryDTOs[position].order_price.toString())
                     putExtra("deliveryPrice",deliveryDTOs[position].delivery_price.toString())
                     putExtra("deliveryAddress",deliveryDTOs[position].delivery_address,)
+                    putExtra("deliveryid", deliveryUidList[position])
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run{context?.startActivity(this)}
             }

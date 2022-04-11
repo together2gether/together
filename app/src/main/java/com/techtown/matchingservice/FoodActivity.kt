@@ -30,6 +30,7 @@ class FoodActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_food)
+        uid = FirebaseAuth.getInstance().uid!!
 
         binding.button48.setOnClickListener {
             finish()
@@ -52,6 +53,10 @@ class FoodActivity : AppCompatActivity() {
 
         //Insert userId
         deliveryDTO.delivery_userId = auth?.currentUser?.email
+
+        deliveryDTO.deliveryParticipation[uid] = true
+
+        deliveryDTO.delivery_ParticipationCount = 1
 
         deliveryDTO.store = binding.registerFoodStoreName.text.toString()
 

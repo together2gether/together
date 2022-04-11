@@ -113,30 +113,51 @@ class Fragment1 : Fragment() {
                 "현재 " + participationCount + " / " + contentDTOs[position].ParticipationTotal.toString()
             //click
             viewHolder.productitemCardView.setOnClickListener {
-                Intent(context, Product::class.java).apply {
-                    putExtra("product", contentDTOs[position].product)
-                    putExtra("imageUrl", contentDTOs[position].imageUrl)
-                    putExtra("price", contentDTOs[position].price.toString())
-                    putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
-                    putExtra("cycle", contentDTOs[position].cycle.toString())
-                    putExtra("unit", contentDTOs[position].unit.toString())
-                    putExtra("URL", contentDTOs[position].url)
-                    putExtra("place", contentDTOs[position].place)
-                    putExtra("timestamp", contentDTOs[position].timestamp.toString())
-                    putExtra("participationCount", participationCount)
-                    putExtra(
-                        "uidkey",
-                        contentDTOs[position].Participation.containsKey(uid).toString()
-                    )
-                    putExtra(
-                        "participationTotal",
-                        contentDTOs[position].ParticipationTotal.toString()
-                    )
-                    putExtra("id", contentUidList[position])
-                    putExtra("Uid", contentDTOs[position].uid.toString())
+                if (contentDTOs[position].uid == uid) {
+                    Intent(context, ProductManage::class.java).apply{
+                        putExtra("product", contentDTOs[position].product)
+                        putExtra("imageUrl", contentDTOs[position].imageUrl)
+                        putExtra("price", contentDTOs[position].price.toString())
+                        putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
+                        putExtra("cycle", contentDTOs[position].cycle.toString())
+                        putExtra("unit", contentDTOs[position].unit.toString())
+                        putExtra("URL", contentDTOs[position].url)
+                        putExtra("place", contentDTOs[position].place)
+                        putExtra("timestamp", contentDTOs[position].timestamp.toString())
+                        putExtra("participationCount", participationCount)
+                        putExtra("id", contentUidList[position])
+                        putExtra(
+                            "participationTotal",
+                            contentDTOs[position].ParticipationTotal.toString()
+                        )
 
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }.run { context?.startActivity(this) }
+                    }.run { context?.startActivity(this) }
+                }else{
+                    Intent(context, Product::class.java).apply {
+                        putExtra("product", contentDTOs[position].product)
+                        putExtra("imageUrl", contentDTOs[position].imageUrl)
+                        putExtra("price", contentDTOs[position].price.toString())
+                        putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
+                        putExtra("cycle", contentDTOs[position].cycle.toString())
+                        putExtra("unit", contentDTOs[position].unit.toString())
+                        putExtra("URL", contentDTOs[position].url)
+                        putExtra("place", contentDTOs[position].place)
+                        putExtra("timestamp", contentDTOs[position].timestamp.toString())
+                        putExtra("participationCount", participationCount)
+                        putExtra(
+                            "uidkey",
+                            contentDTOs[position].Participation.containsKey(uid).toString()
+                        )
+                        putExtra(
+                            "participationTotal",
+                            contentDTOs[position].ParticipationTotal.toString()
+                        )
+                        putExtra("id", contentUidList[position])
+                        putExtra("Uid", contentDTOs[position].uid.toString())
+
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.run { context?.startActivity(this) }
+                }
             }
         }
 

@@ -25,7 +25,7 @@ class Product : AppCompatActivity() {
     private lateinit var binding: ProductInfoBinding
     var firestore: FirebaseFirestore? = null
     lateinit var uid : String
-    var contentdto = ContentDTO()
+    var item = ContentDTO()
     var productid : String? = null
     var product_name : String? = null
     var regist_userid : String? = null
@@ -49,7 +49,7 @@ class Product : AppCompatActivity() {
         binding.productInfoUnit.text =price.toString() + "원 / "+intent.getStringExtra("unit").toString()+"개"
         binding.productInfoURL.text = intent.getStringExtra("URL").toString()
         binding.productInfoPlace.text = intent.getStringExtra("place").toString()
-        binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()
+        binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()+"주"
         binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
         regist_userid = intent.getStringExtra("Uid").toString()
         productid = intent.getStringExtra("id").toString()
@@ -62,18 +62,11 @@ class Product : AppCompatActivity() {
                 if(document != null){
                     var item = document.toObject(ContentDTO::class.java)!!
                     if(item?.Participation!!.containsKey(uid)) binding.productInfoParticipation.isEnabled=false
+                    if(item?.ParticipationCount == item?.ParticipationTotal){
+                        binding.productInfoParticipation.isEnabled=false
+                    }
                 }
             }
-        /*if(intent.getStringExtra("uidkey").toString()=="true"){
-            binding.productInfoParticipation.isEnabled=false
-        }*/
-
-        //var docId = intent.getStringExtra("id").toString()
-        var tsDoc = firestore?.collection("images")?.document(productid.toString())
-        firestore?.runTransaction{
-                transition ->
-            contentdto = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
-        }
 
         binding.productInfoBack.setOnClickListener(){
             finish()
@@ -87,16 +80,16 @@ class Product : AppCompatActivity() {
 
         binding.productInfoParticipation.setOnClickListener(){
 
-            contentdto.ParticipationCount+=1
-            contentdto.Participation[uid] = true
+            item.ParticipationCount+=1
+            item.Participation[uid] = true
             var tsDoc = firestore?.collection("images")?.document(productid.toString())
             firestore?.runTransaction{
                     transition->
-                transition.set(tsDoc!!,contentdto!!)
+                transition.set(tsDoc!!,item)
             }
-            binding.productInfoParticipationNumber.text=contentdto.ParticipationCount.toString()+" / "+contentdto.ParticipationTotal
+            binding.productInfoParticipationNumber.text=item.ParticipationCount.toString()+" / "+item.ParticipationTotal
             var roomId : String? = null
-            if(contentdto.ParticipationCount == 2){
+            if(item.ParticipationCount == 2){
                 val time = System.currentTimeMillis()
                 val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
                 val curTime = dateFormat.format(Date(time)).toString()

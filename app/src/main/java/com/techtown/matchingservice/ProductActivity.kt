@@ -29,7 +29,7 @@ class ProductActivity : AppCompatActivity() {
     var photoUri: Uri? = null
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
-
+    lateinit var uid: String
     var thisTime : Long? = null
 
 
@@ -39,7 +39,8 @@ class ProductActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_product)
-
+        uid = FirebaseAuth.getInstance().uid!!
+        
         binding.button49.setOnClickListener {
             finish()
         }
@@ -108,6 +109,9 @@ class ProductActivity : AppCompatActivity() {
             //Insert price
             contentDTO.price =Integer.parseInt(binding.editTextPrice.text.toString())
 
+            contentDTO.ParticipationCount = 1
+
+            contentDTO.Participation[uid] = true
             //Insert totalNumber
             contentDTO.totalNumber =Integer.parseInt(binding.editTextTotalNumber.text.toString())
 

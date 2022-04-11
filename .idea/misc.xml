@@ -73,7 +73,7 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/chatting.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_activity.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_food.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_product.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_product.xml" value="0.176" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/food_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/food_item.xml" value="0.25" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.24947916666666667" />
@@ -82,10 +82,11 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_chat.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group_activity_item.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/manage_product.xml" value="0.264" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.1449814126394052" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_item.xml" value="0.264" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_food.xml" value="0.17475728155339806" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_product.xml" value="0.13385416666666666" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_product.xml" value="0.4" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/shopping_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/menu/menu_bottom.xml" value="0.19814814814814816" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.1" />

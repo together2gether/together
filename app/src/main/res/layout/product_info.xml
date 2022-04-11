@@ -63,17 +63,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#E4E3E3"
                 android:layout_below="@+id/titleLayout"
-                android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"
-                />
+                android:layout_marginRight="15dp"
+                android:background="#E4E3E3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/titleLayout"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="15dp"
                 android:orientation="vertical">
