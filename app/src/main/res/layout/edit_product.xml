@@ -33,19 +33,19 @@
             android:textSize="12sp" />
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="360dp"
-            android:layout_height="250dp"
+            android:id="@+id/imageVieweditProductAddPhoto"
+            android:layout_width="356dp"
+            android:layout_height="246dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="74dp"
+            android:layout_marginTop="78dp"
             app:srcCompat="@drawable/send" />
 
         <Button
             android:id="@+id/editProduct_addphoto"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_below="@id/imageView2"
+            android:layout_below="@+id/imageVieweditProductAddPhoto"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
@@ -61,7 +61,7 @@
             android:layout_centerVertical="true">
 
             <EditText
-                android:id="@+id/editTextTextPersonName12"
+                android:id="@+id/editProduct_product"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
@@ -126,7 +126,7 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:id="@+id/editTextTextPersonName14"
+                            android:id="@+id/editProduct_total"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
@@ -158,7 +158,7 @@
                             android:textStyle="bold" />
 
                         <EditText
-                            android:id="@+id/editTextTextPersonName20"
+                            android:id="@+id/editProduct_price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal"
@@ -187,11 +187,12 @@
                         android:id="@+id/textView37"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3000원 /"
-                        android:textSize="20sp" />
+                        android:text="구매단위 : "
+                        android:textStyle="bold"
+                        android:textSize="24sp" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName15"
+                        android:id="@+id/editProduct_unit"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="number"
@@ -224,7 +225,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName16"
+                        android:id="@+id/editProduct_url"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -245,18 +246,36 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="직거래 장소 : "
+                        android:text="직거래\n  장소"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text=" : "
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName17"
-                        android:layout_width="match_parent"
+                        android:id="@+id/editProduct_place"
+                        android:layout_width="220dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:inputType="textPersonName"
+                        android:layout_marginRight="10dp"
                         android:text="효창공원"
                         android:textSize="20sp" />
+
+                    <android.widget.Button
+                        android:id="@+id/address"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/button"
+                        android:text="검색" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -276,7 +295,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/editTextTextPersonName19"
+                        android:id="@+id/editProduct_cycle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:inputType="numberDecimal"
@@ -292,35 +311,6 @@
                         android:textSize="20sp"
                         android:textStyle="normal" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView57"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="참여자 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textView58"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="3 / 5"
-                        android:textSize="20sp" />
-
-
-                </LinearLayout>
-
-
             </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>

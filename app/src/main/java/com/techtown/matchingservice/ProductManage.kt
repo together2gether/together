@@ -37,7 +37,7 @@ class ProductManage : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
 
-         Glide.with(this).load(intent.getStringExtra("imageUrl").toString()).into(binding.manageProductPhoto)
+        Glide.with(this).load(intent.getStringExtra("imageUrl").toString()).into(binding.manageProductPhoto)
         binding.manageProductProduct.text = intent.getStringExtra("product").toString()
         binding.manageProductTotal.text = intent.getStringExtra("totalNumber").toString()+"개 ( "+intent.getStringExtra("price").toString()+" 원 )"
         var price:Int = Integer.parseInt(intent.getStringExtra("price").toString())/Integer.parseInt(intent.getStringExtra("participationTotal").toString())
@@ -53,8 +53,18 @@ class ProductManage : AppCompatActivity() {
         }
 
         binding.button22.setOnClickListener(){
-            val intent = Intent(this, EditProduct::class.java)
-            startActivity(intent)
+            val intent = Intent(this, EditProduct::class.java).apply{
+                putExtra("product", binding.manageProductProduct.text)
+                putExtra("imageUrl", intent.getStringExtra("imageUrl").toString())
+                putExtra("price", intent.getStringExtra("price").toString())
+                putExtra("totalNumber", intent.getStringExtra("totalNumber").toString())
+                putExtra("cycle", intent.getStringExtra("cycle").toString())
+                putExtra("unit", intent.getStringExtra("unit").toString())
+                putExtra("URL", binding.manageProductURL.text)
+                putExtra("place", binding.manageProductPlace.text)
+                putExtra("id", productid)
+            }.run { startActivity(this) }
+            finish()
         }
 
         binding.productRemove.setOnClickListener(){

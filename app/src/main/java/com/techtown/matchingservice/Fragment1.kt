@@ -115,6 +115,7 @@ class Fragment1 : Fragment() {
             viewHolder.productitemCardView.setOnClickListener {
                 if (contentDTOs[position].uid == uid) {
                     Intent(context, ProductManage::class.java).apply{
+                        putExtra("position", position.toString())
                         putExtra("product", contentDTOs[position].product)
                         putExtra("imageUrl", contentDTOs[position].imageUrl)
                         putExtra("price", contentDTOs[position].price.toString())
@@ -126,6 +127,7 @@ class Fragment1 : Fragment() {
                         putExtra("timestamp", contentDTOs[position].timestamp.toString())
                         putExtra("participationCount", participationCount)
                         putExtra("id", contentUidList[position])
+                        putExtra("position", position.toString())
                         putExtra(
                             "participationTotal",
                             contentDTOs[position].ParticipationTotal.toString()

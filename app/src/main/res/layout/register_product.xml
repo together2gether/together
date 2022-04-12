@@ -278,7 +278,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="6dp"
                         android:gravity="center"
-                        android:text="직거래    장소"
+                        android:text="직거래\n장소"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 

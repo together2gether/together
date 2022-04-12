@@ -70,12 +70,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25dp"
                         android:paddingBottom="10dp"
+                        android:layout_marginTop="15dp"
                         android:text="꺠끗한 나라 휴지 30롤"
                         android:textSize="24sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/textView53"
+                        android:id="@+id/manageProduct_Time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
