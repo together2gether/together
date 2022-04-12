@@ -83,6 +83,13 @@ class RecommendActivity : AppCompatActivity() {
                 val itemfeed = gson.fromJson(body, Itemfeed::class.java)
                 //println(homefeed)
 
+                for(i in 0..19){
+                    var title = itemfeed.items[i].title
+                    title = title.replace("<b>","")
+                    title = title.replace("</b>","")
+                    itemfeed.items[i].title = title
+                }
+
                 //어답터를 연결하자. 메인쓰레드 변경하기 위해 이 메소드 사용
                 runOnUiThread {
                     recyclerView?.adapter = RecyclerViewAdapter(itemfeed)
@@ -97,7 +104,7 @@ class RecommendActivity : AppCompatActivity() {
     }
     data class Itemfeed(val items: List<Item>)
     data class Item(
-        val title : String,
+        var title : String,
         val link : String,
         val image : String,
         val lprice : String,
@@ -135,7 +142,7 @@ class RecommendActivity : AppCompatActivity() {
                 var textView_title = itemView.findViewById<TextView>(R.id.text_title)
                 var textView_lprice = itemView.findViewById<TextView>(R.id.text_lowprice)
                 textView_title.text = data.title
-                textView_lprice.text = "최저가 ${data.lprice}"
+                textView_lprice.text = "최저가 ${data.lprice}원"
 
                 itemView.setOnClickListener({
                     val webpage = Uri.parse("${data.link}")
