@@ -18,7 +18,7 @@
         <ImageView
             android:id="@+id/chat_img"
             android:layout_width="54dp"
-            android:layout_height="47dp"
+            android:layout_height="54dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
