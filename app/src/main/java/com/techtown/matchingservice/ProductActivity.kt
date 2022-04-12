@@ -10,6 +10,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.ktx.database
@@ -40,13 +41,13 @@ class ProductActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_product)
         uid = FirebaseAuth.getInstance().uid!!
-        
+
         binding.button49.setOnClickListener {
             finish()
         }
         binding.button10.setOnClickListener {
             val intent = Intent(this, RecommendActivity::class.java)
-            startActivity(intent)
+            startActivityForResult(intent, 0)
         }
         binding.address.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
@@ -67,6 +68,21 @@ class ProductActivity : AppCompatActivity() {
                 contentUpload()
                 finish()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(resultCode == RESULT_OK){
+            var title = data?.getStringExtra("title")!!
+            var imageURL = data?.getStringExtra("imageURL").toString()
+            var lprice = data?.getStringExtra("lprice")
+
+            binding.editTextProduct.setText(title)
+            binding.editTextPrice.setText(lprice)
+            Glide.with(this).load(imageURL)
+                .into(binding.imageViewAddPhotoImage)
         }
     }
 

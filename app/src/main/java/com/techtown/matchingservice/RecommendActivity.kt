@@ -9,10 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +36,12 @@ class RecommendActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.result_list)
         btn_search = findViewById(R.id.btn_search)
         edit_search = findViewById(R.id.edit_search)
+
+        val btn_back = findViewById<Button>(R.id.button50)
+        btn_back.setOnClickListener {
+            setResult(RESULT_CANCELED, intent)
+            finish()
+        }
 
         btn_search?.setOnClickListener {
             //키워드 없으면
@@ -139,10 +142,19 @@ class RecommendActivity : AppCompatActivity() {
                     .apply(RequestOptions().override(300,450))
                     .apply(RequestOptions.centerCropTransform())
                     .into(imageView)
+                var btn_regist = itemView.findViewById<Button>(R.id.btn_regist)
                 var textView_title = itemView.findViewById<TextView>(R.id.text_title)
                 var textView_lprice = itemView.findViewById<TextView>(R.id.text_lowprice)
                 textView_title.text = data.title
                 textView_lprice.text = "최저가 ${data.lprice}원"
+
+                btn_regist.setOnClickListener {
+                    intent.putExtra("title", data.title)
+                    intent.putExtra("lprice", data.lprice)
+                    intent.putExtra("imageURL", data.image)
+                    setResult(RESULT_OK, intent)
+                    finish()
+                }
 
                 itemView.setOnClickListener({
                     val webpage = Uri.parse("${data.link}")

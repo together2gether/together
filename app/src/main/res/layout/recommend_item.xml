@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
@@ -21,26 +22,41 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/addphoto" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/text_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="제품명"
-                android:textSize="20sp" />
+                android:textSize="15sp"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="208dp" />
 
             <TextView
                 android:id="@+id/text_lowprice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextView"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginBottom="10dp"
+                android:text="최저가"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="30sp" />
-        </LinearLayout>
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_regist"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btn_regist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="등록"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/text_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
