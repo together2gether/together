@@ -60,7 +60,7 @@ class Product : AppCompatActivity() {
         docRef.document("$productid").get()
             .addOnSuccessListener { document ->
                 if(document != null){
-                    var item = document.toObject(ContentDTO::class.java)!!
+                    item = document.toObject(ContentDTO::class.java)!!
                     if(item?.Participation!!.containsKey(uid)) binding.productInfoParticipation.isEnabled=false
                     if(item?.ParticipationCount == item?.ParticipationTotal){
                         binding.productInfoParticipation.isEnabled=false
