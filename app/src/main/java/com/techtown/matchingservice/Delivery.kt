@@ -34,12 +34,13 @@ class Delivery : AppCompatActivity() {
         binding.foodinfoOrderprice.text = intent.getStringExtra("orderPrice").toString()
         binding.foodinfoDeliveryprice.text = intent.getStringExtra("deliveryPrice").toString()
         binding.foodinfoDeliveryaddress.text = intent.getStringExtra("deliveryAddress").toString()
+        binding.oodinfoDeliverydetail.text = intent.getStringExtra("detail").toString()
         deliveryid = intent.getStringExtra("deliveryid").toString()
         docRef.document("$deliveryid" ).get()
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
-                    if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodinfoParticipation.isEnabled = false
+                    if(item?.deliveryParticipation.containsKey(uid)) binding.foodinfoParticipation.isEnabled = false
                     if(item?.delivery_ParticipationCount == 2 ) binding.foodinfoParticipation.isEnabled = false
                 }
             }

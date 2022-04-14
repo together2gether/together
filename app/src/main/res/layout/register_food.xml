@@ -57,19 +57,21 @@
                     android:orientation="horizontal">
 
                     <RadioGroup
+                        android:id="@+id/register_food_rg"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
 
                         <RadioButton
-                            android:id="@+id/radioButton"
+                            android:id="@+id/rb_delivery"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="10dp"
-                            android:text="배달" />
+                            android:text="배달"
+                            android:checked="true"/>
 
                         <RadioButton
-                            android:id="@+id/radioButton2"
+                            android:id="@+id/rb_shopping"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="쇼핑" />
@@ -82,7 +84,7 @@
                     android:layout_marginTop="5dp">
 
                     <TextView
-                        android:id="@+id/textView148"
+                        android:id="@+id/register_food_name"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -97,7 +99,7 @@
                         android:layout_width="310dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/textView148"
+                        android:layout_toRightOf="@+id/register_food_name"
                         android:background="@drawable/button"
                         android:backgroundTint="#81DCDCDC"
                         android:ems="10"
@@ -199,6 +201,36 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp" />
                 </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/textView194"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:text="상세 설명"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/register_food_detail"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="13dp"
+                        android:layout_toRightOf="@id/textView193"
+                        android:background="@drawable/button"
+                        android:backgroundTint="#81DCDCDC"
+                        android:ems="10"
+                        android:inputType="textLongMessage"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </LinearLayout>
 
                 <android.widget.Button
                     android:id="@+id/register_food_storage"

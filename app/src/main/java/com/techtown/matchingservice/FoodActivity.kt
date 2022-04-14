@@ -18,6 +18,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.techtown.matchingservice.databinding.RegisterFoodBinding
 import com.techtown.matchingservice.databinding.RegisterProductBinding
 import com.techtown.matchingservice.model.DeliveryDTO
+import com.techtown.matchingservice.model.ShoppingDTO
 import com.techtown.matchingservice.model.UsersInfo
 import java.text.SimpleDateFormat
 import java.util.*
@@ -39,6 +40,13 @@ class FoodActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+        binding.registerFoodRg.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.rb_delivery -> binding.registerFoodName.setText("가게 이름")
+                R.id.rb_shopping -> binding.registerFoodName.setText("쇼핑몰 이름")
+            }
+        }
+
         binding.registerFoodStorage.setOnClickListener {
             contentUpload()
             finish()
@@ -46,6 +54,14 @@ class FoodActivity : AppCompatActivity() {
     }
 
     private fun contentUpload() {
+        if(binding.rbDelivery.isChecked){
+            deliveryupload()
+        }else if(binding.rbShopping.isChecked){
+            shoppingupload()
+        }
+    }
+
+    private fun deliveryupload(){
         var deliveryDTO = DeliveryDTO()
 
         //Insert uid of user
@@ -55,6 +71,8 @@ class FoodActivity : AppCompatActivity() {
         deliveryDTO.delivery_userId = auth?.currentUser?.email
 
         deliveryDTO.deliveryParticipation[uid] = true
+
+        deliveryDTO.check = true
 
         deliveryDTO.delivery_ParticipationCount = 1
 
@@ -66,9 +84,43 @@ class FoodActivity : AppCompatActivity() {
 
         deliveryDTO.delivery_address = binding.registerFoodAddress.text.toString()
 
+        deliveryDTO.delivery_detail = binding.registerFoodDetail.text.toString()
+
         deliveryDTO.delivery_timestamp = System.currentTimeMillis()
 
         firestore?.collection("delivery")?.document()?.set(deliveryDTO)
+
+        setResult(Activity.RESULT_OK)
+    }
+
+    private fun shoppingupload(){
+        var shoppingDTO = ShoppingDTO()
+
+        //Insert uid of user
+        shoppingDTO.shopping_uid = auth?.currentUser?.uid
+
+        //Insert userId
+        shoppingDTO.shopping_userId = auth?.currentUser?.email
+
+        shoppingDTO.shoppingParticipation[uid] = true
+
+        shoppingDTO.check=true
+
+        shoppingDTO.shpopping_ParticipationCount = 1
+
+        shoppingDTO.store = binding.registerFoodStoreName.text.toString()
+
+        shoppingDTO.order_price = Integer.parseInt(binding.registerFoodOrderPrice.text.toString())
+
+        shoppingDTO.shopping_price = Integer.parseInt(binding.registerFoodDeliveryPrice.text.toString())
+
+        shoppingDTO.shopping_address = binding.registerFoodAddress.text.toString()
+
+        shoppingDTO.shopping_detail = binding.registerFoodDetail.text.toString()
+
+        shoppingDTO.shopping_timestamp = System.currentTimeMillis()
+
+        firestore?.collection("shopping")?.document()?.set(shoppingDTO)
 
         setResult(Activity.RESULT_OK)
     }

@@ -1,18 +1,18 @@
 package com.techtown.matchingservice.model
 
-data class DeliveryDTO (
+data class ShoppingDTO (
     var store : String? = null,
     var check : Boolean = false,
     var order_price : Int = 0,
-    var delivery_price : Int = 0,
-    var delivery_address : String? = null,
-    var delivery_detail : String? = null,
-    var delivery_uid : String? = null,
-    var delivery_userId : String? = null,
-    var delivery_timestamp : Long? = null,
-    var delivery_ParticipationCount : Int = 0,
+    var shopping_price : Int = 0,
+    var shopping_address : String? = null,
+    var shopping_detail : String? = null,
+    var shopping_uid : String? = null,
+    var shopping_userId : String? = null,
+    var shopping_timestamp : Long? = null,
+    var shpopping_ParticipationCount : Int = 0,
     //참여 누른 유저 관리
-    var deliveryParticipation : MutableMap<String, Boolean> = HashMap()){
+    var shoppingParticipation : MutableMap<String, Boolean> = HashMap()){
         //댓글 관리
         data class Comment(
             var uid : String? = null,

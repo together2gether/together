@@ -85,37 +85,6 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         adapter = ProductListAdapter(productsList)
-        adapter.setItemClickListener(object :
-        ProductListAdapter.OnItemClickListener{
-            override fun onClick(v: View, position: Int) {
-                val item = productsList[position]
-                Intent(applicationContext, Product::class.java).apply {
-                    putExtra("product", productsList[position].name)
-                    putExtra("imageUrl", productsList[position].imageUri)
-                    putExtra("price", productsList[position].price)
-                    putExtra("totalNumber", productsList[position].totalNumber.toString())
-                    putExtra("cycle", productsList[position].cycle.toString())
-                    putExtra("unit", productsList[position].unit.toString())
-                    putExtra("URL", productsList[position].url)
-                    putExtra("place", productsList[position].place)
-                    putExtra("timestamp", productsList[position].timestamp.toString())
-                    putExtra("participationCount", productsList[position].participationCount)
-                    putExtra(
-                        "uidkey",
-                        productsList[position].uidKey
-                    )
-                    putExtra(
-                        "participationTotal",
-                        productsList[position].participationTotal
-                    )
-                    putExtra("id", productsList[position].Listid)
-                    putExtra("Uid", productsList[position].uid)
-
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }.run {applicationContext?.startActivity(this)}
-                adapter.notifyDataSetChanged()
-            }
-        })
         mRecyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         mRecyclerView.adapter = adapter
         firestore = FirebaseFirestore.getInstance()
@@ -204,7 +173,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         val id = document["id"] as String?
                         var item = document.toObject(ContentDTO::class.java)
                         contentDTOs.add(item!!)
-                        contentUidList.add(document.id)
+                        contentUidList.add(id)
                         var location = LatLng(cor[0].latitude, cor[0].longitude)
                         addLatLngData(i,id, location)
                         i++
@@ -323,19 +292,8 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     var name = contentDTOs[item.index].product as String
                     var place = contentDTOs[item.index].place as String
                     var image = contentDTOs[item.index].imageUrl as String
-                    var participation = "현재 " + contentDTOs[item.index].ParticipationCount.toString() + " / " + contentDTOs[item.index].ParticipationTotal.toString()
-                    var price = contentDTOs[item.index].price.toString()
-                    var totalNumber = contentDTOs[item.index].totalNumber.toString()
-                    var cycle = contentDTOs[item.index].cycle.toString()
-                    var unit = contentDTOs[item.index].unit.toString()
-                    var url = contentDTOs[item.index].url as String
-                    var uid = contentDTOs[item.index].uid as String
-                    var timestamp = contentDTOs[item.index].timestamp.toString()
-                    var participationCount = contentDTOs[item.index].ParticipationCount.toString()
-                    var uidkey = contentDTOs[item.index].Participation.containsKey(uid).toString()
-                    var participationTotal = contentDTOs[item.index].ParticipationTotal.toString()
-                    var Listid = contentUidList[item.index] as String
-                    var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
+                    val participation = "현재 " + contentDTOs[item.index].ParticipationCount.toString() + " / " + contentDTOs[item.index].ParticipationTotal.toString()
+                    var product = ProductData(id, name, place, image,participation )
                     productsList.add(product)
                     adapter.notifyDataSetChanged()
                 }
@@ -358,18 +316,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             var place = contentDTOs[p0.index].place as String
             var image = contentDTOs[p0.index].imageUrl as String
             val participation = "현재 " + contentDTOs[p0.index].ParticipationCount.toString() + " / " + contentDTOs[p0.index].ParticipationTotal.toString()
-            var price = contentDTOs[p0.index].price.toString()
-            var totalNumber = contentDTOs[p0.index].totalNumber.toString()
-            var cycle = contentDTOs[p0.index].cycle.toString()
-            var unit = contentDTOs[p0.index].unit.toString()
-            var url = contentDTOs[p0.index].url as String
-            var uid = contentDTOs[p0.index].uid as String
-            var timestamp = contentDTOs[p0.index].timestamp.toString()
-            var participationCount = contentDTOs[p0.index].ParticipationCount.toString()
-            var uidkey = contentDTOs[p0.index].Participation.containsKey(uid).toString()
-            var participationTotal = contentDTOs[p0.index].ParticipationTotal.toString()
-            var Listid = contentUidList[p0.index] as String
-            var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
+            var product = ProductData(id, name, place, image,participation )
             productsList.add(product)
             adapter.notifyDataSetChanged()
             Log.d("qweqwe","wqe")

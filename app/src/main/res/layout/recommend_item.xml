@@ -7,7 +7,7 @@
     android:layout_marginTop="8dp"
     android:layout_marginBottom="4dp"
     app:cardBackgroundColor="#FFFFFFFF"
-    app:cardElevation="5dp"
+    app:cardElevation="0dp"
     >
 
     <LinearLayout
@@ -20,9 +20,11 @@
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:layout_marginLeft="10dp"
             app:srcCompat="@drawable/addphoto" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginLeft="10dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
@@ -44,7 +46,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="최저가"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="30sp"
+                android:textSize="25sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_regist"
                 app:layout_constraintStart_toStartOf="parent" />

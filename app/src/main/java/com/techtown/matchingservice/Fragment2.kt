@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.techtown.matchingservice.databinding.FoodItemBinding
 import com.techtown.matchingservice.databinding.Fragment2Binding
 import com.techtown.matchingservice.model.DeliveryDTO
+import com.techtown.matchingservice.model.ShoppingDTO
 
 class Fragment2 : Fragment() {
     private lateinit var binding: Fragment2Binding
@@ -53,8 +54,13 @@ class Fragment2 : Fragment() {
             }
         }
         binding.fragment2RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-
-        binding.fragment2RecyclerView.adapter =Fragment2RecyclerviewAdapter()
+        binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+        binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
+            when(i){
+                R.id.fragment2_rb_delivery -> binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+                R.id.fragment2_rb_shopping -> binding.fragment2RecyclerView.adapter =Fragment2ShoppingRecyclerviewAdapter()
+            }
+        }
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
     }
@@ -62,7 +68,10 @@ class Fragment2 : Fragment() {
     inner class DeliveryViewHolder(var binding: FoodItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    inner class Fragment2RecyclerviewAdapter() : RecyclerView.Adapter<DeliveryViewHolder>() {
+    inner class ShoppingViewHolder(var binding: FoodItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
+    inner class Fragment2DeliveryRecyclerviewAdapter() : RecyclerView.Adapter<DeliveryViewHolder>() {
 
         var deliveryDTOs: ArrayList<DeliveryDTO> = arrayListOf()
         var deliveryUidList: ArrayList<String> = arrayListOf()
@@ -96,6 +105,7 @@ class Fragment2 : Fragment() {
             viewHolder.fooditemTextvieworderprice.text = deliveryDTOs[position].order_price.toString()
             //delivery price
             viewHolder.fooditemTextviewdeliveryprice.text = deliveryDTOs[position].delivery_price.toString()
+
             //click
             viewHolder.fooditemCardView.setOnClickListener{
                 Intent(context, Delivery::class.java).apply{
@@ -104,6 +114,7 @@ class Fragment2 : Fragment() {
                     putExtra("deliveryPrice",deliveryDTOs[position].delivery_price.toString())
                     putExtra("deliveryAddress",deliveryDTOs[position].delivery_address,)
                     putExtra("deliveryid", deliveryUidList[position])
+                    putExtra("detail", deliveryDTOs[position].delivery_detail)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run{context?.startActivity(this)}
             }
@@ -111,6 +122,47 @@ class Fragment2 : Fragment() {
 
         override fun getItemCount(): Int {
             return deliveryDTOs.size
+        }
+    }
+
+    inner class Fragment2ShoppingRecyclerviewAdapter() : RecyclerView.Adapter<ShoppingViewHolder>() {
+
+        var shoppingDTOs: ArrayList<ShoppingDTO> = arrayListOf()
+        var shoppingUidList: ArrayList<String> = arrayListOf()
+
+        init {
+            firestore?.collection("shopping")
+                ?.orderBy("shopping_timestamp")
+                ?.addSnapshotListener { value, error ->
+                    shoppingDTOs.clear()
+                    shoppingUidList.clear()
+                    for (snapshot in value!!.documents) {
+                        var item = snapshot.toObject(ShoppingDTO::class.java)
+                        shoppingDTOs.add(item!!)
+                        shoppingUidList.add(snapshot.id)
+                    }
+                    notifyDataSetChanged()
+                }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): ShoppingViewHolder {
+            var view =
+                FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ShoppingViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ShoppingViewHolder, position: Int) {
+            var viewHolder = holder.binding
+            //store
+            viewHolder.fooditemTextviewstore.text = shoppingDTOs[position].store
+            //order price
+            viewHolder.fooditemTextvieworderprice.text = shoppingDTOs[position].order_price.toString()
+            //delivery price
+            viewHolder.fooditemTextviewdeliveryprice.text = shoppingDTOs[position].shopping_price.toString()
+        }
+
+        override fun getItemCount(): Int {
+            return shoppingDTOs.size
         }
     }
 }
