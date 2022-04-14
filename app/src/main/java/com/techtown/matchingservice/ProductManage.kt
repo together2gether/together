@@ -15,12 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.ManageProductBinding
-import com.techtown.matchingservice.databinding.ProductInfoBinding
 import com.techtown.matchingservice.model.ChatModel
-import com.techtown.matchingservice.model.ContentDTO
-import com.techtown.matchingservice.model.DeliveryDTO
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ProductManage : AppCompatActivity() {
@@ -29,6 +24,9 @@ class ProductManage : AppCompatActivity() {
     lateinit var uid: String
     val db = Firebase.firestore
     var productid : String? = null
+
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private val roomsRef = database.getReference("chatrooms")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,7 +66,24 @@ class ProductManage : AppCompatActivity() {
         }
 
         binding.productRemove.setOnClickListener(){
+            var roomId : String? = null
+            roomsRef.orderByChild("users/$uid").equalTo(true)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for(item in snapshot.children){
+                            val chatmodel = item.getValue<ChatModel>()
+                            if(chatmodel?.productid == productid){
+                                roomId = item.key
+                                roomsRef.child(roomId.toString()).removeValue()
+                            }
+                        }
+                    }
+                })
             db.collection("images").document("$productid").delete()
+
             finish()
         }
     }
