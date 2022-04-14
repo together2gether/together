@@ -77,6 +77,8 @@ class chatting : AppCompatActivity() {
 
         firestore = FirebaseFirestore.getInstance()
 
+        checkChatRoom()
+
         imageView.setOnClickListener{
             //Log.d("클릭 시 dest", "$destinationUid")
             val chatModel = ChatModel()
@@ -116,15 +118,16 @@ class chatting : AppCompatActivity() {
                 //Log.d("chatUidNotNull dest", "$destinationUid")
             }
         }
-        checkChatRoom()
+
     }
     private fun checkChatRoom(){
-        roomsRef.orderByChild("users/$uid").equalTo(true)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                }
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if(groupchat == "N"){
+        if(groupchat == "N"){
+            roomsRef.orderByChild("users/$uid").equalTo(true)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
                         for(item in snapshot.children){
                             val chatModel = item.getValue<ChatModel>()
                             if(chatModel?.users!!.containsKey(destinationUid) && chatModel.productid == ""){
@@ -135,20 +138,27 @@ class chatting : AppCompatActivity() {
                                 recyclerView?.adapter = RecyclerViewAdapter()
                             }
                         }
-                    } else if(groupchat == "Y") {
-                        for(item in snapshot.children){
-                            val chatModel = item.getValue<ChatModel>()
-                            if(chatModel?.productid == productid){
-                                chatRoomUid = item.key
-                                val button = findViewById<Button>(R.id.btn_input)
-                                button.isEnabled = true
-                                recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
-                                recyclerView?.adapter = RecyclerViewAdapter()
-                            }
+                    }
+                })
+        } else if(groupchat == "Y"){
+            roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for(item in snapshot.children){
+                        val chatModel = item.getValue<ChatModel>()
+                        if(chatModel?.productid == productid){
+                            chatRoomUid = item.key
+                            val button = findViewById<Button>(R.id.btn_input)
+                            button.isEnabled = true
+                            recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
+                            recyclerView?.adapter = RecyclerViewAdapter()
                         }
                     }
                 }
             })
+        }
     }
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MessageViewHolder>(){
         private val comments = ArrayList<ChatModel.Comment>()

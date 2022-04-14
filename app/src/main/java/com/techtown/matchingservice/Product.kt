@@ -90,39 +90,46 @@ class Product : AppCompatActivity() {
             binding.productInfoParticipationNumber.text=item.ParticipationCount.toString()+" / "+item.ParticipationTotal
             var roomId : String? = null
             if(item.ParticipationCount == 2){
-                val time = System.currentTimeMillis()
-                val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
-                val curTime = dateFormat.format(Date(time)).toString()
-
                 val chatModel = ChatModel()
                 chatModel.users.put(regist_userid.toString(), true)
                 chatModel.users.put(uid, true)
                 chatModel.productid = productid
                 roomsRef.push().setValue(chatModel)
-                val comment = ChatModel.Comment(regist_userid.toString(), "안녕하세요. 이 곳은 '$product_name' 공동구매를 위한 채팅방 입니다.", curTime)
+
                 roomsRef.orderByChild("users/$uid").equalTo(true)
                     .addListenerForSingleValueEvent(object : ValueEventListener{
                         override fun onCancelled(error: DatabaseError) {
                         }
 
                         override fun onDataChange(snapshot: DataSnapshot) {
-                            for(item in snapshot.children){
-                                val newChatModel = item.getValue<ChatModel>()
-                                if(newChatModel?.productid == productid){
-                                    roomId = item.key
+                            val time = System.currentTimeMillis()
+                            val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                            val curTime = dateFormat.format(Date(time)).toString()
+                            val comment = ChatModel.Comment(regist_userid.toString(), "안녕하세요. 이 곳은 '$product_name' 공동구매를 위한 채팅방 입니다.", curTime)
+
+                            for(room in snapshot.children){
+                                val chatmodel = room.getValue<ChatModel>()
+                                if(chatmodel?.productid == productid){
+                                    roomId = room.key
                                     roomsRef.child(roomId.toString()).child("comments").push().setValue(comment)
                                 }
                             }
                         }
                     })
             } else {
-                roomsRef.child(roomId.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+                roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
                     }
+
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        var chatModel = snapshot.getValue<ChatModel>()
-                        chatModel?.users!!.put(uid, true)
-                        roomsRef.child(roomId.toString()).setValue(chatModel)
+                        for(room in snapshot.children){
+                            val chatmodel = room.getValue<ChatModel>()
+                            if(chatmodel?.productid == productid){
+                                roomId = room.key
+                                chatmodel?.users!!.put(uid, true)
+                                roomsRef.child(roomId.toString()).setValue(chatmodel)
+                            }
+                        }
                     }
                 })
             }
