@@ -46,8 +46,8 @@ class ProductActivity : AppCompatActivity() {
             finish()
         }
         binding.button10.setOnClickListener {
-            val intent = Intent(this, RecommendActivity::class.java)
-            startActivityForResult(intent, 0)
+            val lowpriceitemIntent = Intent(this, RecommendActivity::class.java)
+            getItemContent.launch(lowpriceitemIntent)
         }
         binding.address.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
@@ -71,7 +71,7 @@ class ProductActivity : AppCompatActivity() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(resultCode == RESULT_OK){
@@ -84,7 +84,23 @@ class ProductActivity : AppCompatActivity() {
             Glide.with(this).load(imageURL)
                 .into(binding.imageViewAddPhotoImage)
         }
-    }
+    }*/
+
+    private val getItemContent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if(result.resultCode == RESULT_OK){
+                var title = result.data?.getStringExtra("title")!!
+                var imageURL = result.data?.getStringExtra("imageURL").toString()
+                var lprice = result.data?.getStringExtra("lprice")
+                var link = result.data?.getStringExtra("link")
+                binding.editTextProduct.setText(title)
+                binding.editTextPrice.setText(lprice)
+                binding.editTextURL.setText(link)
+                Glide.with(this).load(imageURL)
+                    .into(binding.imageViewAddPhotoImage)
+            }
+
+        }
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

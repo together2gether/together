@@ -152,6 +152,7 @@ class RecommendActivity : AppCompatActivity() {
                     intent.putExtra("title", data.title)
                     intent.putExtra("lprice", data.lprice)
                     intent.putExtra("imageURL", data.image)
+                    intent.putExtra("link", data.link)
                     setResult(RESULT_OK, intent)
                     finish()
                 }
