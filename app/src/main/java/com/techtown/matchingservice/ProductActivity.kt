@@ -33,7 +33,6 @@ class ProductActivity : AppCompatActivity() {
     lateinit var uid: String
     var thisTime : Long? = null
 
-
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val roomsRef = database.getReference("chatrooms")
 
@@ -71,33 +70,25 @@ class ProductActivity : AppCompatActivity() {
         }
     }
 
-    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if(resultCode == RESULT_OK){
-            var title = data?.getStringExtra("title")!!
-            var imageURL = data?.getStringExtra("imageURL").toString()
-            var lprice = data?.getStringExtra("lprice")
-
-            binding.editTextProduct.setText(title)
-            binding.editTextPrice.setText(lprice)
-            Glide.with(this).load(imageURL)
-                .into(binding.imageViewAddPhotoImage)
-        }
-    }*/
-
     private val getItemContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if(result.resultCode == RESULT_OK){
                 var title = result.data?.getStringExtra("title")!!
-                var imageURL = result.data?.getStringExtra("imageURL").toString()
+                var imageURL = result.data?.getStringExtra("imageURL")
                 var lprice = result.data?.getStringExtra("lprice")
                 var link = result.data?.getStringExtra("link")
                 binding.editTextProduct.setText(title)
                 binding.editTextPrice.setText(lprice)
                 binding.editTextURL.setText(link)
-                Glide.with(this).load(imageURL)
+                println("image" + imageURL)
+                Glide.with(this).load(imageURL.toString())
                     .into(binding.imageViewAddPhotoImage)
+
+
+                binding.registerProductStorage.setOnClickListener {
+                    contentUpload(imageURL)
+                    finish()
+                }
             }
 
         }
@@ -113,60 +104,88 @@ class ProductActivity : AppCompatActivity() {
             }
         }
 
-    fun contentUpload() {
+    fun contentUpload(imageURL : String? = null) {
         //Make filename
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var imageFileName = "IMAGE" + timestamp + "_.png"
 
         var storageRef = storage?.reference?.child("images")?.child(imageFileName)
 
-        //FileUpload
-        storageRef?.putFile(photoUri!!)?.continueWithTask { task : Task<UploadTask.TaskSnapshot> ->
-            return@continueWithTask storageRef.downloadUrl
-        }?.addOnSuccessListener { uri ->
+        if(imageURL == null){
+            //FileUpload
+            storageRef?.putFile(photoUri!!)?.continueWithTask { task : Task<UploadTask.TaskSnapshot> ->
+                return@continueWithTask storageRef.downloadUrl
+            }?.addOnSuccessListener { uri ->
+                var contentDTO = ContentDTO()
+                //Insert douwnloadUrl of image
+                contentDTO.imageUrl = uri.toString()
+                //Insert uid of user
+                contentDTO.uid = auth?.currentUser?.uid
+                //Insert userId
+                contentDTO.userId = auth?.currentUser?.email
+                //Insert Product
+                contentDTO.product = binding.editTextProduct.text.toString()
+                //Insert price
+                contentDTO.price =Integer.parseInt(binding.editTextPrice.text.toString())
+                contentDTO.ParticipationCount = 1
+                contentDTO.Participation[uid] = true
+                //Insert totalNumber
+                contentDTO.totalNumber =Integer.parseInt(binding.editTextTotalNumber.text.toString())
+                //Insert unit
+                contentDTO.unit =Integer.parseInt(binding.editTextUnit.text.toString())
+                //Insert cycle
+                contentDTO.cycle =Integer.parseInt(binding.editTextCycle.text.toString())
+                //Insert url
+                contentDTO.url = binding.editTextURL.text.toString()
+                //Insert place
+                contentDTO.place =binding.editTextPlace.text.toString()
+                //Insert timestamp
+                contentDTO.timestamp = System.currentTimeMillis()
+                thisTime = contentDTO.timestamp
+                val geocoder = Geocoder(this, Locale.getDefault())
+                val cor = geocoder.getFromLocationName(binding.editTextPlace.text.toString(),1)
+                //var LATLNG = LatLng(cor[0].latitude, cor[0].longitude)
+                //Insert ParticipationTotal
+                var participation : Int = contentDTO.totalNumber / contentDTO.unit
+                contentDTO.ParticipationTotal = participation
+
+                contentDTO.location = GeoPoint(cor[0].latitude, cor[0].longitude)
+                firestore?.collection("images")?.document()?.set(contentDTO)
+
+                setResult(Activity.RESULT_OK)
+
+                finish()
+            }
+        } else {
             var contentDTO = ContentDTO()
-
             //Insert douwnloadUrl of image
-            contentDTO.imageUrl = uri.toString()
-
+            contentDTO.imageUrl = imageURL
             //Insert uid of user
             contentDTO.uid = auth?.currentUser?.uid
-
             //Insert userId
             contentDTO.userId = auth?.currentUser?.email
-
             //Insert Product
             contentDTO.product = binding.editTextProduct.text.toString()
-
             //Insert price
             contentDTO.price =Integer.parseInt(binding.editTextPrice.text.toString())
-
             contentDTO.ParticipationCount = 1
-
             contentDTO.Participation[uid] = true
             //Insert totalNumber
             contentDTO.totalNumber =Integer.parseInt(binding.editTextTotalNumber.text.toString())
-
             //Insert unit
             contentDTO.unit =Integer.parseInt(binding.editTextUnit.text.toString())
-
             //Insert cycle
             contentDTO.cycle =Integer.parseInt(binding.editTextCycle.text.toString())
-
             //Insert url
             contentDTO.url = binding.editTextURL.text.toString()
-
             //Insert place
             contentDTO.place =binding.editTextPlace.text.toString()
-
             //Insert timestamp
             contentDTO.timestamp = System.currentTimeMillis()
             thisTime = contentDTO.timestamp
-
             val geocoder = Geocoder(this, Locale.getDefault())
             val cor = geocoder.getFromLocationName(binding.editTextPlace.text.toString(),1)
             //var LATLNG = LatLng(cor[0].latitude, cor[0].longitude)
-
             //Insert ParticipationTotal
             var participation : Int = contentDTO.totalNumber / contentDTO.unit
             contentDTO.ParticipationTotal = participation
@@ -178,6 +197,10 @@ class ProductActivity : AppCompatActivity() {
 
             finish()
         }
+
+
+
+
     }
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
