@@ -42,7 +42,7 @@ class ProductManage : AppCompatActivity() {
         binding.manageProductUnit.text = price.toString() + "원 / "+intent.getStringExtra("unit").toString()+"개"
         binding.manageProductURL.text = intent.getStringExtra("URL").toString()
         binding.manageProductPlace.text = intent.getStringExtra("place").toString()
-        binding.manageProductCycle.text = intent.getStringExtra("cycle").toString()+"주"
+        binding.manageProductCycle.text = intent.getStringExtra("cycle").toString()+"일"
         binding.manageProductParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
         productid = intent.getStringExtra("id").toString()
 

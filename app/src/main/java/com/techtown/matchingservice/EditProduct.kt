@@ -2,7 +2,6 @@ package com.techtown.matchingservice
 
 import android.app.Activity
 import android.content.Intent
-import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -14,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.techtown.matchingservice.databinding.EditProductBinding
@@ -79,23 +77,23 @@ class EditProduct : AppCompatActivity() {
             }
         }
     fun imageUpload() {
-            var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-            var imageFileName = "IMAGE" + timestamp + "_.png"
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var imageFileName = "IMAGE" + timestamp + "_.png"
 
-            var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
 
-            //FileUpload
-            storageRef?.putFile(photoUri!!)
-                ?.continueWithTask { task: Task<UploadTask.TaskSnapshot> ->
-                    return@continueWithTask storageRef.downloadUrl
-                }?.addOnSuccessListener { uri ->
-                    var tsDoc = firestore?.collection("images")?.document(productid.toString())
-                    firestore?.runTransaction { transition ->
-                        contentdto = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
-                        contentdto.imageUrl = uri.toString()
-                        transition.set(tsDoc!!, contentdto)
+        //FileUpload
+        storageRef?.putFile(photoUri!!)
+            ?.continueWithTask { task: Task<UploadTask.TaskSnapshot> ->
+                return@continueWithTask storageRef.downloadUrl
+            }?.addOnSuccessListener { uri ->
+                var tsDoc = firestore?.collection("images")?.document(productid.toString())
+                firestore?.runTransaction { transition ->
+                    contentdto = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
+                    contentdto.imageUrl = uri.toString()
+                    transition.set(tsDoc!!, contentdto)
+                }
             }
-        }
     }
     fun contentReUpload() {
         var tsDoc = firestore?.collection("images")?.document(productid.toString())
@@ -140,8 +138,8 @@ class EditProduct : AppCompatActivity() {
             transition.set(tsDoc!!,contentdto)
         }
 
-            setResult(Activity.RESULT_OK)
+        setResult(Activity.RESULT_OK)
 
-            finish()
+        finish()
     }
 }

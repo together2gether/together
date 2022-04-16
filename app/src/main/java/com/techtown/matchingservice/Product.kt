@@ -49,7 +49,7 @@ class Product : AppCompatActivity() {
         binding.productInfoUnit.text =price.toString() + "원 / "+intent.getStringExtra("unit").toString()+"개"
         binding.productInfoURL.text = intent.getStringExtra("URL").toString()
         binding.productInfoPlace.text = intent.getStringExtra("place").toString()
-        binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()+"주"
+        binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()+"일"
         binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
         regist_userid = intent.getStringExtra("Uid").toString()
         productid = intent.getStringExtra("id").toString()

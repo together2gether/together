@@ -13,14 +13,13 @@ import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.techtown.matchingservice.databinding.RegisterProductBinding
 import com.techtown.matchingservice.model.ContentDTO
+import kotlinx.android.synthetic.main.register_product.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -32,9 +31,10 @@ class ProductActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     var thisTime : Long? = null
+    var NP_value : String? = null
 
-    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    private val roomsRef = database.getReference("chatrooms")
+    //private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    //private val roomsRef = database.getReference("chatrooms")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +70,31 @@ class ProductActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        initNumberPicker()
+        numberPickerListener()
+    }
+
+    private fun initNumberPicker(){
+        val data1: Array<String> = Array(181){
+            i -> i.toString()
+        }
+
+        NP_cycle?.minValue = 0
+        NP_cycle?.maxValue = data1.size-1
+        NP_cycle?.wrapSelectorWheel = true
+        NP_cycle?.displayedValues = data1
+    }
+
+    private fun numberPickerListener(){
+        NP_cycle.setOnValueChangedListener { picker, oldVal, newVal ->
+            Log.d("test", "oldVal : ${oldVal}, newVal : $newVal")
+            Log.d("test", "picker.displayedValues ${picker.displayedValues[picker.value]}")
+            NP_value = picker.displayedValues[picker.value].toString()
+        }
+    }
     private val getItemContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if(result.resultCode == RESULT_OK){
@@ -134,7 +159,7 @@ class ProductActivity : AppCompatActivity() {
                 //Insert unit
                 contentDTO.unit =Integer.parseInt(binding.editTextUnit.text.toString())
                 //Insert cycle
-                contentDTO.cycle =Integer.parseInt(binding.editTextCycle.text.toString())
+                contentDTO.cycle =Integer.parseInt(NP_value)
                 //Insert url
                 contentDTO.url = binding.editTextURL.text.toString()
                 //Insert place
@@ -175,7 +200,7 @@ class ProductActivity : AppCompatActivity() {
             //Insert unit
             contentDTO.unit =Integer.parseInt(binding.editTextUnit.text.toString())
             //Insert cycle
-            contentDTO.cycle =Integer.parseInt(binding.editTextCycle.text.toString())
+            contentDTO.cycle =Integer.parseInt(NP_value)
             //Insert url
             contentDTO.url = binding.editTextURL.text.toString()
             //Insert place

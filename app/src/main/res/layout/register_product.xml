@@ -220,7 +220,30 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <EditText
+                    <NumberPicker
+                        android:id="@+id/NP_cycle"
+                        android:layout_width="100dp"
+                        android:layout_height="130dp"
+                        android:layout_toRightOf="@id/textView135"
+                        android:background="@drawable/button"
+                        android:backgroundTint="#81DCDCDC"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/NP_cycle"
+                        android:gravity="center"
+                        android:text="일"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold"/>
+
+
+                    <!--<EditText
                         android:id="@+id/editTextCycle"
                         android:layout_width="310dp"
                         android:layout_height="40dp"
@@ -232,7 +255,7 @@
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp" />-->
                 </RelativeLayout>
 
                 <RelativeLayout
