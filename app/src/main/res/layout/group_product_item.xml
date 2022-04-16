@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
@@ -38,7 +39,7 @@
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/productName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -48,7 +49,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/participation_Count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -67,17 +68,17 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="구매 가격 : 3000원 / 5개"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/textView22"
+                    android:id="@+id/cycle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textView3"
+                    android:layout_below="@id/price"
                     android:text="구매 주기 : 14일"
                     android:textSize="18sp" />
 
@@ -85,12 +86,13 @@
                     android:id="@+id/button9"
                     android:layout_width="60dp"
                     android:layout_height="45dp"
-                    android:layout_alignBaseline="@id/textView22"
+                    android:layout_alignBaseline="@id/participation_Count"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/profile_button"
                     android:gravity="center"
                     android:text="탈퇴"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:ignore="NotSibling" />
 
             </RelativeLayout>
 
