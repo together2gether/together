@@ -83,7 +83,7 @@
                     android:textSize="18sp" />
 
                 <android.widget.Button
-                    android:id="@+id/button9"
+                    android:id="@+id/button_drop"
                     android:layout_width="60dp"
                     android:layout_height="45dp"
                     android:layout_alignBaseline="@id/participation_Count"
