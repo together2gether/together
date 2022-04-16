@@ -93,12 +93,14 @@ class LoginActivity : AppCompatActivity() {
     fun moveMainPage(user: FirebaseUser?){
         if(user != null){
             startActivity(Intent(this,MainActivity::class.java))
+            finish()
         }
     }
 
     fun moveModifyPage(user: FirebaseUser?){
         if(user!=null){
             startActivity(Intent(this, ModifyInfo::class.java))
+            finish()
         }
     }
 }

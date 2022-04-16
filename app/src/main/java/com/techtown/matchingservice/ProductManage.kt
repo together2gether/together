@@ -1,7 +1,9 @@
 package com.techtown.matchingservice
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -66,25 +68,38 @@ class ProductManage : AppCompatActivity() {
         }
 
         binding.productRemove.setOnClickListener(){
-            var roomId : String? = null
-            roomsRef.orderByChild("users/$uid").equalTo(true)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(error: DatabaseError) {
-                    }
-
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        for(item in snapshot.children){
-                            val chatmodel = item.getValue<ChatModel>()
-                            if(chatmodel?.productid == productid){
-                                roomId = item.key
-                                roomsRef.child(roomId.toString()).removeValue()
-                            }
-                        }
-                    }
-                })
-            db.collection("images").document("$productid").delete()
-
-            finish()
+            RemovePopup()
         }
+    }
+
+    private fun RemovePopup(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("삭제")
+            .setMessage("이 게시물을 삭제하시겠습니까?")
+            .setPositiveButton("예",
+                DialogInterface.OnClickListener{ dialog, id->
+                    var roomId : String? = null
+                    roomsRef.orderByChild("users/$uid").equalTo(true)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onCancelled(error: DatabaseError) {
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for(item in snapshot.children){
+                                    val chatmodel = item.getValue<ChatModel>()
+                                    if(chatmodel?.productid == productid){
+                                        roomId = item.key
+                                        roomsRef.child(roomId.toString()).removeValue()
+                                    }
+                                }
+                            }
+                        })
+                    db.collection("images").document("$productid").delete()
+                    finish()
+                })
+            .setNegativeButton("아니요",
+                DialogInterface.OnClickListener{ dialog, id->
+                })
+        builder.show()
     }
 }

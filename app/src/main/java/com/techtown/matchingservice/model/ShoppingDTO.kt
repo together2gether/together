@@ -10,7 +10,7 @@ data class ShoppingDTO (
     var shopping_uid : String? = null,
     var shopping_userId : String? = null,
     var shopping_timestamp : Long? = null,
-    var shpopping_ParticipationCount : Int = 0,
+    var shopping_ParticipationCount : Int = 0,
     //참여 누른 유저 관리
     var shoppingParticipation : MutableMap<String, Boolean> = HashMap()){
         //댓글 관리

@@ -45,19 +45,24 @@
                 android:layout_height="32dp"
                 android:layout_marginBottom="10dp"
                 android:text="최저가"
+                android:textStyle="bold"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_regist"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/btn_regist"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:text="등록"
+                android:textSize="13dp"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/text_title" />
+                app:layout_constraintEnd_toEndOf="@+id/text_title"
+                android:backgroundTint="#bfdeff"
+                android:layout_marginRight="10dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>

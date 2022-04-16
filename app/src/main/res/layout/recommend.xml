@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:hint="제품명을 입력해주세요!"/>
 
         <ImageButton
             android:id="@+id/btn_search"

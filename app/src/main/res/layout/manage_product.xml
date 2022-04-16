@@ -9,17 +9,18 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <android.widget.Button
-            android:id="@+id/button21"
-            android:layout_width="30dp"
-            android:layout_height="27dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/arrow" />
+            <android.widget.Button
+                android:id="@+id/button21"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/arrow" />
 
             <android.widget.Button
                 android:id="@+id/button22"
@@ -31,6 +32,7 @@
                 android:background="@drawable/circle_button"
                 android:text="편집"
                 android:textSize="13sp" />
+
             <android.widget.Button
                 android:id="@+id/product_remove"
                 android:layout_width="60dp"
@@ -69,8 +71,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="25dp"
-                        android:paddingBottom="10dp"
                         android:layout_marginTop="15dp"
+                        android:paddingBottom="10dp"
                         android:text="꺠끗한 나라 휴지 30롤"
                         android:textSize="24sp"
                         android:textStyle="bold" />

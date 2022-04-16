@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.marginRight
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -220,7 +221,7 @@ class chatting : AppCompatActivity() {
             holder: RecyclerViewAdapter.MessageViewHolder,
             position: Int
         ) {
-            holder.textView_message.textSize = 20F
+            holder.textView_message.textSize = 16F
             holder.textView_message.text = comments[position].message
             holder.textView_time.text = comments[position].time
             if(comments[position].uid.equals(uid)){
@@ -229,6 +230,14 @@ class chatting : AppCompatActivity() {
                 holder.textView_name.visibility = View.INVISIBLE
                 holder.layout_main.gravity = Gravity.RIGHT
                 holder.textView_time.gravity = Gravity.RIGHT
+                //margin값 설정
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                holder.layout_main.layoutParams = layoutParams
+
+                layoutParams.setMargins(0,0,30,0)
             } else {
                 if(groupchat == "Y"){
                     usersRef.child(comments[position].uid.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -256,6 +265,14 @@ class chatting : AppCompatActivity() {
                 holder.textView_name.visibility = View.VISIBLE
                 holder.textView_message.setBackgroundResource(R.drawable.left_item_message)
                 holder.layout_main.gravity = Gravity.LEFT
+                //margin값 설정
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                holder.layout_main.layoutParams = layoutParams
+
+                layoutParams.setMargins(0,0,150,0)
             }
         }
 

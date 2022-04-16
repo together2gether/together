@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.techtown.matchingservice.databinding.FoodItemBinding
 import com.techtown.matchingservice.databinding.Fragment2Binding
@@ -23,12 +24,14 @@ import com.techtown.matchingservice.model.ShoppingDTO
 class Fragment2 : Fragment() {
     private lateinit var binding: Fragment2Binding
     var firestore: FirebaseFirestore? = null
+    lateinit var uid: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = Fragment2Binding.inflate(inflater, container, false)
         firestore = FirebaseFirestore.getInstance()
+        uid = FirebaseAuth.getInstance().uid!!
 
         binding.imageButton2.setOnClickListener {
             val intent = Intent(context, SearchActivity::class.java)
@@ -57,8 +60,8 @@ class Fragment2 : Fragment() {
         binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
         binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
-                R.id.fragment2_rb_delivery -> binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
-                R.id.fragment2_rb_shopping -> binding.fragment2RecyclerView.adapter =Fragment2ShoppingRecyclerviewAdapter()
+                R.id.fragment2_rb_delivery -> binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
+                R.id.fragment2_rb_shopping -> binding.fragment2RecyclerView.adapter = Fragment2ShoppingRecyclerviewAdapter()
             }
         }
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -107,16 +110,17 @@ class Fragment2 : Fragment() {
             viewHolder.fooditemTextviewdeliveryprice.text = deliveryDTOs[position].delivery_price.toString()
 
             //click
-            viewHolder.fooditemCardView.setOnClickListener{
-                Intent(context, Delivery::class.java).apply{
-                    putExtra("store",deliveryDTOs[position].store)
-                    putExtra("orderPrice",deliveryDTOs[position].order_price.toString())
-                    putExtra("deliveryPrice",deliveryDTOs[position].delivery_price.toString())
-                    putExtra("deliveryAddress",deliveryDTOs[position].delivery_address,)
+            viewHolder.fooditemCardView.setOnClickListener {
+                Intent(context, Delivery::class.java).apply {
+                    putExtra("store", deliveryDTOs[position].store)
+                    putExtra("orderPrice", deliveryDTOs[position].order_price.toString())
+                    putExtra("deliveryPrice", deliveryDTOs[position].delivery_price.toString())
+                    putExtra("deliveryAddress", deliveryDTOs[position].delivery_address)
                     putExtra("deliveryid", deliveryUidList[position])
+                    putExtra("deliveryuid", deliveryDTOs[position].delivery_uid)
                     putExtra("detail", deliveryDTOs[position].delivery_detail)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }.run{context?.startActivity(this)}
+                }.run { context?.startActivity(this) }
             }
         }
 
@@ -125,7 +129,7 @@ class Fragment2 : Fragment() {
         }
     }
 
-    inner class Fragment2ShoppingRecyclerviewAdapter() : RecyclerView.Adapter<ShoppingViewHolder>() {
+    inner class Fragment2ShoppingRecyclerviewAdapter() : RecyclerView.Adapter<Fragment2.ShoppingViewHolder>() {
 
         var shoppingDTOs: ArrayList<ShoppingDTO> = arrayListOf()
         var shoppingUidList: ArrayList<String> = arrayListOf()
@@ -159,6 +163,19 @@ class Fragment2 : Fragment() {
             viewHolder.fooditemTextvieworderprice.text = shoppingDTOs[position].order_price.toString()
             //delivery price
             viewHolder.fooditemTextviewdeliveryprice.text = shoppingDTOs[position].shopping_price.toString()
+
+            viewHolder.fooditemCardView.setOnClickListener{
+                Intent(context, Shopping::class.java).apply{
+                    putExtra("store",shoppingDTOs[position].store)
+                    putExtra("orderPrice",shoppingDTOs[position].order_price.toString())
+                    putExtra("ShoppingPrice",shoppingDTOs[position].shopping_price.toString())
+                    putExtra("ShoppingAddress",shoppingDTOs[position].shopping_address)
+                    putExtra("Shoppinguid", shoppingDTOs[position].shopping_uid)
+                    putExtra("Shoppingid", shoppingUidList[position])
+                    putExtra("detail", shoppingDTOs[position].shopping_detail)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run{context?.startActivity(this)}
+            }
         }
 
         override fun getItemCount(): Int {

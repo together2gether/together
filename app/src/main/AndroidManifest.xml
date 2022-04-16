@@ -49,6 +49,7 @@
         <activity android:name=".RecommendActivity"/>
         <activity android:name=".AddressActivity"/>
         <activity android:name=".Delivery"/>
+        <activity android:name=".Shopping"/>
         <activity android:name=".ProductManage"/>
         <activity android:name=".EditProduct"/>
     </application>

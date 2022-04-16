@@ -106,7 +106,7 @@ class FoodActivity : AppCompatActivity() {
 
         shoppingDTO.check=true
 
-        shoppingDTO.shpopping_ParticipationCount = 1
+        shoppingDTO.shopping_ParticipationCount = 1
 
         shoppingDTO.store = binding.registerFoodStoreName.text.toString()
 

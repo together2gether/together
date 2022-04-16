@@ -6,12 +6,11 @@
     android:layout_marginTop="8dp"
     android:layout_marginBottom="4dp"
     app:cardBackgroundColor="#FFFFFFFF"
-    app:cardElevation="5dp">
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/item_chat"
         android:orientation="horizontal"
         android:visibility="visible">
 
@@ -22,7 +21,6 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
-            android:background="@drawable/profile"
             android:padding="5dp"
             app:srcCompat="@drawable/multi" />
 
@@ -76,7 +74,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/item_chat"
         android:orientation="horizontal"
         android:visibility="gone">
 

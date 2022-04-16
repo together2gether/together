@@ -17,6 +17,29 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/arrow" />
 
+        <android.widget.Button
+            android:id="@+id/food_edit"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="90dp"
+            android:background="@drawable/circle_button"
+            android:text="편집"
+            android:textSize="13sp" />
+
+        <android.widget.Button
+            android:id="@+id/food_remove"
+            android:layout_width="60dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/circle_button"
+            android:text="삭제"
+            android:textColor="#FB0C0C"
+            android:textSize="13sp" />
+
         <RelativeLayout
             android:id="@+id/titleLayout3"
             android:layout_width="match_parent"
@@ -161,7 +184,7 @@
                         android:padding="10dp">
 
                         <TextView
-                            android:id="@+id/oodinfo_deliverydetail"
+                            android:id="@+id/foodinfo_deliverydetail"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="같이 먹어요~"
@@ -176,7 +199,7 @@
                     android:layout_marginTop="10dp">
 
                     <android.widget.Button
-                        android:id="@+id/button_chat"
+                        android:id="@+id/foodinfo_chat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"

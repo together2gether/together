@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -57,6 +58,9 @@ class RecommendActivity : AppCompatActivity() {
             val imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(edit_search?.windowToken, 0)
         }
+
+        recyclerView?.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
     }
     fun fetchJson(vararg p0: String){
         val text = URLEncoder.encode("${p0[0]}", "UTF-8")
@@ -76,8 +80,9 @@ class RecommendActivity : AppCompatActivity() {
         val client = OkHttpClient()
 
         client.newCall(request).enqueue(object : Callback {
-            override fun onResponse(call: Call?, response: Response?) {
-                val body = response?.body()?.string()
+
+            override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
                 println("Success to execute request : $body")
 
                 //Gson을 Kotlin에서 사용 가능한 object로 만든다.
@@ -100,7 +105,7 @@ class RecommendActivity : AppCompatActivity() {
                 }
             }
 
-            override fun onFailure(call: Call?, e: IOException?) {
+            override fun onFailure(call: Call, e: IOException) {
                 println("Failed to execute request")
             }
         })
