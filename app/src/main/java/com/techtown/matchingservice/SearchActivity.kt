@@ -23,10 +23,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -77,7 +74,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     var productsList : ArrayList<ProductData> = arrayListOf<ProductData>()
     lateinit var adapter :ProductListAdapter
     lateinit var mRecyclerView: RecyclerView
-
+    var latlngList : ArrayList<LatLngData> = arrayListOf()
     private lateinit var fusedLocationClient : FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
@@ -116,6 +113,17 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 adapter.notifyDataSetChanged()
             }
         })
+        val Search = findViewById<ImageButton>(R.id.imageButton4)
+
+        Search.setOnClickListener{
+            val edit = findViewById<EditText>(R.id.productSearch)
+            val string = edit.text.toString()
+            if (string.isNullOrEmpty()) {
+                Toast.makeText(this, "검색어를 입력해주세요", Toast.LENGTH_LONG).show()
+            } else {
+                search(string)
+            }
+        }
         mRecyclerView = findViewById<RecyclerView>(R.id.recyclerview)
         mRecyclerView.adapter = adapter
         firestore = FirebaseFirestore.getInstance()
@@ -187,6 +195,11 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             mMap.setOnMapClickListener{
                 //card_view.visibility = View.GONE
                 productsList.clear()
+                /*for(i in latlngList){
+                    mClusterManager.removeItem(i)
+                }*/
+                latlngList.clear()
+                mClusterManager.clearItems()
                 adapter.notifyDataSetChanged()
                 updateLocation()
             }
@@ -205,8 +218,8 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var item = document.toObject(ContentDTO::class.java)
                         contentDTOs.add(item!!)
                         contentUidList.add(document.id)
-                        var location = LatLng(cor[0].latitude, cor[0].longitude)
-                        addLatLngData(i,id, location)
+                        //var location = LatLng(cor[0].latitude, cor[0].longitude)
+                        //addLatLngData(i,id, location)
                         i++
                     }
                 }
@@ -295,6 +308,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     }
     fun addLatLngData(index : Int, id : String?, latlng : LatLng){
         val data = LatLngData(index, id, latlng)
+        latlngList.add(data)
         if(size_check ==0){
             Handler(Looper.getMainLooper()).post{mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(data.latlng,12F))}
         }
@@ -378,7 +392,48 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
     }
-
+    fun search(searchWord : String){
+        for(i in latlngList){
+            mClusterManager.removeItem(i)
+        }
+        latlngList.clear()
+        productsList.clear()
+        firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            var i=0
+            for(snapshot in querySnapshot!!.documents){
+                if(snapshot.getString("product")?.contains(searchWord) == true){
+                    var item = snapshot.toObject(ContentDTO::class.java)
+                    var id = item!!.userId as String
+                    var name = item.product as String
+                    var place = item.place as String
+                    var image = item.imageUrl as String
+                    val participation = "현재 " + item.ParticipationCount.toString() + " / " + item.ParticipationTotal.toString()
+                    var price = item.price.toString()
+                    var totalNumber = item.totalNumber.toString()
+                    var cycle = item.cycle.toString()
+                    var unit = item.unit.toString()
+                    var url = item.url as String
+                    var uid = item.uid as String
+                    var timestamp = item.timestamp.toString()
+                    var participationCount = item.ParticipationCount.toString()
+                    var uidkey = item.Participation.containsKey(uid).toString()
+                    var participationTotal = item.ParticipationTotal.toString()
+                    var Listid = snapshot.id as String
+                    var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
+                    productsList.add(product)
+                    var lat = item.location.latitude
+                    var lng = item.location.longitude
+                    var location : LatLng = LatLng(lat, lng)
+                    addLatLngData(i,id, location)
+                    i++
+                }
+                else{
+                    //Toast.makeText(applicationContext, "검색 결과가 없습니다.",Toast.LENGTH_LONG).show()
+                }
+            }
+            adapter.notifyDataSetChanged()
+        }
+    }
     inner class MarkerClusterRenderer(context : Context?, map : GoogleMap?, clusterManager: ClusterManager<LatLngData>?)
         :DefaultClusterRenderer<LatLngData>(context, map, clusterManager){
         private val context = context
@@ -398,8 +453,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
 
         override fun shouldRenderAsCluster(cluster: Cluster<LatLngData>): Boolean {
             super.shouldRenderAsCluster(cluster)
-            return cluster != null && cluster.size >= 3
+            return cluster != null && cluster.size >= 2
         }
     }
+
 
 }

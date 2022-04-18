@@ -38,7 +38,7 @@ class Fragment1 : Fragment() {
             startActivity(intent)
         }
 
-        binding.button3.setOnClickListener {
+        /*binding.button3.setOnClickListener {
             val string = binding.edit.text
             if (string.isNullOrEmpty()) {
                 Toast.makeText(context, "chip 이름을 입력해주세요", Toast.LENGTH_LONG).show()
@@ -56,7 +56,7 @@ class Fragment1 : Fragment() {
                     setOnCloseIconClickListener { binding.chipGroup.removeView(this) }
                 })
             }
-        }
+        }*/
         binding.fragment1RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         binding.fragment1RecyclerView.adapter = Fragment1RecyclerviewAdapter()

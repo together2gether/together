@@ -20,12 +20,13 @@
             android:layout_height="27dp"
             android:background="@drawable/arrow"
             android:backgroundTint="#ffffff" />
+
         <TextView
             android:id="@+id/set_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="내 정보 변경"
+            android:text="내 정보 수정"
             android:textColor="@android:color/white"
             android:textSize="17sp"
             android:textStyle="bold" />
@@ -156,15 +157,25 @@
 
             <EditText
                 android:id="@+id/edit_Address"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="10dp"
+                android:layout_weight="5"
                 android:background="@drawable/item_chat"
                 android:paddingBottom="15dp"
                 android:textSize="16sp"
                 android:textStyle="normal" />
+
+            <android.widget.Button
+                android:id="@+id/searchButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/button"
+                android:backgroundTintMode="add"
+                android:text="검색" />
         </LinearLayout>
 
         <android.widget.Button

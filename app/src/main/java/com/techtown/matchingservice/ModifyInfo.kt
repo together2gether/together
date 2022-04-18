@@ -1,6 +1,7 @@
 package com.techtown.matchingservice
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -38,7 +39,7 @@ class ModifyInfo : AppCompatActivity() {
     val userRef = infoRef.child(userIdSt)
     var imageUri : Uri? = null
     var profileCheck = false
-
+    lateinit var searchButton :Button
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
             if(result.resultCode == RESULT_OK) {
@@ -67,7 +68,11 @@ class ModifyInfo : AppCompatActivity() {
         var edit_address = findViewById<EditText>(R.id.edit_Address)
         val btn_changeImg = findViewById<Button>(R.id.btn_changeImg)
         val modify = findViewById<Button>(R.id.btn_modify)
-
+        searchButton = findViewById(R.id.searchButton)
+        searchButton.setOnClickListener{
+            val intent = Intent(this, AddressActivity::class.java)
+            resultLauncher.launch(intent)
+        }
         userRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
             }
@@ -147,5 +152,12 @@ class ModifyInfo : AppCompatActivity() {
     private fun reload(){
 
     }
-
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val myData: Intent? = result.data
+            val stringData = result.data?.getStringExtra("returnValue")
+            val editAddress = findViewById<EditText>(R.id.edit_Address)
+            editAddress.setText(stringData)
+        }
+    }
 }

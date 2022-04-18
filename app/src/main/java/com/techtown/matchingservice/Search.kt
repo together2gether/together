@@ -1,21 +1,13 @@
 package com.techtown.matchingservice
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.location.Geocoder
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
-import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -23,9 +15,6 @@ import com.google.android.gms.location.*
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.maps.android.clustering.ClusterManager
-import com.google.maps.android.clustering.view.ClusterRenderer
-import com.google.maps.android.collections.MarkerManager
 import com.techtown.matchingservice.model.ContentDTO
 import java.util.*
 
@@ -73,7 +62,7 @@ class Search : AppCompatActivity(), OnMapReadyCallback {
         button.setOnClickListener {
             finish()
         }
-        val input = findViewById<EditText>(R.id.editTextTextPersonName18)
+        val input = findViewById<EditText>(R.id.productSearch)
         /*val search = findViewById<ImageButton>(R.id.imageButton4)
         search.setOnClickListener {
             val cor = geocoder.getFromLocationName(input.text.toString(), 1)
