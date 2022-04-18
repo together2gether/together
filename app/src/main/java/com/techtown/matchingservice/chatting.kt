@@ -1,6 +1,7 @@
 package com.techtown.matchingservice
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
@@ -56,7 +57,11 @@ class chatting : AppCompatActivity() {
 
         val imageView = findViewById<Button>(R.id.btn_input)
         val editText = findViewById<EditText>(R.id.editText_msg)
-
+        val recommend = findViewById<ImageButton>(R.id.imageButton2)
+        recommend.setOnClickListener {
+            val intent = Intent(this, RecommandLocation::class.java)
+            startActivity(intent)
+        }
         //메시지를 보낸 시간
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
