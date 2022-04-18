@@ -10,8 +10,6 @@
         android:id="@+id/productitem_cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         app:cardBackgroundColor="#FFFFFFFF"
@@ -30,7 +28,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="8dp"
                 android:padding="5dp"
                 app:srcCompat="@drawable/multi" />
 
@@ -51,18 +49,18 @@
                     android:text="아이디"
                     android:textSize="13sp" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
                     android:layout_marginBottom="7dp">
 
                     <TextView
                         android:id="@+id/productitem_textview_product_name"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
+                        android:layout_weight="3"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="center_vertical"
                         android:text="제품1"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -71,12 +69,12 @@
                         android:id="@+id/productitem_participation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
                         android:background="@drawable/number"
+                        android:layout_gravity="center_vertical"
                         android:padding="10dp"
                         android:text="현재 1/5명"
                         android:textSize="13dp" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/productitem_textview_place"

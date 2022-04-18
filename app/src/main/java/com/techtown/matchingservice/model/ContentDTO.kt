@@ -19,10 +19,4 @@ data class ContentDTO(
     var location : GeoPoint = GeoPoint(37.5466,126.9661),
     //참여 누른 유저 관리
     var Participation : MutableMap<String, Boolean> = HashMap()){
-    //댓글 관리
-    data class Comment(
-        var uid : String? = null,
-        var userId : String? = null,
-        var comment : String? = null,
-        var timestamp : Long? = null)
 }

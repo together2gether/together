@@ -53,7 +53,7 @@ class ProductManage : AppCompatActivity() {
         }
 
         binding.button22.setOnClickListener(){
-            val intent = Intent(this, EditProduct::class.java).apply{
+            Intent(this, EditProduct::class.java).apply{
                 putExtra("product", binding.manageProductProduct.text)
                 putExtra("imageUrl", intent.getStringExtra("imageUrl").toString())
                 putExtra("price", intent.getStringExtra("price").toString())

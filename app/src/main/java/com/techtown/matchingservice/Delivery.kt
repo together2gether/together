@@ -1,6 +1,7 @@
 package com.techtown.matchingservice
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -72,6 +73,21 @@ class Delivery : AppCompatActivity() {
                 transition.set(tsDoc!!,item)
             }
             binding.foodinfoParticipation.isEnabled=false
+        }
+
+        binding.foodEdit.setOnClickListener(){
+            Intent(this, EditFood::class.java).apply{
+                putExtra("store", binding.foodinfoStore.text)
+                putExtra("delivery",  intent.getStringExtra("delivery").toString())
+                putExtra("orderPrice", binding.foodinfoOrderprice.text)
+                putExtra("deliveryPrice", binding.foodinfoDeliveryprice.text)
+                putExtra("deliveryAddress", binding.foodinfoDeliveryaddress.text)
+                putExtra("deliveryid", deliveryid)
+                putExtra("deliveryuid", deliveryuid)
+                putExtra("detail", binding.foodinfoDeliverydetail.text)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }.run { startActivity(this) }
+            finish()
         }
 
         binding.foodRemove.setOnClickListener(){
