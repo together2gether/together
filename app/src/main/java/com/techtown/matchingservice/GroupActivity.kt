@@ -92,6 +92,9 @@ class GroupActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: RecyclerViewAdapter.GroupViewHolder, @SuppressLint("RecyclerView") position: Int) {
+            if(groups[position].uid.toString() == uid.toString()){
+                holder.btn_drop.isEnabled = false
+            }
             holder.tv_product.text = groups[position].product
             holder.tv_cycle.text = "구매주기 : "+groups[position].cycle+" 일"
             holder.tv_price.text = "가격 : "+groups[position].price + " 원"
@@ -119,6 +122,7 @@ class GroupActivity : AppCompatActivity() {
                                             transition->
                                         transition.set(tsDoc!!, item)
                                     }
+                                    //recyclerView?.adapter = RecyclerViewAdapter()
                                     roomsRef.orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
                                         override fun onCancelled(error: DatabaseError) {
                                         }
@@ -142,12 +146,13 @@ class GroupActivity : AppCompatActivity() {
                                             }
                                         }
                                     })
+                                    //recyclerView?.adapter = RecyclerViewAdapter()
                                 }
                             }
                         }
-                        //notifyDataSetChanged()
                     }
                 notifyDataSetChanged()
+                recyclerView?.adapter = RecyclerViewAdapter()
             }
         }
 
