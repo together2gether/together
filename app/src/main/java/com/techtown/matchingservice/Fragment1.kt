@@ -1,19 +1,15 @@
 package com.techtown.matchingservice
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.techtown.matchingservice.databinding.Fragment1Binding
@@ -39,8 +35,10 @@ class Fragment1 : Fragment() {
         }
 
         /*binding.button3.setOnClickListener {
-            val string = binding.edit.text
-            if (string.isNullOrEmpty()) {
+            val intent = Intent(context, SelectcityActivity::class.java)
+            startActivity(intent)
+            //val string = binding.edit.text
+            /*if (string.isNullOrEmpty()) {
                 Toast.makeText(context, "chip 이름을 입력해주세요", Toast.LENGTH_LONG).show()
             } else {
                 binding.chipGroup.addView(Chip(context).apply {
@@ -55,7 +53,9 @@ class Fragment1 : Fragment() {
                     isCloseIconVisible = true
                     setOnCloseIconClickListener { binding.chipGroup.removeView(this) }
                 })
-            }
+            }*/
+
+
         }*/
         binding.fragment1RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 

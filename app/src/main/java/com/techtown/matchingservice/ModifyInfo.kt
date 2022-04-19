@@ -101,6 +101,8 @@ class ModifyInfo : AppCompatActivity() {
             getContent.launch(intentImage)
         }
 
+
+
         modify.setOnClickListener {
             if(edit_nickname.text.isEmpty()||edit_name.text.isEmpty()||edit_phonenumber.text.isEmpty()||edit_address.text.isEmpty()){
                 Toast.makeText(this, "닉네임, 이름, 전화번호, 주소를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()

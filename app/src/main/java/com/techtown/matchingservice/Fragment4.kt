@@ -1,5 +1,6 @@
 package com.techtown.matchingservice
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -34,10 +35,9 @@ class Fragment4 : Fragment() {
     private val binding get() = mBinding!!
     private var mContext: Context? = null
     private val _context get() = mContext!!
+    @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-
-
         mBinding = Fragment4Binding.inflate(inflater, container,false)
         val view = binding.root
 
@@ -71,5 +71,13 @@ class Fragment4 : Fragment() {
         }
         return view
     }
+
+    /*@SuppressLint("UseRequireInsteadOfGet")
+    fun refresh() {
+        var ft: FragmentTransaction = getFragmentManager()!!.beginTransaction()
+        ft.detach(this).attach(this).commit()
+    }*/
+
+
 
 }
