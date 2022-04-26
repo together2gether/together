@@ -79,17 +79,22 @@ class ModifyInfo : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userInfo = snapshot.getValue<UsersInfo>()
-                if(userInfo!!.profileImageUrl.toString() != ""){
-                    Glide.with(profile_img.context).load(userInfo?.profileImageUrl)
-                        .apply(RequestOptions().circleCrop())
-                        .into(profile_img)
-                    //val uri = Uri.parse(userInfo.profileImageUrl.toString())
-                    //profile_img.setImageURI(uri)
+                if(userInfo == null){
+
+                } else {
+                    if(userInfo!!.profileImageUrl.toString() != ""){
+                        Glide.with(profile_img.context).load(userInfo?.profileImageUrl)
+                            .apply(RequestOptions().circleCrop())
+                            .into(profile_img)
+                        //val uri = Uri.parse(userInfo.profileImageUrl.toString())
+                        //profile_img.setImageURI(uri)
+                    }
+                    edit_nickname.setText(userInfo.nickname.toString())
+                    edit_name.setText(userInfo.name.toString())
+                    edit_address.setText(userInfo.address.toString())
+                    edit_phonenumber.setText(userInfo.phonenumber.toString())
+
                 }
-                edit_nickname.setText(userInfo.nickname.toString())
-                edit_name.setText(userInfo.name.toString())
-                edit_address.setText(userInfo.address.toString())
-                edit_phonenumber.setText(userInfo.phonenumber.toString())
 
             }
         })
@@ -104,16 +109,18 @@ class ModifyInfo : AppCompatActivity() {
 
 
         modify.setOnClickListener {
+
             if(edit_nickname.text.isEmpty()||edit_name.text.isEmpty()||edit_phonenumber.text.isEmpty()||edit_address.text.isEmpty()){
                 Toast.makeText(this, "닉네임, 이름, 전화번호, 주소를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
-
+                var first = false
                 userRef.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val userInfo = snapshot.getValue<UsersInfo>()
                         if(userInfo == null){
                             val newInfo = UsersInfo("", "","","","",userIdSt)
                             userRef.setValue(newInfo)
+                            first = true
                         }
                         if(profileCheck){
                             FirebaseStorage.getInstance()
@@ -136,6 +143,7 @@ class ModifyInfo : AppCompatActivity() {
                     }
                 })
                 finish()
+
             }
 
         }
