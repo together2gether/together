@@ -128,14 +128,15 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
             <RadioGroup
                 android:id="@+id/fragment2_rg"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="30dp"
+                android:layout_weight="2"
                 android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/fragment2_rb_delivery"
@@ -154,10 +155,10 @@
 
             <TextView
                 android:id="@+id/textView183"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1.5"
                 android:layout_marginRight="30dp"
-                android:layout_toLeftOf="@id/textView184"
                 android:text="필요 주문 금액"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -165,15 +166,16 @@
 
             <TextView
                 android:id="@+id/textView184"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
                 android:text="총 배달비"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_centerVertical="true"/>
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView

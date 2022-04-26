@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.techtown.matchingservice.databinding.EditProductBinding
+import com.techtown.matchingservice.databinding.RegisterProductBinding
 import com.techtown.matchingservice.model.ContentDTO
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,7 +28,7 @@ class EditProduct : AppCompatActivity() {
     var photoUri: Uri? = null
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
-    var productid : String? = null
+    var productid: String? = null
     var contentdto = ContentDTO()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,17 +40,18 @@ class EditProduct : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        Glide.with(this).load(intent.getStringExtra("imageUrl").toString()).into(binding.imageVieweditProductAddPhoto)
-        binding.editProductProduct.setText(intent.getStringExtra("product").toString())
-        binding.editProductTotal.setText(intent.getStringExtra("totalNumber").toString())
-        binding.editProductPrice.setText(intent.getStringExtra("price").toString())
-        binding.editProductUnit.setText(intent.getStringExtra("unit").toString())
-        binding.editProductUrl.setText(intent.getStringExtra("URL").toString())
-        binding.editProductPlace.setText(intent.getStringExtra("place").toString())
-        binding.editProductCycle.setText(intent.getStringExtra("cycle").toString())
-        productid = intent.getStringExtra("id").toString()
+        Glide.with(this).load(intent.getStringExtra("imageUrl").toString())
+            .into(binding.imageVieweditProductAddPhoto)
+//        binding.editTextProduct.setText(intent.getStringExtra("product").toString())
+//        binding.editTextTotalNumber.setText(intent.getStringExtra("totalNumber").toString())
+//        binding.editTextPrice.setText(intent.getStringExtra("price").toString())
+//        binding.editTextUnit.setText(intent.getStringExtra("unit").toString())
+//        binding.editTextURL.setText(intent.getStringExtra("URL").toString())
+//        binding.editTextPlace.setText(intent.getStringExtra("place").toString())
+//        binding.NPCycle.(intent.getStringExtra("cycle").toString())
+//        productid = intent.getStringExtra("id").toString()
 
-        binding.button14.setOnClickListener{
+        binding.button14.setOnClickListener {
             finish()
         }
 
@@ -58,14 +60,15 @@ class EditProduct : AppCompatActivity() {
             photoPickerIntent.type = "image/*"
             getContent.launch(photoPickerIntent)
         }
-        binding.editProductStorage.setOnClickListener{
-            if(photoUri != null){
+        binding.editProductStorage.setOnClickListener {
+            if (photoUri != null) {
                 imageUpload()
             }
             contentReUpload()
             finish()
         }
     }
+
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
@@ -76,6 +79,7 @@ class EditProduct : AppCompatActivity() {
                 Log.d("이미지", "실패")
             }
         }
+
     fun imageUpload() {
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var imageFileName = "IMAGE" + timestamp + "_.png"
@@ -95,6 +99,7 @@ class EditProduct : AppCompatActivity() {
                 }
             }
     }
+
     fun contentReUpload() {
         var tsDoc = firestore?.collection("images")?.document(productid.toString())
         firestore?.runTransaction { transition ->
@@ -135,7 +140,7 @@ class EditProduct : AppCompatActivity() {
             var participation: Int = contentdto.totalNumber / contentdto.unit
             contentdto.ParticipationTotal = participation
 
-            transition.set(tsDoc!!,contentdto)
+            transition.set(tsDoc!!, contentdto)
         }
 
         setResult(Activity.RESULT_OK)

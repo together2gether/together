@@ -18,7 +18,7 @@ class EditFood : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var deliverydto = DeliveryDTO()
-    var deliveryid : String? = null
+    var deliveryid: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class EditFood : AppCompatActivity() {
         binding.registerFoodDetail.setText(intent.getStringExtra("detail").toString())
         deliveryid = intent.getStringExtra("deliveryid").toString()
 
-        if(intent.getStringExtra("delivery").toString()=="false"){
+        if (intent.getStringExtra("delivery").toString() == "false") {
             binding.registerFoodName.setText("쇼핑몰 이름")
             binding.rbShopping.isChecked = true
         }
@@ -47,19 +47,20 @@ class EditFood : AppCompatActivity() {
             finish()
         }
 
-        binding.registerFoodStorage.setOnClickListener(){
+        binding.registerFoodStorage.setOnClickListener() {
             deliveryReUpload()
             finish()
         }
     }
+
     fun deliveryReUpload() {
         var tsDoc = firestore?.collection("delivery")?.document(deliveryid.toString())
         firestore?.runTransaction { transition ->
             deliverydto = transition.get(tsDoc!!).toObject(DeliveryDTO::class.java)!!
 
-            if(binding.rbDelivery.isChecked){
+            if (binding.rbDelivery.isChecked) {
                 deliverydto.delivery = true
-            }else{
+            } else {
                 deliverydto.delivery = false
             }
 

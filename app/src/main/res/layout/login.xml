@@ -16,29 +16,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="210dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="210dp"
+            android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/googleSigninButton"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/google"
                 android:text="구글 로그인"
                 android:textColor="#ffffff"
-                tools:layout_editor_absoluteY="440dp"
-                android:layout_marginBottom="30dp"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/facebookSigninButton"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@drawable/facebook"
-                android:text="페이스북 로그인"
-                android:textColor="#ffffff" />
+                tools:layout_editor_absoluteY="440dp" />
         </LinearLayout>
     </RelativeLayout>
 </layout>
