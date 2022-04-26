@@ -1,7 +1,10 @@
 package com.techtown.matchingservice
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64.encode
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -11,6 +14,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.techtown.matchingservice.databinding.ActivityMainBinding
+import java.security.MessageDigest
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding

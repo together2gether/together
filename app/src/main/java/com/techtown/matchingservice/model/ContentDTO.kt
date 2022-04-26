@@ -1,5 +1,6 @@
 package com.techtown.matchingservice.model
 
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.firestore.GeoPoint
 
 data class ContentDTO(

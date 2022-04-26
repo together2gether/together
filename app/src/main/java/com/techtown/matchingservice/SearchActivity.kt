@@ -46,7 +46,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
-import com.techtown.matchingservice.databinding.ProductItemBinding
+//import com.techtown.matchingservice.databinding.ProductItemBinding
 import com.techtown.matchingservice.model.ContentDTO
 import java.util.*
 import kotlin.collections.ArrayList

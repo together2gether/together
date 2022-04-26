@@ -8,19 +8,29 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import net.daum.mf.map.api.MapPOIItem
-import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.location.LocationManager
+import android.os.Build
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import net.daum.mf.map.api.*
 
 class RecommandLocation : AppCompatActivity() {
+    val PERMISSIONS_REQUEST_CODE = 100
+    val REQUIRED_PERMISSIONS = arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION)
     companion object {
         const val BASE_URL = "http://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 39c205c0e521e0d112dcefa5460592d8"
@@ -32,12 +42,16 @@ class RecommandLocation : AppCompatActivity() {
     lateinit var mapView : MapView
     lateinit var button : Button
     lateinit var button1 : Button
+    lateinit var lat : String
+    lateinit var lng : String
+    lateinit var mylat : String
+    lateinit var mylng : String
+    lateinit var yourlat : String
+    lateinit var yourlng : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.recommend_location)
         mapView = findViewById(R.id.mapView)
-        //val kakao = findViewById<ConstraintLayout>(R.id.mapView)
-        //kakao.addView(mapView)
         val layout = findViewById<RecyclerView>(R.id.rv_list)
         try{
             // 리사이클러 뷰
@@ -53,9 +67,77 @@ class RecommandLocation : AppCompatActivity() {
         }catch (e: Exception){
 
         }
+         lat = intent.getStringExtra("lat").toString()
+         lng = intent.getStringExtra("lng").toString()
+        mylat = intent.getStringExtra("mylat").toString()
+        mylng = intent.getStringExtra("mylng").toString()
+        yourlat = intent.getStringExtra("yourlat").toString()
+        yourlng = intent.getStringExtra("yourlng").toString()
+
+        val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            try {
+                val uNowPosition = MapPoint.mapPointWithGeoCoord(mylat.toDouble(), mylng.toDouble())
+                mapView.setMapCenterPoint(uNowPosition, true)
+                mapView.setZoomLevel(1, true)
+                val marker = MapPOIItem()
+                marker.itemName = "내 위치"
+                marker.mapPoint = uNowPosition
+                marker.markerType = MapPOIItem.MarkerType.CustomImage
+                marker.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                marker.customImageResourceId = R.drawable.red_pin
+                //marker.customSelectedImageResourceId = R.drawable.blue_pin
+                marker.isCustomImageAutoscale = false
+                marker.setCustomImageAnchor(0.5f, 1.0f)
+                mapView.addPOIItem(marker)
+                /*val yourpos = MapPoint.mapPointWithGeoCoord(yourlat.toDouble(), yourlng.toDouble())
+                mapView.setMapCenterPoint(yourpos, true)
+                mapView.setZoomLevel(1, true)
+                val marker2 = MapPOIItem()
+                marker2.itemName = "상대방 위치"
+                marker2.mapPoint = yourpos
+                marker2.markerType = MapPOIItem.MarkerType.CustomImage
+                marker2.selectedMarkerType = MapPOIItem.MarkerType.CustomImage
+                marker2.customImageResourceId = R.drawable.blue_pin
+                //marker.customSelectedImageResourceId = R.drawable.blue_pin
+                marker2.isCustomImageAutoscale = false
+                marker2.setCustomImageAnchor(0.5f, 1.0f)
+                mapView.addPOIItem(marker2)*/
+                var circle = MapCircle(MapPoint.mapPointWithGeoCoord(lat.toDouble(), lng.toDouble()),
+                    500, Color.argb(0,255,255,255 ),
+                    Color.argb(0,255, 255,255));
+                circle.tag = 1234
+                mapView.addCircle(circle)
+                val array1 : Array<MapPointBounds> = arrayOf(circle.bound)
+                val mapPointBounds = MapPointBounds(array1)
+                var padding = 50
+                mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds,padding))
+                var circle2 = MapCircle(MapPoint.mapPointWithGeoCoord(yourlat.toDouble(), yourlng.toDouble()),
+                    500, Color.argb(128,189,215,238 ),
+                    Color.argb(128,189, 215,238));
+                circle2.tag = 1234
+                mapView.addCircle(circle2)
+                //val array2 : Array<MapPointBounds> = arrayOf(circle2.bound)
+
+            }catch(e: NullPointerException){
+                Toast.makeText(applicationContext, "durl", Toast.LENGTH_LONG).show()
+                Log.e("LOCATION_ERROR", e.toString())
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    ActivityCompat.finishAffinity(this)
+                }else{
+                    ActivityCompat.finishAffinity(this)
+                }
+
+                /*val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+                System.exit(0)*/
+            }
+        }else{
+            Toast.makeText(this, "위치 권한이 없습니다.", Toast.LENGTH_SHORT).show()
+            ActivityCompat.requestPermissions(this, REQUIRED_PERMISSIONS, PERMISSIONS_REQUEST_CODE )
+        }
         searchKeyword("편의점",1)
     }
-
     // 키워드 검색 함수
     private fun searchKeyword(keyword: String, page: Int) {
         val retrofit = Retrofit.Builder()          // Retrofit 구성
@@ -64,7 +146,7 @@ class RecommandLocation : AppCompatActivity() {
             .build()
         val api = retrofit.create(KakaoAPI::class.java)            // 통신 인터페이스를 객체로 생성
         //val call = api.getSearchCategory(API_KEY, "CS2", "126.972526" ,"37.560452", 50000)
-        val call = api.getSearchKeyword(API_KEY, "CS2","126.972526", "37.560452",1000 ,1, "distance")
+        val call = api.getSearchKeyword(API_KEY, "CS2",lng, lat,1000 ,1, "distance")
         // 검색 조건 입력
 
         //val call = api.getSearchKeyword(API_KEY, keyword, "126.972526" ,"37.560452", 50000 )
@@ -73,7 +155,7 @@ class RecommandLocation : AppCompatActivity() {
             override fun onResponse(call: Call<ResultSearchKeyword>, response: Response<ResultSearchKeyword>) {
                 // 통신 성공
                 addItemsAndMarkers(response.body())
-                val call1 = api.getSearchKeyword(API_KEY, "SW8", "126.972526", "37.560452", 1000, 1, "distance")
+                val call1 = api.getSearchKeyword(API_KEY, "SW8", lng, lat, 500, 1, "distance")
                 call1.enqueue(object : Callback<ResultSearchKeyword> {
                     override fun onResponse(
                         call: Call<ResultSearchKeyword>,

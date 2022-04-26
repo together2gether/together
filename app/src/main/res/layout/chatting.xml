@@ -43,7 +43,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="7dp"
             android:background="#ffffffff"
-            android:src="@drawable/photo" />
+            android:src="@drawable/location_marker" />
 
         <EditText
             android:id="@+id/editText_msg"

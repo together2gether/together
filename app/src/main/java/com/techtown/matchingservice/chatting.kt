@@ -2,6 +2,7 @@ package com.techtown.matchingservice
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.view.Gravity
@@ -15,13 +16,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.model.ChatModel
@@ -41,39 +44,82 @@ class chatting : AppCompatActivity() {
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val roomsRef = database.getReference("chatrooms")
     private val usersRef = database.getReference("usersInfo")
-
     val db = Firebase.firestore
     val docRef = db.collection("images")
-
+     var mylocation : String = ""
+     var yourlocation : String = ""
     //var groupItem = ContentDTO()
     //var groupItem_id : String? = null
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     var firestore: FirebaseFirestore? = null
-
+    private lateinit var databaseRef : DatabaseReference
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.chatting)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
         val imageView = findViewById<Button>(R.id.btn_input)
         val editText = findViewById<EditText>(R.id.editText_msg)
         val recommend = findViewById<ImageButton>(R.id.imageButton2)
-        recommend.setOnClickListener {
-            val intent = Intent(this, RecommandLocation::class.java)
-            startActivity(intent)
-        }
+
         //메시지를 보낸 시간
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
         val curTime = dateFormat.format(Date(time)).toString()
 
-
+        val geocoder = Geocoder(this)
         groupchat = intent.getStringExtra("groupchat")
         uid = Firebase.auth.currentUser?.uid.toString()
+        val infoRef = database.getReference("usersInfo")
+        val userRef = infoRef.child(uid.toString())
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+
+            }
+        })
         recyclerView = findViewById(R.id.msg_recyclerview)
         if(groupchat == "N"){
             destinationUid = intent.getStringExtra("destinationUid")
             productid = ""
+            val destinationRef = infoRef.child(destinationUid.toString())
+            destinationRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val destinationInfo = snapshot.getValue<UsersInfo>()
+                    yourlocation = destinationInfo!!.address.toString()
+                    val mycor = geocoder.getFromLocationName(mylocation,1)
+                    val yourcor = geocoder.getFromLocationName(yourlocation,1)
+                    val mylat = mycor[0].latitude.toString()
+                    val mylng = mycor[0].longitude.toString()
+                    val yourlat = yourcor[0].latitude.toString()
+                    val yourlng = yourcor[0].longitude.toString()
+                    val lat = ((mycor[0].latitude + yourcor[0].latitude)/2).toString()
+                    val lng = ((mycor[0].longitude + yourcor[0].longitude)/2).toString()
+
+                    recommend.setOnClickListener {
+                        Intent(applicationContext, RecommandLocation::class.java).apply {
+                            putExtra("mylat", mylat)
+                            putExtra("mylng", mylng)
+                            putExtra("yourlat", yourlat)
+                            putExtra("yourlng", yourlng)
+                            putExtra("lat", lat)
+                            putExtra("lng", lng)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }.run {applicationContext?.startActivity(this)}
+                    }
+                }
+            })
         } else if (groupchat == "Y"){
             productid = intent.getStringExtra("productid")
             destinationUid = ""
