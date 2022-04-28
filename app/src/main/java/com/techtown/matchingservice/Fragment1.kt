@@ -1,6 +1,7 @@
 package com.techtown.matchingservice
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,12 +29,18 @@ class Fragment1 : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().uid!!
 
-
-        binding.imageButton2.setOnClickListener {
-            val intent = Intent(context, SearchActivity::class.java)
+        binding.fragment1ProductRegistration.setOnClickListener {
+            val intent = Intent(context, ProductActivity::class.java)
             startActivity(intent)
         }
-
+        binding.low.setOnClickListener {
+            val lowpriceitemIntent = Intent(context, RecommendActivity::class.java)
+            startActivity(lowpriceitemIntent)
+            //getItemContent.launch(lowpriceitemIntent)
+        }
+        binding.menu.setOnClickListener {
+            binding.relative.setBackgroundColor(Color.parseColor("#80ffffff"))
+        }
         binding.button3.setOnClickListener {
             val newintent = Intent(context, CityspinnerActivity::class.java)
             startActivity(newintent)
@@ -165,4 +172,5 @@ class Fragment1 : Fragment() {
             return contentDTOs.size
         }
     }
+
 }

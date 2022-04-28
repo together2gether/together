@@ -17,60 +17,34 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#bfdeff"
-            app:itemIconTint="#bfdeff"
-            app:itemTextColor="#bfdeff"
+            android:background="#143F6B"
             tools:ignore="MissingConstraints">
 
-            <RelativeLayout
+
+            <TextView
+                android:id="@+id/set_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp">
+                android:layout_gravity="center_horizontal"
+                android:text="search"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
-                <android.widget.Button
-                    android:id="@+id/fragment1_conditional_search"
-                    android:layout_width="70dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/circle_button_blue"
-                    android:text="조건탐색"
-                    android:textColor="#ffffff"
-                    android:textSize="12dp" />
-
-                <TextView
-                    android:id="@+id/set_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="search"
-                    android:textColor="@android:color/white"
-                    android:textSize="17sp"
-                    android:textStyle="bold" />
-
-                <android.widget.Button
-                    android:id="@+id/fragment1_product_registration"
-                    android:layout_width="60dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/circle_button_blue"
-                    android:text="등록"
-                    android:textColor="#ffffff"
-                    android:textSize="12dp" />
-
-                <android.widget.Button
-                    android:id="@+id/fragment2_product_registration"
-                    android:layout_width="60dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/circle_button_blue"
-                    android:text="등록"
-                    android:textColor="#ffffff"
-                    android:textSize="12dp" />
-            </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="40dp"
+            android:layout_height="55dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="false"
+            android:layout_marginRight="5dp"
+            android:paddingRight="15dp"
+            app:srcCompat="@drawable/ic_search"
+            app:tint="#ffffff" />
 
         <FrameLayout
             android:id="@+id/main_content"
@@ -81,18 +55,18 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="0dp"
-            android:layout_marginBottom="-2dp">
-
-
-        </FrameLayout>
+            android:layout_marginBottom="-2dp"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            app:itemIconTint="#bfdeff"
-            app:itemTextColor="#bfdeff"
-            app:menu="@menu/menu_bottom" />
+            app:itemIconTint="#143F6B"
+            app:itemTextColor="#143F6B"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/menu_bottom" >
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
     </RelativeLayout>
 </layout>

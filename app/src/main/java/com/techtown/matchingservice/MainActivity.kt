@@ -32,8 +32,11 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         var fragment1 = Fragment1()
         changeTitle("정기구매")
-
-        binding.fragment1ProductRegistration.setOnClickListener {
+        binding.search.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
+        /*binding.fragment1ProductRegistration.setOnClickListener {
             val intent = Intent(this, ProductActivity::class.java)
             startActivity(intent)
         }
@@ -46,10 +49,11 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, FoodActivity::class.java)
             startActivity(intent)
         }
-        supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
+
         binding.fragment2ProductRegistration.setVisibility(View.INVISIBLE)
         binding.fragment1ProductRegistration.setVisibility(View.VISIBLE)
-        binding.fragment1ConditionalSearch.setVisibility(View.VISIBLE)
+        binding.fragment1ConditionalSearch.setVisibility(View.VISIBLE)*/
+        supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
         initNavigationBar()
     }
 
@@ -59,36 +63,36 @@ class MainActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.tab1 -> {
                         changeTitle("정기구매")
-                        binding.fragment2ProductRegistration.setVisibility(View.INVISIBLE)
+                        /*binding.fragment2ProductRegistration.setVisibility(View.INVISIBLE)
                         binding.fragment1ProductRegistration.setVisibility(View.VISIBLE)
-                        binding.fragment1ConditionalSearch.setVisibility(View.VISIBLE)
+                        binding.fragment1ConditionalSearch.setVisibility(View.VISIBLE)*/
                         var fragment1 = Fragment1()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment1).commit()
                     }
                     R.id.tab2 -> {
                         changeTitle("배달")
-                        binding.fragment1ProductRegistration.setVisibility(View.INVISIBLE)
+                        /*binding.fragment1ProductRegistration.setVisibility(View.INVISIBLE)
                         binding.fragment1ConditionalSearch.setVisibility(View.INVISIBLE)
-                        binding.fragment2ProductRegistration.setVisibility(View.VISIBLE)
+                        binding.fragment2ProductRegistration.setVisibility(View.VISIBLE)*/
                         var fragment2 = Fragment2()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment2).commit()
                     }
                     R.id.tab3-> {
                         changeTitle("채팅")
-                        binding.fragment2ProductRegistration.setVisibility(View.INVISIBLE)
+                        /*binding.fragment2ProductRegistration.setVisibility(View.INVISIBLE)
                         binding.fragment1ProductRegistration.setVisibility(View.INVISIBLE)
-                        binding.fragment1ConditionalSearch.setVisibility(View.INVISIBLE)
+                        binding.fragment1ConditionalSearch.setVisibility(View.INVISIBLE)*/
                         var chatFragment = ChatFragment()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, chatFragment).commit()
                     }
                     R.id.tab4 -> {
                         changeTitle("마이페이지")
-                        binding.fragment2ProductRegistration.setVisibility(View.INVISIBLE)
+                        /*binding.fragment2ProductRegistration.setVisibility(View.INVISIBLE)
                         binding.fragment1ProductRegistration.setVisibility(View.INVISIBLE)
-                        binding.fragment1ConditionalSearch.setVisibility(View.INVISIBLE)
+                        binding.fragment1ConditionalSearch.setVisibility(View.INVISIBLE)*/
                         var fragment4 = Fragment4()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment4).commit()

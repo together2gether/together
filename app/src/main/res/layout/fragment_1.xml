@@ -7,91 +7,115 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:orientation="vertical"
-        tools:context=".Fragment1">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical"
+            tools:context=".Fragment1">
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="9"
                 android:orientation="horizontal">
 
-                <HorizontalScrollView
+                <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="10dp"
-                    android:layout_weight="5">
+                    android:layout_weight="9"
+                    android:orientation="horizontal">
 
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/chipGroup"
-                        android:layout_width="match_parent"
+                    <android.widget.Button
+                        android:id="@+id/button3"
+                        android:layout_width="66dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/button"
+                        android:backgroundTint="#E4E4E4"
+                        android:drawableLeft="@drawable/location"
+                        android:paddingLeft="5dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="지역"
+                        android:textSize="13dp" />
+
+                    <HorizontalScrollView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="3dp"
-                        android:layout_marginRight="3dp"
-                        app:chipSpacingHorizontal="10dp"
-                        app:selectionRequired="true"
-                        app:singleLine="true"
-                        app:singleSelection="true">
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="5">
 
-                    </com.google.android.material.chip.ChipGroup>
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chipGroup"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="3dp"
+                            android:layout_marginRight="3dp"
+                            app:chipSpacingHorizontal="10dp"
+                            app:selectionRequired="true"
+                            app:singleLine="true"
+                            app:singleSelection="true">
 
-                </HorizontalScrollView>
+                        </com.google.android.material.chip.ChipGroup>
 
-                <android.widget.Button
-                    android:id="@+id/button3"
-                    android:layout_width="66dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/button"
-                    android:backgroundTint="#E4E4E4"
-                    android:drawableLeft="@drawable/location"
-                    android:paddingLeft="5dp"
-                    android:paddingTop="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingBottom="5dp"
-                    android:text="지역"
-                    android:textSize="13dp" />
+                    </HorizontalScrollView>
 
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:background="#ffffffff"
-                android:src="@drawable/search" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <ImageButton
-                android:id="@+id/imageButton3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:background="#ffffffff"
-                android:src="@drawable/menu" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/fragment1_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp" />
+
+                <com.getbase.floatingactionbutton.FloatingActionsMenu
+                    android:id="@+id/menu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    app:fab_addButtonColorNormal="#143F6B"
+                    app:fab_addButtonColorPressed="#ffffff"
+                    app:fab_labelStyle="@style/LabelStyle"
+                    app:fab_labelsPosition="left">
+
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/low"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fab_colorNormal="#FFF"
+                        app:fab_colorPressed="@color/purple_200"
+                        app:fab_icon="@drawable/cart"
+                        app:fab_title="최저가 제품 보기" />
+
+                    <com.getbase.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/fragment1ProductRegistration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:fab_colorNormal="#FFF"
+                        app:fab_colorPressed="@color/purple_200"
+                        app:fab_icon="@drawable/add"
+                        app:fab_title="등록하기" />
+                </com.getbase.floatingactionbutton.FloatingActionsMenu>
+            </RelativeLayout>
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment1_recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="5dp" />
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

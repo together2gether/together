@@ -207,7 +207,7 @@ class RecommandLocation : AppCompatActivity() {
             listAdapter.notifyDataSetChanged()
         } else {
             // 검색 결과 없음
-            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
 

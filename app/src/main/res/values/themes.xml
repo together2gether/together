@@ -1,25 +1,33 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.MatchingService" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MatchingService" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#bfdeff</item>
-        <item name="colorPrimaryVariant">#bfdeff</item>
+        <item name = "colorPrimaryDark">#143F6B</item>
+        <item name="colorPrimary">#143F6B</item>
+        <item name="colorPrimaryVariant">#143F6B</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#ffffff</item>
+        <item name = "android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+
     </style>
 
-    <style name="Theme.MatchingService.NoActionBar">
+    <!--<style name="Theme.MatchingService.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor" tools:targetApi="l">#143f6b</item>
     </style>
 
     <style name="Theme.MatchingService.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.MatchingService.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.MatchingService.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
+    <style name="LabelStyle">
+        <item name="android:background">@drawable/bg_label</item>
+        <item name="android:textColor">#000000</item>
+    </style>
 </resources>
