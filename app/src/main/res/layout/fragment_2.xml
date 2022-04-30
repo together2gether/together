@@ -4,102 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginTop="15dp"
-    android:layout_marginRight="15dp"
     tools:context=".Fragment2">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_marginTop="8dp">
 
         <LinearLayout
+            android:id="@+id/loc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:background="@drawable/item_chat"
+            android:orientation="horizontal"
+            android:paddingBottom="12dp"
+            android:visibility="gone">
 
-            <EditText
-                android:id="@+id/edit"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/lo"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="7"
-                android:ems="10"
-                android:inputType="textPersonName" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:orientation="horizontal">
 
-            <ImageButton
-                android:id="@+id/imageButton2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:background="#ffffffff"
-                android:src="@drawable/search" />
-
-        </LinearLayout>
-
-        <SeekBar
-            android:id="@+id/seekBar4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textView168"
-            android:layout_marginTop="10dp"
-            android:progressDrawable="@drawable/seekbar"
-            android:thumb="@drawable/seekbar_thumb" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/textView180"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0" />
-
-            <TextView
-                android:id="@+id/textView181"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:text="1km" />
-
-            <TextView
-                android:id="@+id/textView182"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="2km" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <HorizontalScrollView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="10dp"
-                android:layout_weight="5"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp">
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chipGroup2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <android.widget.Button
+                    android:id="@+id/button3"
+                    android:layout_width="66dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="3dp"
-                    app:chipSpacingHorizontal="10dp"
-                    app:selectionRequired="true"
-                    app:singleLine="true"
-                    app:singleSelection="true">
+                    android:background="@drawable/location_button"
+                    android:drawableLeft="@drawable/location"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="5dp"
+                    android:text="지역"
+                    android:textSize="13dp" />
 
-                    <!--<com.google.android.material.chip.Chip
+                <HorizontalScrollView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="5"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chipGroup2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="3dp"
+                        app:chipSpacingHorizontal="10dp"
+                        app:selectionRequired="true"
+                        app:singleLine="true"
+                        app:singleSelection="true">
+
+                        <!--<com.google.android.material.chip.Chip
                     android:id="@+id/chip4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -108,80 +71,119 @@
                     app:chipStrokeColor="#cdd9f1"
                     app:chipStrokeWidth="2dp"
                     app:closeIconVisible="true" />-->
-                </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
 
-            <android.widget.Button
-                android:id="@+id/button3"
-                android:layout_width="66dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/button"
-                android:backgroundTint="#E4E4E4"
-                android:drawableLeft="@drawable/location"
-                android:paddingLeft="5dp"
-                android:paddingTop="5dp"
-                android:paddingRight="5dp"
-                android:paddingBottom="5dp"
-                android:textSize="13dp"
-                android:text="지역" />
-
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/food"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-            <RadioGroup
-                android:id="@+id/fragment2_rg"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:layout_weight="2"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/fragment2_rb_delivery"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="배달"
-                    android:textSize="15dp"
-                    android:checked="true"/>
-                <RadioButton
-                    android:id="@+id/fragment2_rb_shopping"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="쇼핑"
-                    android:textSize="15dp"/>
-            </RadioGroup>
+            android:layout_height="match_parent"
+            android:layout_below="@id/loc"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView183"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:layout_marginRight="30dp"
-                android:text="필요 주문 금액"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_centerVertical="true"/>
+                android:background="@drawable/item_chat"
+                android:orientation="horizontal"
+                android:paddingBottom="12dp">
 
-            <TextView
-                android:id="@+id/textView184"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:text="총 배달비"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:layout_centerVertical="true"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="15dp">
+
+                    <RadioGroup
+                        android:id="@+id/fragment2_rg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/fragment2_rb_delivery"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true"
+                            android:text="배달"
+                            android:textSize="13dp" />
+
+                        <androidx.appcompat.widget.AppCompatRadioButton
+                            android:id="@+id/fragment2_rb_shopping"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="쇼핑"
+                            android:textSize="13dp" />
+                    </RadioGroup>
+
+                    <TextView
+                        android:id="@+id/textView183"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="23dp"
+                        android:text="필요 주문 금액"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView184"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="23dp"
+                        android:text="총 배달비"
+                        android:textColor="#000000"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/fragment2RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
         </LinearLayout>
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/fragment2RecyclerView"
+        <RelativeLayout
+            android:id="@+id/dark"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
 
-    </LinearLayout>
+        </RelativeLayout>
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/menu2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            app:fab_addButtonColorNormal="#143F6B"
+            app:fab_addButtonColorPressed="#ffffff"
+            app:fab_labelStyle="@style/LabelStyle"
+            app:fab_labelsPosition="left">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fragment2ProductRegistration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#FFF"
+                app:fab_colorPressed="@color/purple_200"
+                app:fab_icon="@drawable/add"
+                app:fab_title="등록하기" />
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </RelativeLayout>
+
 </FrameLayout>

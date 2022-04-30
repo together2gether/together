@@ -36,6 +36,7 @@
                     android:id="@+id/tv_list_road"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:text="도로명"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="12sp" />
@@ -44,6 +45,7 @@
                     android:id="@+id/tv_list_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="지번"
                     android:textSize="12sp" />
@@ -54,10 +56,13 @@
                 android:layout_width="0dp"
                 android:layout_height="35dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1.5"
                 android:background="@drawable/button"
-                android:text="추천" />
+                android:backgroundTint="@color/purple_200"
+                android:text="추천"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

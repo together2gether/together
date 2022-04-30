@@ -10,19 +10,17 @@
         android:id="@+id/fooditemCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="4dp"
         app:cardBackgroundColor="#FFFFFFFF"
         app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/fooditemTextviewstore"
@@ -30,40 +28,42 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="1.25"
+                android:layout_weight="1"
                 android:gravity="center_horizontal|center_vertical"
                 android:text="가나분식"
-                android:textSize="18sp" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/fooditemTextvieworderprice"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_weight="1"
+                android:layout_height="35dp"
                 android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
                 android:layout_toRightOf="@id/fooditemTextviewstore"
-                android:background="@drawable/circle_button"
-                android:gravity="center_horizontal"
+                android:layout_weight="0.8"
+                android:background="@drawable/food_button"
+                android:gravity="center_horizontal|center_vertical"
                 android:text="5,000원"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/fooditemTextviewdeliveryprice"
                 android:layout_width="0dp"
-                android:layout_height="45dp"
-                android:layout_weight="1"
+                android:layout_height="35dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_toRightOf="@+id/fooditemTextvieworderprice"
-                android:background="@drawable/circle_button"
+                android:layout_weight="0.8"
+                android:background="@drawable/food_button"
                 android:gravity="center"
                 android:text="2,000원"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <RelativeLayout

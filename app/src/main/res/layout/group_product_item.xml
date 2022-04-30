@@ -9,11 +9,11 @@
     android:layout_marginRight="4dp"
     android:layout_marginBottom="4dp"
     app:cardBackgroundColor="#FFFFFFFF"
-    app:cardElevation="5dp">
+    app:cardElevation="0dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/item_layout"
         android:orientation="horizontal"
         android:visibility="visible">
 
@@ -40,26 +40,14 @@
 
                 <TextView
                     android:id="@+id/productName"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:text="제품1"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/participation_Count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:background="@drawable/number"
-                    android:paddingLeft="20dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="20dp"
-                    android:paddingBottom="10dp"
-                    android:text="거래 인원 5/5"
-                    android:textSize="16sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -72,7 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="구매 가격 : 3000원 / 5개"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/cycle"
@@ -80,18 +68,20 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/price"
                     android:text="구매 주기 : 14일"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
 
                 <android.widget.Button
                     android:id="@+id/button_drop"
-                    android:layout_width="60dp"
-                    android:layout_height="45dp"
-                    android:layout_alignBaseline="@id/participation_Count"
+                    android:layout_width="55dp"
+                    android:layout_height="35dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/profile_button"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button"
+                    android:backgroundTint="#ff5959"
                     android:gravity="center"
                     android:text="탈퇴"
-                    android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
                     tools:ignore="NotSibling" />
 
             </RelativeLayout>

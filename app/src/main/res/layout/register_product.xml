@@ -7,7 +7,9 @@
 
     </data>
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -18,41 +20,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#bfdeff"
-                    app:itemIconTint="#bfdeff"
-                    app:itemTextColor="#bfdeff"
-                    tools:ignore="MissingConstraints">
-
-                    <android.widget.Button
-                        android:id="@+id/button49"
-                        android:layout_width="30dp"
-                        android:layout_height="27dp"
-                        android:background="@drawable/arrow"
-                        android:backgroundTint="#ffffff" />
-
-                    <TextView
-                        android:id="@+id/set_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="등록"
-                        android:textColor="@android:color/white"
-                        android:textSize="17sp"
-                        android:textStyle="bold" />
-                </androidx.appcompat.widget.Toolbar>
-
                 <ImageView
                     android:id="@+id/imageView_add_photo_image"
-                    android:layout_width="360dp"
-                    android:layout_height="250dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginRight="10dp"
                     android:background="@drawable/send" />
 
                 <Button
@@ -61,189 +33,201 @@
                     android:layout_height="30dp"
                     android:layout_gravity="right"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="30dp"
-                    android:background="@drawable/addphoto" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp">
-                <RelativeLayout
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/addphoto"
+                    android:backgroundTint="#FF0000" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/textView11"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="제품명"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editTextProduct"
-                        android:layout_width="200dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:layout_toLeftOf="@id/button10"
-                        android:layout_toRightOf="@id/textView11"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:ems="9"
-                        android:gravity="center"
-                        android:inputType="textPersonName"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
-
-                    <android.widget.Button
-                        android:id="@+id/button10"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/circle_button"
-                        android:text="최저가 제품 보기" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp">
-
-                    <TextView
-                        android:id="@+id/textView12"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="총 가격"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editTextPrice"
-                        android:layout_width="310dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/textView12"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp">
-
-                    <TextView
-                        android:id="@+id/textView13"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="총 개수"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editTextTotalNumber"
-                        android:layout_width="310dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/textView13"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp">
-
-                    <TextView
-                        android:id="@+id/textView14"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="구매단위"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <EditText
-                        android:id="@+id/editTextUnit"
-                        android:layout_width="310dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/textView14"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="numberDecimal"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp">
-
-                    <TextView
-                        android:id="@+id/textView135"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="주기"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <NumberPicker
-                        android:id="@+id/NP_cycle"
-                        android:layout_width="100dp"
-                        android:layout_height="130dp"
-                        android:layout_toRightOf="@id/textView135"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:gravity="center"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
-
-                    <TextView
-                        android:layout_width="50dp"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_toRightOf="@id/NP_cycle"
-                        android:gravity="center"
-                        android:text="일"
-                        android:layout_centerVertical="true"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
-                        android:textStyle="bold"/>
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/textView11"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center"
+                            android:text="제품명"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/editTextProduct"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:layout_toRightOf="@id/textView11"
+                            android:gravity="center"
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp">
+
+                        <TextView
+                            android:id="@+id/textView12"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center"
+                            android:text="총 가격"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/editTextPrice"
+                            android:layout_width="200dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/textView12"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/editTextPrice"
+                            android:text="  원"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp">
+
+                        <TextView
+                            android:id="@+id/textView13"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center"
+                            android:text="총 개수"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/editTextTotalNumber"
+                            android:layout_width="200dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/textView13"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/editTextTotalNumber"
+                            android:text="  개"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp">
+
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center"
+                            android:text="구매단위"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/editTextUnit"
+                            android:layout_width="200dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/textView14"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:inputType="numberDecimal"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                        <TextView
+                            android:id="@+id/textView15"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/editTextUnit"
+                            android:text="  개"
+                            android:textSize="18sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp">
+
+                        <TextView
+                            android:id="@+id/textView135"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center"
+                            android:text="주기"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <NumberPicker
+                            android:id="@+id/NP_cycle"
+                            android:layout_width="100dp"
+                            android:layout_height="130dp"
+                            android:layout_toRightOf="@id/textView135"
+                            android:background="@drawable/button"
+                            android:backgroundTint="#81DCDCDC"
+                            android:gravity="center"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+
+                        <TextView
+                            android:layout_width="50dp"
+                            android:layout_height="match_parent"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/NP_cycle"
+                            android:gravity="center"
+                            android:text="일"
+                            android:textColor="@color/black"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
 
-                    <!--<EditText
+                        <!--<EditText
                         android:id="@+id/editTextCycle"
                         android:layout_width="310dp"
                         android:layout_height="40dp"
@@ -256,90 +240,111 @@
                         android:inputType="numberDecimal"
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp" />-->
-                </RelativeLayout>
+                    </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp">
 
-                    <TextView
-                        android:id="@+id/textView136"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="URL"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/textView136"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center"
+                            android:text="URL"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editTextURL"
-                        android:layout_width="310dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/textView136"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="textPersonName"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
-                </RelativeLayout>
+                        <EditText
+                            android:id="@+id/editTextURL"
+                            android:layout_width="310dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:layout_toRightOf="@id/textView136"
+                            android:ems="10"
+                            android:gravity="center"
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
+                    </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="13dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="20dp">
 
-                    <TextView
-                        android:id="@+id/textView149"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="직거래\n장소"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/textView149"
+                            android:layout_width="70dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="6dp"
+                            android:gravity="center"
+                            android:text="직거래\n장소"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
 
-                    <EditText
-                        android:id="@+id/editTextPlace"
-                        android:layout_width="210dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginRight="5dp"
-                        android:layout_toRightOf="@id/textView149"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="textPersonName"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        <EditText
+                            android:id="@+id/editTextPlace"
+                            android:layout_width="200dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dp"
+                            android:layout_toRightOf="@id/textView149"
+                            android:gravity="center"
+                            android:inputType="textPersonName"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp" />
 
-                    <android.widget.Button
-                        android:id="@+id/address"
-                        android:layout_width="60dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/editTextPlace"
-                        android:background="@drawable/button"
-                        android:text="검색" />
-                </RelativeLayout>
+                        <android.widget.Button
+                            android:id="@+id/address"
+                            android:layout_width="80dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@id/editTextPlace"
+                            android:background="@drawable/circle_button"
+                            android:backgroundTint="@color/purple_200"
+                            android:text="검색"
+                            android:textColor="#ffffff" />
+                    </RelativeLayout>
 
-                <android.widget.Button
-                    android:id="@+id/register_product_storage"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/button"
-                    android:text="저장"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.widget.Button
+                android:id="@+id/button49"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="@color/purple_200" />
+
+            <android.widget.Button
+                android:id="@+id/register_product_storage"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/circle_button"
+                android:backgroundTint="@color/purple_200"
+                android:text="저장"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </RelativeLayout>
 </layout>

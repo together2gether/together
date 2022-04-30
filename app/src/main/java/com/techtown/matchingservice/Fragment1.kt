@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.techtown.matchingservice.databinding.Fragment1Binding
@@ -36,11 +39,19 @@ class Fragment1 : Fragment() {
         binding.low.setOnClickListener {
             val lowpriceitemIntent = Intent(context, RecommendActivity::class.java)
             startActivity(lowpriceitemIntent)
-            //getItemContent.launch(lowpriceitemIntent)
+
         }
-        binding.menu.setOnClickListener {
-            binding.relative.setBackgroundColor(Color.parseColor("#80ffffff"))
-        }
+        binding.menu.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
+            override fun onMenuExpanded() {
+                binding.background.setBackgroundColor(Color.parseColor("#80000000"))
+            }
+
+            override fun onMenuCollapsed() {
+                binding.background.setBackgroundColor(Color.parseColor("#00000000"))
+            }
+        })
+
+
         binding.button3.setOnClickListener {
             val newintent = Intent(context, CityspinnerActivity::class.java)
             startActivity(newintent)
@@ -69,7 +80,6 @@ class Fragment1 : Fragment() {
         return binding.root
 
     }
-
     inner class CustomViewHolder(var binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -103,19 +113,18 @@ class Fragment1 : Fragment() {
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             var viewHolder = holder.binding
             //UserId
-            viewHolder.productitemTextviewUserId.text = contentDTOs[position].userId
             //ProductName
             viewHolder.productitemTextviewProductName.text = contentDTOs[position].product
             //place
-            viewHolder.productitemTextviewPlace.text = contentDTOs[position].place
+            viewHolder.productitemTextviewPlace.text = contentDTOs[position].price.toString() + " / " + contentDTOs[position].ParticipationTotal.toString() + "개"
             //Photo
             Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
                 .into(viewHolder.productItemPhoto)
 
             var participationCount: String = contentDTOs[position].ParticipationCount.toString()
 
-            viewHolder.productitemParticipation.text =
-                "현재 " + participationCount + " / " + contentDTOs[position].ParticipationTotal.toString()
+            //viewHolder.productitemParticipation.text =
+            //    "현재 " + participationCount + " / " + contentDTOs[position].ParticipationTotal.toString()
             //click
             viewHolder.productitemCardView.setOnClickListener {
                 if (contentDTOs[position].uid == uid) {

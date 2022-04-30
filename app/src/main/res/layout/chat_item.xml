@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
-    android:layout_marginBottom="4dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
     app:cardBackgroundColor="#FFFFFFFF"
     app:cardElevation="0dp">
 
@@ -22,7 +22,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
             android:padding="5dp"
-            app:srcCompat="@drawable/multi" />
+            app:srcCompat="@drawable/products" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,6 +31,15 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/chat_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="눈송이"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
             <RelativeLayout
                 android:id="@+id/layout"
                 android:layout_width="match_parent"
@@ -38,34 +47,31 @@
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:id="@+id/chat_title"
+                    android:id="@+id/chat_lastMsg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:text="눈송이"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_toLeftOf="@id/textView17"
+                    android:text="안녕하세요!"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/textView17"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:paddingLeft="20dp"
                     android:paddingTop="10dp"
                     android:paddingRight="20dp"
                     android:paddingBottom="10dp"
-                    android:text="1분전" />
-            </RelativeLayout>
+                    android:text="1분전"
+                    android:textSize="10sp" />
 
-            <TextView
-                android:id="@+id/chat_lastMsg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:layout_marginBottom="5dp"
-                android:text="안녕하세요!"
-                android:textSize="16sp" />
+            </RelativeLayout>
 
         </LinearLayout>
 

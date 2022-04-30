@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#bfdeff"
+        android:background="@color/purple_200"
         app:itemIconTint="#bfdeff"
         app:itemTextColor="#bfdeff"
         tools:ignore="MissingConstraints">
@@ -18,8 +19,9 @@
             android:id="@+id/button46"
             android:layout_width="30dp"
             android:layout_height="27dp"
-            android:background="@drawable/arrow"
+            android:background="@drawable/ic_back"
             android:backgroundTint="#ffffff" />
+
         <TextView
             android:id="@+id/set_date"
             android:layout_width="wrap_content"

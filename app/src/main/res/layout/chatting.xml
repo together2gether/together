@@ -64,6 +64,8 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="7dp"
             android:background="@drawable/button"
-            android:text="입력" />
+            android:backgroundTint="@color/purple_200"
+            android:text="입력"
+            android:textColor="#ffffff" />
     </RelativeLayout>
 </RelativeLayout>

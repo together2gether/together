@@ -154,12 +154,16 @@ class RecommendActivity : AppCompatActivity() {
                 textView_lprice.text = "최저가 ${data.lprice}원"
 
                 btn_regist.setOnClickListener {
-                    intent.putExtra("title", data.title)
-                    intent.putExtra("lprice", data.lprice)
-                    intent.putExtra("imageURL", data.image)
-                    intent.putExtra("link", data.link)
-                    setResult(RESULT_OK, intent)
-                    finish()
+                    Intent(applicationContext, ProductActivity::class.java).apply {
+                        putExtra("title", data.title)
+                        putExtra("lprice", data.lprice)
+                        putExtra("imageURL", data.image)
+                        putExtra("link", data.link)
+                        putExtra("bol", "shop")
+
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        setResult(RESULT_OK, intent)
+                    }.run {applicationContext?.startActivity(this)}
                 }
 
                 itemView.setOnClickListener({

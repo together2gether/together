@@ -12,7 +12,7 @@
         android:id="@+id/button50"
         android:layout_width="30dp"
         android:layout_height="27dp"
-        android:background="@drawable/arrow" />
+        android:background="@drawable/ic_back" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -43,6 +43,18 @@
             android:layout_centerVertical="false"
             android:layout_marginRight="5dp"
             android:paddingRight="15dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_search"
+            app:tint="#ffffff" />
+        <ImageView
+            android:id="@+id/search2"
+            android:layout_width="40dp"
+            android:layout_height="55dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="false"
+            android:layout_marginRight="5dp"
+            android:paddingRight="15dp"
+            android:visibility="invisible"
             app:srcCompat="@drawable/ic_search"
             app:tint="#ffffff" />
 
@@ -62,10 +74,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            app:itemIconTint="#143F6B"
-            app:itemTextColor="#143F6B"
+            app:itemIconTint="@drawable/bottom_icon_color"
+            app:itemTextColor="@drawable/bottom_icon_color"
             app:labelVisibilityMode="labeled"
-            app:menu="@menu/menu_bottom" >
+            app:menu="@menu/menu_bottom">
 
         </com.google.android.material.bottomnavigation.BottomNavigationView>
     </RelativeLayout>

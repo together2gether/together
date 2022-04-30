@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,13 +34,9 @@ class Fragment2 : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().uid!!
 
-        binding.imageButton2.setOnClickListener {
-            val intent = Intent(context, SearchActivity::class.java)
-            startActivity(intent)
-        }
         binding.button3.setOnClickListener {
-            val string = binding.edit.text
-            if (string.isNullOrEmpty()) {
+            //val string = binding.edit.text
+            /*if (string.isNullOrEmpty()) {
                 Toast.makeText(context, "chip 이름을 입력해주세요", Toast.LENGTH_LONG).show()
             } else {
                 binding.chipGroup2.addView(Chip(context).apply {
@@ -54,8 +51,21 @@ class Fragment2 : Fragment() {
                     isCloseIconVisible = true
                     setOnCloseIconClickListener { binding.chipGroup2.removeView(this) }
                 })
-            }
+            }*/
         }
+        binding.fragment2ProductRegistration.setOnClickListener {
+            val intent = Intent(context, FoodActivity::class.java)
+            startActivity(intent)
+        }
+        binding.menu2.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
+            override fun onMenuExpanded() {
+                binding.dark.setBackgroundColor(Color.parseColor("#80000000"))
+            }
+
+            override fun onMenuCollapsed() {
+                binding.dark.setBackgroundColor(Color.parseColor("#00000000"))
+            }
+        })
         binding.fragment2RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
         binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
@@ -63,10 +73,14 @@ class Fragment2 : Fragment() {
                 R.id.fragment2_rb_delivery -> {
                     deliverycheck = 1
                     binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+                    //binding.fragment2RbDelivery.buttonTintList = ColorStateList.valueOf(Color.parseColor("#ff5959"))
+                    //binding.fragment2RbShopping.buttonTintList = ColorStateList.valueOf(Color.parseColor("#808080"))
                 }
                 R.id.fragment2_rb_shopping -> {
                     deliverycheck = 2
                     binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+                    //binding.fragment2RbShopping.buttonTintList = ColorStateList.valueOf(Color.parseColor("#ff5959"))
+                    //binding.fragment2RbDelivery.buttonTintList = ColorStateList.valueOf(Color.parseColor("#808080"))
                 }
             }
         }

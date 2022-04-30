@@ -6,15 +6,23 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/item_color.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/item_layout.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/layer_button_checked.xml" value="0.141" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/layer_button_unchecked.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/profile.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/selector_radio_button.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/alarm.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/bg_label.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/bottom_icon_color.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/button.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/button_change.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/button_checked.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/circle_button.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/circle_button_blue.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/food_button.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/ic_search.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/item_login.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/left_item_message.xml" value="0.141" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/location.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/location_button.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/login_google.xml" value="0.201" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/message_item.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/profile_button.xml" value="0.1515" />
@@ -42,7 +50,8 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/group.xml" value="0.24818840579710144" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/group_activity_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/group_item.xml" value="0.24818840579710144" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/list_layout.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/group_product_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/list_layout.xml" value="0.2" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/login.xml" value="0.2" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/manage.xml" value="0.264" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/manage_activity.xml" value="0.24947916666666667" />
@@ -57,7 +66,8 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/product_info.xml" value="0.264" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/product_item.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/recommend.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/recommend_location.xml" value="0.1" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/recommend_item.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/recommend_location.xml" value="0.2" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/register.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/register_activity.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/register_food.xml" value="0.24947916666666667" />

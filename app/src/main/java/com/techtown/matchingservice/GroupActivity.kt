@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -50,7 +51,7 @@ class GroupActivity : AppCompatActivity() {
 
         recyclerView?.layoutManager = LinearLayoutManager(this)
         recyclerView?.adapter = RecyclerViewAdapter()
-
+        recyclerView?.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         /*groups.clear()
         docRef.get()
             .addOnSuccessListener { documents ->
@@ -98,7 +99,6 @@ class GroupActivity : AppCompatActivity() {
             holder.tv_product.text = groups[position].product
             holder.tv_cycle.text = "구매주기 : "+groups[position].cycle+" 일"
             holder.tv_price.text = "가격 : "+groups[position].price + " 원"
-            holder.part_Count.text = "현재 인원 : "+groups[position].ParticipationCount+"/"+groups[position].ParticipationTotal
             Glide.with(holder.itemView.context)
                 .load(groups[position].imageUrl)
                 .apply(RequestOptions().circleCrop())
@@ -161,7 +161,6 @@ class GroupActivity : AppCompatActivity() {
             val image : ImageView = view.findViewById(R.id.moodImageView)
             val tv_price : TextView = view.findViewById(R.id.price)
             val tv_cycle : TextView = view.findViewById(R.id.cycle)
-            val part_Count : TextView = view.findViewById(R.id.participation_Count)
             val btn_drop : Button = view.findViewById(R.id.button_drop)
         }
 

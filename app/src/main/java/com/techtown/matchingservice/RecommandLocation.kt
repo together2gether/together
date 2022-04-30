@@ -48,11 +48,16 @@ class RecommandLocation : AppCompatActivity() {
     lateinit var mylng : String
     lateinit var yourlat : String
     lateinit var yourlng : String
+    lateinit var back : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recommend_location)
         mapView = findViewById(R.id.mapView)
+        back = findViewById(R.id.back)
         val layout = findViewById<RecyclerView>(R.id.rv_list)
+        back.setOnClickListener {
+            finish()
+        }
         try{
             // 리사이클러 뷰
             layout.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

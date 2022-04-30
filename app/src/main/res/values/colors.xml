@@ -8,4 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name = "main">#143F6B</color>
+    <color name = "colorAccent">#FFB6</color>
+    <color name = "colorRadioBtn">#FFB6</color>
 </resources>

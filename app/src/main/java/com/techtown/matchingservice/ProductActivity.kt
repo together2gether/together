@@ -6,6 +6,7 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +33,8 @@ class ProductActivity : AppCompatActivity() {
     lateinit var uid: String
     var thisTime : Long? = null
     var NP_value : String? = null
-
+    var bol : String ?= ""
+    var bo : String = ""
     //private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     //private val roomsRef = database.getReference("chatrooms")
 
@@ -44,10 +46,7 @@ class ProductActivity : AppCompatActivity() {
         binding.button49.setOnClickListener {
             finish()
         }
-        binding.button10.setOnClickListener {
-            val lowpriceitemIntent = Intent(this, RecommendActivity::class.java)
-            getItemContent.launch(lowpriceitemIntent)
-        }
+
         binding.address.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java)
             resultLauncher.launch(intent)
@@ -56,7 +55,27 @@ class ProductActivity : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
+        bol = intent.getStringExtra("bol").toString()
+        if(bol=="shop"){
+            Toast.makeText(this, "1", Toast.LENGTH_LONG).show()
+            var title = intent.getStringExtra("title").toString()
+            var imageURL = intent.getStringExtra("imageURL").toString()
+            var lprice = intent.getStringExtra("lprice").toString()
+            var link = intent.getStringExtra("link").toString()
+            binding.editTextProduct.setText(title)
+            binding.editTextPrice.setText(lprice)
+            binding.editTextURL.setText(link)
+            println("image" + imageURL)
+            Glide.with(this).load(imageURL.toString())
+                .into(binding.imageViewAddPhotoImage)
 
+
+            binding.registerProductStorage.setOnClickListener {
+                contentUpload(imageURL)
+                finish()
+            }
+            bol = ""
+        }
 
         //Open the album
         binding.btnAddphoto.setOnClickListener {

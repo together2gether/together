@@ -2,6 +2,7 @@ package com.techtown.matchingservice
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
@@ -280,6 +281,7 @@ class chatting : AppCompatActivity() {
                 holder.layout_destination.visibility = View.INVISIBLE
                 holder.textView_name.visibility = View.INVISIBLE
                 holder.layout_main.gravity = Gravity.RIGHT
+                holder.layout_sub.gravity = Gravity.RIGHT
                 holder.textView_time.gravity = Gravity.RIGHT
                 //margin값 설정
                 val layoutParams = LinearLayout.LayoutParams(
@@ -315,15 +317,14 @@ class chatting : AppCompatActivity() {
                 holder.layout_destination.visibility=View.VISIBLE
                 holder.textView_name.visibility = View.VISIBLE
                 holder.textView_message.setBackgroundResource(R.drawable.left_item_message)
-                holder.layout_main.gravity = Gravity.LEFT
+                //holder.layout_main.gravity = Gravity.LEFT
                 //margin값 설정
                 val layoutParams = LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 holder.layout_main.layoutParams = layoutParams
-
-                layoutParams.setMargins(0,0,150,0)
+                layoutParams.setMargins(0,0,0,0)
             }
         }
 
@@ -333,6 +334,7 @@ class chatting : AppCompatActivity() {
             val imageView_profile: ImageView = view.findViewById(R.id.iv_profile)
             val layout_destination: LinearLayout = view.findViewById(R.id.linear_destination)
             val layout_main: LinearLayout = view.findViewById(R.id.linear_main)
+            val layout_sub : LinearLayout = view.findViewById(R.id.layout_sub)
             val textView_time: TextView = view.findViewById(R.id.tv_time)
         }
 

@@ -4,12 +4,12 @@
     <item
         android:id="@+id/tab1"
         android:enabled="true"
-        android:icon="@drawable/multi"
-        android:title="정기구매"/>
+        android:icon="@drawable/products"
+        android:title="공동구매"/>
     <item
         android:id="@+id/tab2"
         android:enabled="true"
-        android:icon="@drawable/motorbike"
+        android:icon="@drawable/dish"
         android:title="배달"/>
     <item
         android:id="@+id/tab3"
@@ -19,7 +19,7 @@
     <item
         android:id="@+id/tab4"
         android:title="마이페이지"
-        android:icon="@drawable/list_48"
+        android:icon="@drawable/account"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
 
