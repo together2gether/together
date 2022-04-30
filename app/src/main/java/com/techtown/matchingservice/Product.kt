@@ -1,7 +1,10 @@
 package com.techtown.matchingservice
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
@@ -44,16 +47,31 @@ class Product : AppCompatActivity() {
         Glide.with(this).load(intent.getStringExtra("imageUrl").toString())
             .into(binding.productInfoPhoto)
         binding.productInfoProduct.text = intent.getStringExtra("product").toString()
-        binding.productInfoTotal.text = intent.getStringExtra("totalNumber").toString()+"개 ( "+intent.getStringExtra("price").toString()+" 원 )"
+        binding.productInfoTotal.text = "총 " +intent.getStringExtra("totalNumber").toString() + " 개"
         var price:Int = Integer.parseInt(intent.getStringExtra("price").toString())/Integer.parseInt(intent.getStringExtra("participationTotal").toString())
-        binding.productInfoUnit.text =price.toString() + "원 / "+intent.getStringExtra("unit").toString()+"개"
+        binding.productInfoUnit.text =price.toString() + "원 ( "+intent.getStringExtra("unit").toString()+ " 개 )"
         binding.productInfoURL.text = intent.getStringExtra("URL").toString()
         binding.productInfoPlace.text = intent.getStringExtra("place").toString()
-        binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()+"일"
+        binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()
         binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
         regist_userid = intent.getStringExtra("Uid").toString()
         productid = intent.getStringExtra("id").toString()
         product_name = intent.getStringExtra("product").toString()
+
+        if(regist_userid == uid){
+            binding.buttonChat.setVisibility(View.INVISIBLE)
+            binding.productInfoParticipation.setVisibility(View.INVISIBLE)
+            binding.productInfoParticipationuser.setVisibility(View.VISIBLE)
+            binding.productInfoGarbage.setVisibility(View.VISIBLE)
+            binding.productInfoRevice.setVisibility(View.VISIBLE)
+
+        }else{
+            binding.buttonChat.setVisibility(View.VISIBLE)
+            binding.productInfoParticipation.setVisibility(View.VISIBLE)
+            binding.productInfoParticipationuser.setVisibility(View.INVISIBLE)
+            binding.productInfoGarbage.setVisibility(View.INVISIBLE)
+            binding.productInfoRevice.setVisibility(View.INVISIBLE)
+        }
 
         val intent = Intent(this, chatting::class.java)
 
@@ -139,5 +157,54 @@ class Product : AppCompatActivity() {
             startActivity(intent)
             binding.productInfoParticipation.isEnabled=false
         }
+
+        binding.productInfoRevice.setOnClickListener(){
+            Intent(this, EditProduct::class.java).apply{
+                putExtra("product", binding.productInfoProduct.text)
+                putExtra("imageUrl", intent.getStringExtra("imageUrl").toString())
+                putExtra("price", intent.getStringExtra("price").toString())
+                putExtra("totalNumber", intent.getStringExtra("totalNumber").toString())
+                putExtra("cycle", intent.getStringExtra("cycle").toString())
+                putExtra("unit", intent.getStringExtra("unit").toString())
+                putExtra("URL", binding.productInfoURL.text)
+                putExtra("place", binding.productInfoPlace.text)
+                putExtra("id", productid)
+            }.run { startActivity(this) }
+            finish()
+        }
+
+        binding.productInfoGarbage.setOnClickListener(){
+            RemovePopup()
+        }
+    }
+    private fun RemovePopup(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("삭제")
+            .setMessage("이 게시물을 삭제하시겠습니까?")
+            .setPositiveButton("예",
+                DialogInterface.OnClickListener{ dialog, id->
+                    var roomId : String? = null
+                    roomsRef.orderByChild("users/$uid").equalTo(true)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onCancelled(error: DatabaseError) {
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for(item in snapshot.children){
+                                    val chatmodel = item.getValue<ChatModel>()
+                                    if(chatmodel?.productid == productid){
+                                        roomId = item.key
+                                        roomsRef.child(roomId.toString()).removeValue()
+                                    }
+                                }
+                            }
+                        })
+                    db.collection("images").document("$productid").delete()
+                    finish()
+                })
+            .setNegativeButton("아니요",
+                DialogInterface.OnClickListener{ dialog, id->
+                })
+        builder.show()
     }
 }

@@ -116,7 +116,8 @@ class Fragment1 : Fragment() {
             //ProductName
             viewHolder.productitemTextviewProductName.text = contentDTOs[position].product
             //place
-            viewHolder.productitemTextviewPlace.text = contentDTOs[position].price.toString() + " / " + contentDTOs[position].ParticipationTotal.toString() + "개"
+            viewHolder.productitemTextviewPlace.text =
+                contentDTOs[position].price.toString() + " / " + contentDTOs[position].ParticipationTotal.toString() + "개"
             //Photo
             Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
                 .into(viewHolder.productItemPhoto)
@@ -127,54 +128,35 @@ class Fragment1 : Fragment() {
             //    "현재 " + participationCount + " / " + contentDTOs[position].ParticipationTotal.toString()
             //click
             viewHolder.productitemCardView.setOnClickListener {
-                if (contentDTOs[position].uid == uid) {
-                    Intent(context, ProductManage::class.java).apply{
-                        putExtra("position", position.toString())
-                        putExtra("product", contentDTOs[position].product)
-                        putExtra("imageUrl", contentDTOs[position].imageUrl)
-                        putExtra("price", contentDTOs[position].price.toString())
-                        putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
-                        putExtra("cycle", contentDTOs[position].cycle.toString())
-                        putExtra("unit", contentDTOs[position].unit.toString())
-                        putExtra("URL", contentDTOs[position].url)
-                        putExtra("place", contentDTOs[position].place)
-                        putExtra("timestamp", contentDTOs[position].timestamp.toString())
-                        putExtra("participationCount", participationCount)
-                        putExtra("id", contentUidList[position])
-                        putExtra("position", position.toString())
-                        putExtra(
-                            "participationTotal",
-                            contentDTOs[position].ParticipationTotal.toString()
-                        )
 
-                    }.run { context?.startActivity(this) }
-                }else{
-                    Intent(context, Product::class.java).apply {
-                        putExtra("product", contentDTOs[position].product)
-                        putExtra("imageUrl", contentDTOs[position].imageUrl)
-                        putExtra("price", contentDTOs[position].price.toString())
-                        putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
-                        putExtra("cycle", contentDTOs[position].cycle.toString())
-                        putExtra("unit", contentDTOs[position].unit.toString())
-                        putExtra("URL", contentDTOs[position].url)
-                        putExtra("place", contentDTOs[position].place)
-                        putExtra("timestamp", contentDTOs[position].timestamp.toString())
-                        putExtra("participationCount", participationCount)
-                        putExtra(
-                            "uidkey",
-                            contentDTOs[position].Participation.containsKey(uid).toString()
-                        )
-                        putExtra(
-                            "participationTotal",
-                            contentDTOs[position].ParticipationTotal.toString()
-                        )
-                        putExtra("id", contentUidList[position])
-                        putExtra("Uid", contentDTOs[position].uid.toString())
+                Intent(context, Product::class.java).apply {
+                    putExtra("position", position.toString())
+                    putExtra("product", contentDTOs[position].product)
+                    putExtra("imageUrl", contentDTOs[position].imageUrl)
+                    putExtra("price", contentDTOs[position].price.toString())
+                    putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
+                    putExtra("cycle", contentDTOs[position].cycle.toString())
+                    putExtra("unit", contentDTOs[position].unit.toString())
+                    putExtra("URL", contentDTOs[position].url)
+                    putExtra("place", contentDTOs[position].place)
+                    putExtra("timestamp", contentDTOs[position].timestamp.toString())
+                    putExtra("participationCount", participationCount)
+                    putExtra("id", contentUidList[position])
+                    putExtra("position", position.toString())
+                    putExtra(
+                        "uidkey",
+                        contentDTOs[position].Participation.containsKey(uid).toString()
+                    )
+                    putExtra(
+                        "participationTotal",
+                        contentDTOs[position].ParticipationTotal.toString()
+                    )
+                    putExtra("id", contentUidList[position])
+                    putExtra("Uid", contentDTOs[position].uid.toString())
 
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }.run { context?.startActivity(this) }
-                }
+                }.run { context?.startActivity(this) }
             }
+
         }
 
         override fun getItemCount(): Int {

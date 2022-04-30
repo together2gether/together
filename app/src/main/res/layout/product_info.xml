@@ -14,223 +14,247 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+
             <android.widget.Button
                 android:id="@+id/product_info_back"
                 android:layout_width="30dp"
                 android:layout_height="27dp"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/arrow" />
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="@color/purple_200" />
+
+            <android.widget.Button
+                android:id="@+id/product_info_revice"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="70dp"
+                android:background="@drawable/revice"
+                android:backgroundTint="@color/purple_200" />
+
+            <android.widget.Button
+                android:id="@+id/product_info_garbage"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="25dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/garbage"
+                android:backgroundTint="#F80303" />
 
             <ImageView
                 android:id="@+id/productInfo_photo"
-                android:layout_width="360dp"
-                android:layout_height="250dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="55dp" />
-
-            <RelativeLayout
-                android:id="@+id/titleLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/productInfo_photo"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true">
+                android:layout_height="350dp"
+                android:layout_below="@id/product_info_back"
+                android:layout_marginTop="15dp"/>
 
-                <TextView
-                    android:id="@+id/productInfo_product"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="20dp"
-                    android:paddingBottom="10dp"
-                    android:text="꺠끗한 나라 휴지 30롤"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+           <LinearLayout
+               android:id="@+id/registerUser"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/productInfo_photo"
+               android:layout_margin="15dp"
+               android:orientation="horizontal">
+               <ImageView
+                   android:layout_width="50dp"
+                   android:layout_height="50dp"
+                   android:layout_marginLeft="5dp"/>
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="10dp"
+                   android:orientation="vertical">
+               <TextView
+                   android:id="@+id/ProductregisterUserName"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="눈송이"/>
 
-                <TextView
-                    android:id="@+id/product_info_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="40dp"
-                    android:text="1분전"
-                    android:textSize="16sp" />
-            </RelativeLayout>
+                   <TextView
+                       android:id="@+id/ProductregisterTime"
+                       android:layout_marginTop="5dp"
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:text="1분전"/>
+               </LinearLayout>
+           </LinearLayout>
 
             <TextView
+                android:id="@+id/line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_below="@+id/titleLayout"
+                android:layout_below="@+id/registerUser"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="#E4E3E3" />
 
             <LinearLayout
+                android:id="@+id/product_info_detail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/titleLayout"
+                android:layout_below="@id/line"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/productInfo_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text="꺠끗한 나라 휴지 30롤"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/productInfo_URL"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="http://www.sookmyung.ac.kr"
+                    android:textColor="#CCC8C8"
+                    android:textSize="15sp" />
 
-                    <TextView
-                        android:id="@+id/textView39"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="총 개수 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/productInfo_total"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="30개(18000원)"
-                        android:textSize="20sp" />
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/productInfo_unit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="9dp"
+                    android:layout_marginTop="17dp"
                     android:layout_marginBottom="9dp"
-                    android:text="3000원 / 5개"
+                    android:text="3000원 ( 5개 )"
+                    android:textColor="#000000"
                     android:textSize="20sp" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/productInfo_total"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="총 30개"
+                    android:textSize="15sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView42"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="URL : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/productInfo_URL"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="http://www.sookmyung.ac.kr"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView44"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="직거래 장소 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/productInfo_place"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="효창공원"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView46"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="구매주기 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/productInfo_cycle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="3주"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView48"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="참여자 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
+                        android:layout_gravity="bottom"
+                        android:text="현재   "
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/productInfo_participation_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="3/5"
-                        android:textSize="20sp" />
+                        android:text="3 / 5"
+                        android:textSize="25sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="   명"
+                        android:textSize="15sp" />
+
+                    <Button
+                        android:id="@+id/product_info_participationuser"
+                        android:layout_width="70dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:backgroundTint="#DCD9D9"
+                        android:text="참여자"
+                        android:textColor="#000000"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="40dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
 
-                    <android.widget.Button
-                        android:id="@+id/button_chat"
-                        android:layout_width="55dp"
-                        android:layout_height="40dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_toLeftOf="@id/product_info_participation"
-                        android:background="@drawable/button"
-                        android:text="채팅"
-                        android:textSize="17sp" />
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/location_marker"
+                        android:backgroundTint="#143F6B" />
 
-                    <android.widget.Button
-                        android:id="@+id/product_info_participation"
-                        android:layout_width="55dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/button_change"
-                        android:text="참여"
-                        android:textSize="17sp" />
-                </RelativeLayout>
+                    <TextView
+                        android:id="@+id/productInfo_place"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:text="효창공원"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/productInfo_cycle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="50"
+                        android:textColor="#FA0303"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text=" 일 마다 공동 구매되는 상품입니다."
+                        android:textSize="15sp" />
+                </LinearLayout>
+
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/product_info_detail"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="40dp">
+
+                <android.widget.Button
+                    android:id="@+id/button_chat"
+                    android:layout_width="50dp"
+                    android:layout_height="35dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toLeftOf="@id/product_info_participation"
+                    android:background="@drawable/button"
+                    android:text="채팅"
+                    android:textSize="15sp" />
+
+                <android.widget.Button
+                    android:id="@+id/product_info_participation"
+                    android:layout_width="50dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/button_change"
+                    android:text="참여"
+                    android:textSize="15sp" />
+            </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 </layout>

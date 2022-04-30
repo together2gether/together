@@ -243,8 +243,6 @@ class ProductActivity : AppCompatActivity() {
         }
 
 
-
-
     }
     private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
