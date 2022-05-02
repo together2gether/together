@@ -72,6 +72,9 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/xml/network_security_config.xml" value="0.1" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/drawable/circle_button.xml" value="0.13" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/drawable/circle_button_white.xml" value="0.13" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/drawable/food_button.xml" value="0.2055" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/drawable/image.xml" value="0.2055" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/drawable/location.xml" value="0.2055" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/activity_main.xml" value="0.24564102564102563" />
@@ -82,7 +85,7 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_activity.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_food.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/edit_product.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/food_info.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/food_info.xml" value="0.264" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/food_item.xml" value="0.25" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/fragment_2.xml" value="0.24947916666666667" />
@@ -91,13 +94,13 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/group_activity_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/manage_product.xml" value="0.2" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.24947916666666667" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.4" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/product_item.xml" value="0.264" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/recommend.xml" value="0.109375" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/recommend_info.xml" value="0.109375" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/recommend_item.xml" value="0.109375" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/recommend_location.xml" value="0.109375" />
-        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_food.xml" value="0.17475728155339806" />
+        <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_food.xml" value="0.2" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/register_product.xml" value="0.264" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/layout/shopping_item.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/menu/menu_bottom.xml" value="0.19814814814814816" />

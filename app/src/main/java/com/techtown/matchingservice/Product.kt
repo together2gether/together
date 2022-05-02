@@ -3,6 +3,7 @@ package com.techtown.matchingservice
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.ProductInfoBinding
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
+import kotlinx.android.synthetic.main.register_product.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -71,6 +73,22 @@ class Product : AppCompatActivity() {
             binding.productInfoParticipationuser.setVisibility(View.INVISIBLE)
             binding.productInfoGarbage.setVisibility(View.INVISIBLE)
             binding.productInfoRevice.setVisibility(View.INVISIBLE)
+        }
+
+        binding.productInfoRevice.setOnClickListener(){
+            Intent(this, EditProduct::class.java).apply{
+                putExtra("product", binding.productInfoProduct.text)
+                putExtra("imageUrl", intent.getStringExtra("imageUrl").toString())
+                putExtra("price", intent.getStringExtra("price").toString())
+                putExtra("totalNumber", intent.getStringExtra("totalNumber").toString())
+                putExtra("cycle", binding.productInfoCycle.text)
+                putExtra("unit", intent.getStringExtra("unit").toString())
+                putExtra("URL", binding.productInfoURL.text)
+                putExtra("place", binding.productInfoPlace.text)
+                putExtra("id", productid)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }.run { startActivity(this) }
+            finish()
         }
 
         val intent = Intent(this, chatting::class.java)
@@ -158,25 +176,11 @@ class Product : AppCompatActivity() {
             binding.productInfoParticipation.isEnabled=false
         }
 
-        binding.productInfoRevice.setOnClickListener(){
-            Intent(this, EditProduct::class.java).apply{
-                putExtra("product", binding.productInfoProduct.text)
-                putExtra("imageUrl", intent.getStringExtra("imageUrl").toString())
-                putExtra("price", intent.getStringExtra("price").toString())
-                putExtra("totalNumber", intent.getStringExtra("totalNumber").toString())
-                putExtra("cycle", intent.getStringExtra("cycle").toString())
-                putExtra("unit", intent.getStringExtra("unit").toString())
-                putExtra("URL", binding.productInfoURL.text)
-                putExtra("place", binding.productInfoPlace.text)
-                putExtra("id", productid)
-            }.run { startActivity(this) }
-            finish()
-        }
-
         binding.productInfoGarbage.setOnClickListener(){
             RemovePopup()
         }
     }
+
     private fun RemovePopup(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("삭제")
@@ -207,4 +211,5 @@ class Product : AppCompatActivity() {
                 })
         builder.show()
     }
+
 }

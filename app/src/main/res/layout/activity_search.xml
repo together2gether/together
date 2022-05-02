@@ -39,7 +39,7 @@
                     android:layout_height="25dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
-                    android:background="@drawable/arrow"
+                    android:background="@drawable/ic_back"
                     android:backgroundTint="#143F6B" />
 
                 <EditText
@@ -49,6 +49,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_weight="7"
                     android:ems="10"
+                    android:hint="제품을 입력해주세요."
                     android:inputType="textPersonName" />
 
                 <ImageButton

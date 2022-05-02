@@ -63,16 +63,12 @@ class Fragment2 : Fragment() {
             }*/
         }
         binding.fragment2ProductRegistration.setOnClickListener {
-            val intent = Intent(context, FoodActivity::class.java)
-            startActivity(intent)
             Intent(context, FoodActivity::class.java).apply{
                 putExtra("kind", "delivery".toString())
 
             }.run { context?.startActivity(this) }
         }
         binding.shop.setOnClickListener {
-            val intent = Intent(context, FoodActivity::class.java)
-            startActivity(intent)
             Intent(context, FoodActivity::class.java).apply{
                 putExtra("kind", "shop".toString())
 
@@ -184,10 +180,10 @@ class Fragment2 : Fragment() {
             viewHolder.fooditemCardView.setOnClickListener {
                 Intent(context, Delivery::class.java).apply {
                     putExtra("store", deliveryDTOs[position].store.toString())
+                    putExtra("name",deliveryDTOs[position].name.toString())
                     putExtra("delivery", deliveryDTOs[position].delivery.toString())
                     putExtra("orderPrice", deliveryDTOs[position].order_price.toString())
                     putExtra("deliveryPrice", deliveryDTOs[position].delivery_price.toString())
-                    putExtra("deliveryAddress", deliveryDTOs[position].delivery_address)
                     putExtra("deliveryid", deliveryUidList[position])
                     putExtra("deliveryuid", deliveryDTOs[position].delivery_uid)
                     putExtra("detail", deliveryDTOs[position].delivery_detail)

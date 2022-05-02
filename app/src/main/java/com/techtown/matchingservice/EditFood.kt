@@ -30,6 +30,7 @@ class EditFood : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         binding.registerFoodStoreName.setText(intent.getStringExtra("store").toString())
+        binding.registerFoodName.setText(intent.getStringExtra("name").toString())
         binding.registerFoodOrderPrice.setText(intent.getStringExtra("orderPrice").toString())
         binding.registerFoodDeliveryPrice.setText(intent.getStringExtra("deliveryPrice").toString())
         binding.registerFoodDetail.setText(intent.getStringExtra("detail").toString())
@@ -37,7 +38,6 @@ class EditFood : AppCompatActivity() {
 
         if (intent.getStringExtra("delivery").toString() == "false") {
             binding.registerFoodName.setText("쇼핑몰 이름")
-            //binding.rbShopping.isChecked = true
         }
 
         binding.button48.setOnClickListener() {
@@ -55,13 +55,9 @@ class EditFood : AppCompatActivity() {
         firestore?.runTransaction { transition ->
             deliverydto = transition.get(tsDoc!!).toObject(DeliveryDTO::class.java)!!
 
-            /*if (binding.rbDelivery.isChecked) {
-                deliverydto.delivery = true
-            } else {
-                deliverydto.delivery = false
-            }*/
-
             deliverydto.store = binding.registerFoodStoreName.text.toString()
+
+            deliverydto.name = binding.registerFoodName.text.toString()
 
             deliverydto.order_price =
                 Integer.parseInt(binding.registerFoodOrderPrice.text.toString())

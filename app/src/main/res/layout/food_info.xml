@@ -10,214 +10,224 @@
         android:layout_height="match_parent">
 
         <android.widget.Button
-            android:id="@+id/button23"
+            android:id="@+id/food_info_back"
             android:layout_width="30dp"
             android:layout_height="27dp"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/arrow" />
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/purple_200" />
 
         <android.widget.Button
-            android:id="@+id/food_edit"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:id="@+id/food_info_revice"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="80dp"
-            android:background="@drawable/circle_button"
-            android:text="편집"
-            android:textSize="13sp" />
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/revice"
+            android:backgroundTint="@color/purple_200" />
 
         <android.widget.Button
-            android:id="@+id/food_remove"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:id="@+id/food_info_garbage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/circle_button"
-            android:text="삭제"
-            android:textColor="#FB0C0C"
-            android:textSize="13sp" />
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
+            android:background="@drawable/garbage"
+            android:backgroundTint="#F80303" />
 
-        <RelativeLayout
-            android:id="@+id/titleLayout3"
+
+        <LinearLayout
+            android:id="@+id/registerUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/button23"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="false"
-            android:layout_marginTop="30dp">
+            android:layout_below="@id/food_info_back"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/foodinfo_store"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
-                android:text="포돈 같이 배달시킬 분"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView73"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="40dp"
-                android:text="1분전"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/foodinfo_store"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:background="#DDDBDB" />
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/foodinfo_store"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/foodregisterUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="눈송이" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView76"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="필요 주문 금액 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/foodinfo_orderprice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="13000원"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView78"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="총 배달비 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/foodinfo_deliveryprice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="서울 용산구 청파동2가"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textView80"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="배달 주소 : "
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/foodinfo_deliveryaddress"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="서울 용산구 청파동2가"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginBottom="9dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/textView81"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="상세 설명"
-                        android:textSize="24sp"
-                        android:textStyle="bold" />
-
-                    <ScrollView
-                        android:id="@+id/scrollView2"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81EAE9E9"
-                        android:padding="10dp">
-
-                        <TextView
-                            android:id="@+id/foodinfo_deliverydetail"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:text="같이 먹어요~"
-                            android:textSize="20sp" />
-                    </ScrollView>
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="10dp">
-
-                    <android.widget.Button
-                        android:id="@+id/foodinfo_chat"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:layout_toLeftOf="@id/foodinfo_participation"
-                        android:background="@drawable/button"
-                        android:text="채팅"
-                        android:textSize="20sp" />
-
-                    <android.widget.Button
-                        android:id="@+id/foodinfo_participation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/button_change"
-                        android:text="참여"
-                        android:textSize="20sp" />
-                </RelativeLayout>
+                <TextView
+                    android:id="@+id/foodregisterTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="1분전" />
             </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/registerUser"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="#E4E3E3" />
+
+        <LinearLayout
+            android:id="@+id/food_info_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/line"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/food_Info_Store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="5dp"
+                android:text="신내떡"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/food_Info_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="숙대입구역점"
+                android:textColor="#B8B6B6"
+                android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/food_button"
+                android:drawableLeft="@drawable/locationxml"
+                android:drawableTint="#143F6B"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="  거래 장소 추천"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="주문에 필요한 금액은  " />
+
+                <TextView
+                    android:id="@+id/food_info_orderprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="6000원"
+                    android:textColor="#FD0303"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  입니다." />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="배달비는  " />
+
+                <TextView
+                    android:id="@+id/food_info_deliveryprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="총 2500원"
+                    android:textColor="#FD0303"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="  입니다." />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="상세 설명"
+                android:textColor="#000000"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <ScrollView
+                android:id="@+id/scrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/button"
+                android:backgroundTint="#81EAE9E9"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/foodinfo_deliverydetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="같이 먹어요~"
+                    android:textSize="17dp" />
+            </ScrollView>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/food_info_detail"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="40dp">
+
+            <android.widget.Button
+                android:id="@+id/food_info_chat"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="16dp"
+                android:layout_toLeftOf="@id/food_info_participation"
+                android:background="@drawable/button"
+                android:text="채팅"
+                android:textSize="15sp" />
+
+            <android.widget.Button
+                android:id="@+id/food_info_participation"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/button_change"
+                android:text="참여"
+                android:textSize="15sp" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

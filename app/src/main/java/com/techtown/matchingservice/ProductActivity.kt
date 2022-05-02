@@ -114,28 +114,6 @@ class ProductActivity : AppCompatActivity() {
             NP_value = picker.displayedValues[picker.value].toString()
         }
     }
-    private val getItemContent =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if(result.resultCode == RESULT_OK){
-                var title = result.data?.getStringExtra("title")!!
-                var imageURL = result.data?.getStringExtra("imageURL")
-                var lprice = result.data?.getStringExtra("lprice")
-                var link = result.data?.getStringExtra("link")
-                binding.editTextProduct.setText(title)
-                binding.editTextPrice.setText(lprice)
-                binding.editTextURL.setText(link)
-                println("image" + imageURL)
-                Glide.with(this).load(imageURL.toString())
-                    .into(binding.imageViewAddPhotoImage)
-
-
-                binding.registerProductStorage.setOnClickListener {
-                    contentUpload(imageURL)
-                    finish()
-                }
-            }
-
-        }
 
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->

@@ -293,7 +293,7 @@ class chatting : AppCompatActivity() {
                 )
                 holder.layout_main.layoutParams = layoutParams
 
-                layoutParams.setMargins(0,0,30,0)
+                layoutParams.setMargins(0,0,50,0)
             } else {
                 if(groupchat == "Y"){
                     usersRef.child(comments[position].uid.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -327,7 +327,7 @@ class chatting : AppCompatActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 holder.layout_main.layoutParams = layoutParams
-                layoutParams.setMargins(0,0,30,0)
+                layoutParams.setMargins(0,0,150,0)
             }
         }
 

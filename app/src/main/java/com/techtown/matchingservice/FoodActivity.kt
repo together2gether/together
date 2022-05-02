@@ -2,7 +2,9 @@ package com.techtown.matchingservice
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,10 +30,12 @@ class FoodActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         kind= intent.getStringExtra("kind").toString()
             when (kind) {
-               "delivery" -> binding.registerFoodName.setText("가게 이름")
-                "shop" -> binding.registerFoodName.setText("쇼핑몰 이름")
+                "delivery" -> binding.registerFood.setText("가게 이름")
+                "shop" -> {
+                    binding.registerFood.setText("쇼핑몰 이름")
+                    binding.editTextStore.setVisibility(View.GONE)
+                }
             }
-
         binding.registerFoodStorage.setOnClickListener {
             contentUpload()
             finish()
@@ -58,6 +62,8 @@ class FoodActivity : AppCompatActivity() {
         deliveryDTO.delivery_ParticipationCount = 1
 
         deliveryDTO.store = binding.registerFoodStoreName.text.toString()
+
+        deliveryDTO.name = binding.registerFoodName.text.toString()
 
         deliveryDTO.order_price = Integer.parseInt(binding.registerFoodOrderPrice.text.toString())
 

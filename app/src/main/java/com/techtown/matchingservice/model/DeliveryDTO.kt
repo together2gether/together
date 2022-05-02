@@ -2,10 +2,10 @@ package com.techtown.matchingservice.model
 
 data class DeliveryDTO (
     var store : String? = null,
+    var name : String? = null,
     var delivery : Boolean = false,
     var order_price : Int = 0,
     var delivery_price : Int = 0,
-    var delivery_address : String? = null,
     var delivery_detail : String? = null,
     var delivery_uid : String? = null,
     var delivery_userId : String? = null,

@@ -27,6 +27,7 @@ class EditProduct : AppCompatActivity() {
     var storage: FirebaseStorage? = null
     var photoUri: Uri? = null
     var auth: FirebaseAuth? = null
+    var NP_value : String? = null
     var firestore: FirebaseFirestore? = null
     var productid: String? = null
     var contentdto = ContentDTO()
@@ -42,14 +43,13 @@ class EditProduct : AppCompatActivity() {
 
         Glide.with(this).load(intent.getStringExtra("imageUrl").toString())
             .into(binding.imageViewAddPhotoImage)
-//        binding.editTextProduct.setText(intent.getStringExtra("product").toString())
-//        binding.editTextTotalNumber.setText(intent.getStringExtra("totalNumber").toString())
-//        binding.editTextPrice.setText(intent.getStringExtra("price").toString())
-//        binding.editTextUnit.setText(intent.getStringExtra("unit").toString())
-//        binding.editTextURL.setText(intent.getStringExtra("URL").toString())
-//        binding.editTextPlace.setText(intent.getStringExtra("place").toString())
-//        binding.NPCycle.displayedValues[Integer.parseInt(intent.getStringExtra("cycle").toString())]
-//        productid = intent.getStringExtra("id").toString()
+        binding.editTextProduct.setText(intent.getStringExtra("product").toString())
+        binding.editTextTotalNumber.setText(intent.getStringExtra("totalNumber").toString())
+        binding.editTextPrice.setText(intent.getStringExtra("price").toString())
+        binding.editTextUnit.setText(intent.getStringExtra("unit").toString())
+        binding.editTextURL.setText(intent.getStringExtra("URL").toString())
+        binding.editTextPlace.setText(intent.getStringExtra("place").toString())
+        productid = intent.getStringExtra("id").toString()
 
         binding.button49.setOnClickListener {
             finish()
@@ -67,8 +67,39 @@ class EditProduct : AppCompatActivity() {
             contentReUpload()
             finish()
         }
+
+        binding.address.setOnClickListener {
+            val intent = Intent(this, AddressActivity::class.java)
+            resultLauncher.launch(intent)
+        }
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        initNumberPicker()
+        numberPickerListener()
+    }
+
+    private fun initNumberPicker(){
+        val data1: Array<String> = Array(181){
+                i -> i.toString()
+        }
+
+        NP_cycle?.minValue = 0
+        NP_cycle?.maxValue = data1.size-1
+        NP_cycle?.wrapSelectorWheel = true
+        NP_cycle?.displayedValues = data1
+        NP_cycle?.value= Integer.parseInt(intent.getStringExtra("cycle").toString())
+    }
+
+    private fun numberPickerListener(){
+        NP_cycle.setOnValueChangedListener { picker, oldVal, newVal ->
+            Log.d("test", "oldVal : ${oldVal}, newVal : $newVal")
+            Log.d("test", "picker.displayedValues ${picker.displayedValues[picker.value]}")
+            NP_value = picker.displayedValues[picker.value].toString()
+        }
+    }
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == RESULT_OK) {
@@ -105,14 +136,13 @@ class EditProduct : AppCompatActivity() {
         firestore?.runTransaction { transition ->
             contentdto = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
 
-
             //Insert uid of user
             contentdto.uid = auth?.currentUser?.uid
 
             //Insert userId
             contentdto.userId = auth?.currentUser?.email
 
-            //Insert Product
+            //Insert ProductT
             contentdto.product = binding.editTextProduct.text.toString()
 
             //Insert price
@@ -146,7 +176,14 @@ class EditProduct : AppCompatActivity() {
         }
 
         setResult(Activity.RESULT_OK)
-
         finish()
+    }
+
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val myData: Intent? = result.data
+            val stringData = result.data?.getStringExtra("returnValue")
+            binding.editTextPlace.setText(stringData)
+        }
     }
 }
