@@ -7,49 +7,30 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.BitmapFactory
-import android.graphics.Camera
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
-import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.location.LocationRequest
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.provider.SyncStateContract.Helpers.update
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-import com.google.android.gms.location.LocationRequest.create
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 //import com.techtown.matchingservice.databinding.ProductItemBinding
 import com.techtown.matchingservice.model.ContentDTO
-import kotlinx.android.synthetic.main.activity_search.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -85,13 +66,10 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         setContentView(R.layout.activity_search)
         var selectbutton = findViewById<Button>(R.id.btn_select)
         selectbutton.setOnClickListener{
-            val mDialogView = LayoutInflater.from(this).inflate(R.layout.activity_search,null)
-            val mBuilder = AlertDialog.Builder(this)
-                .setView(mDialogView)
-                .setTitle("조건 탐색")
-
-            mBuilder.show()
+            val dialog = ConditionDialog()
+            dialog.show(supportFragmentManager, "ConditionDialog")
         }
+
         adapter = ProductListAdapter(productsList)
         adapter.setItemClickListener(object :
             ProductListAdapter.OnItemClickListener{

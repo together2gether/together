@@ -47,7 +47,6 @@
         <activity android:name=".ProductActivity"/>
         <activity android:name=".FoodActivity"/>
         <activity android:name=".Product"/>
-        <activity android:name=".ConditionActivity"/>
         <activity android:name=".RecommendActivity"/>
         <activity android:name=".AddressActivity"/>
         <activity android:name=".Delivery"/>
