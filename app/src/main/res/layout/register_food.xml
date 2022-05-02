@@ -88,7 +88,8 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="13dp">
 
                     <TextView
                         android:id="@+id/textView22"
@@ -99,7 +100,7 @@
                         android:gravity="center"
                         android:text="지점"
                         android:textSize="16sp"
-                        android:textStyle="bold"  />
+                        android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/editTextTextPersonName"
