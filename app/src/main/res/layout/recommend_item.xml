@@ -17,16 +17,16 @@
 
         <ImageView
             android:id="@+id/item_image"
-            android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
+            android:layout_width="180dp"
+            android:layout_height="90dp"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             app:srcCompat="@drawable/addphoto" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_marginLeft="10dp"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_weight="1">
 
             <TextView
@@ -35,35 +35,34 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="제품명"
-                android:textSize="15sp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="208dp" />
+                android:textColor="#000000"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/text_lowprice"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="32dp"
+                android:layout_below="@id/text_title"
                 android:layout_marginBottom="10dp"
                 android:text="최저가"
-                android:textStyle="bold"
-                android:textColor="@android:color/holo_red_dark"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_regist"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:textColor="#ff5959"
+                android:textSize="18sp"
+                android:textStyle="normal" />
 
             <Button
                 android:id="@+id/btn_regist"
                 android:layout_width="60dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/button"
+                android:backgroundTint="@color/purple_200"
                 android:text="등록"
-                android:textSize="13dp"
-                android:textColor="@color/black"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/text_title"
-                android:backgroundTint="#bfdeff"
-                android:layout_marginRight="10dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:textColor="#ffffff"
+                android:textSize="12dp" />
+        </RelativeLayout>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

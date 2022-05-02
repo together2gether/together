@@ -2,6 +2,7 @@ package com.techtown.matchingservice
 
 
 import android.content.Intent
+import android.content.Intent.getIntent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.techtown.matchingservice.databinding.FoodItemBinding
 import com.techtown.matchingservice.databinding.Fragment2Binding
 import com.techtown.matchingservice.model.DeliveryDTO
+import kotlinx.android.synthetic.main.fragment_2.*
 
 class Fragment2 : Fragment() {
     private lateinit var binding: Fragment2Binding
@@ -33,7 +36,13 @@ class Fragment2 : Fragment() {
         binding = Fragment2Binding.inflate(inflater, container, false)
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().uid!!
-
+        val drawerLayout:DrawerLayout = binding.drawerLayout
+        val drawerView = binding.drawer
+        var cate : String = arguments?.getString("category").toString()
+        if(cate == "open"){
+            drawerLayout.openDrawer(drawerView)
+            cate = "close"
+        }
         binding.button3.setOnClickListener {
             //val string = binding.edit.text
             /*if (string.isNullOrEmpty()) {
@@ -56,6 +65,18 @@ class Fragment2 : Fragment() {
         binding.fragment2ProductRegistration.setOnClickListener {
             val intent = Intent(context, FoodActivity::class.java)
             startActivity(intent)
+            Intent(context, FoodActivity::class.java).apply{
+                putExtra("kind", "delivery".toString())
+
+            }.run { context?.startActivity(this) }
+        }
+        binding.shop.setOnClickListener {
+            val intent = Intent(context, FoodActivity::class.java)
+            startActivity(intent)
+            Intent(context, FoodActivity::class.java).apply{
+                putExtra("kind", "shop".toString())
+
+            }.run { context?.startActivity(this) }
         }
         binding.menu2.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
             override fun onMenuExpanded() {
@@ -68,6 +89,16 @@ class Fragment2 : Fragment() {
         })
         binding.fragment2RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+        binding.deliver.setOnClickListener {
+            deliverycheck = 1
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
+        }
+        binding.shopping.setOnClickListener {
+            deliverycheck = 2
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
+        }
         binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
                 R.id.fragment2_rb_delivery -> {
@@ -84,6 +115,7 @@ class Fragment2 : Fragment() {
                 }
             }
         }
+
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
     }

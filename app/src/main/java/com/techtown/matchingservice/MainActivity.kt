@@ -12,8 +12,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.techtown.matchingservice.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import java.security.MessageDigest
 import java.util.*
 
@@ -23,15 +25,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         val ab = supportActionBar!!
         ab.setDisplayShowTitleEnabled(false)
         //ab.setDisplayHomeAsUpEnabled(true)
+
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         var fragment1 = Fragment1()
         changeTitle("정기구매")
+
+
         binding.search.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
@@ -39,6 +43,14 @@ class MainActivity : AppCompatActivity() {
         binding.search2.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)
+        }
+        binding.category.setOnClickListener{
+            var fragment2 = Fragment2()
+            var bundle = Bundle()
+            bundle.putString("category","open")
+            fragment2.arguments = bundle
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_content, fragment2).commit()
         }
         binding.search.setVisibility(View.VISIBLE)
         supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
@@ -53,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("정기구매")
                         binding.search.setVisibility(View.VISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
+                        binding.category.setVisibility(View.INVISIBLE)
                         var fragment1 = Fragment1()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment1).commit()
@@ -61,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("배달")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.VISIBLE)
+                        binding.category.setVisibility(View.VISIBLE)
                         var fragment2 = Fragment2()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment2).commit()
@@ -69,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("채팅")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
+                        binding.category.setVisibility(View.INVISIBLE)
                         var chatFragment = ChatFragment()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, chatFragment).commit()
@@ -77,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("마이페이지")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
+                        binding.category.setVisibility(View.INVISIBLE)
                         var fragment4 = Fragment4()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment4).commit()

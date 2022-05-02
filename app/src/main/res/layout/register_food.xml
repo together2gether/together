@@ -11,38 +11,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
+            android:id="@+id/relat"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#bfdeff"
-            app:itemIconTint="#bfdeff"
-            app:itemTextColor="#bfdeff"
-            tools:ignore="MissingConstraints">
+            android:layout_height="wrap_content">
 
             <android.widget.Button
                 android:id="@+id/button48"
                 android:layout_width="30dp"
                 android:layout_height="27dp"
-                android:background="@drawable/arrow"
-                android:backgroundTint="#ffffff" />
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ic_back" />
 
-            <TextView
-                android:id="@+id/register_food_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="등록"
-                android:textColor="@android:color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
-        </androidx.appcompat.widget.Toolbar>
+            <android.widget.Button
+                android:id="@+id/register_food_storage"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/circle_button"
+                android:backgroundTint="@color/purple_200"
+                android:text="저장"
+                android:textColor="#ffffff"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
-            android:layout_marginTop="10dp">
+            android:layout_below="@id/relat">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,29 +54,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <RadioGroup
-                        android:id="@+id/register_food_rg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rb_delivery"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="10dp"
-                            android:checked="true"
-                            android:text="배달" />
-
-                        <RadioButton
-                            android:id="@+id/rb_shopping"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="쇼핑" />
-                    </RadioGroup>
-                </LinearLayout>
+                    android:orientation="horizontal" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -91,7 +69,7 @@
                         android:layout_marginRight="6dp"
                         android:gravity="center"
                         android:text="가게 이름"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
@@ -100,13 +78,41 @@
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/register_food_name"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
                         android:ems="10"
                         android:gravity="center"
                         android:inputType="textPersonName"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="6dp"
+                        android:gravity="center"
+                        android:text="지점"
+                        android:textSize="16sp"
+                        android:textStyle="bold"  />
+
+                    <EditText
+                        android:id="@+id/editTextTextPersonName"
+                        android:layout_width="310dp"
+                        android:layout_height="40dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/textView22"
+                        android:ems="10"
+                        android:gravity="center"
+                        android:inputType="textPersonName"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -122,22 +128,29 @@
                         android:layout_marginRight="6dp"
                         android:gravity="center"
                         android:text="필요 주문 금액"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/register_food_order_price"
-                        android:layout_width="310dp"
+                        android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/textView150"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
                         android:ems="10"
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/register_food_order_price"
+                        android:text=" 원" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -153,22 +166,29 @@
                         android:layout_marginRight="6dp"
                         android:gravity="center"
                         android:text="총 배달비"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
                         android:id="@+id/register_food_delivery_price"
-                        android:layout_width="310dp"
+                        android:layout_width="200dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/textView191"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
                         android:ems="10"
                         android:gravity="center"
                         android:inputType="numberDecimal"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textView20"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/register_food_delivery_price"
+                        android:text=" 원" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -178,28 +198,15 @@
 
                     <TextView
                         android:id="@+id/textView193"
-                        android:layout_width="70dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_centerInParent="true"
                         android:layout_marginRight="6dp"
-                        android:gravity="center"
-                        android:text="배달 주소"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:text="현재 배달 주소는 회원정보 상의 주소로 되어 있습니다. 해당 위치가 아닌 경우 회원정보 주소를 수정해주세요."
+                        android:textColor="#FF4343"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
 
-                    <EditText
-                        android:id="@+id/register_food_address"
-                        android:layout_width="310dp"
-                        android:layout_height="40dp"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/textView193"
-                        android:background="@drawable/button"
-                        android:backgroundTint="#81DCDCDC"
-                        android:ems="10"
-                        android:gravity="center"
-                        android:inputType="textPersonName"
-                        android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
                 </RelativeLayout>
 
                 <LinearLayout
@@ -216,7 +223,7 @@
                         android:layout_marginRight="6dp"
                         android:gravity="center"
                         android:text="상세 설명"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold" />
 
                     <EditText
@@ -234,14 +241,7 @@
                         android:paddingRight="10dp" />
                 </LinearLayout>
 
-                <android.widget.Button
-                    android:id="@+id/register_food_storage"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/button"
-                    android:text="저장"
-                    android:textSize="18sp" />
+
             </LinearLayout>
         </ScrollView>
 

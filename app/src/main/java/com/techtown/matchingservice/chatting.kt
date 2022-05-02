@@ -69,7 +69,10 @@ class chatting : AppCompatActivity() {
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
         val curTime = dateFormat.format(Date(time)).toString()
-
+        val button = findViewById<Button>(R.id.back_botton)
+        button.setOnClickListener {
+            finish()
+        }
         val geocoder = Geocoder(this)
         groupchat = intent.getStringExtra("groupchat")
         uid = Firebase.auth.currentUser?.uid.toString()
@@ -320,11 +323,11 @@ class chatting : AppCompatActivity() {
                 //holder.layout_main.gravity = Gravity.LEFT
                 //margin값 설정
                 val layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 holder.layout_main.layoutParams = layoutParams
-                layoutParams.setMargins(0,0,0,0)
+                layoutParams.setMargins(0,0,30,0)
             }
         }
 

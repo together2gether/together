@@ -14,6 +14,7 @@ class FoodActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
+    lateinit var kind : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_food)
@@ -25,13 +26,11 @@ class FoodActivity : AppCompatActivity() {
         //Initiate
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
-
-        binding.registerFoodRg.setOnCheckedChangeListener { radioGroup, i ->
-            when (i) {
-                R.id.rb_delivery -> binding.registerFoodName.setText("가게 이름")
-                R.id.rb_shopping -> binding.registerFoodName.setText("쇼핑몰 이름")
+        kind= intent.getStringExtra("kind").toString()
+            when (kind) {
+               "delivery" -> binding.registerFoodName.setText("가게 이름")
+                "shop" -> binding.registerFoodName.setText("쇼핑몰 이름")
             }
-        }
 
         binding.registerFoodStorage.setOnClickListener {
             contentUpload()
@@ -50,7 +49,7 @@ class FoodActivity : AppCompatActivity() {
 
         deliveryDTO.deliveryParticipation[uid] = true
 
-        if (binding.rbDelivery.isChecked) {
+        if (kind == "delivery") {
             deliveryDTO.delivery = true
         } else {
             deliveryDTO.delivery = false
@@ -65,7 +64,6 @@ class FoodActivity : AppCompatActivity() {
         deliveryDTO.delivery_price =
             Integer.parseInt(binding.registerFoodDeliveryPrice.text.toString())
 
-        deliveryDTO.delivery_address = binding.registerFoodAddress.text.toString()
 
         deliveryDTO.delivery_detail = binding.registerFoodDetail.text.toString()
 

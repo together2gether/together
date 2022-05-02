@@ -5,26 +5,48 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView_topName"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/item_chat"
-        android:padding="15dp"
-        android:text="눈송이"
-        android:textColor="#a1a6ac"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/relativeLayout">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/msg_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/relativeLayout"
-        android:layout_below="@id/textView_topName">
+        <RelativeLayout
+            android:id="@+id/relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <Button
+                android:id="@+id/back_botton"
+                android:layout_width="30dp"
+                android:layout_height="27dp"
+                android:layout_centerVertical="false"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/ic_back" />
+
+            <TextView
+                android:id="@+id/textView_topName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_chat"
+                android:gravity="center_horizontal"
+                android:padding="15dp"
+                android:text="눈송이"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/msg_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relative">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayout"

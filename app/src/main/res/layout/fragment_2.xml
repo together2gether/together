@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    android:id="@+id/drawer_layout"
+    tools:openDrawer="start"
     tools:context=".Fragment2">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:id="@+id/loc"
@@ -87,38 +89,38 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/item_chat"
                 android:orientation="horizontal"
                 android:paddingBottom="12dp">
+
+                <RadioGroup
+                    android:id="@+id/fragment2Rg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <RadioButton
+                        android:id="@+id/fragment2_rb_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="배달" />
+
+                    <RadioButton
+                        android:id="@+id/fragment2_rb_shopping"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="쇼핑" />
+                </RadioGroup>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginRight="15dp">
-
-                    <RadioGroup
-                        android:id="@+id/fragment2_rg"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal">
-
-                        <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/fragment2_rb_delivery"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true"
-                            android:text="배달"
-                            android:textSize="13dp" />
-
-                        <androidx.appcompat.widget.AppCompatRadioButton
-                            android:id="@+id/fragment2_rb_shopping"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="쇼핑"
-                            android:textSize="13dp" />
-                    </RadioGroup>
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="8dp">
 
                     <TextView
                         android:id="@+id/textView183"
@@ -126,7 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="23dp"
+                        android:layout_marginLeft="133dp"
                         android:text="필요 주문 금액"
                         android:textColor="#000000"
                         android:textSize="15sp"
@@ -139,7 +141,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="23dp"
+                        android:layout_marginLeft="28dp"
                         android:text="총 배달비"
                         android:textColor="#000000"
                         android:textSize="15sp"
@@ -176,14 +178,56 @@
             app:fab_labelsPosition="left">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/shop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#FFF"
+                app:fab_colorPressed="@color/purple_200"
+                app:fab_icon="@drawable/shopping"
+                app:fab_title="온라인 쇼핑 등록하기" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fragment2ProductRegistration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:fab_colorNormal="#FFF"
                 app:fab_colorPressed="@color/purple_200"
-                app:fab_icon="@drawable/add"
-                app:fab_title="등록하기" />
+                app:fab_icon="@drawable/fast_food"
+                app:fab_title="음식 배달 등록하기" />
+
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
     </RelativeLayout>
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/drawer"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#ffffff"
+        android:gravity="center_horizontal">
+
+        <android.widget.Button
+            android:id="@+id/deliver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/category_button"
+            android:drawableLeft="@drawable/image"
+            android:drawablePadding="-25dp"
+            android:paddingLeft="15dp"
+            android:text="음식 배달" />
+
+        <android.widget.Button
+            android:id="@+id/shopping"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/deliver"
+            android:background="@drawable/category_button"
+            android:drawableStart="@drawable/bag"
+            android:drawablePadding="-20dp"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:text="온라인 쇼핑" />
+
+    </RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

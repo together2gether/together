@@ -10,75 +10,99 @@
 
 
     <RelativeLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+
+        <RelativeLayout
+            android:id="@+id/tool"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#143F6B"
-            tools:ignore="MissingConstraints">
+            android:layout_height="wrap_content">
 
-
-            <TextView
-                android:id="@+id/set_date"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="search"
-                android:textColor="@android:color/white"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                android:background="#143F6B"
+                tools:ignore="MissingConstraints">
 
 
-        </androidx.appcompat.widget.Toolbar>
+                <TextView
+                    android:id="@+id/set_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="search"
+                    android:textColor="@android:color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
 
-        <ImageView
-            android:id="@+id/search"
-            android:layout_width="40dp"
-            android:layout_height="55dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="false"
-            android:layout_marginRight="5dp"
-            android:paddingRight="15dp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_search"
-            app:tint="#ffffff" />
-        <ImageView
-            android:id="@+id/search2"
-            android:layout_width="40dp"
-            android:layout_height="55dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="false"
-            android:layout_marginRight="5dp"
-            android:paddingRight="15dp"
-            android:visibility="invisible"
-            app:srcCompat="@drawable/ic_search"
-            app:tint="#ffffff" />
+            </androidx.appcompat.widget.Toolbar>
 
-        <FrameLayout
-            android:id="@+id/main_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/bottom_navigation"
-            android:layout_below="@id/toolbar"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="-2dp"/>
+            <ImageView
+                android:id="@+id/search"
+                android:layout_width="40dp"
+                android:layout_height="55dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="false"
+                android:layout_marginRight="5dp"
+                android:paddingRight="15dp"
+                android:visibility="visible"
+                app:srcCompat="@drawable/ic_search"
+                app:tint="#ffffff" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            app:itemIconTint="@drawable/bottom_icon_color"
-            app:itemTextColor="@drawable/bottom_icon_color"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/menu_bottom">
+            <ImageView
+                android:id="@+id/search2"
+                android:layout_width="40dp"
+                android:layout_height="55dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="false"
+                android:layout_marginRight="5dp"
+                android:paddingRight="15dp"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/ic_search"
+                app:tint="#ffffff" />
 
-        </com.google.android.material.bottomnavigation.BottomNavigationView>
+            <ImageButton
+                android:id="@+id/category"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/purple_200"
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                app:srcCompat="@drawable/menu"
+                app:tint="#ffffff" />
+
+            <FrameLayout
+                android:id="@+id/main_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@id/bottom_navigation"
+                android:layout_below="@id/toolbar"
+                android:layout_marginEnd="0dp"
+                android:layout_marginBottom="-2dp">
+
+            </FrameLayout>
+
+            <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                app:itemIconTint="@drawable/bottom_icon_color"
+                app:itemTextColor="@drawable/bottom_icon_color"
+                app:labelVisibilityMode="labeled"
+                app:menu="@menu/menu_bottom">
+
+            </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+        </RelativeLayout>
+
+
+
     </RelativeLayout>
 </layout>
