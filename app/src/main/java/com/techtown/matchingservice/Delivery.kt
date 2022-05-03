@@ -8,12 +8,19 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.FoodInfoBinding
-import com.techtown.matchingservice.model.ContentDTO
+import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.DeliveryDTO
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Delivery : AppCompatActivity() {
     private lateinit var binding: FoodInfoBinding
@@ -24,6 +31,9 @@ class Delivery : AppCompatActivity() {
     var item = DeliveryDTO()
     val db = Firebase.firestore
     val docRef = db.collection("delivery")
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private val roomsRef = database.getReference("chatrooms")
+    var foodName : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +45,8 @@ class Delivery : AppCompatActivity() {
             finish()
         }
 
-        binding.foodInfoStore.text = intent.getStringExtra("store").toString()
+        foodName = intent.getStringExtra("store").toString()
+        binding.foodInfoStore.text = foodName
         binding.foodInfoName.text = intent.getStringExtra("name").toString()
         binding.foodInfoOrderprice.text = intent.getStringExtra("orderPrice").toString()
         binding.foodInfoDeliveryprice.text = intent.getStringExtra("deliveryPrice").toString()
@@ -59,12 +70,13 @@ class Delivery : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
-                    if(item?.deliveryParticipation.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
+                    if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
                     if(item?.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
                 }
             }
 
         binding.foodInfoParticipation.setOnClickListener(){
+
             item.delivery_ParticipationCount+=1
             item.deliveryParticipation[uid] = true
             var tsDoc = firestore?.collection("delivery")?.document(deliveryid.toString())
@@ -73,6 +85,46 @@ class Delivery : AppCompatActivity() {
                 transition.set(tsDoc!!,item)
             }
             binding.foodInfoParticipation.isEnabled=false
+            var roomId : String? = null
+            val chatModel = ChatModel()
+            chatModel.users.put(deliveryuid.toString(), true)
+            chatModel.users.put(uid, true)
+            chatModel.productid = deliveryid
+            chatModel.delivery = true
+            roomsRef.push().setValue(chatModel)
+
+            roomsRef.orderByChild("users/$uid").equalTo(true)
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        val time = System.currentTimeMillis()
+                        val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                        val curTime = dateFormat.format(Date(time)).toString()
+                        val comment = ChatModel.Comment(deliveryuid.toString(), "안녕하세요. 이 곳은 '$foodName' 공동구매를 위한 채팅방 입니다.", curTime)
+
+                        for (room in snapshot.children){
+                            val chatModel = room.getValue<ChatModel>()
+                            if(chatModel?.productid == deliveryid){
+                                roomId = room.key
+                                roomsRef.child(roomId.toString()).child("comments").push().setValue(comment)
+                            }
+                        }
+                    }
+                })
+
+            Intent(this, chatting::class.java).apply {
+                putExtra("groupchat","DY")
+                putExtra("productid", deliveryid.toString())
+            }.run { startActivity(this) }
+        }
+
+        binding.foodInfoChat.setOnClickListener {
+            Intent(this, chatting::class.java).apply {
+                putExtra("groupchat","N")
+                putExtra("destinationUid", deliveryuid.toString())
+            }.run { startActivity(this) }
         }
 
         binding.foodInfoRevice.setOnClickListener(){

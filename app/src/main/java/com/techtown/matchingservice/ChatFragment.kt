@@ -24,6 +24,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
+import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
 import java.util.*
 
@@ -35,6 +36,7 @@ class ChatFragment : Fragment() {
 
     val db = Firebase.firestore
     val docRef = db.collection("images")
+    val delRef = db.collection("delivery")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,6 +94,7 @@ class ChatFragment : Fragment() {
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
             var p_id = chatModel[position].productid.toString()
             var destinationUid: String? = null
+            var delivery = chatModel[position].delivery
             //채팅바에 있는 유저 모두 체크
             if(p_id == ""){
                 for(user in chatModel[position].users.keys){
@@ -111,12 +114,21 @@ class ChatFragment : Fragment() {
                         holder.textView_title.text = user?.name
                     }
                 })
-            } else {
+            } else if ( delivery == false){
                 docRef.document(p_id).get()
                     .addOnSuccessListener { document ->
                         if(document != null){
                             var item = document.toObject(ContentDTO::class.java)
                             holder.textView_title.text = item?.product
+                        }
+                    }
+            } else if(delivery == true){
+                delRef.document(p_id).get()
+                    .addOnSuccessListener { document ->
+                        if(document != null){
+                            var item = document.toObject(DeliveryDTO::class.java)
+                            //holder.textView_title.text = item?.name
+                            holder.textView_title.text = item?.store
                         }
                     }
             }
@@ -127,37 +139,17 @@ class ChatFragment : Fragment() {
             val lastMessageKey = commentMap.keys.toTypedArray()[0]
             holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
 
-            /*if(p_id == ""){
-                val commentMap = TreeMap<String, ChatModel.Comment>(reverseOrder())
-                commentMap.putAll(chatModel[position].comments)
-                val lastMessageKey = commentMap.keys.toTypedArray()[0]
-                holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
-            } else {
-                roomsRef.child(p_id).addListenerForSingleValueEvent(object : ValueEventListener{
-                    override fun onCancelled(error: DatabaseError) {
-                    }
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        var item = snapshot.getValue<ChatModel>()
-                        if(item!!.comments != null){
-                            val commentMap = TreeMap<String, ChatModel.Comment>(reverseOrder())
-                            commentMap.putAll(chatModel[position].comments)
-                            val lastMessageKey = commentMap.keys.toTypedArray()[0]
-                            holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
-                        }
-                    }
-                })
-            }*/
-
-
-
             //채팅창 선택 시 이동
             holder.itemView.setOnClickListener{
                 val intent = Intent(context, chatting::class.java)
                 if(p_id == ""){
                     intent.putExtra("destinationUid", destinationUid.toString())
                     intent.putExtra("groupchat", "N")
-                } else {
+                } else if(delivery == false) {
                     intent.putExtra("groupchat", "Y")
+                    intent.putExtra("productid", p_id)
+                } else if ( delivery == true){
+                    intent.putExtra("groupchat", "DY")
                     intent.putExtra("productid", p_id)
                 }
                 context?.startActivity(intent)

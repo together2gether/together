@@ -113,14 +113,12 @@ class ModifyInfo : AppCompatActivity() {
             if(edit_nickname.text.isEmpty()||edit_name.text.isEmpty()||edit_phonenumber.text.isEmpty()||edit_address.text.isEmpty()){
                 Toast.makeText(this, "닉네임, 이름, 전화번호, 주소를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
-                var first = false
                 userRef.addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val userInfo = snapshot.getValue<UsersInfo>()
                         if(userInfo == null){
                             val newInfo = UsersInfo("", "","","","",userIdSt)
                             userRef.setValue(newInfo)
-                            first = true
                         }
                         if(profileCheck){
                             FirebaseStorage.getInstance()

@@ -2,7 +2,6 @@ package com.techtown.matchingservice
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
@@ -12,24 +11,25 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.marginRight
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
+import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
 import java.text.SimpleDateFormat
 import java.util.*
@@ -47,8 +47,9 @@ class chatting : AppCompatActivity() {
     private val usersRef = database.getReference("usersInfo")
     val db = Firebase.firestore
     val docRef = db.collection("images")
-     var mylocation : String = ""
-     var yourlocation : String = ""
+    val delRef = db.collection("delivery")
+    var mylocation : String = ""
+    var yourlocation : String = ""
     //var groupItem = ContentDTO()
     //var groupItem_id : String? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -127,6 +128,9 @@ class chatting : AppCompatActivity() {
         } else if (groupchat == "Y"){
             productid = intent.getStringExtra("productid")
             destinationUid = ""
+        } else if(groupchat == "DY"){
+            productid = intent.getStringExtra("productid")
+            destinationUid = ""
         } else {
             Toast.makeText(this, "오류", Toast.LENGTH_LONG).show()
         }
@@ -153,6 +157,16 @@ class chatting : AppCompatActivity() {
                             chatModel.productid = productid
                         }
                     }
+            } else if(groupchat == "DY"){
+                delRef.document("$productid").get()
+                    .addOnSuccessListener { doc ->
+                        if(doc != null){
+                            var groupItem = doc.toObject(DeliveryDTO::class.java)!!
+                            for(users in groupItem!!.deliveryParticipation.keys){
+                                chatModel.users.put(users, true)
+                            }
+                            chatModel.productid = productid
+                        }}
             }
 
             val comment = ChatModel.Comment(uid, editText.text.toString(), curTime)
@@ -214,6 +228,24 @@ class chatting : AppCompatActivity() {
                     }
                 }
             })
+        } else if(groupchat == "DY"){
+            roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for(item in snapshot.children){
+                        val chatModel = item.getValue<ChatModel>()
+                        if(chatModel?.productid == productid){
+                            chatRoomUid = item.key
+                            val button = findViewById<Button>(R.id.btn_input)
+                            button.isEnabled = true
+                            recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
+                            recyclerView?.adapter = RecyclerViewAdapter()
+                        }
+                    }
+                }
+            })
         }
     }
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MessageViewHolder>(){
@@ -240,6 +272,17 @@ class chatting : AppCompatActivity() {
                             var productname = groupItem.product.toString()
                             var topName = findViewById<TextView>(R.id.textView_topName)
                             topName.text = productname
+                        }
+                    }
+                getMessageList()
+            } else if(groupchat == "DY"){
+                delRef.document("$productid").get()
+                    .addOnSuccessListener { doc ->
+                        if(doc != null){
+                            var groupItem = doc.toObject(DeliveryDTO::class.java)!!
+                            var deliveryname = groupItem.store.toString()
+                            var topName = findViewById<TextView>(R.id.textView_topName)
+                            topName.text = deliveryname
                         }
                     }
                 getMessageList()
@@ -295,7 +338,7 @@ class chatting : AppCompatActivity() {
 
                 layoutParams.setMargins(0,0,50,0)
             } else {
-                if(groupchat == "Y"){
+                if(groupchat == "Y" || groupchat == "DY"){
                     usersRef.child(comments[position].uid.toString()).addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             user = snapshot.getValue<UsersInfo>()
@@ -348,4 +391,3 @@ class chatting : AppCompatActivity() {
 
     }
 }
-

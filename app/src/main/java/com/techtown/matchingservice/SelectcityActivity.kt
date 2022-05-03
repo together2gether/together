@@ -1,47 +1,45 @@
 package com.techtown.matchingservice
 
-import android.content.Context
 import android.os.Bundle
-import android.util.AttributeSet
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 
 class SelectcityActivity : AppCompatActivity() {
-    /*var spinnerCity: Spinner? = null
+    var spinnerCity: Spinner? = null
     var spinnerSigungu: Spinner? = null
     var spinnerDong: Spinner? = null
 
     var arrayAdapter: ArrayAdapter<String>? = null
-    val EXTRA_ADDRESS: String = "address"*/
+    val EXTRA_ADDRESS: String = "address"
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        return super.onCreateView(name, context, attrs)
-    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selectcity)
 
-        /*spinnerCity = findViewById(R.id.city)
+        spinnerCity = findViewById(R.id.city)
         spinnerSigungu = findViewById(R.id.sigungu)
-        spinnerDong = findViewById(R.id.dong)*/
+        spinnerDong = findViewById(R.id.dong)
 
-        /*ArrayAdapter.createFromResource(
+        ArrayAdapter.createFromResource(
             this,
             R.array.spinner_region,
             R.layout.spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
             spinnerCity!!.adapter = adapter
-        }*/
+        }
 
-        //initAddressSpinner()
+        initAddressSpinner()
 
 
 
     }
 
 
-    /*fun initAddressSpinner(){
+    fun initAddressSpinner(){
         spinnerCity?.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener{
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -174,5 +172,5 @@ class SelectcityActivity : AppCompatActivity() {
         arrayAdapter = ArrayAdapter<String>(this, R.layout.spinner_item, resources.getStringArray(array_resource))
         arrayAdapter!!.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item)
         spinnerDong?.adapter = arrayAdapter
-    }*/
+    }
 }
