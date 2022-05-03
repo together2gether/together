@@ -3,6 +3,7 @@ package com.techtown.matchingservice
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ class FoodActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     lateinit var kind : String
-    val items = resources.getStringArray(R.array.my_array)
+    val items = arrayOf("한식", "중식","일식","양식", "치킨", "피자","분식","디저트","고기","패스트푸드")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_food)
@@ -43,9 +44,26 @@ class FoodActivity : AppCompatActivity() {
             contentUpload()
             finish()
         }
-        val myAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
-        binding.spinner.adapter = myAdapter
-        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        val myAdapter = ArrayAdapter(this, R.layout.item_spinner, items)
+        binding.deliverSpinner.adapter = myAdapter
+        binding.deliverSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2) {
+                    0 -> {
+
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
+        binding.shoppingSpinner.adapter = myAdapter
+        binding.shoppingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 when(p2) {
                     0 -> {
@@ -81,7 +99,12 @@ class FoodActivity : AppCompatActivity() {
         }
 
         deliveryDTO.delivery_ParticipationCount = 1
-
+        if(kind == "delivery"){
+            deliveryDTO.category = binding.deliverSpinner.selectedItem.toString()
+        }
+        else {
+            deliveryDTO.category = binding.shoppingSpinner.selectedItem.toString()
+        }
         deliveryDTO.store = binding.registerFoodStoreName.text.toString()
 
         deliveryDTO.name = binding.registerFoodName.text.toString()

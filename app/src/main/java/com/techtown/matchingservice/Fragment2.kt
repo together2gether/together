@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.techtown.matchingservice.databinding.FoodItemBinding
 import com.techtown.matchingservice.databinding.Fragment2Binding
 import com.techtown.matchingservice.model.DeliveryDTO
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_2.*
 
 class Fragment2 : Fragment() {
@@ -29,8 +30,8 @@ class Fragment2 : Fragment() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     var deliverycheck : Int = 1
-    var deliverynum : Int = 0
-    var shoppingnum : Int = 0
+    var deliverycate : String ="전체"
+    var shoppingcate : String ="전체"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -98,84 +99,126 @@ class Fragment2 : Fragment() {
         }*/
         binding.all.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 0
+            deliverycate ="전체"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
+
         }
         binding.button4.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 1
+            deliverycate ="한식"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.button9.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 2
+            deliverycate ="중식"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.button10.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 3
+            deliverycate ="일식"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.button11.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 4
+            deliverycate ="양식"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.chicken.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 5
+            deliverycate ="치킨"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.pizza.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 6
+            deliverycate ="피자"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.bunsik.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 7
+            deliverycate ="분식"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.desert.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 8
+            deliverycate ="디저트"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.meat.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 9
+            deliverycate ="고기"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.fast.setOnClickListener {
             deliverycheck = 1
-            deliverynum = 10
+            deliverycate ="패스트푸드"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.coupang.setOnClickListener {
             deliverycheck = 2
-            shoppingnum = 1
+            shoppingcate = "쿠팡"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.emart.setOnClickListener {
             deliverycheck = 2
-            shoppingnum = 2
+            shoppingcate = "이마트몰"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.marketkurly.setOnClickListener {
             deliverycheck = 2
-            shoppingnum = 3
+            shoppingcate = "마켓컬리"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.lotte.setOnClickListener {
             deliverycheck = 2
-            shoppingnum = 4
+            shoppingcate = "롯데ON"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.bunga11.setOnClickListener {
             deliverycheck = 2
-            shoppingnum = 5
+            shoppingcate = "11번가"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.gmarket.setOnClickListener {
             deliverycheck=2
-            shoppingnum = 5
+            shoppingcate = "G마켓"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.auction.setOnClickListener {
             deliverycheck=2
-            shoppingnum = 6
+            shoppingcate = "옥션"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.gita.setOnClickListener {
             deliverycheck=2
-            shoppingnum = 7
+            shoppingcate = "기타"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
         binding.all2.setOnClickListener {
             deliverycheck=2
-            shoppingnum = 0
+            shoppingcate = "전체"
+            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
         }
+
         binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
                 R.id.fragment2_rb_delivery -> {
@@ -210,43 +253,70 @@ class Fragment2 : Fragment() {
 
         init {
             if (deliverycheck == 1) {
-                when(deliverynum){
-                    0 ->{
-                        firestore?.collection("delivery")
-                            ?.orderBy("delivery_timestamp")
-                            ?.addSnapshotListener { value, error ->
-                                deliveryDTOs.clear()
-                                deliveryUidList.clear()
-                                for (snapshot in value!!.documents) {
-                                    var item = snapshot.toObject(DeliveryDTO::class.java)
-                                    if (item!!.delivery) {
-                                        deliveryDTOs.add(item)
-                                        deliveryUidList.add(snapshot.id)
-                                    }
+                if (deliverycate == "전체") {
+                    firestore?.collection("delivery")
+                        ?.orderBy("delivery_timestamp")
+                        ?.addSnapshotListener { value, error ->
+                            deliveryDTOs.clear()
+                            deliveryUidList.clear()
+                            for (snapshot in value!!.documents) {
+                                var item = snapshot.toObject(DeliveryDTO::class.java)
+                                if (item!!.delivery) {
+                                    deliveryDTOs.add(item)
+                                    deliveryUidList.add(snapshot.id)
                                 }
-                                notifyDataSetChanged()
                             }
-                    }
-                }
+                            notifyDataSetChanged()
+                        }
 
-            }else{
-                when(shoppingnum){
-                    0 -> {
-                        firestore?.collection("delivery")
-                            ?.orderBy("delivery_timestamp")
-                            ?.addSnapshotListener { value, error ->
-                                deliveryDTOs.clear()
-                                deliveryUidList.clear()
-                                for (snapshot in value!!.documents) {
-                                    var item = snapshot.toObject(DeliveryDTO::class.java)
-                                    if (!item!!.delivery) {
-                                        deliveryDTOs.add(item)
-                                        deliveryUidList.add(snapshot.id)
-                                    }
+                } else {
+                    firestore?.collection("delivery")
+                        ?.orderBy("delivery_timestamp")
+                        ?.addSnapshotListener { value, error ->
+                            deliveryDTOs.clear()
+                            deliveryUidList.clear()
+                            for (snapshot in value!!.documents) {
+                                var item = snapshot.toObject(DeliveryDTO::class.java)
+                                if (item!!.category == deliverycate) {
+                                    deliveryDTOs.add(item)
+                                    deliveryUidList.add(snapshot.id)
                                 }
-                                notifyDataSetChanged()
                             }
-                    }
+                            notifyDataSetChanged()
+                        }
+                }
+            } else {
+                if (shoppingcate == "전체") {
+                    firestore?.collection("delivery")
+                        ?.orderBy("delivery_timestamp")
+                        ?.addSnapshotListener { value, error ->
+                            deliveryDTOs.clear()
+                            deliveryUidList.clear()
+                            for (snapshot in value!!.documents) {
+                                var item = snapshot.toObject(DeliveryDTO::class.java)
+                                if (!item!!.delivery) {
+                                    deliveryDTOs.add(item)
+                                    deliveryUidList.add(snapshot.id)
+                                }
+                            }
+                            notifyDataSetChanged()
+                        }
+
+                } else {
+                    firestore?.collection("delivery")
+                        ?.orderBy("delivery_timestamp")
+                        ?.addSnapshotListener { value, error ->
+                            deliveryDTOs.clear()
+                            deliveryUidList.clear()
+                            for (snapshot in value!!.documents) {
+                                var item = snapshot.toObject(DeliveryDTO::class.java)
+                                if (item!!.category == shoppingcate) {
+                                    deliveryDTOs.add(item)
+                                    deliveryUidList.add(snapshot.id)
+                                }
+                            }
+                            notifyDataSetChanged()
+                        }
                 }
 
             }

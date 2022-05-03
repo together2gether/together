@@ -54,7 +54,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/textView23"
@@ -66,12 +67,29 @@
                         android:text="카테고리"
                         android:textSize="16sp"
                         android:textStyle="bold" />
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:layout_width="300dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/spinner"
-                        android:layout_centerHorizontal="true"/>
 
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/deliver_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@id/textView23"
+                        android:background="@drawable/spinner_background"
+                        android:gravity="center"
+                        android:textAlignment="gravity"
+                        android:visibility="visible"/>
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/shopping_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="32dp"
+                        android:layout_centerInParent="true"
+                        android:layout_toRightOf="@id/textView23"
+                        android:background="@drawable/spinner_background"
+                        android:fadeScrollbars="true"
+                        android:gravity="center"
+                        android:textAlignment="gravity"
+                        android:visibility="invisible" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -222,7 +240,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginRight="6dp"
-                        android:text="현재 배달 주소는 회원정보 상의 주소로 되어 있습니다. \n해당 위치가 아닌 경우 회원정보 주소를 수정해주세요."
+                        android:text="현재 배달 주소는 회원정보 상의 주소로 되어 있습니다.\n해당 위치가 아닌 경우 회원정보 주소를 수정해주세요."
                         android:textColor="#FF4343"
                         android:textSize="16sp"
                         android:textStyle="normal" />
