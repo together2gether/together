@@ -29,7 +29,8 @@ class Fragment2 : Fragment() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     var deliverycheck : Int = 1
-
+    var deliverynum : Int = 1
+    var shoppingnum : Int = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -85,7 +86,7 @@ class Fragment2 : Fragment() {
         })
         binding.fragment2RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
-        binding.deliver.setOnClickListener {
+        /*binding.deliver.setOnClickListener {
             deliverycheck = 1
             binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
@@ -94,6 +95,86 @@ class Fragment2 : Fragment() {
             deliverycheck = 2
             binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+        }*/
+        binding.all.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 0
+        }
+        binding.button4.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 1
+        }
+        binding.button9.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 2
+        }
+        binding.button10.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 3
+        }
+        binding.button11.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 4
+        }
+        binding.chicken.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 5
+        }
+        binding.pizza.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 6
+        }
+        binding.bunsik.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 7
+        }
+        binding.desert.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 8
+        }
+        binding.meat.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 9
+        }
+        binding.fast.setOnClickListener {
+            deliverycheck = 1
+            deliverynum = 10
+        }
+        binding.coupang.setOnClickListener {
+            deliverycheck = 2
+            shoppingnum = 1
+        }
+        binding.emart.setOnClickListener {
+            deliverycheck = 2
+            shoppingnum = 2
+        }
+        binding.marketkurly.setOnClickListener {
+            deliverycheck = 2
+            shoppingnum = 3
+        }
+        binding.lotte.setOnClickListener {
+            deliverycheck = 2
+            shoppingnum = 4
+        }
+        binding.bunga11.setOnClickListener {
+            deliverycheck = 2
+            shoppingnum = 5
+        }
+        binding.gmarket.setOnClickListener {
+            deliverycheck=2
+            shoppingnum = 5
+        }
+        binding.auction.setOnClickListener {
+            deliverycheck=2
+            shoppingnum = 6
+        }
+        binding.gita.setOnClickListener {
+            deliverycheck=2
+            shoppingnum = 7
+        }
+        binding.all2.setOnClickListener {
+            deliverycheck=2
+            shoppingnum = 0
         }
         binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
             when(i){
@@ -129,35 +210,45 @@ class Fragment2 : Fragment() {
 
         init {
             if (deliverycheck == 1) {
-                firestore?.collection("delivery")
-                    ?.orderBy("delivery_timestamp")
-                    ?.addSnapshotListener { value, error ->
-                        deliveryDTOs.clear()
-                        deliveryUidList.clear()
-                        for (snapshot in value!!.documents) {
-                            var item = snapshot.toObject(DeliveryDTO::class.java)
-                            if (item!!.delivery) {
-                                deliveryDTOs.add(item)
-                                deliveryUidList.add(snapshot.id)
+                when(deliverynum){
+                    0 ->{
+                        firestore?.collection("delivery")
+                            ?.orderBy("delivery_timestamp")
+                            ?.addSnapshotListener { value, error ->
+                                deliveryDTOs.clear()
+                                deliveryUidList.clear()
+                                for (snapshot in value!!.documents) {
+                                    var item = snapshot.toObject(DeliveryDTO::class.java)
+                                    if (item!!.delivery) {
+                                        deliveryDTOs.add(item)
+                                        deliveryUidList.add(snapshot.id)
+                                    }
+                                }
+                                notifyDataSetChanged()
                             }
-                        }
-                        notifyDataSetChanged()
                     }
+                }
+
             }else{
-                firestore?.collection("delivery")
-                    ?.orderBy("delivery_timestamp")
-                    ?.addSnapshotListener { value, error ->
-                        deliveryDTOs.clear()
-                        deliveryUidList.clear()
-                        for (snapshot in value!!.documents) {
-                            var item = snapshot.toObject(DeliveryDTO::class.java)
-                            if (!item!!.delivery) {
-                                deliveryDTOs.add(item)
-                                deliveryUidList.add(snapshot.id)
+                when(shoppingnum){
+                    0 -> {
+                        firestore?.collection("delivery")
+                            ?.orderBy("delivery_timestamp")
+                            ?.addSnapshotListener { value, error ->
+                                deliveryDTOs.clear()
+                                deliveryUidList.clear()
+                                for (snapshot in value!!.documents) {
+                                    var item = snapshot.toObject(DeliveryDTO::class.java)
+                                    if (!item!!.delivery) {
+                                        deliveryDTOs.add(item)
+                                        deliveryUidList.add(snapshot.id)
+                                    }
+                                }
+                                notifyDataSetChanged()
                             }
-                        }
-                        notifyDataSetChanged()
                     }
+                }
+
             }
         }
 

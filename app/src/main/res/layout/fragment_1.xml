@@ -119,7 +119,7 @@
                 app:fab_colorNormal="#FFF"
                 app:fab_colorPressed="@color/purple_200"
                 app:fab_icon="@drawable/cart"
-                app:fab_title="최저가 제품 보기" />
+                app:fab_title="추천 제품 보기" />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fragment1ProductRegistration"

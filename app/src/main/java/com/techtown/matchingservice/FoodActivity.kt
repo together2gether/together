@@ -3,6 +3,8 @@ package com.techtown.matchingservice
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
@@ -17,6 +19,7 @@ class FoodActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     lateinit var kind : String
+    val items = resources.getStringArray(R.array.my_array)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_food)
@@ -39,6 +42,24 @@ class FoodActivity : AppCompatActivity() {
         binding.registerFoodStorage.setOnClickListener {
             contentUpload()
             finish()
+        }
+        val myAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
+        binding.spinner.adapter = myAdapter
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2) {
+                    0 -> {
+
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
         }
     }
 

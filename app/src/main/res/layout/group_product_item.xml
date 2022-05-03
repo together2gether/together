@@ -72,12 +72,12 @@
 
                 <android.widget.Button
                     android:id="@+id/button_drop"
-                    android:layout_width="55dp"
-                    android:layout_height="35dp"
+                    android:layout_width="45dp"
+                    android:layout_height="33dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/button"
-                    android:backgroundTint="#ff5959"
+                    android:backgroundTint="#DFFF5959"
                     android:gravity="center"
                     android:text="탈퇴"
                     android:textColor="#ffffff"

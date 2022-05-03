@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         var fragment1 = Fragment1()
-        changeTitle("정기구매")
+        changeTitle("공동구매")
 
 
         binding.search.setOnClickListener {

@@ -327,7 +327,7 @@ class chatting : AppCompatActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 holder.layout_main.layoutParams = layoutParams
-                layoutParams.setMargins(0,0,150,0)
+                layoutParams.setMargins(0,0,0,0)
             }
         }
 

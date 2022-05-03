@@ -13,7 +13,8 @@
         <RelativeLayout
             android:id="@+id/relative"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/item_chat">
 
             <Button
                 android:id="@+id/back_botton"
@@ -28,8 +29,8 @@
                 android:id="@+id/textView_topName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/item_chat"
+                android:layout_marginRight="42dp"
+                android:layout_toRightOf="@id/back_botton"
                 android:gravity="center_horizontal"
                 android:padding="15dp"
                 android:text="눈송이"
