@@ -29,8 +29,8 @@ class Fragment2 : Fragment() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     var deliverycheck : Int = 1
-    var deliverynum : Int = 1
-    var shoppingnum : Int = 1
+    var deliverynum : Int = 0
+    var shoppingnum : Int = 0
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
