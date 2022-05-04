@@ -31,6 +31,7 @@ import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
+import kotlinx.android.synthetic.main.chatting.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -87,7 +88,6 @@ class chatting : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userInfo = snapshot.getValue<UsersInfo>()
                 mylocation = userInfo!!.address.toString()
-
             }
         })
         recyclerView = findViewById(R.id.msg_recyclerview)
@@ -123,6 +123,7 @@ class chatting : AppCompatActivity() {
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }.run {applicationContext?.startActivity(this)}
                     }
+                    textView_topName.setText(destinationInfo.nickname.toString())
                 }
             })
         } else if (groupchat == "Y"){
