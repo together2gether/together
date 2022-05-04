@@ -7,6 +7,8 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -19,6 +21,8 @@ import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.FoodInfoBinding
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.DeliveryDTO
+import com.techtown.matchingservice.model.UsersInfo
+import kotlinx.android.synthetic.main.food_info.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -33,6 +37,7 @@ class Delivery : AppCompatActivity() {
     val docRef = db.collection("delivery")
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val roomsRef = database.getReference("chatrooms")
+    private val usersRef = database.getReference("usersInfo")
     var foodName : String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,12 +71,34 @@ class Delivery : AppCompatActivity() {
             binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
         }
 
+        usersRef.child(deliveryuid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userInfo = snapshot.getValue<UsersInfo>()
+                if(userInfo != null){
+                    if(userInfo!!.profileImageUrl.toString() != ""){
+                        Glide.with(food_register_profile.context).load(userInfo?.profileImageUrl)
+                            .apply(RequestOptions().circleCrop())
+                            .into(food_register_profile)
+                    }
+                    foodregisterUserName.setText(userInfo.nickname.toString())
+                }
+            }
+        })
+
         docRef.document("$deliveryid" ).get()
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
                     if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
                     if(item?.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
+                    val time = item?.delivery_timestamp
+                    val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                    val timeStr = dateFormat.format(Date(time!!)).toString()
+                    foodregisterTime.setText(timeStr)
+
                 }
             }
 
