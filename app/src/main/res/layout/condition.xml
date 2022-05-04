@@ -1,11 +1,229 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:cardCornerRadius="8dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="#143F6B">
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/back"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="#ffffff" />
+
+            <TextView
+                android:id="@+id/set_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="조건 탐색"
+                android:textColor="@android:color/white"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:paddingTop="10dp"
+                android:text="가격"
+                android:textSize="17dp" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:value="15000"
+                android:valueFrom="0"
+                android:valueTo="30000"/>
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:id="@+id/condition_0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0원 ~ "
+                android:textSize="15dp" />
+
+            <EditText
+                android:id="@+id/edittext_condition_price"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:background="@drawable/edittext"
+                android:paddingRight="5dp"
+                android:gravity="right"
+                android:inputType="numberSigned"
+                android:text="10000"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 원"
+                android:textSize="15dp"/>
+
+        </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:paddingTop="10dp"
+                android:text="거리"
+                android:textSize="17dp" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/slider1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="1000"
+                android:valueFrom="0"
+                android:valueTo="2000"
+                android:stepSize="1"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:id="@+id/condition_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0m ~ "
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/edittext_condition_distance"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edittext"
+                    android:paddingRight="5dp"
+                    android:gravity="right"
+                    android:inputType="numberSigned"
+                    android:text="1000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" m"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:paddingTop="10dp"
+                android:text="주기"
+                android:textSize="17dp" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/slider2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:value="90"
+                android:valueFrom="0"
+                android:valueTo="180"
+                android:stepSize="1"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true">
+
+                <TextView
+                    android:id="@+id/condition_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0일 ~ "
+                    android:textSize="15dp" />
+
+                <EditText
+                    android:id="@+id/edittext_condition_day"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edittext"
+                    android:paddingRight="5dp"
+                    android:gravity="right"
+                    android:inputType="numberSigned"
+                    android:text="90"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 일"
+                    android:textSize="15dp" />
+
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:text="조건 탐색"
+                android:textSize="12dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

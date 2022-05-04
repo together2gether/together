@@ -114,6 +114,11 @@ class Product : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.productInfoParticipationuser.setOnClickListener(){
+            val dialog = ParticipantDialog()
+            dialog.show(supportFragmentManager, "ParticipantDialog")
+        }
+
         binding.productInfoParticipation.setOnClickListener(){
 
             item.ParticipationCount+=1
