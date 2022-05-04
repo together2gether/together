@@ -79,7 +79,7 @@ class chatting : AppCompatActivity() {
         uid = Firebase.auth.currentUser?.uid.toString()
         val infoRef = database.getReference("usersInfo")
         val userRef = infoRef.child(uid.toString())
-        userRef.addListenerForSingleValueEvent(object : ValueEventListener{
+        userRef.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
 
             }

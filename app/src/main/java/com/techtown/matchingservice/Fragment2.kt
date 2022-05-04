@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.getIntent
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.location.Address
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,14 +17,19 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.getbase.floatingactionbutton.FloatingActionsMenu
+import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.FoodItemBinding
 import com.techtown.matchingservice.databinding.Fragment2Binding
 import com.techtown.matchingservice.model.DeliveryDTO
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_2.*
+import java.lang.Math.*
+import kotlin.math.pow
 
 class Fragment2 : Fragment() {
     private lateinit var binding: Fragment2Binding
@@ -32,6 +38,12 @@ class Fragment2 : Fragment() {
     var deliverycheck : Int = 1
     var deliverycate : String ="전체"
     var shoppingcate : String ="전체"
+    var mylat : Double =0.0
+    var mylon : Double = 0.0
+    var mylocation : String = ""
+    lateinit var mycor : List<Address>
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -355,6 +367,16 @@ class Fragment2 : Fragment() {
 
         override fun getItemCount(): Int {
             return deliveryDTOs.size
+        }
+    }
+    object DistanceManager{
+        private const val R = 6372.8 * 1000
+        fun getDistance(lat1 : Double, lon1:Double, lat2:Double, lon2 : Double) : Int{
+            val dLat = Math.toRadians(lat2 - lat1)
+            val dLon = Math.toRadians(lon2-lon1)
+            val a = sin(dLat/2).pow(2.0) + sin(dLon/2).pow(2.0)*cos(Math.toRadians(lat1))*cos(Math.toRadians(lat2))
+            val c = 2*asin(sqrt(a))
+            return (R*c).toInt()
         }
     }
 }
