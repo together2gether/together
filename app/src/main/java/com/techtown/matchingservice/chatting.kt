@@ -346,7 +346,7 @@ class chatting : AppCompatActivity() {
                                 .load(user?.profileImageUrl)
                                 .apply(RequestOptions().circleCrop())
                                 .into(holder.imageView_profile)
-                            holder.textView_name.text = user?.name
+                            holder.textView_name.text = user?.nickname
 
                         }
 
@@ -358,7 +358,7 @@ class chatting : AppCompatActivity() {
                         .load(user?.profileImageUrl)
                         .apply(RequestOptions().circleCrop())
                         .into(holder.imageView_profile)
-                    holder.textView_name.text = user?.name
+                    holder.textView_name.text = user?.nickname
                 }
                 holder.layout_destination.visibility=View.VISIBLE
                 holder.textView_name.visibility = View.VISIBLE

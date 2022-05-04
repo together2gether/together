@@ -111,7 +111,7 @@ class ChatFragment : Fragment() {
                         Glide.with(holder.itemView.context).load(user?.profileImageUrl)
                             .apply(RequestOptions().circleCrop())
                             .into(holder.imageView)
-                        holder.textView_title.text = user?.name
+                        holder.textView_title.text = user?.nickname
                     }
                 })
             } else if ( delivery == false){
