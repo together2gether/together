@@ -6,13 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.RegisterFoodBinding
 import com.techtown.matchingservice.model.DeliveryDTO
+import com.techtown.matchingservice.model.UsersInfo
 
 class FoodActivity : AppCompatActivity() {
     lateinit var binding: RegisterFoodBinding
@@ -20,7 +28,9 @@ class FoodActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     lateinit var kind : String
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     val items = arrayOf("한식", "중식","일식","양식", "치킨", "피자","분식","디저트","고기","패스트푸드")
+    var address : String= ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_food)
@@ -40,13 +50,33 @@ class FoodActivity : AppCompatActivity() {
                     binding.editTextStore.setVisibility(View.GONE)
                 }
             }
+        val userRef = database.getReference("usersInfo").child(auth?.currentUser?.uid.toString())
+        userRef.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userInfo = snapshot.getValue<UsersInfo>()
+                address = userInfo!!.address.toString()
+
+                //Toast.makeText(applicationContext, add, Toast.LENGTH_LONG).show()
+                /*if(add!= null&&add!= ""){
+                    Toast.makeText(applicationContext, add, Toast.LENGTH_LONG).show()
+                    deliveryDTO.delivery_address = add
+                    Toast.makeText(applicationContext, add, Toast.LENGTH_LONG).show()
+                }*/
+            }
+        })
+
         binding.registerFoodStorage.setOnClickListener {
+            Toast.makeText(applicationContext, address, Toast.LENGTH_LONG).show()
             contentUpload()
             finish()
         }
         val myAdapter = ArrayAdapter(this, R.layout.item_spinner, items)
         binding.deliverSpinner.adapter = myAdapter
-        binding.deliverSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+        /*binding.deliverSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 when(p2) {
                     0 -> {
@@ -61,7 +91,7 @@ class FoodActivity : AppCompatActivity() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
-        }
+        }*/
         binding.shoppingSpinner.adapter = myAdapter
         binding.shoppingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -90,6 +120,9 @@ class FoodActivity : AppCompatActivity() {
         //Insert userId
         deliveryDTO.delivery_userId = auth?.currentUser?.email
 
+
+
+        deliveryDTO.delivery_address = address
         deliveryDTO.deliveryParticipation[uid] = true
 
         if (kind == "delivery") {

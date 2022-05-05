@@ -60,12 +60,13 @@ class Fragment1 : Fragment() {
             }
 
             override fun onDataChange(snapshot: DataSnapshot) {
-                val userInfo = snapshot.getValue<UsersInfo>()
+                var userInfo = snapshot.getValue<UsersInfo>()
                 mylocation = userInfo!!.address.toString()
                 mycor = geocoder.getFromLocationName(mylocation,1)
                 mylat = mycor[0].latitude
                 mylon = mycor[0].longitude
             }
+
         })
 
         binding.fragment1ProductRegistration.setOnClickListener {

@@ -9,6 +9,7 @@ data class DeliveryDTO (
     var delivery_price : Int = 0,
     var delivery_detail : String? = null,
     var delivery_uid : String? = null,
+    var delivery_address : String? =null,
     var delivery_userId : String? = null,
     var delivery_timestamp : Long? = null,
     var delivery_ParticipationCount : Int = 0,

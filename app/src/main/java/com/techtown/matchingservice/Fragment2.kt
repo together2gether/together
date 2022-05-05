@@ -6,6 +6,7 @@ import android.content.Intent.getIntent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,14 +19,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.material.chip.Chip
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.FoodItemBinding
 import com.techtown.matchingservice.databinding.Fragment2Binding
 import com.techtown.matchingservice.model.DeliveryDTO
+import com.techtown.matchingservice.model.UsersInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_2.*
 import java.lang.Math.*
@@ -42,14 +50,24 @@ class Fragment2 : Fragment() {
     var mylon : Double = 0.0
     var mylocation : String = ""
     lateinit var mycor : List<Address>
+    var delivery_lat : Double = 0.0
+    var delivery_lon : Double = 0.0
+    var delivery_location : String = ""
+    lateinit var delivery_cor : List<Address>
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var geocoder: Geocoder
+    lateinit var infoRef : DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = Fragment2Binding.inflate(inflater, container, false)
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().uid!!
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        geocoder = Geocoder(context)
+        infoRef = database.getReference("usersInfo")
+        val userRef = infoRef.child(uid.toString())
         val drawerLayout:DrawerLayout = binding.drawerLayout
         val drawerView = binding.drawer
         var cate : String = arguments?.getString("category").toString()
@@ -57,6 +75,19 @@ class Fragment2 : Fragment() {
             drawerLayout.openDrawer(drawerView)
             cate = "close"
         }
+        userRef.addValueEventListener(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+                mycor = geocoder.getFromLocationName(mylocation, 1)
+                mylat = mycor[0].latitude
+                mylon = mycor[0].longitude
+            }
+        })
         binding.button3.setOnClickListener {
             //val string = binding.edit.text
             /*if (string.isNullOrEmpty()) {
@@ -266,6 +297,7 @@ class Fragment2 : Fragment() {
         init {
             if (deliverycheck == 1) {
                 if (deliverycate == "전체") {
+                    //Toast.makeText(context, "1", Toast.LENGTH_LONG).show()
                     firestore?.collection("delivery")
                         ?.orderBy("delivery_timestamp")
                         ?.addSnapshotListener { value, error ->
@@ -273,9 +305,17 @@ class Fragment2 : Fragment() {
                             deliveryUidList.clear()
                             for (snapshot in value!!.documents) {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
+                                //Toast.makeText(context, item!!.delivery_address.toString(), Toast.LENGTH_LONG).show()
+                                var location = item!!.delivery_address
+                                var cor = geocoder.getFromLocationName(location, 1)
+                                delivery_lat = cor[0].latitude
+                                delivery_lon = cor[0].longitude
+                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
                                 if (item!!.delivery) {
-                                    deliveryDTOs.add(item)
-                                    deliveryUidList.add(snapshot.id)
+                                    if(distance <= 2000) {
+                                        deliveryDTOs.add(item)
+                                        deliveryUidList.add(snapshot.id)
+                                    }
                                 }
                             }
                             notifyDataSetChanged()
@@ -289,9 +329,27 @@ class Fragment2 : Fragment() {
                             deliveryUidList.clear()
                             for (snapshot in value!!.documents) {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
+                                var delivery_uid = item!!.delivery_uid
+                                var deliveryRef = infoRef.child(delivery_uid.toString())
+                                deliveryRef.addValueEventListener(object :ValueEventListener{
+                                    override fun onCancelled(error: DatabaseError) {
+
+                                    }
+
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        var deliveryInfo = snapshot.getValue<UsersInfo>()
+                                        delivery_location = deliveryInfo!!.address.toString()
+                                        delivery_cor = geocoder.getFromLocationName(delivery_location, 1)
+                                        delivery_lat = delivery_cor[0].latitude
+                                        delivery_lon = delivery_cor[0].longitude
+                                    }
+                                })
+                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
                                 if (item!!.category == deliverycate) {
-                                    deliveryDTOs.add(item)
-                                    deliveryUidList.add(snapshot.id)
+                                    if(distance <= 2000) {
+                                        deliveryDTOs.add(item)
+                                        deliveryUidList.add(snapshot.id)
+                                    }
                                 }
                             }
                             notifyDataSetChanged()
@@ -306,9 +364,27 @@ class Fragment2 : Fragment() {
                             deliveryUidList.clear()
                             for (snapshot in value!!.documents) {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
+                                var delivery_uid = item!!.delivery_uid
+                                var deliveryRef = infoRef.child(delivery_uid.toString())
+                                deliveryRef.addValueEventListener(object :ValueEventListener{
+                                    override fun onCancelled(error: DatabaseError) {
+
+                                    }
+
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        var deliveryInfo = snapshot.getValue<UsersInfo>()
+                                        delivery_location = deliveryInfo!!.address.toString()
+                                        delivery_cor = geocoder.getFromLocationName(delivery_location, 1)
+                                        delivery_lat = delivery_cor[0].latitude
+                                        delivery_lon = delivery_cor[0].longitude
+                                    }
+                                })
+                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
                                 if (!item!!.delivery) {
-                                    deliveryDTOs.add(item)
-                                    deliveryUidList.add(snapshot.id)
+                                    if(distance <= 2000) {
+                                        deliveryDTOs.add(item)
+                                        deliveryUidList.add(snapshot.id)
+                                    }
                                 }
                             }
                             notifyDataSetChanged()
@@ -322,9 +398,27 @@ class Fragment2 : Fragment() {
                             deliveryUidList.clear()
                             for (snapshot in value!!.documents) {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
+                                var delivery_uid = item!!.delivery_uid
+                                var deliveryRef = infoRef.child(delivery_uid.toString())
+                                deliveryRef.addValueEventListener(object :ValueEventListener{
+                                    override fun onCancelled(error: DatabaseError) {
+
+                                    }
+
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        var deliveryInfo = snapshot.getValue<UsersInfo>()
+                                        delivery_location = deliveryInfo!!.address.toString()
+                                        delivery_cor = geocoder.getFromLocationName(delivery_location, 1)
+                                        delivery_lat = delivery_cor[0].latitude
+                                        delivery_lon = delivery_cor[0].longitude
+                                    }
+                                })
+                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
                                 if (item!!.category == shoppingcate) {
-                                    deliveryDTOs.add(item)
-                                    deliveryUidList.add(snapshot.id)
+                                    if(distance <= 2000) {
+                                        deliveryDTOs.add(item)
+                                        deliveryUidList.add(snapshot.id)
+                                    }
                                 }
                             }
                             notifyDataSetChanged()
