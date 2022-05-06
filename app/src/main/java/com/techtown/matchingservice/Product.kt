@@ -3,12 +3,12 @@ package com.techtown.matchingservice
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,7 +21,8 @@ import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.ProductInfoBinding
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
-import kotlinx.android.synthetic.main.register_product.*
+import com.techtown.matchingservice.model.UsersInfo
+import kotlinx.android.synthetic.main.product_info.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,8 +35,9 @@ class Product : AppCompatActivity() {
     var productid : String? = null
     var product_name : String? = null
     var regist_userid : String? = null
-    private var databse = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    private val roomsRef = databse.getReference("chatrooms")
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private val roomsRef = database.getReference("chatrooms")
+    private val usersRef = database.getReference("usersInfo")
 
     val db = Firebase.firestore
     val docRef = db.collection("images")
@@ -59,6 +61,24 @@ class Product : AppCompatActivity() {
         regist_userid = intent.getStringExtra("Uid").toString()
         productid = intent.getStringExtra("id").toString()
         product_name = intent.getStringExtra("product").toString()
+
+        usersRef.child(regist_userid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userInfo = snapshot.getValue<UsersInfo>()
+                if(userInfo != null){
+                    if(userInfo!!.profileImageUrl.toString() != ""){
+                        Glide.with(product_register_profile.context).load(userInfo?.profileImageUrl)
+                            .apply(RequestOptions().circleCrop())
+                            .into(product_register_profile)
+
+                    }
+                    ProductregisterUserName.setText(userInfo.nickname.toString())
+                }
+            }
+        })
 
         if(regist_userid == uid){
             binding.buttonChat.setVisibility(View.INVISIBLE)
