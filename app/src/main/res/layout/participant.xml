@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:id="@+id/toolbar"
+            android:id="@+id/participant_toolbar"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:background="#143F6B">
@@ -34,28 +34,11 @@
                 android:textSize="17sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@+id/toolbar">
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/participant_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/man"/>
+            android:layout_below="@id/participant_toolbar"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="눈송이" />
-        </LinearLayout>
-    </LinearLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

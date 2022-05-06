@@ -116,7 +116,11 @@ class Product : AppCompatActivity() {
 
         binding.productInfoParticipationuser.setOnClickListener(){
             val dialog = ParticipantDialog()
+            var bundle = Bundle()
+            bundle.putString("productid",productid)
+            dialog.arguments = bundle
             dialog.show(supportFragmentManager, "ParticipantDialog")
+
         }
 
         binding.productInfoParticipation.setOnClickListener(){

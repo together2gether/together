@@ -5,6 +5,9 @@
 
     </data>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -208,8 +211,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/food_info_detail"
             android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="40dp">
+            android:layout_marginRight="15dp">
 
             <android.widget.Button
                 android:id="@+id/food_info_chat"
@@ -231,4 +233,5 @@
                 android:textSize="15sp" />
         </RelativeLayout>
     </RelativeLayout>
+    </ScrollView>
 </layout>
