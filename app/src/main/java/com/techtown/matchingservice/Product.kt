@@ -210,6 +210,18 @@ class Product : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        docRef.document("$productid").get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    item = document.toObject(ContentDTO::class.java)!!
+                    binding.productInfoParticipationNumber.text=item.ParticipationCount.toString()+" / "+item.ParticipationTotal
+                }
+            }
+
+    }
+
     private fun RemovePopup(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("삭제")

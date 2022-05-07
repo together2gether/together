@@ -72,6 +72,24 @@ class Fragment4 : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        infoRef.child(uid).addListenerForSingleValueEvent(object :ValueEventListener{
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userProfile = snapshot.getValue<UsersInfo>()
+                binding.textViewNickname.text = userProfile?.nickname+" 님"
+                if(userProfile?.profileImageUrl != ""){
+                    Glide.with(requireContext()).load(userProfile?.profileImageUrl)
+                        .apply(RequestOptions().circleCrop())
+                        .into(binding.profileImg!!)
+                }
+            }
+        })
+    }
+
     /*@SuppressLint("UseRequireInsteadOfGet")
     fun refresh() {
         var ft: FragmentTransaction = getFragmentManager()!!.beginTransaction()

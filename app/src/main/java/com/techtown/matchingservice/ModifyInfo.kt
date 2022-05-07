@@ -39,6 +39,7 @@ class ModifyInfo : AppCompatActivity() {
     val userRef = infoRef.child(userIdSt)
     var imageUri : Uri? = null
     var profileCheck = false
+
     lateinit var searchButton :Button
     private val getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result: ActivityResult ->
@@ -109,17 +110,22 @@ class ModifyInfo : AppCompatActivity() {
 
 
         modify.setOnClickListener {
-
             if(edit_nickname.text.isEmpty()||edit_name.text.isEmpty()||edit_phonenumber.text.isEmpty()||edit_address.text.isEmpty()){
                 Toast.makeText(this, "닉네임, 이름, 전화번호, 주소를 모두 입력해주세요.", Toast.LENGTH_SHORT).show()
             } else {
                 userRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onCancelled(error: DatabaseError) {
+                    }
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val userInfo = snapshot.getValue<UsersInfo>()
                         if(userInfo == null){
                             val newInfo = UsersInfo("", "","","","",userIdSt)
                             userRef.setValue(newInfo)
                         }
+                        userRef.child("nickname").setValue(edit_nickname.text.toString())
+                        userRef.child("name").setValue(edit_name.text.toString())
+                        userRef.child("phonenumber").setValue(edit_phonenumber.text.toString())
+                        userRef.child("address").setValue(edit_address.text.toString())
                         if(profileCheck){
                             FirebaseStorage.getInstance()
                                 .reference.child("userImages").child("$userIdSt/photo").putFile(imageUri!!).addOnSuccessListener {
@@ -127,23 +133,23 @@ class ModifyInfo : AppCompatActivity() {
                                     FirebaseStorage.getInstance().reference.child("userImages").child("$userIdSt/photo").downloadUrl
                                         .addOnSuccessListener {
                                             userProfile = it
-                                            Log.d("이미지 URL", "$userProfile")
                                             userRef.child("profileImageUrl").setValue(userProfile.toString())
+                                            Log.d("profile",userProfile.toString())
+                                            finish()
                                         }
                                 }
                         }
-                        userRef.child("nickname").setValue(edit_nickname.text.toString())
-                        userRef.child("name").setValue(edit_name.text.toString())
-                        userRef.child("phonenumber").setValue(edit_phonenumber.text.toString())
-                        userRef.child("address").setValue(edit_address.text.toString())
-                    }
-                    override fun onCancelled(error: DatabaseError) {
+                        else {
+                            finish()
+                        }
+
+
                     }
                 })
-                finish()
+
+
 
             }
-
         }
         val finish = findViewById<Button>(R.id.button45)
         finish.setOnClickListener {

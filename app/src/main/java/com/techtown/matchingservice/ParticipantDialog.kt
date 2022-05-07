@@ -1,5 +1,6 @@
 package com.techtown.matchingservice
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.ParticipantBinding
+import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
 
@@ -33,11 +35,12 @@ class ParticipantDialog : DialogFragment() {
     private val binding get() = _binding!!
     var firestore: FirebaseFirestore? = null
     var productid : String? = null
-    //var item = ContentDTO()
+    var item = ContentDTO()
     val db = Firebase.firestore
     val docRef = db.collection("images")
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val usersRef = database.getReference("usersInfo")
+    private val roomsRef = database.getReference("chatrooms")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,6 +55,7 @@ class ParticipantDialog : DialogFragment() {
 
         binding.back.setOnClickListener() {
             dialog?.cancel()
+
         }
 
         productid = arguments?.getString("productid").toString()
@@ -68,11 +72,9 @@ class ParticipantDialog : DialogFragment() {
 
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.ParticipantViewHolder>() {
         private var user : UsersInfo? = null
-
-
+        var registeruid : String? = null
         init {
             getParticipantList()
-            Log.d("participant",contentUidList.size.toString())
         }
         fun getParticipantList(){
             docRef.document("$productid")?.get()
@@ -80,12 +82,10 @@ class ParticipantDialog : DialogFragment() {
                     contentUidList.clear()
                     if(document != null){
                         var item = document.toObject(ContentDTO::class.java)!!
+                        registeruid = item.uid.toString()
                         for((key, value) in item.Participation){
                             if(value == true){
-
                                 contentUidList.add(key)
-                                Log.d("participant",contentUidList.size.toString())
-
                             }
                         }
                         notifyDataSetChanged()
@@ -98,7 +98,9 @@ class ParticipantDialog : DialogFragment() {
             return ParticipantViewHolder(view)
         }
 
-        override fun onBindViewHolder(holder: RecyclerViewAdapter.ParticipantViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: RecyclerViewAdapter.ParticipantViewHolder, @SuppressLint(
+            "RecyclerView"
+        ) position: Int) {
             usersRef.child(contentUidList[position]).addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
@@ -112,6 +114,57 @@ class ParticipantDialog : DialogFragment() {
                     holder.nickname.text = user?.nickname
                 }
             })
+            if(registeruid == contentUidList[position]){
+                holder.del.visibility = View.INVISIBLE
+            }
+            holder.del.setOnClickListener {
+                docRef.document("$productid")?.get()
+                    ?.addOnSuccessListener { document ->
+                        if(document != null){
+                            var item = document.toObject(ContentDTO::class.java)!!
+                            var numoftrue = 0
+                            for((key, value) in item.Participation){
+                                if(key == contentUidList[position]){
+                                    item.Participation[key] = false
+                                }
+                                if(item.Participation[key] == true){
+                                    numoftrue += 1
+                                }
+                            }
+                            item.ParticipationCount = numoftrue
+                            var tsDoc = docRef.document(productid.toString())
+                            firestore?.runTransaction {
+                                    transition ->
+                                transition.set(tsDoc!!,item)
+                            }
+                            Log.d("plist",item.ParticipationCount.toString())
+                            notifyDataSetChanged()
+                            roomsRef.orderByChild("productid").equalTo("$productid").addListenerForSingleValueEvent(object : ValueEventListener{
+                                override fun onCancelled(error: DatabaseError) {
+                                }
+
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    for (room in snapshot.children){
+                                        val chatroom = room.getValue<ChatModel>()
+                                        var roomId = room.key
+                                        docRef.document("$productid").get().addOnSuccessListener { document ->
+                                            if(numoftrue == 1){
+                                                roomsRef.child(roomId.toString()).removeValue()
+                                            } else {
+                                                chatroom!!.users[contentUidList[position]] = false
+                                                roomsRef.child(roomId.toString()).setValue(chatroom)
+                                            }
+
+                                        }
+                                    }
+                                }
+                            })
+
+                        }
+                    }
+                notifyDataSetChanged()
+                binding.participantRecyclerview.adapter = RecyclerViewAdapter()
+            }
         }
 
         override fun getItemCount(): Int {
