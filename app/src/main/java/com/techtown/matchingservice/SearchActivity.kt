@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.BitmapFactory
+import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
@@ -25,16 +26,27 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.maps.android.clustering.Cluster
 import com.google.maps.android.clustering.ClusterManager
 import com.google.maps.android.clustering.view.DefaultClusterRenderer
 //import com.techtown.matchingservice.databinding.ProductItemBinding
 import com.techtown.matchingservice.model.ContentDTO
+import com.techtown.matchingservice.model.UsersInfo
+import kotlinx.android.synthetic.main.condition.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
+    var search : String = "none"
+    var condition : String = "none"
     private val ZoomLevel : Int = 12
     private lateinit var mClusterManager : ClusterManager<LatLngData>
     private lateinit var clusterRenderer: DefaultClusterRenderer<LatLngData>
@@ -50,7 +62,12 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     companion object {
         var selectedMarker : Marker? = null
     }
+    var i=0
     lateinit var uid: String
+    var List : ArrayList<ProductData> = ArrayList<ProductData>()
+    var price : Int =0
+    var distance : Int =0
+    var day :  Int =0
     var product :ArrayList<ContentDTO> = arrayListOf()
     var contentUidList: ArrayList<String?> = arrayListOf()
     var productUid : ArrayList<String> = arrayListOf()
@@ -60,16 +77,48 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     var latlngList : ArrayList<LatLngData> = arrayListOf()
     private lateinit var fusedLocationClient : FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    var mylat : Double = 0.0
+    var mylon : Double = 0.0
+    var mylocation : String = ""
+    lateinit var mycor : List<Address>
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         var selectbutton = findViewById<Button>(R.id.btn_select)
         selectbutton.setOnClickListener{
-            val dialog = ConditionDialog()
-            dialog.show(supportFragmentManager, "ConditionDialog")
+            val dialog = ConditionDialog(this)
+            dialog.showDialog()
+            dialog.setOnClickListener(object : ConditionDialog.OnDialogClickListener{
+                override fun onClicked(p1: Float, p2: Float, p3: Float) {
+                    price = p1.toInt()
+                    day = p2.toInt()
+                    distance = p3.toInt()
+                    condition()
+                }
+            })
         }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        uid = FirebaseAuth.getInstance().uid!!
+        val geocoder = Geocoder(this)
+        val infoRef = database.getReference("usersInfo")
+        val userRef = infoRef.child(uid.toString())
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
 
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+                mycor = geocoder.getFromLocationName(mylocation,1)
+                mylat = mycor[0].latitude
+                mylon = mycor[0].longitude
+            }
+
+        })
         adapter = ProductListAdapter(productsList)
         adapter.setItemClickListener(object :
             ProductListAdapter.OnItemClickListener{
@@ -125,6 +174,11 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             Manifest.permission.ACCESS_FINE_LOCATION
         )
         requirePermissions(permissions, 999)
+        /*if(intent.hasExtra("price")){
+            price = intent.getStringExtra("price").toString()
+            day = intent.getStringExtra("day").toString()
+            distance = intent.getStringExtra("distance").toString()
+        }*/
     }
     fun requirePermissions(permissions:Array<String>,requestCode : Int){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
@@ -381,47 +435,225 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
     }
-    fun search(searchWord : String){
-        for(i in latlngList){
-            mClusterManager.removeItem(i)
-        }
-        latlngList.clear()
-        productsList.clear()
-        firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            var i=0
-            for(snapshot in querySnapshot!!.documents){
-                if(snapshot.getString("product")?.contains(searchWord) == true){
-                    var item = snapshot.toObject(ContentDTO::class.java)
-                    var id = item!!.userId as String
-                    var name = item.product as String
-                    var place = item.place as String
-                    var image = item.imageUrl as String
-                    val participation = "현재 " + item.ParticipationCount.toString() + " / " + item.ParticipationTotal.toString()
-                    var price = item.price.toString()
-                    var totalNumber = item.totalNumber.toString()
-                    var cycle = item.cycle.toString()
-                    var unit = item.unit.toString()
-                    var url = item.url as String
-                    var uid = item.uid as String
-                    var timestamp = item.timestamp.toString()
-                    var participationCount = item.ParticipationCount.toString()
-                    var uidkey = item.Participation.containsKey(uid).toString()
-                    var participationTotal = item.ParticipationTotal.toString()
-                    var Listid = snapshot.id as String
-                    var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
+    fun condition(){
+        condition = "condition"
+        /*for(z in latlngList){
+            mClusterManager.removeItem(z)
+        }*/
+        mClusterManager.clearItems()
+        List.clear()
+        if(search == "search"){
+            List.addAll(productsList)
+            latlngList.clear()
+            productsList.clear()
+            i=0
+            for(item in List){
+                var product_price = item.price.toInt()
+                var product_day = item.unit.toInt()
+                var location = item.place
+                var cor = geocoder.getFromLocationName(location,1)
+                var pro_lat = cor[0].latitude
+                var pro_lon = cor[0].longitude
+                var product_distance =
+                    Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
+                if(price.toInt() >= product_price && day.toInt() >= product_day && distance.toInt() >= product_distance){
+                    var product = ProductData(
+                        item.userId, item.name, item.place, item.imageUri, item.participation,
+                        item.price, item.totalNumber, item.cycle, item.unit, item.url,
+                        item.uid, item.timestamp, item.participationCount,
+                        item.uidKey, item.participationTotal, item.Listid
+                    )
                     productsList.add(product)
-                    var lat = item.location.latitude
-                    var lng = item.location.longitude
-                    var location : LatLng = LatLng(lat, lng)
-                    addLatLngData(i,id, location)
+                    var loc :LatLng = LatLng(pro_lat, pro_lon)
+                    addLatLngData(i, item.userId, loc)
                     i++
-                }
-                else{
-                    //Toast.makeText(applicationContext, "검색 결과가 없습니다.",Toast.LENGTH_LONG).show()
                 }
             }
             adapter.notifyDataSetChanged()
         }
+        else{
+            latlngList.clear()
+            productsList.clear()
+            i=0
+            firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                for(snapshot in querySnapshot!!.documents){
+                    var item = snapshot.toObject(ContentDTO::class.java)
+                    var id = item!!.userId as String
+                    var product_price = item.price as Int
+                    var product_day = item.unit.toInt()
+                    var pro_lat = item.location.latitude
+                    var pro_lon = item.location.longitude
+                    var product_distance =
+                        Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
+                    if (price>= product_price && day >= product_day && distance >= product_distance) {
+                        var name = item.product as String
+                        var place = item.place as String
+                        var image = item.imageUrl as String
+                        val participation =
+                            "현재 " + item.ParticipationCount.toString() + " / " + item.ParticipationTotal.toString()
+                        var price = item.price.toString()
+                        var totalNumber = item.totalNumber.toString()
+                        var cycle = item.cycle.toString()
+                        var unit = item.unit.toString()
+                        var url = item.url as String
+                        var uid = item.uid as String
+                        var timestamp = item.timestamp.toString()
+                        var participationCount = item.ParticipationCount.toString()
+                        var uidkey = item.Participation.containsKey(uid).toString()
+                        var participationTotal = item.ParticipationTotal.toString()
+                        var Listid = snapshot.id as String
+                        var product = ProductData(
+                            id,
+                            name,
+                            place,
+                            image,
+                            participation,
+                            price,
+                            totalNumber,
+                            cycle,
+                            unit,
+                            url,
+                            uid,
+                            timestamp,
+                            participationCount,
+                            uidkey,
+                            participationTotal,
+                            Listid
+                        )
+                        productsList.add(product)
+                        var lat = item.location.latitude
+                        var lng = item.location.longitude
+                        var location: LatLng = LatLng(lat, lng)
+                        addLatLngData(i, id, location)
+                        i++
+                    }
+                }
+            }
+            adapter.notifyDataSetChanged()
+        }
+    }
+    fun search(searchWord : String){
+        search = "search"
+        for(z in latlngList){
+            mClusterManager.removeItem(z)
+        }
+        latlngList.clear()
+        productsList.clear()
+        if(condition == "condition"){
+            firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                i=0
+                for(snapshot in querySnapshot!!.documents){
+                    var item = snapshot.toObject(ContentDTO::class.java)
+                    if(snapshot.getString("product")?.contains(searchWord)==true){
+                        var id = item!!.userId as String
+                        var product_price = item.price.toInt()
+                        var product_day = item.unit.toInt()
+                        var pro_lat = item.location.latitude
+                        var pro_lon = item.location.longitude
+                        var product_distance =
+                            Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
+                        if (price.toInt() >= product_price && day.toInt() >= product_day && distance.toInt() >= product_distance) {
+                            var item = snapshot.toObject(ContentDTO::class.java)
+                            var id = item!!.userId as String
+                            var name = item.product as String
+                            var place = item.place as String
+                            var image = item.imageUrl as String
+                            val participation =
+                                "현재 " + item.ParticipationCount.toString() + " / " + item.ParticipationTotal.toString()
+                            var price = item.price.toString()
+                            var totalNumber = item.totalNumber.toString()
+                            var cycle = item.cycle.toString()
+                            var unit = item.unit.toString()
+                            var url = item.url as String
+                            var uid = item.uid as String
+                            var timestamp = item.timestamp.toString()
+                            var participationCount = item.ParticipationCount.toString()
+                            var uidkey = item.Participation.containsKey(uid).toString()
+                            var participationTotal = item.ParticipationTotal.toString()
+                            var Listid = snapshot.id as String
+                            var product = ProductData(
+                                id,
+                                name,
+                                place,
+                                image,
+                                participation,
+                                price,
+                                totalNumber,
+                                cycle,
+                                unit,
+                                url,
+                                uid,
+                                timestamp,
+                                participationCount,
+                                uidkey,
+                                participationTotal,
+                                Listid
+                            )
+                            productsList.add(product)
+                            var lat = item.location.latitude
+                            var lng = item.location.longitude
+                            var location: LatLng = LatLng(lat, lng)
+                            addLatLngData(i, id, location)
+                            i++
+                        }
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+        }
+        else{
+            firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                i=0
+                for(snapshot in querySnapshot!!.documents){
+                    var item = snapshot.toObject(ContentDTO::class.java)
+                    if(snapshot.getString("product")?.contains(searchWord)==true){
+                        var id = item!!.userId as String
+                        var name = item.product as String
+                        var place = item.place as String
+                        var image = item.imageUrl as String
+                        val participation =
+                            "현재 " + item.ParticipationCount.toString() + " / " + item.ParticipationTotal.toString()
+                        var price = item.price.toString()
+                        var totalNumber = item.totalNumber.toString()
+                        var cycle = item.cycle.toString()
+                        var unit = item.unit.toString()
+                        var url = item.url as String
+                        var uid = item.uid as String
+                        var timestamp = item.timestamp.toString()
+                        var participationCount = item.ParticipationCount.toString()
+                        var uidkey = item.Participation.containsKey(uid).toString()
+                        var participationTotal = item.ParticipationTotal.toString()
+                        var Listid = snapshot.id as String
+                        var product = ProductData(
+                            id,
+                            name,
+                            place,
+                            image,
+                            participation,
+                            price,
+                            totalNumber,
+                            cycle,
+                            unit,
+                            url,
+                            uid,
+                            timestamp,
+                            participationCount,
+                            uidkey,
+                            participationTotal,
+                            Listid
+                        )
+                        productsList.add(product)
+                        var lat = item.location.latitude
+                        var lng = item.location.longitude
+                        var location: LatLng = LatLng(lat, lng)
+                        addLatLngData(i, id, location)
+                        i++
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+        }
+
     }
     inner class MarkerClusterRenderer(context : Context?, map : GoogleMap?, clusterManager: ClusterManager<LatLngData>?)
         :DefaultClusterRenderer<LatLngData>(context, map, clusterManager){
