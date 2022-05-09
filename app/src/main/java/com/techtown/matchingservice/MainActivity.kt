@@ -58,19 +58,22 @@ class MainActivity : AppCompatActivity() {
             "1" -> {
                 val fragment1 = Fragment1()
                 supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
+                binding.bottomNavigation.selectedItemId = R.id.tab1
             }
             "2" -> {
                 val fragment2 = Fragment2()
                 supportFragmentManager.beginTransaction().add(R.id.main_content, fragment2).commit()
+                binding.bottomNavigation.selectedItemId = R.id.tab2
             }
             "3" -> {
                 val fragment3 = ChatFragment()
                 supportFragmentManager.beginTransaction().add(R.id.main_content, fragment3).commit()
+                binding.bottomNavigation.selectedItemId = R.id.tab3
             }
             "4" -> {
                 val fragment4 = Fragment4()
                 supportFragmentManager.beginTransaction().add(R.id.main_content, fragment4).commit()
-               // binding.bottomNavigation.
+                binding.bottomNavigation.selectedItemId = R.id.tab4
             }
         }
         //supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
