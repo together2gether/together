@@ -29,7 +29,9 @@ class FoodActivity : AppCompatActivity() {
     lateinit var uid: String
     lateinit var kind : String
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
-    val items = arrayOf("한식", "중식","일식","양식", "치킨", "피자","분식","디저트","고기","패스트푸드")
+    var items = arrayOf("")
+    val del_items = arrayOf("한식", "중식","일식","양식", "치킨", "피자","분식","디저트","고기","패스트푸드", "기타")
+    val shop_items = arrayOf("쿠팡","이마트몰","마켓컬리","롯데ON","11번가","G마켓","옥션","기타")
     var address : String= ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +50,9 @@ class FoodActivity : AppCompatActivity() {
                 "shop" -> {
                     binding.registerFood.setText("쇼핑몰 이름")
                     binding.editTextStore.setVisibility(View.GONE)
+                    binding.textView193.setText("* 현재 배달 주소는 회원정보의 주소로 되어 있습니다.\n  해당 위치가 아닌 경우 회원정보 주소를 수정해주세요.")
+                    binding.deliverSpinner.setVisibility(View.INVISIBLE)
+                    binding.shoppingSpinner.setVisibility(View.VISIBLE)
                 }
             }
         val userRef = database.getReference("usersInfo").child(auth?.currentUser?.uid.toString())
@@ -74,7 +79,14 @@ class FoodActivity : AppCompatActivity() {
             contentUpload()
             finish()
         }
+
+        if(kind == "delivery"){
+            items = del_items
+        } else{
+            items = shop_items
+        }
         val myAdapter = ArrayAdapter(this, R.layout.item_spinner, items)
+
         binding.deliverSpinner.adapter = myAdapter
         /*binding.deliverSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

@@ -478,8 +478,8 @@ class Fragment2 : Fragment() {
             viewHolder.fooditemTextvieworderprice.text =
                 deliveryDTOs[position].order_price.toString()
             //delivery price
-            viewHolder.fooditemTextviewdeliveryprice.text =
-                deliveryDTOs[position].delivery_price.toString()
+            var pdel : Int = deliveryDTOs[position].delivery_price / 2
+            viewHolder.fooditemTextviewdeliveryprice.text = pdel.toString()
 
             //click
             viewHolder.fooditemCardView.setOnClickListener {
