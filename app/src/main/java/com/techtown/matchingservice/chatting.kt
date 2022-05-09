@@ -39,7 +39,6 @@ class chatting : AppCompatActivity() {
     private var chatRoomUid : String? = null
     private var destinationUid : String? = null
     private var productid : String? = null
-    //private var productname : String? = null
     private var groupchat : String? = null
     private var uid : String? = null
     private var recyclerView : RecyclerView? = null
@@ -51,8 +50,6 @@ class chatting : AppCompatActivity() {
     val delRef = db.collection("delivery")
     var mylocation : String = ""
     var yourlocation : String = ""
-    //var groupItem = ContentDTO()
-    //var groupItem_id : String? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     var firestore: FirebaseFirestore? = null
@@ -78,8 +75,7 @@ class chatting : AppCompatActivity() {
         val geocoder = Geocoder(this)
         groupchat = intent.getStringExtra("groupchat")
         uid = Firebase.auth.currentUser?.uid.toString()
-        val infoRef = database.getReference("usersInfo")
-        val userRef = infoRef.child(uid.toString())
+        val userRef = usersRef.child(uid.toString())
         userRef.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
 
@@ -94,7 +90,7 @@ class chatting : AppCompatActivity() {
         if(groupchat == "N"){
             destinationUid = intent.getStringExtra("destinationUid")
             productid = ""
-            val destinationRef = infoRef.child(destinationUid.toString())
+            val destinationRef = usersRef.child(destinationUid.toString())
             destinationRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
 
@@ -120,6 +116,13 @@ class chatting : AppCompatActivity() {
                             putExtra("yourlng", yourlng)
                             putExtra("lat", lat)
                             putExtra("lng", lng)
+                            if(chatRoomUid == null){
+                                putExtra("roomId", "null")
+                            } else {
+                                putExtra("roomId", chatRoomUid.toString())
+                            }
+                            putExtra("destinationUid", destinationUid.toString())
+                            putExtra("Uid", uid.toString())
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }.run {applicationContext?.startActivity(this)}
                     }

@@ -1,27 +1,50 @@
 package com.techtown.matchingservice
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.http.SslCertificate
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+import com.techtown.matchingservice.model.ChatModel
+import com.techtown.matchingservice.model.UsersInfo
 import net.daum.mf.map.api.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RecommandLocation : AppCompatActivity() {
+    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    private val roomsRef = database.getReference("chatrooms")
+    private val usersRef = database.getReference("usersInfo")
+    var roomId : String? = null
+    var destUid : String? = null
+    var Uid : String? = null
+
     val PERMISSIONS_REQUEST_CODE = 100
     val REQUIRED_PERMISSIONS = arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION)
     companion object {
@@ -29,7 +52,7 @@ class RecommandLocation : AppCompatActivity() {
         const val API_KEY = "KakaoAK 39c205c0e521e0d112dcefa5460592d8"
     }
     private val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
-    private val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
+    private val listAdapter = RecyclerViewAdapter(listItems)    // 리사이클러 뷰 어댑터
     private var pageNumber = 1      // 검색 페이지 번호
     private var keyword = ""        // 검색 키워드
     lateinit var mapView : MapView
@@ -45,6 +68,9 @@ class RecommandLocation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recommend_location)
+        roomId = intent.getStringExtra("roomId")
+        destUid = intent.getStringExtra("destinationUid")
+        Uid = intent.getStringExtra("Uid")
         mapView = findViewById(R.id.mapView)
         back = findViewById(R.id.back)
         val layout = findViewById<RecyclerView>(R.id.rv_list)
@@ -56,7 +82,7 @@ class RecommandLocation : AppCompatActivity() {
             layout.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
             layout.adapter = listAdapter
             // 리스트 아이템 클릭 시 해당 위치로 이동
-            listAdapter.setItemClickListener(object: ListAdapter.OnItemClickListener {
+            listAdapter.setItemClickListener(object: OnItemClickListener {
                 override fun onClick(v: View, position: Int) {
                     val mapPoint = MapPoint.mapPointWithGeoCoord(listItems[position].y, listItems[position].x)
                     mapView.setMapCenterPointAndZoomLevel(mapPoint, 1, true)
@@ -209,5 +235,83 @@ class RecommandLocation : AppCompatActivity() {
             //Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
+
+    inner class RecyclerViewAdapter(val itemList: ArrayList<ListLayout>) : RecyclerView.Adapter<RecyclerViewAdapter.LocationViewHolder>(){
+        override fun onCreateViewHolder(
+            parent: ViewGroup,
+            viewType: Int
+        ): RecyclerViewAdapter.LocationViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
+            return LocationViewHolder(view)
+        }
+
+        override fun onBindViewHolder(
+            holder: RecyclerViewAdapter.LocationViewHolder,
+            position: Int
+        ) {
+            holder.name.text = itemList[position].name
+            holder.road.text = itemList[position].road
+            holder.address.text = itemList[position].address
+            // 아이템 클릭 이벤트
+            holder.itemView.setOnClickListener {
+                itemClickListener.onClick(it, position)
+            }
+
+            holder.rec_loc.setOnClickListener {
+
+                val time = System.currentTimeMillis()
+                val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                val curTime = dateFormat.format(Date(time)).toString()
+                val LNAME = itemList[position].name
+                val Road = itemList[position].road
+                val comment = ChatModel.Comment(Uid.toString(), "추천 거래 위치 : $LNAME \n도로명 주소 : $Road", curTime)
+
+                if(roomId == "null"){
+                    val chatModel = ChatModel()
+                    chatModel.users.put(destUid.toString(), true)
+                    chatModel.users.put(Uid.toString(), true)
+                    chatModel.productid = ""
+                    roomsRef.push().setValue(chatModel)
+                }
+                roomsRef.orderByChild("users/$Uid").equalTo(true)
+                    .addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if(roomId == "null"){
+                                for(room in snapshot.children){
+                                    val chatmodel = room.getValue<ChatModel>()
+                                    if(chatmodel!!.productid == "" && chatmodel.users.contains(destUid.toString())){
+                                        roomId = room.key
+                                    }
+                                }
+                            }
+                            roomsRef.child(roomId.toString()).child("comments").push().setValue(comment)
+                        }
+                    })
+                finish()
+
+            }
+
+        }
+
+        override fun getItemCount(): Int {
+            return itemList.size
+        }
+
+        inner class LocationViewHolder(view : View) : RecyclerView.ViewHolder(view){
+            val name: TextView = itemView.findViewById(R.id.tv_list_name)
+            val road: TextView = itemView.findViewById(R.id.tv_list_road)
+            val address: TextView = itemView.findViewById(R.id.tv_list_address)
+            val rec_loc : Button = itemView.findViewById(R.id.location)
+        }
+
+        fun setItemClickListener(onItemClickListener: OnItemClickListener){
+            this.itemClickListener = onItemClickListener
+        }
+        private lateinit var itemClickListener : OnItemClickListener
+    }
+
 
 }
