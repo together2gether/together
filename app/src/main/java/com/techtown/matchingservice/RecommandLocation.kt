@@ -180,13 +180,58 @@ class RecommandLocation : AppCompatActivity() {
             override fun onResponse(call: Call<ResultSearchKeyword>, response: Response<ResultSearchKeyword>) {
                 // 통신 성공
                 addItemsAndMarkers(response.body())
-                val call1 = api.getSearchKeyword(API_KEY, "SW8", lng, lat, 500, 1, "distance")
+                val call1 = api.getSearchKeyword(API_KEY, "SW8", lng, lat, 1000, 1, "distance")
                 call1.enqueue(object : Callback<ResultSearchKeyword> {
                     override fun onResponse(
                         call: Call<ResultSearchKeyword>,
                         response: Response<ResultSearchKeyword>
                     ) {
                         addItemsAndMarkers(response.body())
+                        val call2 = api.getSearchKeyword(API_KEY, "SC4", lng, lat, 1000, 1, "distance")
+                        call2.enqueue(object  : Callback<ResultSearchKeyword>{
+                            override fun onResponse(
+                                call: Call<ResultSearchKeyword>,
+                                response: Response<ResultSearchKeyword>
+                            ) {
+                                addItemsAndMarkers(response.body())
+                                val call3 = api.getSearchKeyword(API_KEY,"PO3", lng, lat, 1000, 1, "distance")
+                                call3.enqueue(object : Callback<ResultSearchKeyword>{
+                                    override fun onResponse(
+                                        call: Call<ResultSearchKeyword>,
+                                        response: Response<ResultSearchKeyword>
+                                    ) {
+                                        addItemsAndMarkers(response.body())
+                                        val call4 = api.getSearchKeyword(API_KEY,"MT1", lng, lat, 1000, 1, "distance")
+                                        call4.enqueue(object : Callback<ResultSearchKeyword>{
+                                            override fun onResponse(
+                                                call: Call<ResultSearchKeyword>,
+                                                response: Response<ResultSearchKeyword>
+                                            ) {
+                                                addItemsAndMarkers(response.body())
+                                            }
+
+                                            override fun onFailure(
+                                                call: Call<ResultSearchKeyword>,
+                                                t: Throwable
+                                            ) {
+                                                Log.w("LocalSearch", "통신 실패 : ${t.message}")
+                                            }
+                                        })
+                                    }
+
+                                    override fun onFailure(
+                                        call: Call<ResultSearchKeyword>,
+                                        t: Throwable
+                                    ) {
+                                        Log.w("LocalSearch", "통신 실패 : ${t.message}")
+                                    }
+                                })
+                            }
+
+                            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
+                                Log.w("LocalSearch", "통신 실패 : ${t.message}")
+                            }
+                        })
                     }
 
                     override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {

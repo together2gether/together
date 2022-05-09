@@ -196,6 +196,8 @@ class chatting : AppCompatActivity() {
     }
     private fun checkChatRoom(){
         if(groupchat == "N"){
+            val image = findViewById<ImageButton>(R.id.imageButton2)
+            image.setVisibility(View.VISIBLE)
             roomsRef.orderByChild("users/$uid").equalTo(true)
                 .addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
@@ -215,6 +217,8 @@ class chatting : AppCompatActivity() {
                     }
                 })
         } else if(groupchat == "Y"){
+            val image = findViewById<ImageButton>(R.id.imageButton2)
+            image.setVisibility(View.GONE)
             roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
@@ -233,6 +237,8 @@ class chatting : AppCompatActivity() {
                 }
             })
         } else if(groupchat == "DY"){
+            val image = findViewById<ImageButton>(R.id.imageButton2)
+            image.setVisibility(View.GONE)
             roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
@@ -374,7 +380,7 @@ class chatting : AppCompatActivity() {
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 holder.layout_main.layoutParams = layoutParams
-                layoutParams.setMargins(0,0,0,0)
+                layoutParams.setMargins(0,0,50,0)
             }
         }
 
