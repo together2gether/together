@@ -131,14 +131,17 @@ class Fragment1 : Fragment() {
                 ?.addSnapshotListener { value, error ->
                     contentDTOs.clear()
                     contentUidList.clear()
-                    for (snapshot in value!!.documents) {
-                        var item = snapshot.toObject(ContentDTO::class.java)
-                        var lat = item!!.location.latitude
-                        var lon = item!!.location.longitude
-                        var distance = DistanceManager.getDistance(mylat, mylon, lat, lon).toDouble()
-                        if(distance <= 2000){
-                            contentDTOs.add(item!!)
-                            contentUidList.add(snapshot.id)
+                    if (value?.documents != null) {
+                        for (snapshot in value!!.documents) {
+                            var item = snapshot.toObject(ContentDTO::class.java)
+                            var lat = item!!.location.latitude
+                            var lon = item!!.location.longitude
+                            var distance =
+                                DistanceManager.getDistance(mylat, mylon, lat, lon).toDouble()
+                            if (distance <= 2000) {
+                                contentDTOs.add(item!!)
+                                contentUidList.add(snapshot.id)
+                            }
                         }
                     }
                     notifyDataSetChanged()

@@ -68,6 +68,17 @@
             android:textSize="12sp"
             android:textStyle="bold" />
 
+        <android.widget.Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/setting_button"
+            android:text="로그아웃"
+            android:textColor="#FD0202"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
     </LinearLayout>
 
 </FrameLayout>

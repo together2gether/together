@@ -37,8 +37,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="false"></activity>
+            android:name=".MainActivity"/>
         <activity android:name=".SearchActivity"/>
         <activity android:name=".chatting"/>
         <activity android:name=".ModifyInfo"/>

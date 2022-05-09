@@ -43,39 +43,41 @@ class Fragment2 : Fragment() {
     private lateinit var binding: Fragment2Binding
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
-    var deliverycheck : Int = 1
-    var deliverycate : String ="전체"
-    var shoppingcate : String ="전체"
-    var mylat : Double =0.0
-    var mylon : Double = 0.0
-    var mylocation : String = ""
-    lateinit var mycor : List<Address>
-    var delivery_lat : Double = 0.0
-    var delivery_lon : Double = 0.0
-    var delivery_location : String = ""
-    lateinit var delivery_cor : List<Address>
-    private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
+    var deliverycheck: Int = 1
+    var deliverycate: String = "전체"
+    var shoppingcate: String = "전체"
+    var mylat: Double = 0.0
+    var mylon: Double = 0.0
+    var mylocation: String = ""
+    lateinit var mycor: List<Address>
+    var delivery_lat: Double = 0.0
+    var delivery_lon: Double = 0.0
+    var delivery_location: String = ""
+    lateinit var delivery_cor: List<Address>
+    private var database =
+        Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var geocoder: Geocoder
-    lateinit var infoRef : DatabaseReference
+    lateinit var infoRef: DatabaseReference
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = Fragment2Binding.inflate(inflater, container, false)
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().uid!!
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        fusedLocationProviderClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
         geocoder = Geocoder(context)
         infoRef = database.getReference("usersInfo")
         val userRef = infoRef.child(uid.toString())
-        val drawerLayout:DrawerLayout = binding.drawerLayout
+        val drawerLayout: DrawerLayout = binding.drawerLayout
         val drawerView = binding.drawer
-        var cate : String = arguments?.getString("category").toString()
-        if(cate == "open"){
+        var cate: String = arguments?.getString("category").toString()
+        if (cate == "open") {
             drawerLayout.openDrawer(drawerView)
             cate = "close"
         }
-        userRef.addValueEventListener(object : ValueEventListener{
+        userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
             }
@@ -108,18 +110,19 @@ class Fragment2 : Fragment() {
             }*/
         }
         binding.fragment2ProductRegistration.setOnClickListener {
-            Intent(context, FoodActivity::class.java).apply{
+            Intent(context, FoodActivity::class.java).apply {
                 putExtra("kind", "delivery".toString())
 
             }.run { context?.startActivity(this) }
         }
         binding.shop.setOnClickListener {
-            Intent(context, FoodActivity::class.java).apply{
+            Intent(context, FoodActivity::class.java).apply {
                 putExtra("kind", "shop".toString())
 
             }.run { context?.startActivity(this) }
         }
-        binding.menu2.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
+        binding.menu2.setOnFloatingActionsMenuUpdateListener(object :
+            FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
             override fun onMenuExpanded() {
                 binding.dark.setBackgroundColor(Color.parseColor("#80000000"))
             }
@@ -128,8 +131,13 @@ class Fragment2 : Fragment() {
                 binding.dark.setBackgroundColor(Color.parseColor("#00000000"))
             }
         })
-        binding.fragment2RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-        binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+        binding.fragment2RecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+        binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
         /*binding.deliver.setOnClickListener {
             deliverycheck = 1
             binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
@@ -142,137 +150,137 @@ class Fragment2 : Fragment() {
         }*/
         binding.all.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="전체"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "전체"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
 
         }
         binding.button4.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="한식"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "한식"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.button9.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="중식"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "중식"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.button10.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="일식"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "일식"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.button11.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="양식"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "양식"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.chicken.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="치킨"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "치킨"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.pizza.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="피자"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "피자"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.bunsik.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="분식"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "분식"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.desert.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="디저트"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "디저트"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.meat.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="고기"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "고기"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.fast.setOnClickListener {
             deliverycheck = 1
-            deliverycate ="패스트푸드"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            deliverycate = "패스트푸드"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.coupang.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "쿠팡"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.emart.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "이마트몰"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.marketkurly.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "마켓컬리"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.lotte.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "롯데ON"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.bunga11.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "11번가"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.gmarket.setOnClickListener {
-            deliverycheck=2
+            deliverycheck = 2
             shoppingcate = "G마켓"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.auction.setOnClickListener {
-            deliverycheck=2
+            deliverycheck = 2
             shoppingcate = "옥션"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.gita.setOnClickListener {
-            deliverycheck=2
+            deliverycheck = 2
             shoppingcate = "기타"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
         binding.all2.setOnClickListener {
-            deliverycheck=2
+            deliverycheck = 2
             shoppingcate = "전체"
-            binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
 
         binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
-            when(i){
+            when (i) {
                 R.id.fragment2_rb_delivery -> {
                     deliverycheck = 1
-                    binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+                    binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
                     //binding.fragment2RbDelivery.buttonTintList = ColorStateList.valueOf(Color.parseColor("#ff5959"))
                     //binding.fragment2RbShopping.buttonTintList = ColorStateList.valueOf(Color.parseColor("#808080"))
                 }
                 R.id.fragment2_rb_shopping -> {
                     deliverycheck = 2
-                    binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
+                    binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
                     //binding.fragment2RbShopping.buttonTintList = ColorStateList.valueOf(Color.parseColor("#ff5959"))
                     //binding.fragment2RbDelivery.buttonTintList = ColorStateList.valueOf(Color.parseColor("#808080"))
                 }
@@ -289,7 +297,8 @@ class Fragment2 : Fragment() {
     inner class ShoppingViewHolder(var binding: FoodItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    inner class Fragment2DeliveryRecyclerviewAdapter() : RecyclerView.Adapter<DeliveryViewHolder>() {
+    inner class Fragment2DeliveryRecyclerviewAdapter() :
+        RecyclerView.Adapter<DeliveryViewHolder>() {
 
         var deliveryDTOs: ArrayList<DeliveryDTO> = arrayListOf()
         var deliveryUidList: ArrayList<String> = arrayListOf()
@@ -303,18 +312,25 @@ class Fragment2 : Fragment() {
                         ?.addSnapshotListener { value, error ->
                             deliveryDTOs.clear()
                             deliveryUidList.clear()
-                            for (snapshot in value!!.documents) {
-                                var item = snapshot.toObject(DeliveryDTO::class.java)
-                                //Toast.makeText(context, item!!.delivery_address.toString(), Toast.LENGTH_LONG).show()
-                                var location = item!!.delivery_address
-                                var cor = geocoder.getFromLocationName(location, 1)
-                                delivery_lat = cor[0].latitude
-                                delivery_lon = cor[0].longitude
-                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
-                                if (item!!.delivery) {
-                                    if(distance <= 2000) {
-                                        deliveryDTOs.add(item)
-                                        deliveryUidList.add(snapshot.id)
+                            if (value?.documents != null) {
+                                for (snapshot in value!!.documents) {
+                                    var item = snapshot.toObject(DeliveryDTO::class.java)
+                                    //Toast.makeText(context, item!!.delivery_address.toString(), Toast.LENGTH_LONG).show()
+                                    var location = item!!.delivery_address
+                                    var cor = geocoder.getFromLocationName(location, 1)
+                                    delivery_lat = cor[0].latitude
+                                    delivery_lon = cor[0].longitude
+                                    var distance = DistanceManager.getDistance(
+                                        mylat,
+                                        mylon,
+                                        delivery_lat,
+                                        delivery_lon
+                                    ).toDouble()
+                                    if (item!!.delivery) {
+                                        if (distance <= 2000) {
+                                            deliveryDTOs.add(item)
+                                            deliveryUidList.add(snapshot.id)
+                                        }
                                     }
                                 }
                             }
@@ -327,28 +343,36 @@ class Fragment2 : Fragment() {
                         ?.addSnapshotListener { value, error ->
                             deliveryDTOs.clear()
                             deliveryUidList.clear()
-                            for (snapshot in value!!.documents) {
-                                var item = snapshot.toObject(DeliveryDTO::class.java)
-                                var delivery_uid = item!!.delivery_uid
-                                var deliveryRef = infoRef.child(delivery_uid.toString())
-                                deliveryRef.addValueEventListener(object :ValueEventListener{
-                                    override fun onCancelled(error: DatabaseError) {
+                            if (value?.documents != null) {
+                                for (snapshot in value!!.documents) {
+                                    var item = snapshot.toObject(DeliveryDTO::class.java)
+                                    var delivery_uid = item!!.delivery_uid
+                                    var deliveryRef = infoRef.child(delivery_uid.toString())
+                                    deliveryRef.addValueEventListener(object : ValueEventListener {
+                                        override fun onCancelled(error: DatabaseError) {
 
-                                    }
+                                        }
 
-                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                        var deliveryInfo = snapshot.getValue<UsersInfo>()
-                                        delivery_location = deliveryInfo!!.address.toString()
-                                        delivery_cor = geocoder.getFromLocationName(delivery_location, 1)
-                                        delivery_lat = delivery_cor[0].latitude
-                                        delivery_lon = delivery_cor[0].longitude
-                                    }
-                                })
-                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
-                                if (item!!.category == deliverycate) {
-                                    if(distance <= 2000) {
-                                        deliveryDTOs.add(item)
-                                        deliveryUidList.add(snapshot.id)
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            var deliveryInfo = snapshot.getValue<UsersInfo>()
+                                            delivery_location = deliveryInfo!!.address.toString()
+                                            delivery_cor =
+                                                geocoder.getFromLocationName(delivery_location, 1)
+                                            delivery_lat = delivery_cor[0].latitude
+                                            delivery_lon = delivery_cor[0].longitude
+                                        }
+                                    })
+                                    var distance = DistanceManager.getDistance(
+                                        mylat,
+                                        mylon,
+                                        delivery_lat,
+                                        delivery_lon
+                                    ).toDouble()
+                                    if (item!!.category == deliverycate) {
+                                        if (distance <= 2000) {
+                                            deliveryDTOs.add(item)
+                                            deliveryUidList.add(snapshot.id)
+                                        }
                                     }
                                 }
                             }
@@ -366,7 +390,7 @@ class Fragment2 : Fragment() {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
                                 var delivery_uid = item!!.delivery_uid
                                 var deliveryRef = infoRef.child(delivery_uid.toString())
-                                deliveryRef.addValueEventListener(object :ValueEventListener{
+                                deliveryRef.addValueEventListener(object : ValueEventListener {
                                     override fun onCancelled(error: DatabaseError) {
 
                                     }
@@ -374,14 +398,20 @@ class Fragment2 : Fragment() {
                                     override fun onDataChange(snapshot: DataSnapshot) {
                                         var deliveryInfo = snapshot.getValue<UsersInfo>()
                                         delivery_location = deliveryInfo!!.address.toString()
-                                        delivery_cor = geocoder.getFromLocationName(delivery_location, 1)
+                                        delivery_cor =
+                                            geocoder.getFromLocationName(delivery_location, 1)
                                         delivery_lat = delivery_cor[0].latitude
                                         delivery_lon = delivery_cor[0].longitude
                                     }
                                 })
-                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
+                                var distance = DistanceManager.getDistance(
+                                    mylat,
+                                    mylon,
+                                    delivery_lat,
+                                    delivery_lon
+                                ).toDouble()
                                 if (!item!!.delivery) {
-                                    if(distance <= 2000) {
+                                    if (distance <= 2000) {
                                         deliveryDTOs.add(item)
                                         deliveryUidList.add(snapshot.id)
                                     }
@@ -400,7 +430,7 @@ class Fragment2 : Fragment() {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
                                 var delivery_uid = item!!.delivery_uid
                                 var deliveryRef = infoRef.child(delivery_uid.toString())
-                                deliveryRef.addValueEventListener(object :ValueEventListener{
+                                deliveryRef.addValueEventListener(object : ValueEventListener {
                                     override fun onCancelled(error: DatabaseError) {
 
                                     }
@@ -408,14 +438,20 @@ class Fragment2 : Fragment() {
                                     override fun onDataChange(snapshot: DataSnapshot) {
                                         var deliveryInfo = snapshot.getValue<UsersInfo>()
                                         delivery_location = deliveryInfo!!.address.toString()
-                                        delivery_cor = geocoder.getFromLocationName(delivery_location, 1)
+                                        delivery_cor =
+                                            geocoder.getFromLocationName(delivery_location, 1)
                                         delivery_lat = delivery_cor[0].latitude
                                         delivery_lon = delivery_cor[0].longitude
                                     }
                                 })
-                                var distance = DistanceManager.getDistance(mylat, mylon, delivery_lat, delivery_lon).toDouble()
+                                var distance = DistanceManager.getDistance(
+                                    mylat,
+                                    mylon,
+                                    delivery_lat,
+                                    delivery_lon
+                                ).toDouble()
                                 if (item!!.category == shoppingcate) {
-                                    if(distance <= 2000) {
+                                    if (distance <= 2000) {
                                         deliveryDTOs.add(item)
                                         deliveryUidList.add(snapshot.id)
                                     }
@@ -428,7 +464,7 @@ class Fragment2 : Fragment() {
             }
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup,viewType: Int): DeliveryViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeliveryViewHolder {
             var view =
                 FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             return DeliveryViewHolder(view)
@@ -439,15 +475,17 @@ class Fragment2 : Fragment() {
             //store
             viewHolder.fooditemTextviewstore.text = deliveryDTOs[position].store
             //order price
-            viewHolder.fooditemTextvieworderprice.text = deliveryDTOs[position].order_price.toString()
+            viewHolder.fooditemTextvieworderprice.text =
+                deliveryDTOs[position].order_price.toString()
             //delivery price
-            viewHolder.fooditemTextviewdeliveryprice.text = deliveryDTOs[position].delivery_price.toString()
+            viewHolder.fooditemTextviewdeliveryprice.text =
+                deliveryDTOs[position].delivery_price.toString()
 
             //click
             viewHolder.fooditemCardView.setOnClickListener {
                 Intent(context, Delivery::class.java).apply {
                     putExtra("store", deliveryDTOs[position].store.toString())
-                    putExtra("name",deliveryDTOs[position].name.toString())
+                    putExtra("name", deliveryDTOs[position].name.toString())
                     putExtra("delivery", deliveryDTOs[position].delivery.toString())
                     putExtra("orderPrice", deliveryDTOs[position].order_price.toString())
                     putExtra("deliveryPrice", deliveryDTOs[position].delivery_price.toString())
@@ -463,14 +501,18 @@ class Fragment2 : Fragment() {
             return deliveryDTOs.size
         }
     }
-    object DistanceManager{
+
+    object DistanceManager {
         private const val R = 6372.8 * 1000
-        fun getDistance(lat1 : Double, lon1:Double, lat2:Double, lon2 : Double) : Int{
+        fun getDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Int {
             val dLat = Math.toRadians(lat2 - lat1)
-            val dLon = Math.toRadians(lon2-lon1)
-            val a = sin(dLat/2).pow(2.0) + sin(dLon/2).pow(2.0)*cos(Math.toRadians(lat1))*cos(Math.toRadians(lat2))
-            val c = 2*asin(sqrt(a))
-            return (R*c).toInt()
+            val dLon = Math.toRadians(lon2 - lon1)
+            val a =
+                sin(dLat / 2).pow(2.0) + sin(dLon / 2).pow(2.0) * cos(Math.toRadians(lat1)) * cos(
+                    Math.toRadians(lat2)
+                )
+            val c = 2 * asin(sqrt(a))
+            return (R * c).toInt()
         }
     }
 }

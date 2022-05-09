@@ -2,14 +2,17 @@ package com.techtown.matchingservice
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -35,9 +38,12 @@ class Fragment4 : Fragment() {
     private val binding get() = mBinding!!
     private var mContext: Context? = null
     private val _context get() = mContext!!
+    lateinit var auth: FirebaseAuth
+
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        auth = FirebaseAuth.getInstance()
         mBinding = Fragment4Binding.inflate(inflater, container,false)
         val view = binding.root
 
@@ -69,6 +75,10 @@ class Fragment4 : Fragment() {
             val intent = Intent(context, GroupActivity::class.java)
             startActivity(intent)
         }
+
+        binding.btnLogout.setOnClickListener{
+            logout()
+        }
         return view
     }
 
@@ -88,6 +98,24 @@ class Fragment4 : Fragment() {
                 }
             }
         })
+    }
+
+    private fun logout(){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("로그아웃")
+            .setMessage("로그아웃 하시겠습니까?")
+            .setPositiveButton("예",
+                DialogInterface.OnClickListener { dialog, id ->
+                    auth.signOut()
+                    var intent = Intent(activity, LoginActivity::class.java) //로그인 페이지 이동
+                    startActivity(intent)
+                    activity?.finish()
+                }
+            )
+            .setNegativeButton("아니요",
+                DialogInterface.OnClickListener{ dialog, id->
+                })
+        builder.show()
     }
 
     /*@SuppressLint("UseRequireInsteadOfGet")

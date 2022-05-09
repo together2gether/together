@@ -51,6 +51,10 @@ class LoginActivity : AppCompatActivity() {
         googleLoginResult.launch(signInIntent)
     }
 
+    override fun onStart() {
+        super.onStart()
+        moveMainPage(auth?.currentUser)
+    }
 
 
     fun firebaseAuthWithGoogle(idToken: String?) {
