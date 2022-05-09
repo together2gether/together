@@ -215,6 +215,13 @@ class Fragment2 : Fragment() {
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }
+        binding.delGita.setOnClickListener {
+            deliverycheck = 1
+            deliverycate = "기타"
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
+            drawerLayout.closeDrawer(drawerView)
+        }
+
         binding.coupang.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "쿠팡"

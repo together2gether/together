@@ -240,21 +240,23 @@
 
                 <android.widget.Button
                     android:id="@+id/button_chat"
-                    android:layout_width="50dp"
-                    android:layout_height="35dp"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="16dp"
                     android:layout_toLeftOf="@id/product_info_participation"
-                    android:background="@drawable/button"
+                    android:background="@drawable/button_selector"
                     android:text="채팅"
+                    android:textColor="@color/white"
                     android:textSize="15sp" />
 
                 <android.widget.Button
                     android:id="@+id/product_info_participation"
-                    android:layout_width="50dp"
-                    android:layout_height="35dp"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/button_change"
+                    android:background="@drawable/button_selector"
                     android:text="참여"
+                    android:textColor="@color/white"
                     android:textSize="15sp" />
             </RelativeLayout>
         </RelativeLayout>

@@ -4,22 +4,22 @@
     <item
         android:id="@+id/tab1"
         android:enabled="true"
-        android:icon="@drawable/products"
+        android:icon="@drawable/boxes"
         android:title="공동구매"/>
     <item
         android:id="@+id/tab2"
         android:enabled="true"
-        android:icon="@drawable/dish"
+        android:icon="@drawable/delivery"
         android:title="배달"/>
     <item
         android:id="@+id/tab3"
         android:enabled="true"
         android:title="채팅"
-        android:icon="@drawable/chat"/>
+        android:icon="@drawable/chatting"/>
     <item
         android:id="@+id/tab4"
         android:title="마이페이지"
-        android:icon="@drawable/account"
+        android:icon="@drawable/user"
         android:enabled="true"
         app:showAsAction="ifRoom"/>
 

@@ -1,5 +1,6 @@
 package com.techtown.matchingservice
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -22,6 +23,7 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
 
+    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         val ab = supportActionBar!!
         ab.setDisplayShowTitleEnabled(false)
         //ab.setDisplayHomeAsUpEnabled(true)
+
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         var fragment1 = Fragment1()
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.search.setVisibility(View.VISIBLE)
         var page= intent.getStringExtra("page")
+        binding.bottomNavigation.itemIconTintList = null
         when(page){
             "1" -> {
                 val fragment1 = Fragment1()

@@ -99,7 +99,6 @@ class Fragment1 : Fragment() {
                 binding.chipGroup.addView(Chip(context).apply {
                     text = string
                     chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#ffffff"))
-
                     chipStrokeColor = ColorStateList.valueOf(Color.parseColor("#cdd9f1"))
                     chipStrokeWidth = 4f
                     setTextColor(
