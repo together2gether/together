@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,17 +53,7 @@ class GroupActivity : AppCompatActivity() {
         recyclerView?.layoutManager = LinearLayoutManager(this)
         recyclerView?.adapter = RecyclerViewAdapter()
         recyclerView?.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        /*groups.clear()
-        docRef.get()
-            .addOnSuccessListener { documents ->
-                for(document in documents){
-                    item = document.toObject(ContentDTO::class.java)!!
-                    if(item?.Participation!!.containsKey(uid)){
-                        //Toast.makeText(this, item.product.toString(), Toast.LENGTH_SHORT).show()
-                        groups.add(item)
-                    }
-                }
-            }*/
+
         val finish = findViewById<Button>(R.id.button47)
         finish.setOnClickListener {
             finish()
@@ -94,7 +85,8 @@ class GroupActivity : AppCompatActivity() {
 
         override fun onBindViewHolder(holder: RecyclerViewAdapter.GroupViewHolder, @SuppressLint("RecyclerView") position: Int) {
             if(groups[position].uid.toString() == uid.toString()){
-                holder.btn_drop.isEnabled = false
+                holder.btn_drop.visibility = View.INVISIBLE
+                holder.btn_cp.visibility = View.VISIBLE
             }
             holder.tv_product.text = groups[position].product
             holder.tv_cycle.text = "구매주기 : "+groups[position].cycle+" 일"
@@ -162,6 +154,7 @@ class GroupActivity : AppCompatActivity() {
             val tv_price : TextView = view.findViewById(R.id.price)
             val tv_cycle : TextView = view.findViewById(R.id.cycle)
             val btn_drop : Button = view.findViewById(R.id.button_drop)
+            val btn_cp : Button = view.findViewById(R.id.button_complete)
         }
 
         override fun getItemCount(): Int {

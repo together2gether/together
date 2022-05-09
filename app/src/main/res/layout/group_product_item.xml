@@ -84,6 +84,20 @@
                     android:textSize="14sp"
                     tools:ignore="NotSibling" />
 
+                <android.widget.Button
+                    android:id="@+id/button_complete"
+                    android:layout_width="55dp"
+                    android:layout_height="33dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/button"
+                    android:backgroundTint="@color/purple_200"
+                    android:gravity="center"
+                    android:text="거래완료"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:visibility="invisible" />
+
             </RelativeLayout>
 
         </LinearLayout>

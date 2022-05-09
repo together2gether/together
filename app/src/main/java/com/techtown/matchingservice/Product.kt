@@ -2,6 +2,7 @@ package com.techtown.matchingservice
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -54,13 +55,19 @@ class Product : AppCompatActivity() {
         binding.productInfoTotal.text = "총 " +intent.getStringExtra("totalNumber").toString() + " 개"
         var price:Int = Integer.parseInt(intent.getStringExtra("price").toString())/Integer.parseInt(intent.getStringExtra("participationTotal").toString())
         binding.productInfoUnit.text =price.toString() + "원 ( "+intent.getStringExtra("unit").toString()+ " 개 )"
-        binding.productInfoURL.text = intent.getStringExtra("URL").toString()
+        var URL : String = intent.getStringExtra("URL").toString()
+        binding.productInfoURL.text = URL
         binding.productInfoPlace.text = intent.getStringExtra("place").toString()
         binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()
         binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
         regist_userid = intent.getStringExtra("Uid").toString()
         productid = intent.getStringExtra("id").toString()
         product_name = intent.getStringExtra("product").toString()
+
+        binding.productInfoURL.setOnClickListener{
+            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(URL))
+            startActivity(intent)
+        }
 
         usersRef.child(regist_userid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
