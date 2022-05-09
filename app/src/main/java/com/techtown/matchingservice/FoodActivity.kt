@@ -105,22 +105,25 @@ class FoodActivity : AppCompatActivity() {
             }
         }*/
         binding.shoppingSpinner.adapter = myAdapter
-        binding.shoppingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                when(p2) {
-                    0 -> {
-
-                    }
-                    else -> {
-
+        if(kind == "shop"){
+            binding.shoppingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                    when(p2) {
+                        7 -> {
+                            binding.registerFoodStoreName.setText("")
+                        }
+                        else -> {
+                            binding.registerFoodStoreName.setText(shop_items[p2])
+                        }
                     }
                 }
-            }
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
+                override fun onNothingSelected(p0: AdapterView<*>?) {
 
+                }
             }
         }
+
     }
 
     private fun contentUpload() {
