@@ -53,7 +53,27 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.main_content, fragment2).commit()
         }
         binding.search.setVisibility(View.VISIBLE)
-        supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
+        var page= intent.getStringExtra("page")
+        when(page){
+            "1" -> {
+                val fragment1 = Fragment1()
+                supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
+            }
+            "2" -> {
+                val fragment2 = Fragment2()
+                supportFragmentManager.beginTransaction().add(R.id.main_content, fragment2).commit()
+            }
+            "3" -> {
+                val fragment3 = ChatFragment()
+                supportFragmentManager.beginTransaction().add(R.id.main_content, fragment3).commit()
+            }
+            "4" -> {
+                val fragment4 = Fragment4()
+                supportFragmentManager.beginTransaction().add(R.id.main_content, fragment4).commit()
+               // binding.bottomNavigation.
+            }
+        }
+        //supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
         initNavigationBar()
     }
 

@@ -162,7 +162,7 @@ class Fragment1 : Fragment() {
             viewHolder.productitemTextviewProductName.text = contentDTOs[position].product
             //place
             viewHolder.productitemTextviewPlace.text =
-                contentDTOs[position].price.toString() + " / " + contentDTOs[position].unit.toString() + "개"
+                (Integer.parseInt(contentDTOs[position].price.toString())/Integer.parseInt(contentDTOs[position].ParticipationTotal.toString())).toString() + "원 (" + contentDTOs[position].unit.toString() + "개)"
             //Photo
             Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
                 .into(viewHolder.productItemPhoto)
