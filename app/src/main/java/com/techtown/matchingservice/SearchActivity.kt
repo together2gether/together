@@ -89,6 +89,8 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         setContentView(R.layout.activity_search)
         var selectbutton = findViewById<Button>(R.id.btn_select)
         selectbutton.setOnClickListener{
+            mClusterManager.hashCode()
+            mClusterManager.clearItems()
             val dialog = ConditionDialog(this)
             dialog.showDialog()
             dialog.setOnClickListener(object : ConditionDialog.OnDialogClickListener{
@@ -534,9 +536,10 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     }
     fun search(searchWord : String){
         search = "search"
-        for(z in latlngList){
+        /*for(z in latlngList){
             mClusterManager.removeItem(z)
-        }
+        }*/
+        mClusterManager.clearItems()
         latlngList.clear()
         productsList.clear()
         if(condition == "condition"){
@@ -653,7 +656,6 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 adapter.notifyDataSetChanged()
             }
         }
-
     }
     inner class MarkerClusterRenderer(context : Context?, map : GoogleMap?, clusterManager: ClusterManager<LatLngData>?)
         :DefaultClusterRenderer<LatLngData>(context, map, clusterManager){
