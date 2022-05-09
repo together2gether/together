@@ -51,13 +51,13 @@ class LoginActivity : AppCompatActivity() {
         googleLoginResult.launch(signInIntent)
     }
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
         if(account != null){
             moveMainPage(auth?.currentUser)
         }
-    }
+    }*/
 
 
     fun firebaseAuthWithGoogle(idToken: String?) {
