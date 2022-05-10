@@ -54,6 +54,7 @@
         <activity android:name=".EditFood"/>
         <activity android:name=".RecommandLocation"/>
         <activity android:name=".Home"/>
+        <activity android:name=".SearchFood"/>
     </application>
 
 </manifest>
