@@ -75,7 +75,6 @@ class FoodActivity : AppCompatActivity() {
         })
 
         binding.registerFoodStorage.setOnClickListener {
-            Toast.makeText(applicationContext, address, Toast.LENGTH_LONG).show()
             contentUpload()
             finish()
         }

@@ -31,6 +31,7 @@ import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
+import com.techtown.matchingservice.util.FcmPush
 import kotlinx.android.synthetic.main.chatting.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,6 +52,7 @@ class chatting : AppCompatActivity() {
     var mylocation : String = ""
     var yourlocation : String = ""
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    var mynick : String? = null
 
     var firestore: FirebaseFirestore? = null
     private lateinit var databaseRef : DatabaseReference
@@ -83,6 +85,7 @@ class chatting : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userInfo = snapshot.getValue<UsersInfo>()
+                mynick = userInfo!!.nickname.toString()
                 mylocation = userInfo!!.address.toString()
             }
         })
@@ -150,13 +153,21 @@ class chatting : AppCompatActivity() {
             if(groupchat == "N"){
                 chatModel.users.put(destinationUid!!, true)
                 chatModel.productid = ""
+                var str = editText.text.toString()
+                FcmPush.instance.sendMessage(destinationUid!!,mynick.toString(), str)
             } else if(groupchat == "Y"){
+                var str = editText.text.toString()
                 docRef.document("$productid").get()
                     .addOnSuccessListener { document ->
                         if(document != null){
                             var groupItem = document.toObject(ContentDTO::class.java)!!
-                            for(users in groupItem!!.Participation.keys){
-                                chatModel.users.put(users, true)
+                            for(users in groupItem!!.Participation){
+                                if(users.value == true) {
+                                    chatModel.users.put(users.key, true)
+                                    if(users.key != uid){
+                                        FcmPush.instance.sendMessage(users.key,mynick.toString(), str)
+                                    }
+                                }
                             }
                             chatModel.productid = productid
                         }
@@ -396,7 +407,6 @@ class chatting : AppCompatActivity() {
         override fun getItemCount(): Int {
             return comments.size
         }
-
 
     }
 }

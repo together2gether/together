@@ -28,7 +28,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.techtown.matchingservice.model.UsersInfo
 
-private lateinit var auth: FirebaseAuth
+lateinit var auth: FirebaseAuth
 
 class ModifyInfo : AppCompatActivity() {
     val user = Firebase.auth.currentUser
