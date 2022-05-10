@@ -191,7 +191,6 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
         try{
             mMap = p0
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            Toast.makeText(applicationContext, mylocation, Toast.LENGTH_LONG).show()
             setLastLocation(LatLng(mylat, mylon))
             mMap.uiSettings.isMyLocationButtonEnabled = true
             mMap.uiSettings.isZoomControlsEnabled = true
@@ -245,27 +244,6 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
 
         }
     }
-
-    /*@SuppressLint("MissingPermission")
-    fun updateLocation(){
-        val locationRequest = com.google.android.gms.location.LocationRequest.create()
-        locationRequest.run {
-            priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval  = 1000
-        }
-        locationCallback = object: LocationCallback(){
-            override fun onLocationResult(p0: LocationResult?) {
-                p0?.let{
-                    for(location in it.locations){
-                        Log.d("Location", "${location.latitude}, ${location.longitude}")
-                        removeLocationListener()
-                        setLastLocation(location)
-                    }
-                }
-            }
-        }
-        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
-    }*/
     fun setLastLocation(lastLocation : LatLng){
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
         val resources : Resources = this!!.resources
@@ -282,7 +260,6 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
         if(size_check < 100){
             boundmap()
         }
-
     }
     private fun moveCamera(map: GoogleMap, marker: Marker){
         map.animateCamera(

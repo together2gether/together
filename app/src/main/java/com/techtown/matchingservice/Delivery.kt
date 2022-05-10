@@ -2,6 +2,8 @@ package com.techtown.matchingservice
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -9,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -16,6 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.FoodInfoBinding
@@ -39,7 +44,15 @@ class Delivery : AppCompatActivity() {
     private val roomsRef = database.getReference("chatrooms")
     private val usersRef = database.getReference("usersInfo")
     var foodName : String? = null
-
+    var mylat : Double= 0.0
+    var mylng : Double = 0.0
+    var yourlat : Double = 0.0
+    var yourlng : Double = 0.0
+    lateinit var yourcor : List<Address>
+    lateinit var mycor : List<Address>
+    var yourlocation : String = ""
+    var mylocation : String = ""
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.food_info)
@@ -49,6 +62,30 @@ class Delivery : AppCompatActivity() {
         binding.foodInfoBack.setOnClickListener(){
             finish()
         }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        val geocoder = Geocoder(this)
+        val infoRef = database.getReference("usersInfo")
+        val userRef = infoRef.child(uid.toString())
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+                mycor = geocoder.getFromLocationName(mylocation,1)
+                mylat = mycor[0].latitude
+                mylng = mycor[0].longitude
+            }
+
+        })
+        yourlocation = intent.getStringExtra("address").toString()
+        yourcor = geocoder.getFromLocationName(yourlocation, 1)
+        yourlat = yourcor[0].latitude
+        yourlng = yourcor[0].longitude
+        val lat = ((mycor[0].latitude + yourcor[0].latitude)/2).toString()
+        val lng = ((mycor[0].longitude + yourcor[0].longitude)/2).toString()
 
         foodName = intent.getStringExtra("store").toString()
         binding.foodInfoStore.text = foodName
@@ -71,6 +108,18 @@ class Delivery : AppCompatActivity() {
             binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
         }
 
+        binding.recommend.setOnClickListener {
+            Intent(applicationContext, RecommandLocation::class.java).apply {
+                putExtra("mylat", mylat)
+                putExtra("mylng", mylng)
+                putExtra("yourlat", yourlat)
+                putExtra("yourlng", yourlng)
+                putExtra("lat", lat)
+                putExtra("lng", lng)
+                putExtra("delivery", "delivery")
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }.run {applicationContext?.startActivity(this)}
+        }
         usersRef.child(deliveryuid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
             }

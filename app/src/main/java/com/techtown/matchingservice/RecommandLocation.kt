@@ -65,6 +65,7 @@ class RecommandLocation : AppCompatActivity() {
     lateinit var yourlat : String
     lateinit var yourlng : String
     lateinit var back : Button
+    lateinit var deliver_rec: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.recommend_location)
@@ -98,6 +99,7 @@ class RecommandLocation : AppCompatActivity() {
         mylng = intent.getStringExtra("mylng").toString()
         yourlat = intent.getStringExtra("yourlat").toString()
         yourlng = intent.getStringExtra("yourlng").toString()
+        deliver_rec = intent.getStringExtra("delivery").toString()
 
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
@@ -171,7 +173,7 @@ class RecommandLocation : AppCompatActivity() {
             .build()
         val api = retrofit.create(KakaoAPI::class.java)            // 통신 인터페이스를 객체로 생성
         //val call = api.getSearchCategory(API_KEY, "CS2", "126.972526" ,"37.560452", 50000)
-        val call = api.getSearchKeyword(API_KEY, "CS2",lng, lat,1000 ,1, "distance")
+        val call = api.getSearchKeyword(API_KEY, "CS2",lng, lat,500 ,1, "distance")
         // 검색 조건 입력
 
         //val call = api.getSearchKeyword(API_KEY, keyword, "126.972526" ,"37.560452", 50000 )
@@ -180,28 +182,28 @@ class RecommandLocation : AppCompatActivity() {
             override fun onResponse(call: Call<ResultSearchKeyword>, response: Response<ResultSearchKeyword>) {
                 // 통신 성공
                 addItemsAndMarkers(response.body())
-                val call1 = api.getSearchKeyword(API_KEY, "SW8", lng, lat, 1000, 1, "distance")
+                val call1 = api.getSearchKeyword(API_KEY, "SW8", lng, lat, 500, 1, "distance")
                 call1.enqueue(object : Callback<ResultSearchKeyword> {
                     override fun onResponse(
                         call: Call<ResultSearchKeyword>,
                         response: Response<ResultSearchKeyword>
                     ) {
                         addItemsAndMarkers(response.body())
-                        val call2 = api.getSearchKeyword(API_KEY, "SC4", lng, lat, 1000, 1, "distance")
+                        val call2 = api.getSearchKeyword(API_KEY, "SC4", lng, lat, 500, 1, "distance")
                         call2.enqueue(object  : Callback<ResultSearchKeyword>{
                             override fun onResponse(
                                 call: Call<ResultSearchKeyword>,
                                 response: Response<ResultSearchKeyword>
                             ) {
                                 addItemsAndMarkers(response.body())
-                                val call3 = api.getSearchKeyword(API_KEY,"PO3", lng, lat, 1000, 1, "distance")
+                                val call3 = api.getSearchKeyword(API_KEY,"PO3", lng, lat, 500, 1, "distance")
                                 call3.enqueue(object : Callback<ResultSearchKeyword>{
                                     override fun onResponse(
                                         call: Call<ResultSearchKeyword>,
                                         response: Response<ResultSearchKeyword>
                                     ) {
                                         addItemsAndMarkers(response.body())
-                                        val call4 = api.getSearchKeyword(API_KEY,"MT1", lng, lat, 1000, 1, "distance")
+                                        val call4 = api.getSearchKeyword(API_KEY,"MT1", lng, lat, 500, 1, "distance")
                                         call4.enqueue(object : Callback<ResultSearchKeyword>{
                                             override fun onResponse(
                                                 call: Call<ResultSearchKeyword>,
@@ -301,7 +303,11 @@ class RecommandLocation : AppCompatActivity() {
             holder.itemView.setOnClickListener {
                 itemClickListener.onClick(it, position)
             }
-
+            if(deliver_rec != null){
+                if(deliver_rec == "delivery"){
+                    holder.rec_loc.visibility = View.GONE
+                }
+            }
             holder.rec_loc.setOnClickListener {
 
                 val time = System.currentTimeMillis()
