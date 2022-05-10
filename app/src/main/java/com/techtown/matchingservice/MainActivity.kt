@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.search2.setOnClickListener {
-            val intent = Intent(this, SearchActivity::class.java)
+            val intent = Intent(this, SearchFood::class.java)
             startActivity(intent)
         }
         binding.category.setOnClickListener{
