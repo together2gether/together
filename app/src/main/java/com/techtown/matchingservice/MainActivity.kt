@@ -47,14 +47,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SearchFood::class.java)
             startActivity(intent)
         }
-        binding.category.setOnClickListener{
+        /*binding.category.setOnClickListener{
             var fragment2 = Fragment2()
             var bundle = Bundle()
             bundle.putString("category","open")
             fragment2.arguments = bundle
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_content, fragment2).commit()
-        }
+        }*/
         binding.search.setVisibility(View.VISIBLE)
         var page= intent.getStringExtra("page")
         binding.bottomNavigation.itemIconTintList = null
@@ -66,7 +66,6 @@ class MainActivity : AppCompatActivity() {
                 changeTitle("공동구매")
                 binding.search.setVisibility(View.VISIBLE)
                 binding.search2.setVisibility(View.INVISIBLE)
-                binding.category.setVisibility(View.INVISIBLE)
             }
             "2" -> {
                 var fragment2 = Fragment2()
@@ -79,7 +78,6 @@ class MainActivity : AppCompatActivity() {
                 changeTitle("배달")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.VISIBLE)
-                binding.category.setVisibility(View.VISIBLE)
             }
             "3" -> {
                 val fragment3 = ChatFragment()
@@ -88,7 +86,6 @@ class MainActivity : AppCompatActivity() {
                 changeTitle("채팅")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.INVISIBLE)
-                binding.category.setVisibility(View.INVISIBLE)
             }
             "4" -> {
                 val fragment4 = Fragment4()
@@ -97,7 +94,6 @@ class MainActivity : AppCompatActivity() {
                 changeTitle("마이페이지")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.INVISIBLE)
-                binding.category.setVisibility(View.INVISIBLE)
             }
         }
         //supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
@@ -112,7 +108,6 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("공동구매")
                         binding.search.setVisibility(View.VISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
-                        binding.category.setVisibility(View.INVISIBLE)
                         var fragment1 = Fragment1()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment1).commit()
@@ -121,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("배달")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.VISIBLE)
-                        binding.category.setVisibility(View.VISIBLE)
                         var fragment2 = Fragment2()
                         var bundle = Bundle()
                         bundle.putString("category","open")
@@ -133,7 +127,6 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("채팅")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
-                        binding.category.setVisibility(View.INVISIBLE)
                         var chatFragment = ChatFragment()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, chatFragment).commit()
@@ -142,7 +135,6 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("마이페이지")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
-                        binding.category.setVisibility(View.INVISIBLE)
                         var fragment4 = Fragment4()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment4).commit()

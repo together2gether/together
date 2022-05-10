@@ -76,7 +76,10 @@ class Fragment2 : Fragment() {
         var cate: String = arguments?.getString("category").toString()
         if (cate == "open") {
             drawerLayout.openDrawer(drawerView)
-            cate = "close"
+        }
+
+        binding.categoryFrag2.setOnClickListener {
+            drawerLayout.openDrawer(drawerView)
         }
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
