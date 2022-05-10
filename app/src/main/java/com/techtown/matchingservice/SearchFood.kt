@@ -105,7 +105,6 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                 mycor = geocoder.getFromLocationName(mylocation,1)
                 mylat = mycor[0].latitude
                 mylon = mycor[0].longitude
-
             }
 
         })
@@ -192,7 +191,8 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
         try{
             mMap = p0
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            updateLocation()
+            Toast.makeText(applicationContext, mylocation, Toast.LENGTH_LONG).show()
+            setLastLocation(LatLng(mylat, mylon))
             mMap.uiSettings.isMyLocationButtonEnabled = true
             mMap.uiSettings.isZoomControlsEnabled = true
 
@@ -216,7 +216,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                 latlngList.clear()
                 mClusterManager.clearItems()
                 adapter.notifyDataSetChanged()
-                updateLocation()
+                setLastLocation(LatLng(mylat, mylon))
             }
 
             clusterItemClick(mMap)
@@ -239,14 +239,14 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             boundmap()
-            updateLocation()
+            setLastLocation(LatLng(mylat, mylon))
 
         } catch (e:Exception){
 
         }
     }
 
-    @SuppressLint("MissingPermission")
+    /*@SuppressLint("MissingPermission")
     fun updateLocation(){
         val locationRequest = com.google.android.gms.location.LocationRequest.create()
         locationRequest.run {
@@ -265,8 +265,8 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             }
         }
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
-    }
-    fun setLastLocation(lastLocation : Location){
+    }*/
+    fun setLastLocation(lastLocation : LatLng){
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
         val resources : Resources = this!!.resources
         val bitmap2 = BitmapFactory.decodeResource(resources,R.drawable.red_pin)
