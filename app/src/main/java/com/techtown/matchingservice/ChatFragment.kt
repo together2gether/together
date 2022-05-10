@@ -3,6 +3,7 @@ package com.techtown.matchingservice
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -139,8 +140,11 @@ class ChatFragment : Fragment() {
             commentMap.putAll(chatModel[position].comments)
             val lastMessageKey = commentMap.keys.toTypedArray()[0]
             holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
-            /*var timeLong : Long? = chatModel[position].comments[lastMessageKey]?.time?.toLong()
-            holder.textView_time.text = timeDiff(timeLong!!)*/
+            var timeLong : Long? = chatModel[position].comments[lastMessageKey]?.longtime
+            holder.textView_time.text = timeDiff(timeLong!!)
+
+            //Log.d("time", timeLong.toString())
+
 
 
             //채팅창 선택 시 이동
@@ -187,6 +191,6 @@ class ChatFragment : Fragment() {
                 }
             }
         }
-        return msg
+        return diffTime.toString() + msg
     }
 }

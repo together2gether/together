@@ -315,7 +315,7 @@ class RecommandLocation : AppCompatActivity() {
                 val curTime = dateFormat.format(Date(time)).toString()
                 val LNAME = itemList[position].name
                 val Road = itemList[position].road
-                val comment = ChatModel.Comment(Uid.toString(), "추천 거래 위치 : $LNAME \n도로명 주소 : $Road", curTime)
+                val comment = ChatModel.Comment(Uid.toString(), "추천 거래 위치 : $LNAME \n도로명 주소 : $Road", curTime, time)
 
                 if(roomId == "null"){
                     val chatModel = ChatModel()

@@ -178,7 +178,7 @@ class Delivery : AppCompatActivity() {
                         val time = System.currentTimeMillis()
                         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
                         val curTime = dateFormat.format(Date(time)).toString()
-                        val comment = ChatModel.Comment(deliveryuid.toString(), "안녕하세요. 이 곳은 '$foodName' 공동구매를 위한 채팅방 입니다.", curTime)
+                        val comment = ChatModel.Comment(deliveryuid.toString(), "안녕하세요. 이 곳은 '$foodName' 공동구매를 위한 채팅방 입니다.", curTime, time)
 
                         for (room in snapshot.children){
                             val chatModel = room.getValue<ChatModel>()

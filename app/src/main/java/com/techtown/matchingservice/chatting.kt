@@ -173,7 +173,7 @@ class chatting : AppCompatActivity() {
                         }}
             }
 
-            val comment = ChatModel.Comment(uid, editText.text.toString(), curTime)
+            val comment = ChatModel.Comment(uid, editText.text.toString(), curTime, time)
             if(chatRoomUid == null){
                 imageView.isEnabled = false
                 roomsRef.push().setValue(chatModel).addOnSuccessListener {
