@@ -94,26 +94,6 @@
                 android:orientation="horizontal"
                 android:paddingBottom="12dp">
 
-                <RadioGroup
-                    android:id="@+id/fragment2Rg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <RadioButton
-                        android:id="@+id/fragment2_rb_delivery"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="배달" />
-
-                    <RadioButton
-                        android:id="@+id/fragment2_rb_shopping"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="쇼핑" />
-                </RadioGroup>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -121,6 +101,18 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="8dp">
+
+                    <ImageButton
+                        android:id="@+id/category_frag2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/purple_200"
+                        android:scaleType="fitXY"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/menu"
+                        app:tint="@color/white" />
 
                     <TextView
                         android:id="@+id/textView183"

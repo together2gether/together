@@ -65,6 +65,7 @@
                 android:text="구매 가격 : 3000원/5개"
                 android:textSize="16sp" />
 
+
         </LinearLayout>
 
     </LinearLayout>

@@ -59,6 +59,7 @@ class Fragment2 : Fragment() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var geocoder: Geocoder
     lateinit var infoRef: DatabaseReference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -275,23 +276,6 @@ class Fragment2 : Fragment() {
             shoppingcate = "전체"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-        }
-
-        binding.fragment2Rg.setOnCheckedChangeListener { radioGroup, i ->
-            when (i) {
-                R.id.fragment2_rb_delivery -> {
-                    deliverycheck = 1
-                    binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
-                    //binding.fragment2RbDelivery.buttonTintList = ColorStateList.valueOf(Color.parseColor("#ff5959"))
-                    //binding.fragment2RbShopping.buttonTintList = ColorStateList.valueOf(Color.parseColor("#808080"))
-                }
-                R.id.fragment2_rb_shopping -> {
-                    deliverycheck = 2
-                    binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
-                    //binding.fragment2RbShopping.buttonTintList = ColorStateList.valueOf(Color.parseColor("#ff5959"))
-                    //binding.fragment2RbDelivery.buttonTintList = ColorStateList.valueOf(Color.parseColor("#808080"))
-                }
-            }
         }
 
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)

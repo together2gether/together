@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         var fragment1 = Fragment1()
-        changeTitle("공동구매")
+        //changeTitle("공동구매")
 
 
         binding.search.setOnClickListener {
@@ -63,21 +63,41 @@ class MainActivity : AppCompatActivity() {
                 val fragment1 = Fragment1()
                 supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
                 binding.bottomNavigation.selectedItemId = R.id.tab1
+                changeTitle("공동구매")
+                binding.search.setVisibility(View.VISIBLE)
+                binding.search2.setVisibility(View.INVISIBLE)
+                binding.category.setVisibility(View.INVISIBLE)
             }
             "2" -> {
-                val fragment2 = Fragment2()
-                supportFragmentManager.beginTransaction().add(R.id.main_content, fragment2).commit()
+                var fragment2 = Fragment2()
+                var bundle = Bundle()
+                bundle.putString("category","open")
+                fragment2.arguments = bundle
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_content, fragment2).commit()
                 binding.bottomNavigation.selectedItemId = R.id.tab2
+                changeTitle("배달")
+                binding.search.setVisibility(View.INVISIBLE)
+                binding.search2.setVisibility(View.VISIBLE)
+                binding.category.setVisibility(View.VISIBLE)
             }
             "3" -> {
                 val fragment3 = ChatFragment()
                 supportFragmentManager.beginTransaction().add(R.id.main_content, fragment3).commit()
                 binding.bottomNavigation.selectedItemId = R.id.tab3
+                changeTitle("채팅")
+                binding.search.setVisibility(View.INVISIBLE)
+                binding.search2.setVisibility(View.INVISIBLE)
+                binding.category.setVisibility(View.INVISIBLE)
             }
             "4" -> {
                 val fragment4 = Fragment4()
                 supportFragmentManager.beginTransaction().add(R.id.main_content, fragment4).commit()
                 binding.bottomNavigation.selectedItemId = R.id.tab4
+                changeTitle("마이페이지")
+                binding.search.setVisibility(View.INVISIBLE)
+                binding.search2.setVisibility(View.INVISIBLE)
+                binding.category.setVisibility(View.INVISIBLE)
             }
         }
         //supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
@@ -89,7 +109,7 @@ class MainActivity : AppCompatActivity() {
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.tab1 -> {
-                        changeTitle("정기구매")
+                        changeTitle("공동구매")
                         binding.search.setVisibility(View.VISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
                         binding.category.setVisibility(View.INVISIBLE)
@@ -103,6 +123,9 @@ class MainActivity : AppCompatActivity() {
                         binding.search2.setVisibility(View.VISIBLE)
                         binding.category.setVisibility(View.VISIBLE)
                         var fragment2 = Fragment2()
+                        var bundle = Bundle()
+                        bundle.putString("category","open")
+                        fragment2.arguments = bundle
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment2).commit()
                     }
