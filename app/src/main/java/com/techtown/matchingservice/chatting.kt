@@ -173,12 +173,18 @@ class chatting : AppCompatActivity() {
                         }
                     }
             } else if(groupchat == "DY"){
+                var str = editText.text.toString()
                 delRef.document("$productid").get()
                     .addOnSuccessListener { doc ->
                         if(doc != null){
                             var groupItem = doc.toObject(DeliveryDTO::class.java)!!
-                            for(users in groupItem!!.deliveryParticipation.keys){
-                                chatModel.users.put(users, true)
+                            for(users in groupItem!!.deliveryParticipation){
+                                if(users.value == true) {
+                                    chatModel.users.put(users.key, true)
+                                    if(users.key != uid){
+                                        FcmPush.instance.sendMessage(users.key,mynick.toString(), str)
+                                    }
+                                }
                             }
                             chatModel.productid = productid
                         }}
