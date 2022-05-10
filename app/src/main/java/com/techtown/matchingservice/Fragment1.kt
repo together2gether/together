@@ -142,6 +142,8 @@ class Fragment1 : Fragment() {
                                 contentUidList.add(snapshot.id)
                             }
                         }
+                        contentDTOs.reverse()
+                        contentUidList.reverse()
                     }
                     notifyDataSetChanged()
 

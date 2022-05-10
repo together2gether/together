@@ -89,6 +89,7 @@ class ChatFragment : Fragment() {
             val imageView: ImageView = itemView.findViewById(R.id.chat_img)
             val textView_title: TextView = itemView.findViewById(R.id.chat_title)
             val textView_lastMessage: TextView = itemView.findViewById(R.id.chat_lastMsg)
+            val textView_time : TextView = itemView.findViewById(R.id.textView17)
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -138,6 +139,9 @@ class ChatFragment : Fragment() {
             commentMap.putAll(chatModel[position].comments)
             val lastMessageKey = commentMap.keys.toTypedArray()[0]
             holder.textView_lastMessage.text = chatModel[position].comments[lastMessageKey]?.message
+            /*var timeLong : Long? = chatModel[position].comments[lastMessageKey]?.time?.toLong()
+            holder.textView_time.text = timeDiff(timeLong!!)*/
+
 
             //채팅창 선택 시 이동
             holder.itemView.setOnClickListener{
@@ -159,5 +163,30 @@ class ChatFragment : Fragment() {
         override fun getItemCount(): Int {
             return chatModel.size
         }
+    }
+    enum class TimeValue(val value: Int, val maximum : Int, val msg : String){
+        SEC(60,60,"분 전"),
+        MIN(60,24,"시간 전"),
+        HOUR(24,30,"일 전"),
+        DAY(30,12,"달 전"),
+        MONTH(12,Int.MAX_VALUE,"년 전")
+    }
+
+    fun timeDiff(time : Long): String? {
+        val curTime = System.currentTimeMillis()
+        var diffTime = (curTime- time)/1000
+        var msg:String? = null
+        if(diffTime < TimeValue.SEC.value)
+            msg = "방금 전"
+        else {
+            for(i in TimeValue.values()){
+                diffTime /= i.value
+                if(diffTime < i.maximum){
+                    msg = i.msg
+                    break
+                }
+            }
+        }
+        return msg
     }
 }

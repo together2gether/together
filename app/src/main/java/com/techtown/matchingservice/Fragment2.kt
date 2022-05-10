@@ -324,8 +324,11 @@ class Fragment2 : Fragment() {
                                         }
                                     }
                                 }
+                                deliveryDTOs.reverse()
+                                deliveryUidList.reverse()
+                                notifyDataSetChanged()
                             }
-                            notifyDataSetChanged()
+
                         }
 
                 } else {
@@ -366,8 +369,11 @@ class Fragment2 : Fragment() {
                                         }
                                     }
                                 }
+                                deliveryDTOs.reverse()
+                                deliveryUidList.reverse()
+                                notifyDataSetChanged()
                             }
-                            notifyDataSetChanged()
+
                         }
                 }
             } else {
@@ -408,6 +414,8 @@ class Fragment2 : Fragment() {
                                     }
                                 }
                             }
+                            deliveryDTOs.reverse()
+                            deliveryUidList.reverse()
                             notifyDataSetChanged()
                         }
 
@@ -448,6 +456,8 @@ class Fragment2 : Fragment() {
                                     }
                                 }
                             }
+                            deliveryDTOs.reverse()
+                            deliveryUidList.reverse()
                             notifyDataSetChanged()
                         }
                 }

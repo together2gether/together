@@ -23,6 +23,7 @@ import com.techtown.matchingservice.databinding.ProductInfoBinding
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
+import kotlinx.android.synthetic.main.food_info.*
 import kotlinx.android.synthetic.main.product_info.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -128,6 +129,10 @@ class Product : AppCompatActivity() {
                     if(item?.ParticipationCount == item?.ParticipationTotal){
                         binding.productInfoParticipation.isEnabled=false
                     }
+                    val time = item?.timestamp
+                    val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                    val timeStr = dateFormat.format(Date(time!!)).toString()
+                    ProductregisterTime.setText(timeStr)
                 }
             }
 
