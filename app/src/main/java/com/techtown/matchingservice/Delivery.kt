@@ -6,6 +6,7 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -58,7 +59,10 @@ class Delivery : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.food_info)
         uid = FirebaseAuth.getInstance().uid!!
         firestore = FirebaseFirestore.getInstance()
-
+        val myuid = intent.getStringExtra("deliveryuid")
+        if(myuid == uid){
+            binding.recommend.visibility = View.GONE
+        }
         binding.foodInfoBack.setOnClickListener(){
             finish()
         }
@@ -77,15 +81,29 @@ class Delivery : AppCompatActivity() {
                 mycor = geocoder.getFromLocationName(mylocation,1)
                 mylat = mycor[0].latitude
                 mylng = mycor[0].longitude
+                yourlocation = intent.getStringExtra("address").toString()
+                yourcor = geocoder.getFromLocationName(yourlocation, 1)
+                yourlat = yourcor[0].latitude
+                yourlng = yourcor[0].longitude
+                val lat = ((mylat+ yourcor[0].latitude)/2).toString()
+                val lng = ((mylng + yourcor[0].longitude)/2).toString()
+                binding.recommend.setOnClickListener {
+                    Intent(applicationContext, RecommandLocation::class.java).apply {
+                        putExtra("mylat", mylat.toString())
+                        putExtra("mylng", mylng.toString())
+                        putExtra("yourlat", yourlat.toString())
+                        putExtra("yourlng", yourlng.toString())
+                        putExtra("lat", lat)
+                        putExtra("lng", lng)
+                        putExtra("delivery", "delivery")
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.run {applicationContext?.startActivity(this)}
+                }
             }
 
         })
-        yourlocation = intent.getStringExtra("address").toString()
-        yourcor = geocoder.getFromLocationName(yourlocation, 1)
-        yourlat = yourcor[0].latitude
-        yourlng = yourcor[0].longitude
-        val lat = ((mycor[0].latitude + yourcor[0].latitude)/2).toString()
-        val lng = ((mycor[0].longitude + yourcor[0].longitude)/2).toString()
+
+
 
         foodName = intent.getStringExtra("store").toString()
         binding.foodInfoStore.text = foodName
@@ -108,18 +126,7 @@ class Delivery : AppCompatActivity() {
             binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
         }
 
-        binding.recommend.setOnClickListener {
-            Intent(applicationContext, RecommandLocation::class.java).apply {
-                putExtra("mylat", mylat)
-                putExtra("mylng", mylng)
-                putExtra("yourlat", yourlat)
-                putExtra("yourlng", yourlng)
-                putExtra("lat", lat)
-                putExtra("lng", lng)
-                putExtra("delivery", "delivery")
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }.run {applicationContext?.startActivity(this)}
-        }
+
         usersRef.child(deliveryuid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
             }

@@ -100,7 +100,8 @@ class RecommandLocation : AppCompatActivity() {
         yourlat = intent.getStringExtra("yourlat").toString()
         yourlng = intent.getStringExtra("yourlng").toString()
         deliver_rec = intent.getStringExtra("delivery").toString()
-
+        //Toast.makeText(applicationContext, mylat.toString(), Toast.LENGTH_LONG).show()
+        Log.d("loc", mylat)
         val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
         if(permissionCheck == PackageManager.PERMISSION_GRANTED) {
             try {
