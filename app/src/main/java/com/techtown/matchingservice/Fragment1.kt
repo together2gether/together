@@ -161,14 +161,17 @@ class Fragment1 : Fragment() {
             //UserId
             //ProductName
             viewHolder.productitemTextviewProductName.text = contentDTOs[position].product
+            viewHolder.textNumofProduct.text = "1인당 " +contentDTOs[position].unit.toString() + "개"
             //place
             viewHolder.productitemTextviewPlace.text =
-                (Integer.parseInt(contentDTOs[position].price.toString())/Integer.parseInt(contentDTOs[position].ParticipationTotal.toString())).toString() + "원 (" + contentDTOs[position].unit.toString() + "개)"
+                (Integer.parseInt(contentDTOs[position].price.toString())/Integer.parseInt(contentDTOs[position].ParticipationTotal.toString())).toString() + "원"
             //Photo
             Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
                 .into(viewHolder.productItemPhoto)
 
             var participationCount: String = contentDTOs[position].ParticipationCount.toString()
+            var timeLong : Long? = contentDTOs[position].timestamp
+            viewHolder.textTime.text = timeDiff(timeLong!!)
 
             //viewHolder.productitemParticipation.text =
             //    "현재 " + participationCount + " / " + contentDTOs[position].ParticipationTotal.toString()
@@ -219,5 +222,30 @@ class Fragment1 : Fragment() {
             val c = 2* Math.asin(Math.sqrt(a))
             return (R*c).toInt()
         }
+    }
+    enum class TimeValue(val value: Int, val maximum : Int, val msg : String){
+        SEC(60,60,"분 전"),
+        MIN(60,24,"시간 전"),
+        HOUR(24,30,"일 전"),
+        DAY(30,12,"달 전"),
+        MONTH(12,Int.MAX_VALUE,"년 전")
+    }
+
+    fun timeDiff(time : Long): String? {
+        val curTime = System.currentTimeMillis()
+        var diffTime = (curTime- time)/1000
+        var msg:String? = null
+        if(diffTime < TimeValue.SEC.value)
+            msg = "방금 전"
+        else {
+            for(i in TimeValue.values()){
+                diffTime /= i.value
+                if(diffTime < i.maximum){
+                    msg = i.msg
+                    break
+                }
+            }
+        }
+        return diffTime.toString() + msg
     }
 }
