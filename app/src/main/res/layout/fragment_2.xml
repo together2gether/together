@@ -112,7 +112,7 @@
                         android:drawableTop="@drawable/category"
                         android:text="카테고리"
                         android:textSize="12sp"
-                        android:visibility="gone" />
+                        android:visibility="invisible" />
 
                     <TextView
                         android:id="@+id/textView183"

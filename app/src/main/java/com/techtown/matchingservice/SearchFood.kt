@@ -113,17 +113,18 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             DeliveryListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = productsList[position]
-                Intent(applicationContext, Delivery::class.java).apply {
-                    putExtra("store", productsList[position].store)
-                    putExtra("name", productsList[position].place)
-                    putExtra("orderPrice", productsList[position].orderprice)
-                    putExtra("deliverPrice", productsList[position].deliverprice.toString())
-                    putExtra("detail", productsList[position].detail.toString())
-                    putExtra("deliveryuid", productsList[position].userId.toString())
-                    putExtra("deliveryid", productsList[position].Listid)
+                Intent(this@SearchFood, Delivery::class.java).apply {
+                    putExtra("store", productsList[position].store.toString())
+                    putExtra("name", productsList[position].place.toString())
                     putExtra("delivery", productsList[position].delivery.toString())
+                    putExtra("orderPrice", productsList[position].orderprice.toString())
+                    putExtra("deliveryPrice", productsList[position].deliverprice.toString())
+                    putExtra("deliveryid", productsList[position].Listid)
+                    putExtra("deliveryuid", productsList[position].userId)
+                    putExtra("detail", productsList[position].detail)
+                    putExtra("address", productsList[position].address)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }.run {applicationContext?.startActivity(this)}
+                }.run {this@SearchFood?.startActivity(this)}
                 adapter.notifyDataSetChanged()
             }
         })
@@ -321,8 +322,9 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                     var timestamp = contentDTOs[item.index].delivery_timestamp as String
                     var email = contentDTOs[item.index].delivery_userId as String
                     var delivery = contentDTOs[item.index].delivery as String
+                    val uidkey = contentDTOs[item.index].deliveryParticipation.containsKey(uid).toString()
                     var product = DeliveryData(id, store, place, orderprice, deliverprice, detail, Listid,
-                    category, participationCount, address, timestamp, email, delivery)
+                    category, participationCount, address, timestamp, email, delivery, uidkey)
                     productsList.add(product)
                     adapter.notifyDataSetChanged()
                 }
@@ -353,8 +355,9 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             var timestamp = contentDTOs[p0.index].delivery_timestamp as String
             var email = contentDTOs[p0.index].delivery_userId as String
             var delivery = contentDTOs[p0.index].delivery as String
+            var uidkey = contentDTOs[p0.index].deliveryParticipation.containsKey(uid).toString()
             var product = DeliveryData(id, store, place, orderprice, deliverprice, detail, Listid,
-            category, participationCount, address, timestamp, email, delivery)
+            category, participationCount, address, timestamp, email, delivery, uidkey)
             productsList.add(product)
             adapter.notifyDataSetChanged()
             Log.d("qweqwe","wqe")
@@ -373,7 +376,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             for(snapshot in querySnapshot!!.documents){
                 var item = snapshot.toObject(DeliveryDTO::class.java)
                 if(snapshot.getString("store")?.contains(searchWord)==true){
-                    var id = item!!.delivery_userId as String
+                    var id = item!!.delivery_uid as String
                     var name = item.name as String
                     var store = item.store as String
                     var orderprice = item.order_price.toString()
@@ -388,9 +391,10 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                     var email = item.delivery_userId.toString()
                     var delivery = item.delivery.toString()
                     var Listid = snapshot.id as String
+                    var uidkey = item.deliveryParticipation.containsKey(uid).toString()
                     var product = DeliveryData(
                         id, store, name, orderprice, deliverprice, detail,
-                        Listid, category, participationCount, address, timestamp, email, delivery
+                        Listid, category, participationCount, address, timestamp, email, delivery, uidkey
                     )
                     productsList.add(product)
                     var lat = cor[0].latitude
