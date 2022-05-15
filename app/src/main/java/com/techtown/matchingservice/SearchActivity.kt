@@ -176,11 +176,6 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             Manifest.permission.ACCESS_FINE_LOCATION
         )
         requirePermissions(permissions, 999)
-        /*if(intent.hasExtra("price")){
-            price = intent.getStringExtra("price").toString()
-            day = intent.getStringExtra("day").toString()
-            distance = intent.getStringExtra("distance").toString()
-        }*/
     }
     fun requirePermissions(permissions:Array<String>,requestCode : Int){
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
@@ -238,11 +233,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
 
             mMap.setOnInfoWindowClickListener {  }
             mMap.setOnMapClickListener{
-                //card_view.visibility = View.GONE
                 productsList.clear()
-                /*for(i in latlngList){
-                    mClusterManager.removeItem(i)
-                }*/
                 latlngList.clear()
                 mClusterManager.clearItems()
                 adapter.notifyDataSetChanged()
@@ -263,8 +254,6 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var item = document.toObject(ContentDTO::class.java)
                         contentDTOs.add(item!!)
                         contentUidList.add(document.id)
-                        //var location = LatLng(cor[0].latitude, cor[0].longitude)
-                        //addLatLngData(i,id, location)
                         i++
                     }
                 }
@@ -288,8 +277,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 p0?.let{
                     for(location in it.locations){
                         Log.d("Location", "${location.latitude}, ${location.longitude}")
-                        removeLocationListener()
-                        setLastLocation(location)
+                            removeLocationListener()
+                            setLastLocation(location)
+
                     }
                 }
             }
@@ -363,6 +353,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         if(size_check == 100){
             Handler(Looper.getMainLooper()).post{boundmap()}
         }
+        cameraInit()
     }
 
     override fun onBackPressed() {
@@ -416,7 +407,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             var name = contentDTOs[p0.index].product as String
             var place = contentDTOs[p0.index].place as String
             var image = contentDTOs[p0.index].imageUrl as String
-            val participation = "현재 " + contentDTOs[p0.index].ParticipationCount.toString() + " / " + contentDTOs[p0.index].ParticipationTotal.toString()
+            var participation = "현재 " + contentDTOs[p0.index].ParticipationCount.toString() + " / " + contentDTOs[p0.index].ParticipationTotal.toString()
             var price = contentDTOs[p0.index].price.toString()
             var totalNumber = contentDTOs[p0.index].totalNumber.toString()
             var cycle = contentDTOs[p0.index].cycle.toString()
@@ -439,9 +430,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     }
     fun condition(){
         condition = "condition"
-        /*for(z in latlngList){
+        for(z in latlngList){
             mClusterManager.removeItem(z)
-        }*/
+        }
         mClusterManager.clearItems()
         List.clear()
         if(search == "search"){
@@ -468,8 +459,8 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     productsList.add(product)
                     var loc :LatLng = LatLng(pro_lat, pro_lon)
                     addLatLngData(i, item.userId, loc)
-                    i++
                 }
+                i++
             }
             adapter.notifyDataSetChanged()
         }
@@ -526,9 +517,10 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var lat = item.location.latitude
                         var lng = item.location.longitude
                         var location: LatLng = LatLng(lat, lng)
+                        boundmap()
                         addLatLngData(i, id, location)
-                        i++
                     }
+                    i++
                 }
             }
             adapter.notifyDataSetChanged()
@@ -536,20 +528,16 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     }
     fun search(searchWord : String){
         search = "search"
-        /*for(z in latlngList){
-            mClusterManager.removeItem(z)
-        }*/
         mClusterManager.clearItems()
         latlngList.clear()
         productsList.clear()
         if(condition == "condition"){
+            i=0
             firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                i=0
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(ContentDTO::class.java)
                     if(snapshot.getString("product")?.contains(searchWord)==true){
-                        var id = item!!.userId as String
-                        var product_price = item.price.toInt()
+                        var product_price = item!!.price.toInt()
                         var product_day = item.unit.toInt()
                         var pro_lat = item.location.latitude
                         var pro_lon = item.location.longitude
@@ -596,17 +584,18 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                             var lat = item.location.latitude
                             var lng = item.location.longitude
                             var location: LatLng = LatLng(lat, lng)
-                            addLatLngData(i, id, location)
-                            i++
+                            addLatLngData(i, Listid, location)
+                            Log.e("product", i.toString() + " : " + name)
                         }
                     }
+                    i++
                 }
                 adapter.notifyDataSetChanged()
             }
         }
         else{
+            i=0
             firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-                i=0
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(ContentDTO::class.java)
                     if(snapshot.getString("product")?.contains(searchWord)==true){
@@ -648,10 +637,11 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         productsList.add(product)
                         var lat = item.location.latitude
                         var lng = item.location.longitude
-                        var location: LatLng = LatLng(lat, lng)
-                        addLatLngData(i, id, location)
-                        i++
+                        var location= LatLng(lat, lng)
+                        addLatLngData(i, Listid, location)
+                        Log.e("product", i.toString() + " : " + name)
                     }
+                    i++
                 }
                 adapter.notifyDataSetChanged()
             }
