@@ -28,6 +28,7 @@ import com.techtown.matchingservice.databinding.FoodInfoBinding
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
+import com.techtown.matchingservice.util.FcmPush
 import kotlinx.android.synthetic.main.food_info.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -53,6 +54,7 @@ class Delivery : AppCompatActivity() {
     lateinit var mycor : List<Address>
     var yourlocation : String = ""
     var mylocation : String = ""
+    var nickname : String? = null
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +79,8 @@ class Delivery : AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 var userInfo = snapshot.getValue<UsersInfo>()
-                mylocation = userInfo!!.address.toString()
+                nickname = userInfo!!.nickname.toString()
+                mylocation = userInfo.address.toString()
                 mycor = geocoder.getFromLocationName(mylocation,1)
                 mylat = mycor[0].latitude
                 mylng = mycor[0].longitude
@@ -134,8 +137,8 @@ class Delivery : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userInfo = snapshot.getValue<UsersInfo>()
                 if(userInfo != null){
-                    if(userInfo!!.profileImageUrl.toString() != ""){
-                        Glide.with(food_register_profile.context).load(userInfo?.profileImageUrl)
+                    if(userInfo.profileImageUrl.toString() != ""){
+                        Glide.with(food_register_profile.context).load(userInfo.profileImageUrl)
                             .apply(RequestOptions().circleCrop())
                             .into(food_register_profile)
                     }
@@ -148,9 +151,9 @@ class Delivery : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
-                    if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
-                    if(item?.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
-                    val time = item?.delivery_timestamp
+                    if(item?.deliveryParticipation.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
+                    if(item.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
+                    val time = item.delivery_timestamp
                     val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
                     val timeStr = dateFormat.format(Date(time!!)).toString()
                     foodregisterTime.setText(timeStr)
@@ -159,6 +162,9 @@ class Delivery : AppCompatActivity() {
             }
 
         binding.foodInfoParticipation.setOnClickListener(){
+
+            var str =binding.foodInfoStore.text.toString()+" 구매에 " + nickname + "님이 참여하셨습니다."
+            FcmPush.instance.sendMessage(deliveryuid!!,"공동구매 참여", str)
 
             item.delivery_ParticipationCount+=1
             item.deliveryParticipation[uid] = true

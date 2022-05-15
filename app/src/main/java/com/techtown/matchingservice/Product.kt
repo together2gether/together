@@ -23,6 +23,7 @@ import com.techtown.matchingservice.databinding.ProductInfoBinding
 import com.techtown.matchingservice.model.ChatModel
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
+import com.techtown.matchingservice.util.FcmPush
 import kotlinx.android.synthetic.main.food_info.*
 import kotlinx.android.synthetic.main.product_info.*
 import java.text.SimpleDateFormat
@@ -40,6 +41,7 @@ class Product : AppCompatActivity() {
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private val roomsRef = database.getReference("chatrooms")
     private val usersRef = database.getReference("usersInfo")
+    var nickname : String?  = null
 
     val db = Firebase.firestore
     val docRef = db.collection("images")
@@ -77,7 +79,7 @@ class Product : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val userInfo = snapshot.getValue<UsersInfo>()
                 if(userInfo != null){
-                    if(userInfo!!.profileImageUrl.toString() != ""){
+                    if(userInfo!!.profileImageUrl.toString() != "") {
                         Glide.with(product_register_profile.context).load(userInfo?.profileImageUrl)
                             .apply(RequestOptions().circleCrop())
                             .into(product_register_profile)
@@ -119,6 +121,18 @@ class Product : AppCompatActivity() {
             finish()
         }
 
+        val userRef = usersRef.child(uid.toString())
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userInfo = snapshot.getValue<UsersInfo>()
+                nickname = userInfo!!.nickname.toString()
+            }
+        })
+
         val intent = Intent(this, chatting::class.java)
 
         docRef.document("$productid").get()
@@ -156,6 +170,9 @@ class Product : AppCompatActivity() {
         }
 
         binding.productInfoParticipation.setOnClickListener(){
+
+            var str =binding.productInfoProduct.text.toString()+" 공동 구매에 " + nickname + "님이 참여하셨습니다."
+            FcmPush.instance.sendMessage(regist_userid!!,"공동 구매 참여", str)
 
             item.ParticipationCount+=1
             item.Participation[uid] = true
