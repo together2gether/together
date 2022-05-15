@@ -22,6 +22,13 @@
             android:orientation="horizontal"
             android:visibility="visible">
 
+            <ImageView
+                android:id="@+id/foodimage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                app:srcCompat="@drawable/beef" />
+
             <TextView
                 android:id="@+id/fooditemTextviewstore"
                 android:layout_width="0dp"
@@ -54,6 +61,7 @@
                 android:id="@+id/fooditemTextviewdeliveryprice"
                 android:layout_width="0dp"
                 android:layout_height="35dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"

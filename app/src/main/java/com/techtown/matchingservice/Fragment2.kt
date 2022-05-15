@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.graphics.drawable.toDrawable
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -484,6 +485,67 @@ class Fragment2 : Fragment() {
             //delivery price
             var pdel : Int = deliveryDTOs[position].delivery_price / 2
             viewHolder.fooditemTextviewdeliveryprice.text = pdel.toString()
+            if(deliverycheck ==1 ){
+                if(deliveryDTOs[position].category == "한식"){
+                    viewHolder.foodimage.setImageResource(R.drawable.koreanfood)
+                }
+                else if(deliveryDTOs[position].category == "중식"){
+                    viewHolder.foodimage.setImageResource(R.drawable.chinesefood)
+                }
+                else if(deliveryDTOs[position].category == "일식"){
+                    viewHolder.foodimage.setImageResource(R.drawable.japanesefood)
+                }
+                else if(deliveryDTOs[position].category == "양식"){
+                    viewHolder.foodimage.setImageResource(R.drawable.pastafood)
+                }
+                else if(deliveryDTOs[position].category == "치킨"){
+                    viewHolder.foodimage.setImageResource(R.drawable.chicken)
+                }
+                else if(deliveryDTOs[position].category == "피자"){
+                    viewHolder.foodimage.setImageResource(R.drawable.pizzafood)
+                }
+                else if(deliveryDTOs[position].category == "분식"){
+                    viewHolder.foodimage.setImageResource(R.drawable.bunsik)
+                }
+                else if(deliveryDTOs[position].category == "디저트"){
+                    viewHolder.foodimage.setImageResource(R.drawable.desert)
+                }
+                else if(deliveryDTOs[position].category == "고기"){
+                    viewHolder.foodimage.setImageResource(R.drawable.meat)
+                }
+                else if(deliveryDTOs[position].category == "패스트푸드"){
+                    viewHolder.foodimage.setImageResource(R.drawable.fastfood)
+                }
+                else{
+                    viewHolder.foodimage.setImageResource(R.drawable.del_gitabutton)
+                }
+            } else{
+                if(deliveryDTOs[position].category == "쿠팡"){
+                    viewHolder.foodimage.setImageResource(R.drawable.coupang)
+                }
+                else if(deliveryDTOs[position].category == "이마트몰"){
+                    viewHolder.foodimage.setImageResource(R.drawable.emartmall)
+                }
+                else if(deliveryDTOs[position].category == "마켓컬리"){
+                    viewHolder.foodimage.setImageResource(R.drawable.marketkurly)
+                }
+                else if(deliveryDTOs[position].category == "롯데ON"){
+                    viewHolder.foodimage.setImageResource(R.drawable.lotteon)
+                }
+                else if(deliveryDTOs[position].category == "11번가"){
+                    viewHolder.foodimage.setImageResource(R.drawable.bunga)
+                }
+                else if(deliveryDTOs[position].category == "G마켓"){
+                    viewHolder.foodimage.setImageResource(R.drawable.market)
+                }
+                else if(deliveryDTOs[position].category == "옥션"){
+                    viewHolder.foodimage.setImageResource(R.drawable.auctionmarket)
+                }
+                else if(deliveryDTOs[position].category == "기타"){
+                    viewHolder.foodimage.setImageResource(R.drawable.gitabutton)
+                }
+            }
+
 
             //click
             viewHolder.fooditemCardView.setOnClickListener {
