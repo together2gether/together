@@ -275,7 +275,7 @@ class Fragment1 : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return contentList.size
+            return filteringList.size
         }
     }
     object DistanceManager{
