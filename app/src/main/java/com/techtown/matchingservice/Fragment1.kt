@@ -1,13 +1,17 @@
 package com.techtown.matchingservice
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -44,6 +48,13 @@ class Fragment1 : Fragment() {
     lateinit var mycor : List<Address>
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    var items = arrayOf(" 최신 순 ", " 가격 순 ")
+    var items_filter = arrayOf(" 1km 이내 ", " 2km 이내 ", " 3km 이내 ")
+    var contentList = mutableListOf<Triple<String, ContentDTO, Double>>()
+    var filteringList = mutableListOf<Triple<String, ContentDTO, Double>>()
+    //var contentDTOs: ArrayList<ContentDTO> = arrayListOf()
+    //var contentUidList: ArrayList<String> = arrayListOf()
+    @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -109,47 +120,102 @@ class Fragment1 : Fragment() {
                 })
             }*/
         }
+
+
+        val myAdapter = context?.let { ArrayAdapter(it, R.layout.item_spinner, items) }
+        binding.sort.adapter = myAdapter
+
+        binding.sort.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2){
+                    0 -> {
+                        filteringList.sortBy { it.second.timestamp }
+                        filteringList.reverse()
+                    }
+                    else -> {
+                        filteringList.sortBy { it.second.price / it.second.ParticipationTotal }
+
+                    }
+                }
+                binding.fragment1RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
+
+        val myAdapter2 = context?.let { ArrayAdapter(it, R.layout.item_spinner, items_filter) }
+        binding.spinnerFilter.adapter = myAdapter2
+
+        binding.spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when (p2) {
+                    0->{
+                        filtering(1000)
+                    }
+                    1->{
+                        filtering(2000)
+                    }
+                    2->{
+                        filtering(3000)
+                    }
+                }
+                binding.fragment1RecyclerView.adapter!!.notifyDataSetChanged()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
+
+        firestore?.collection("images")
+            ?.orderBy("timestamp")
+            ?.addSnapshotListener { value, error ->
+                //contentDTOs.clear()
+                //contentUidList.clear()
+                contentList.clear()
+                if (value?.documents != null) {
+                    for (snapshot in value!!.documents) {
+                        var item = snapshot.toObject(ContentDTO::class.java)
+                        var lat = item!!.location.latitude
+                        var lon = item!!.location.longitude
+                        var distance =
+                            DistanceManager.getDistance(mylat, mylon, lat, lon).toDouble()
+                        if (distance <= 3000) {
+                            //contentDTOs.add(item!!)
+                            //contentUidList.add(snapshot.id)
+                            contentList.add(Triple(snapshot.id, item, distance))
+                        }
+                    }
+                    contentList.reverse()
+                }
+            }
+
         binding.fragment1RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         binding.fragment1RecyclerView.adapter = Fragment1RecyclerviewAdapter()
         binding.fragment1RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
 
+
+
+    }
+    fun filtering(dist : Int? = 1000){
+        filteringList.clear()
+        for(i in contentList){
+            if(i.third <= dist!!){
+                filteringList.add(i)
+            }
+        }
     }
     inner class CustomViewHolder(var binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     inner class Fragment1RecyclerviewAdapter() : RecyclerView.Adapter<CustomViewHolder>() {
-
-        var contentDTOs: ArrayList<ContentDTO> = arrayListOf()
-        var contentUidList: ArrayList<String> = arrayListOf()
-
         init {
-            firestore?.collection("images")
-                ?.orderBy("timestamp")
-                ?.addSnapshotListener { value, error ->
-                    contentDTOs.clear()
-                    contentUidList.clear()
-                    if (value?.documents != null) {
-                        for (snapshot in value!!.documents) {
-                            var item = snapshot.toObject(ContentDTO::class.java)
-                            var lat = item!!.location.latitude
-                            var lon = item!!.location.longitude
-                            var distance =
-                                DistanceManager.getDistance(mylat, mylon, lat, lon).toDouble()
-                            if (distance <= 2000) {
-                                contentDTOs.add(item!!)
-                                contentUidList.add(snapshot.id)
-                            }
-                        }
-                        contentDTOs.reverse()
-                        contentUidList.reverse()
-                    }
-                    notifyDataSetChanged()
 
-                }
+            filtering(1000)
+            notifyDataSetChanged()
         }
-
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
             var view =
                 ProductItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -160,17 +226,17 @@ class Fragment1 : Fragment() {
             var viewHolder = holder.binding
             //UserId
             //ProductName
-            viewHolder.productitemTextviewProductName.text = contentDTOs[position].product
-            viewHolder.textNumofProduct.text = "1인당 " +contentDTOs[position].unit.toString() + "개"
+            viewHolder.productitemTextviewProductName.text = filteringList[position].second.product.toString()
+            viewHolder.textNumofProduct.text = "1인당 " +filteringList[position].second.unit.toString() + "개"
             //place
             viewHolder.productitemTextviewPlace.text =
-                (Integer.parseInt(contentDTOs[position].price.toString())/Integer.parseInt(contentDTOs[position].ParticipationTotal.toString())).toString() + "원"
+                (Integer.parseInt(filteringList[position].second.price.toString())/Integer.parseInt(filteringList[position].second.ParticipationTotal.toString())).toString() + "원"
             //Photo
-            Glide.with(holder.itemView.context).load(contentDTOs[position].imageUrl)
+            Glide.with(holder.itemView.context).load(filteringList[position].second.imageUrl)
                 .into(viewHolder.productItemPhoto)
 
-            var participationCount: String = contentDTOs[position].ParticipationCount.toString()
-            var timeLong : Long? = contentDTOs[position].timestamp
+            var participationCount: String = filteringList[position].second.ParticipationCount.toString()
+            var timeLong : Long? = filteringList[position].second.timestamp
             viewHolder.textTime.text = timeDiff(timeLong!!)
 
             //viewHolder.productitemParticipation.text =
@@ -180,28 +246,28 @@ class Fragment1 : Fragment() {
 
                 Intent(context, Product::class.java).apply {
                     putExtra("position", position.toString())
-                    putExtra("product", contentDTOs[position].product)
-                    putExtra("imageUrl", contentDTOs[position].imageUrl)
-                    putExtra("price", contentDTOs[position].price.toString())
-                    putExtra("totalNumber", contentDTOs[position].totalNumber.toString())
-                    putExtra("cycle", contentDTOs[position].cycle.toString())
-                    putExtra("unit", contentDTOs[position].unit.toString())
-                    putExtra("URL", contentDTOs[position].url)
-                    putExtra("place", contentDTOs[position].place)
-                    putExtra("timestamp", contentDTOs[position].timestamp.toString())
+                    putExtra("product", filteringList[position].second.product)
+                    putExtra("imageUrl", filteringList[position].second.imageUrl)
+                    putExtra("price", filteringList[position].second.price.toString())
+                    putExtra("totalNumber", filteringList[position].second.totalNumber.toString())
+                    putExtra("cycle", filteringList[position].second.cycle.toString())
+                    putExtra("unit", filteringList[position].second.unit.toString())
+                    putExtra("URL", filteringList[position].second.url)
+                    putExtra("place", filteringList[position].second.place)
+                    putExtra("timestamp", filteringList[position].second.timestamp.toString())
                     putExtra("participationCount", participationCount)
-                    putExtra("id", contentUidList[position])
+                    putExtra("id", filteringList[position].first)
                     putExtra("position", position.toString())
                     putExtra(
                         "uidkey",
-                        contentDTOs[position].Participation.containsKey(uid).toString()
+                        filteringList[position].second.Participation.containsKey(uid).toString()
                     )
                     putExtra(
                         "participationTotal",
-                        contentDTOs[position].ParticipationTotal.toString()
+                        filteringList[position].second.ParticipationTotal.toString()
                     )
-                    putExtra("id", contentUidList[position])
-                    putExtra("Uid", contentDTOs[position].uid.toString())
+                    //putExtra("id", contentUidList[position])
+                    putExtra("Uid", filteringList[position].second.uid.toString())
 
                 }.run { context?.startActivity(this) }
             }
@@ -209,7 +275,7 @@ class Fragment1 : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return contentDTOs.size
+            return contentList.size
         }
     }
     object DistanceManager{

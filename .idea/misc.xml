@@ -9,11 +9,9 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable-v24/selector_radio_button.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/alarm.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/bg_label.xml" value="0.1" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/bunsik.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/button.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/button_change.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/button_checked.xml" value="0.1" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/category.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/circle_button.xml" value="0.1" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/item_login.xml" value="0.141" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/drawable/left_item_message.xml" value="0.141" />
@@ -26,7 +24,7 @@
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_info.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_item.xml" value="0.22056159420289856" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_main.xml" value="0.22056159420289856" />
-        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_search.xml" value="0.2" />
+        <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/activity_search.xml" value="0.1175925925925926" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/address.xml" value="0.2269021739130435" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/chat_item.xml" value="0.1766304347826087" />
         <entry key="..\:/Users/ekal0/AndroidStudioProjects/MatchingService/app/src/main/res/layout/chatting.xml" value="0.264" />
@@ -122,6 +120,9 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/del_gitabutton.xml" value="0.172" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/fastfood.xml" value="0.172" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/gitabutton.xml" value="0.172" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/round_button.xml" value="0.1" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/sortspinner_back.xml" value="0.1765" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/spinner_background.xml" value="0.1765" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/activity_search.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/chat_item.xml" value="0.25" />
@@ -129,7 +130,7 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/condition.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/edit_food.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/food_info.xml" value="0.35698924731182796" />
-        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_1.xml" value="0.30517711171662126" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_2.xml" value="0.22" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_4.xml" value="0.10364583333333334" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
@@ -137,6 +138,9 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/group.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/group_product_item.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/groupchat.xml" value="0.1" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/home.xml" value="0.10277777777777777" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/list_layout.xml" value="0.175" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/login.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/low_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/manage_food.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/message_left_item.xml" value="0.22" />
@@ -147,11 +151,16 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/product_info.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/product_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend.xml" value="0.229607250755287" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend_info.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend_item.xml" value="0.18" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend_location.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend_product.xml" value="0.33" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/register_food.xml" value="0.175" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/register_product.xml" value="0.2242562929061785" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/shopping_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/trade.xml" value="0.1" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/trade_food_item.xml" value="0.175" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/trade_product_item.xml" value="0.175" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/menu/menu_bottom.xml" value="0.14722222222222223" />
       </map>
     </option>
