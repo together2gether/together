@@ -27,6 +27,13 @@
         <meta-data
             android:name = "com.kakao.sdk.AppKey"
             android:value="5b29ae044e98616186c76aad9a7a37d3"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/icon_message"/>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/icon_color"/>
+
         <activity
             android:name=".LoginActivity"
             android:exported="true">

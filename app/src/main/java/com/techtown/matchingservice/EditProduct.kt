@@ -165,9 +165,6 @@ class EditProduct : AppCompatActivity() {
             //Insert place
             contentdto.place = binding.editTextPlace.text.toString()
 
-            //Insert timestamp
-            contentdto.timestamp = System.currentTimeMillis()
-
             //Insert ParticipationTotal
             var participation: Int = contentdto.totalNumber / contentdto.unit
             contentdto.ParticipationTotal = participation

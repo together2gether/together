@@ -68,8 +68,6 @@ class EditFood : AppCompatActivity() {
 
             deliverydto.delivery_detail = binding.registerFoodDetail.text.toString()
 
-            deliverydto.delivery_timestamp = System.currentTimeMillis()
-
             transition.set(tsDoc!!, deliverydto)
         }
         setResult(Activity.RESULT_OK)
