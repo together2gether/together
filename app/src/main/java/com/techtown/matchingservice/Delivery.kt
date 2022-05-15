@@ -151,7 +151,7 @@ class Delivery : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
-                    if(item?.deliveryParticipation.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
+                    if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
                     if(item.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
                     val time = item.delivery_timestamp
                     val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
