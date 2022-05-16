@@ -184,6 +184,12 @@ class Fragment1 : Fragment() {
                         filtering(3000)
                     }
                 }
+                if(binding.sort.selectedItemPosition == 0){
+                    filteringList.sortBy { it.second.timestamp }
+                    filteringList.reverse()
+                } else {
+                    filteringList.sortBy { it.second.price / it.second.ParticipationTotal }
+                }
                 binding.fragment1RecyclerView.adapter!!.notifyDataSetChanged()
             }
 
