@@ -199,11 +199,11 @@ class ChatFragment : Fragment() {
             for(i in TimeValue.values()){
                 diffTime /= i.value
                 if(diffTime < i.maximum){
-                    msg = i.msg
+                    msg = diffTime.toString() + i.msg
                     break
                 }
             }
         }
-        return diffTime.toString() + msg
+        return msg
     }
 }
