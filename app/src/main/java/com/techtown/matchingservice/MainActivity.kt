@@ -33,11 +33,8 @@ class MainActivity : AppCompatActivity() {
         ab.setDisplayShowTitleEnabled(false)
         //ab.setDisplayHomeAsUpEnabled(true)
 
-
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
-        var fragment1 = Fragment1()
         //changeTitle("공동구매")
-
 
         binding.search.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)
@@ -61,14 +58,15 @@ class MainActivity : AppCompatActivity() {
         when(page){
             "1" -> {
                 val fragment1 = Fragment1()
-                supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
                 binding.bottomNavigation.selectedItemId = R.id.tab1
+                supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
                 changeTitle("공동구매")
                 binding.search.setVisibility(View.VISIBLE)
                 binding.search2.setVisibility(View.INVISIBLE)
                 binding.category.setVisibility(View.INVISIBLE)
             }
             "2" -> {
+                binding.bottomNavigation.selectedItemId = R.id.tab2
                 var fragment2 = Fragment2()
                 binding.category.setVisibility(View.VISIBLE)
                 var bundle = Bundle()
@@ -76,7 +74,6 @@ class MainActivity : AppCompatActivity() {
                 fragment2.arguments = bundle
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, fragment2).commit()
-                binding.bottomNavigation.selectedItemId = R.id.tab2
                 changeTitle("배달")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.VISIBLE)

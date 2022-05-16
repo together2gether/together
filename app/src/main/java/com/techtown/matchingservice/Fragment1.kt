@@ -52,6 +52,8 @@ class Fragment1 : Fragment() {
     var items_filter = arrayOf(" 1km 이내 ", " 2km 이내 ", " 3km 이내 ")
     var contentList = mutableListOf<Triple<String, ContentDTO, Double>>()
     var filteringList = mutableListOf<Triple<String, ContentDTO, Double>>()
+    lateinit var geocoder : Geocoder
+    var dist =1000
     //var contentDTOs: ArrayList<ContentDTO> = arrayListOf()
     //var contentUidList: ArrayList<String> = arrayListOf()
     @SuppressLint("UseRequireInsteadOfGet")
@@ -62,8 +64,8 @@ class Fragment1 : Fragment() {
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().uid!!
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-        val geocoder = Geocoder(context)
         val infoRef = database.getReference("usersInfo")
+        geocoder = Geocoder(context)
         val userRef = infoRef.child(uid.toString())
         userRef.addValueEventListener(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
@@ -79,7 +81,29 @@ class Fragment1 : Fragment() {
             }
 
         })
-
+        firestore?.collection("images")
+            ?.orderBy("timestamp")
+            ?.addSnapshotListener { value, error ->
+                //contentDTOs.clear()
+                //contentUidList.clear()
+                contentList.clear()
+                if (value?.documents != null) {
+                    for (snapshot in value!!.documents) {
+                        var item = snapshot.toObject(ContentDTO::class.java)
+                        var cor = geocoder.getFromLocationName(item!!.place.toString(), 1)
+                        var lat = cor[0].latitude
+                        var lon = cor[0].longitude
+                        var distance =
+                            DistanceManager.getDistance(mylat, mylon, lat, lon).toDouble()
+                        if (distance <= 3000!!.toInt()) {
+                            //contentDTOs.add(item!!)
+                            //contentUidList.add(snapshot.id)
+                            contentList.add(Triple(snapshot.id, item, distance))
+                        }
+                    }
+                    contentList.reverse()
+                }
+            }
         binding.fragment1ProductRegistration.setOnClickListener {
             val intent = Intent(context, ProductActivity::class.java)
             startActivity(intent)
@@ -146,7 +170,7 @@ class Fragment1 : Fragment() {
 
         val myAdapter2 = context?.let { ArrayAdapter(it, R.layout.item_spinner, items_filter) }
         binding.spinnerFilter.adapter = myAdapter2
-
+        //filtering(1000)
         binding.spinnerFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 when (p2) {
@@ -167,37 +191,11 @@ class Fragment1 : Fragment() {
             }
         }
 
-        firestore?.collection("images")
-            ?.orderBy("timestamp")
-            ?.addSnapshotListener { value, error ->
-                //contentDTOs.clear()
-                //contentUidList.clear()
-                contentList.clear()
-                if (value?.documents != null) {
-                    for (snapshot in value!!.documents) {
-                        var item = snapshot.toObject(ContentDTO::class.java)
-                        var lat = item!!.location.latitude
-                        var lon = item!!.location.longitude
-                        var distance =
-                            DistanceManager.getDistance(mylat, mylon, lat, lon).toDouble()
-                        if (distance <= 3000) {
-                            //contentDTOs.add(item!!)
-                            //contentUidList.add(snapshot.id)
-                            contentList.add(Triple(snapshot.id, item, distance))
-                        }
-                    }
-                    contentList.reverse()
-                }
-            }
-
         binding.fragment1RecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         binding.fragment1RecyclerView.adapter = Fragment1RecyclerviewAdapter()
         binding.fragment1RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
-
-
-
     }
     fun filtering(dist : Int? = 1000){
         filteringList.clear()
@@ -206,13 +204,13 @@ class Fragment1 : Fragment() {
                 filteringList.add(i)
             }
         }
+
     }
     inner class CustomViewHolder(var binding: ProductItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
     inner class Fragment1RecyclerviewAdapter() : RecyclerView.Adapter<CustomViewHolder>() {
         init {
-
             filtering(1000)
             notifyDataSetChanged()
         }
