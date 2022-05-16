@@ -31,6 +31,7 @@ import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ChatFragment : Fragment() {
@@ -101,6 +102,8 @@ class ChatFragment : Fragment() {
             val textView_lastMessage: TextView = itemView.findViewById(R.id.chat_lastMsg)
             val textView_time : TextView = itemView.findViewById(R.id.textView17)
             val card : CardView = itemView.findViewById(R.id.item_card)
+            var textView_chatMembers : TextView = itemView.findViewById(R.id.tv_chatmember)
+            val image_person : ImageView = itemView.findViewById(R.id.person_icon)
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
@@ -125,7 +128,7 @@ class ChatFragment : Fragment() {
                             .apply(RequestOptions().circleCrop())
                             .into(holder.imageView)
                         holder.textView_title.text = user?.nickname
-                        holder.card.setBackgroundResource(R.color.skyBlue)
+                        //holder.card.setBackgroundResource(R.color.skyBlue)
                     }
                 })
             } else if (delivery == false){
@@ -139,6 +142,16 @@ class ChatFragment : Fragment() {
                                 .into(holder.imageView)
                         }
                     }
+                var numofmem = 0
+                for(mem in chatModel[position].first.users.values){
+                    if(mem == true){
+                        numofmem += 1
+                    }
+                }
+                holder.textView_chatMembers.visibility = View.VISIBLE
+                holder.textView_chatMembers.text = " $numofmem"
+                holder.image_person.visibility = View.VISIBLE
+
             } else if(delivery == true){
                 delRef.document(p_id).get()
                     .addOnSuccessListener { document ->
