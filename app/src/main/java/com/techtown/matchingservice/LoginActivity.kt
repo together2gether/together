@@ -36,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         binding.googleSigninButton.setOnClickListener {
+            LoadingDialog(this).show()
             //First step
             googleLogin()
         }
@@ -70,9 +71,11 @@ class LoginActivity : AppCompatActivity() {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             val userInfo = snapshot.getValue<UsersInfo>()
                             if(userInfo == null){
+                                LoadingDialog(this@LoginActivity).dismiss()
                                 moveModifyPage(task.result?.user)
                             }
                             else {
+                                LoadingDialog(this@LoginActivity).dismiss()
                                 moveMainPage(task.result?.user)
                             }
                         }

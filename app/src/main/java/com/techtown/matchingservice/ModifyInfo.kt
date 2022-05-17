@@ -31,6 +31,7 @@ import com.techtown.matchingservice.model.UsersInfo
 lateinit var auth: FirebaseAuth
 
 class ModifyInfo : AppCompatActivity() {
+    //val dialog = LoadingDialog(this)
     val user = Firebase.auth.currentUser
     val userId = user?.uid
     val userIdSt = userId.toString()
@@ -127,6 +128,7 @@ class ModifyInfo : AppCompatActivity() {
                         userRef.child("phonenumber").setValue(edit_phonenumber.text.toString())
                         userRef.child("address").setValue(edit_address.text.toString())
                         if(profileCheck){
+                            LoadingDialog(this@ModifyInfo).show()
                             FirebaseStorage.getInstance()
                                 .reference.child("userImages").child("$userIdSt/photo").putFile(imageUri!!).addOnSuccessListener {
                                     var userProfile: Uri? = null
@@ -135,6 +137,7 @@ class ModifyInfo : AppCompatActivity() {
                                             userProfile = it
                                             userRef.child("profileImageUrl").setValue(userProfile.toString())
                                             Log.d("profile",userProfile.toString())
+                                            LoadingDialog(this@ModifyInfo).dismiss()
                                             finish()
                                         }
                                 }

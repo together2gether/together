@@ -6,16 +6,13 @@ import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -23,7 +20,6 @@ import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserInfo
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -31,12 +27,13 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import com.google.protobuf.Value
 import com.techtown.matchingservice.databinding.Fragment1Binding
 import com.techtown.matchingservice.databinding.ProductItemBinding
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
+import java.security.AccessController.getContext
 import kotlin.math.pow
+import com.techtown.matchingservice.MainActivity as MainActivity
 
 class Fragment1 : Fragment() {
     private lateinit var binding: Fragment1Binding
@@ -54,12 +51,14 @@ class Fragment1 : Fragment() {
     var filteringList = mutableListOf<Triple<String, ContentDTO, Double>>()
     lateinit var geocoder : Geocoder
     var dist =1000
+
     //var contentDTOs: ArrayList<ContentDTO> = arrayListOf()
     //var contentUidList: ArrayList<String> = arrayListOf()
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+        //LoadingDialog(requireContext()).show()
         binding = Fragment1Binding.inflate(inflater, container, false)
         firestore = FirebaseFirestore.getInstance()
         uid = FirebaseAuth.getInstance().uid!!
@@ -104,6 +103,7 @@ class Fragment1 : Fragment() {
                     contentList.reverse()
                 }
             }
+        //LoadingDialog(requireContext()).dismiss()
         binding.fragment1ProductRegistration.setOnClickListener {
             val intent = Intent(context, ProductActivity::class.java)
             startActivity(intent)
@@ -202,6 +202,7 @@ class Fragment1 : Fragment() {
         binding.fragment1RecyclerView.adapter = Fragment1RecyclerviewAdapter()
         binding.fragment1RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
+
     }
     fun filtering(dist : Int? = 1000){
         filteringList.clear()
@@ -227,6 +228,7 @@ class Fragment1 : Fragment() {
         }
 
         override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
+
             var viewHolder = holder.binding
             //UserId
             //ProductName
@@ -242,6 +244,7 @@ class Fragment1 : Fragment() {
             var participationCount: String = filteringList[position].second.ParticipationCount.toString()
             var timeLong : Long? = filteringList[position].second.timestamp
             viewHolder.textTime.text = timeDiff(timeLong!!)
+
 
             //viewHolder.productitemParticipation.text =
             //    "현재 " + participationCount + " / " + contentDTOs[position].ParticipationTotal.toString()
@@ -275,6 +278,7 @@ class Fragment1 : Fragment() {
 
                 }.run { context?.startActivity(this) }
             }
+
 
         }
 
