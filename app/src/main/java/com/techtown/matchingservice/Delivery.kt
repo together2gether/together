@@ -72,6 +72,7 @@ class Delivery : AppCompatActivity() {
         val geocoder = Geocoder(this)
         val infoRef = database.getReference("usersInfo")
         val userRef = infoRef.child(uid.toString())
+
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
@@ -126,7 +127,7 @@ class Delivery : AppCompatActivity() {
         }else{
             binding.foodInfoChat.setVisibility(View.VISIBLE)
             binding.foodInfoParticipation.setVisibility(View.VISIBLE)
-            binding.foodInfoParticipation.isEnabled = true;
+            //binding.foodInfoParticipation.isEnabled = true;
             binding.foodInfoRevice.setVisibility(View.INVISIBLE)
             binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
         }
@@ -153,15 +154,51 @@ class Delivery : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
-                    if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
+                    //if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
                     if(item.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
                     val time = item.delivery_timestamp
                     val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
                     val timeStr = dateFormat.format(Date(time!!)).toString()
                     foodregisterTime.setText(timeStr)
 
+                    if(item.deliveryParticipation[uid] == true){
+                        binding.foodInfoParticipation.visibility = View.INVISIBLE
+                        binding.foodInfoCancel.visibility = View.VISIBLE
+                    }
+
                 }
             }
+        binding.foodInfoCancel.setOnClickListener {
+            docRef.document(deliveryid.toString()).get()
+                .addOnSuccessListener { document ->
+                    var thisItem = document.toObject(DeliveryDTO::class.java)!!
+                    thisItem.deliveryParticipation[uid] = false
+                    thisItem.delivery_ParticipationCount -= 1
+                    var tsDoc = docRef.document(deliveryid.toString())
+                    firestore?.runTransaction {
+                        transition->
+                        transition.set(tsDoc!!, thisItem)
+                    }
+                }
+            roomsRef.orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (room in snapshot.children){
+                        val chatroom = room.getValue<ChatModel>()
+                        if(chatroom?.productid == deliveryid.toString()){
+                            var roomId = room.key
+                            roomsRef.child(roomId.toString()).removeValue()
+                        }
+                    }
+                }
+            })
+            binding.foodInfoCancel.visibility = View.INVISIBLE
+            binding.foodInfoParticipation.visibility = View.VISIBLE
+        }
+
 
         binding.foodInfoParticipation.setOnClickListener(){
 
@@ -175,7 +212,9 @@ class Delivery : AppCompatActivity() {
                     transition->
                 transition.set(tsDoc!!,item)
             }
-            binding.foodInfoParticipation.isEnabled=false
+            binding.foodInfoParticipation.visibility = View.INVISIBLE
+            binding.foodInfoCancel.visibility = View.VISIBLE
+            //binding.foodInfoParticipation.isEnabled=false
             var roomId : String? = null
             val chatModel = ChatModel()
             chatModel.users.put(deliveryuid.toString(), true)
