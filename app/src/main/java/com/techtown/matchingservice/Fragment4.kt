@@ -28,6 +28,7 @@ class Fragment4 : Fragment() {
         fun newInstance() : Fragment4{
             return Fragment4()
         }
+
     }
     val database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     val infoRef = database.getReference("usersInfo")

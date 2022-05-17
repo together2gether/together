@@ -1,15 +1,386 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    android:id="@+id/drawer_layout"
-    tools:openDrawer="start"
-    tools:context=".Fragment2">
+    android:layout_height="match_parent">
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="false"
+        tools:context=".Fragment2"
+        tools:openDrawer="start">
+
+        <RelativeLayout
+            android:id="@+id/drawer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginEnd="-64dp"
+            android:background="#ffffff"
+            android:gravity="center_horizontal"
+            android:visibility="visible">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/deliver_cate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="13dp">
+
+                    <RelativeLayout
+                        android:id="@+id/label1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/item_chat"
+                        android:paddingBottom="12dp">
+
+                        <TextView
+                            android:id="@+id/title1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:text="배달"
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/kind1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/label1"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_horizontal">
+
+                        <android.widget.Button
+                            android:id="@+id/button4"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/koreanfood"
+                            android:drawablePadding="4dp"
+                            android:text="한식"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/button9"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/button4"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/chinesefood"
+                            android:drawablePadding="4dp"
+                            android:text="중식"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/button10"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/button9"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/japanesefood"
+                            android:drawablePadding="4dp"
+                            android:text="일식"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/button11"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/button10"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/pastafood"
+                            android:drawablePadding="4dp"
+                            android:text="양식"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/chicken"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/button4"
+                            android:layout_marginTop="5dp"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/chicken"
+                            android:drawablePadding="4dp"
+                            android:text="치킨"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/pizza"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/button9"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/chicken"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/pizzafood"
+                            android:drawablePadding="4dp"
+                            android:text="피자"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/bunsik"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/button10"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/pizza"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/bunsik"
+                            android:drawablePadding="4dp"
+                            android:text="분식"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/desert"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/button11"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/bunsik"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/desert"
+                            android:drawablePadding="4dp"
+                            android:text="디저트"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/meat"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/chicken"
+                            android:layout_marginTop="5dp"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/meat"
+                            android:drawablePadding="4dp"
+                            android:text="고기"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/fast"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/pizza"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/meat"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/fastfood"
+                            android:drawablePadding="4dp"
+                            android:text="패스트푸드"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/del_gita"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/pizza"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/fast"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/del_gitabutton"
+                            android:drawablePadding="4dp"
+                            android:text="기타
+"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/all"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/bunsik"
+                            android:layout_toRightOf="@id/del_gita"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/allbutton"
+                            android:text="전체"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/shop_cate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/deliver_cate"
+                    android:layout_marginTop="20dp">
+
+                    <RelativeLayout
+                        android:id="@+id/label2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/item_chat"
+                        android:paddingBottom="12dp">
+
+                        <TextView
+                            android:id="@+id/textView24"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:gravity="center"
+                            android:text="온라인 쇼핑"
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/kind2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/label2"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center_horizontal">
+
+                        <android.widget.Button
+                            android:id="@+id/coupang"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/coupang"
+                            android:drawablePadding="4dp"
+                            android:text="쿠팡"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/emart"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/coupang"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/emartmall"
+                            android:drawablePadding="4dp"
+                            android:text="이마트몰"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/marketkurly"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/emart"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/marketkurly"
+                            android:drawablePadding="4dp"
+                            android:text="마켓컬리"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/lotte"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/marketkurly"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/lotteon"
+                            android:drawablePadding="4dp"
+                            android:text="롯데ON"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/bunga11"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/coupang"
+                            android:layout_marginTop="5dp"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/bunga"
+                            android:drawablePadding="4dp"
+                            android:text="11번가"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/gmarket"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/emart"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/bunga11"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/market"
+                            android:drawablePadding="4dp"
+                            android:text="G마켓"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/auction"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/marketkurly"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/gmarket"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/auctionmarket"
+                            android:drawablePadding="4dp"
+                            android:text="옥션"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/gita"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/lotte"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/auction"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/gitabutton"
+                            android:drawablePadding="4dp"
+                            android:text="기타"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <android.widget.Button
+                            android:id="@+id/all2"
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/bunga11"
+                            android:layout_marginTop="5dp"
+                            android:background="#00000000"
+                            android:drawableTop="@drawable/allbutton2"
+                            android:drawablePadding="4dp"
+                            android:text="전체"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 
     <RelativeLayout
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -158,400 +529,37 @@
 
         </RelativeLayout>
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/menu2"
+    </RelativeLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/menu2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="15dp"
+        app:fab_addButtonColorNormal="#143F6B"
+        app:fab_addButtonColorPressed="#ffffff"
+        app:fab_labelStyle="@style/LabelStyle"
+        app:fab_labelsPosition="left">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            app:fab_addButtonColorNormal="#143F6B"
-            app:fab_addButtonColorPressed="#ffffff"
-            app:fab_labelStyle="@style/LabelStyle"
-            app:fab_labelsPosition="left">
+            app:fab_colorNormal="#FFF"
+            app:fab_colorPressed="@color/purple_200"
+            app:fab_icon="@drawable/shopping"
+            app:fab_title="온라인 쇼핑 등록하기" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/shop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#FFF"
-                app:fab_colorPressed="@color/purple_200"
-                app:fab_icon="@drawable/shopping"
-                app:fab_title="온라인 쇼핑 등록하기" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment2ProductRegistration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_colorNormal="#FFF"
+            app:fab_colorPressed="@color/purple_200"
+            app:fab_icon="@drawable/fast_food"
+            app:fab_title="음식 배달 등록하기" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fragment2ProductRegistration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#FFF"
-                app:fab_colorPressed="@color/purple_200"
-                app:fab_icon="@drawable/fast_food"
-                app:fab_title="음식 배달 등록하기" />
-
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/drawer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:layout_marginEnd="-64dp"
-        android:background="#ffffff"
-        android:gravity="center_horizontal"
-        android:visibility="visible">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <RelativeLayout
-                android:id="@+id/deliver_cate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dp">
-
-                <RelativeLayout
-                    android:id="@+id/label1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/item_chat"
-                    android:paddingBottom="12dp">
-
-                    <TextView
-                        android:id="@+id/title1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center_horizontal|center_vertical"
-                        android:text="배달"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/kind1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/label1"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_horizontal">
-
-                    <android.widget.Button
-                        android:id="@+id/button4"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/koreanfood"
-                        android:drawablePadding="4dp"
-                        android:text="한식"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/button9"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/button4"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/chinesefood"
-                        android:drawablePadding="4dp"
-                        android:text="중식"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/button10"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/button9"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/japanesefood"
-                        android:drawablePadding="4dp"
-                        android:text="일식"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/button11"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/button10"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/pastafood"
-                        android:drawablePadding="4dp"
-                        android:text="양식"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/chicken"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/button4"
-                        android:layout_marginTop="5dp"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/chicken"
-                        android:drawablePadding="4dp"
-                        android:text="치킨"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/pizza"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/button9"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/chicken"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/pizzafood"
-                        android:drawablePadding="4dp"
-                        android:text="피자"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/bunsik"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/button10"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/pizza"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/bunsik"
-                        android:drawablePadding="4dp"
-                        android:text="분식"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/desert"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/button11"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/bunsik"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/desert"
-                        android:drawablePadding="4dp"
-                        android:text="디저트"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/meat"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/chicken"
-                        android:layout_marginTop="5dp"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/meat"
-                        android:drawablePadding="4dp"
-                        android:text="고기"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/fast"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/pizza"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/meat"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/fastfood"
-                        android:drawablePadding="4dp"
-                        android:text="패스트푸드"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/del_gita"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/pizza"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/fast"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/del_gitabutton"
-                        android:drawablePadding="4dp"
-                        android:text="기타
-"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/all"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/bunsik"
-                        android:layout_toRightOf="@id/del_gita"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/allbutton"
-                        android:text="전체"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/shop_cate"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/deliver_cate"
-                android:layout_marginTop="20dp">
-
-                <RelativeLayout
-                    android:id="@+id/label2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/item_chat"
-                    android:paddingBottom="12dp">
-
-                    <TextView
-                        android:id="@+id/textView24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center"
-                        android:text="온라인 쇼핑"
-                        android:textColor="#000000"
-                        android:textSize="15sp" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/kind2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/label2"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center_horizontal">
-
-                    <android.widget.Button
-                        android:id="@+id/coupang"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/coupang"
-                        android:drawablePadding="4dp"
-                        android:text="쿠팡"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/emart"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/coupang"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/emartmall"
-                        android:drawablePadding="4dp"
-                        android:text="이마트몰"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/marketkurly"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/emart"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/marketkurly"
-                        android:drawablePadding="4dp"
-                        android:text="마켓컬리"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/lotte"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/marketkurly"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/lotteon"
-                        android:drawablePadding="4dp"
-                        android:text="롯데ON"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/bunga11"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/coupang"
-                        android:layout_marginTop="5dp"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/bunga"
-                        android:drawablePadding="4dp"
-                        android:text="11번가"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/gmarket"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/emart"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/bunga11"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/market"
-                        android:drawablePadding="4dp"
-                        android:text="G마켓"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/auction"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/marketkurly"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/gmarket"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/auctionmarket"
-                        android:drawablePadding="4dp"
-                        android:text="옥션"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/gita"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/lotte"
-                        android:layout_marginTop="5dp"
-                        android:layout_toRightOf="@id/auction"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/gitabutton"
-                        android:drawablePadding="4dp"
-                        android:text="기타"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <android.widget.Button
-                        android:id="@+id/all2"
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/bunga11"
-                        android:layout_marginTop="5dp"
-                        android:background="#00000000"
-                        android:drawableTop="@drawable/allbutton2"
-                        android:drawablePadding="4dp"
-                        android:text="전체"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-</androidx.drawerlayout.widget.DrawerLayout>
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+</RelativeLayout>

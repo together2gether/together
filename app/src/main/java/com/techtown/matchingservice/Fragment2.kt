@@ -84,6 +84,13 @@ class Fragment2 : Fragment() {
         binding.categoryFrag2.setOnClickListener {
             drawerLayout.openDrawer(drawerView)
         }
+        if(drawerLayout.isDrawerOpen(drawerView) == false){
+            Toast.makeText(context, "gone", Toast.LENGTH_LONG).show()
+            drawerLayout.visibility = View.GONE;
+        }else{
+            Toast.makeText(context, "visible", Toast.LENGTH_LONG).show()
+            drawerLayout.visibility = View.VISIBLE;
+        }
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
 
@@ -132,10 +139,15 @@ class Fragment2 : Fragment() {
             FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
             override fun onMenuExpanded() {
                 binding.dark.setBackgroundColor(Color.parseColor("#80000000"))
+                binding.dark.visibility = View.VISIBLE
+                //binding.drawerLayout.isEnabled = false;
+                //binding.background.isEnabled = false;
             }
 
             override fun onMenuCollapsed() {
                 binding.dark.setBackgroundColor(Color.parseColor("#00000000"))
+                binding.dark.visibility = View.GONE
+                //binding.background.isEnabled = true;
             }
         })
         binding.fragment2RecyclerView.addItemDecoration(
@@ -493,6 +505,7 @@ class Fragment2 : Fragment() {
 
             //click
             viewHolder.fooditemCardView.setOnClickListener {
+                Toast.makeText(context, "1", Toast.LENGTH_LONG).show()
                 Intent(context, Delivery::class.java).apply {
                     putExtra("store", deliveryDTOs[position].store.toString())
                     putExtra("name", deliveryDTOs[position].name.toString())

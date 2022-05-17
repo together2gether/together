@@ -120,11 +120,13 @@ class Delivery : AppCompatActivity() {
         if(deliveryuid == uid){
             binding.foodInfoChat.setVisibility(View.INVISIBLE)
             binding.foodInfoParticipation.setVisibility(View.INVISIBLE)
+            binding.foodInfoParticipation.isEnabled = false;
             binding.foodInfoRevice.setVisibility(View.VISIBLE)
             binding.foodInfoGarbage.setVisibility(View.VISIBLE)
         }else{
             binding.foodInfoChat.setVisibility(View.VISIBLE)
             binding.foodInfoParticipation.setVisibility(View.VISIBLE)
+            binding.foodInfoParticipation.isEnabled = true;
             binding.foodInfoRevice.setVisibility(View.INVISIBLE)
             binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
         }

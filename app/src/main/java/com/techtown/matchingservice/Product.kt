@@ -93,6 +93,7 @@ class Product : AppCompatActivity() {
         if(regist_userid == uid){
             binding.buttonChat.setVisibility(View.INVISIBLE)
             binding.productInfoParticipation.setVisibility(View.INVISIBLE)
+            binding.productInfoParticipation.isEnabled = false;
             binding.productInfoParticipationuser.setVisibility(View.VISIBLE)
             binding.productInfoGarbage.setVisibility(View.VISIBLE)
             binding.productInfoRevice.setVisibility(View.VISIBLE)
@@ -100,6 +101,7 @@ class Product : AppCompatActivity() {
         }else{
             binding.buttonChat.setVisibility(View.VISIBLE)
             binding.productInfoParticipation.setVisibility(View.VISIBLE)
+            binding.productInfoParticipation.isEnabled = true;
             binding.productInfoParticipationuser.setVisibility(View.INVISIBLE)
             binding.productInfoGarbage.setVisibility(View.INVISIBLE)
             binding.productInfoRevice.setVisibility(View.INVISIBLE)
