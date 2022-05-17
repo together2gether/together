@@ -8,11 +8,13 @@ import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.graphics.drawable.toDrawable
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -57,12 +59,13 @@ class Fragment2 : Fragment() {
     var delivery_lon: Double = 0.0
     var delivery_location: String = ""
     lateinit var delivery_cor: List<Address>
+    var isopen : String = "close"
     private var database =
         Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var geocoder: Geocoder
     lateinit var infoRef: DatabaseReference
-
+    lateinit var drawerLayout: DrawerLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -74,22 +77,29 @@ class Fragment2 : Fragment() {
         geocoder = Geocoder(context)
         infoRef = database.getReference("usersInfo")
         val userRef = infoRef.child(uid.toString())
-        val drawerLayout: DrawerLayout = binding.drawerLayout
+        drawerLayout = binding.drawerLayout
         val drawerView = binding.drawer
         var cate: String = arguments?.getString("category").toString()
         if (cate == "open") {
-            drawerLayout.openDrawer(drawerView)
+            if(drawerLayout.isDrawerOpen(Gravity.LEFT)){
+                drawerLayout.closeDrawers()
+            }else{
+                drawerLayout.openDrawer(Gravity.LEFT)
+            }
         }
+        drawerLayout.addDrawerListener(MyDrawerListener())
 
-        binding.categoryFrag2.setOnClickListener {
-            drawerLayout.openDrawer(drawerView)
-        }
-        if(drawerLayout.isDrawerOpen(drawerView) == false){
-            Toast.makeText(context, "gone", Toast.LENGTH_LONG).show()
-            drawerLayout.visibility = View.GONE;
-        }else{
-            Toast.makeText(context, "visible", Toast.LENGTH_LONG).show()
+
+        if(drawerLayout.isDrawerOpen(Gravity.LEFT)==true){
             drawerLayout.visibility = View.VISIBLE;
+            Toast.makeText(context, "VISIBLE", Toast.LENGTH_LONG).show()
+
+        }else {
+            drawerLayout.visibility =View.GONE;
+            Toast.makeText(context, "GONE", Toast.LENGTH_LONG).show()
+        }
+        binding.categoryFrag2.setOnClickListener {
+            drawerLayout.openDrawer(Gravity.LEFT)
         }
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -138,16 +148,57 @@ class Fragment2 : Fragment() {
         binding.menu2.setOnFloatingActionsMenuUpdateListener(object :
             FloatingActionsMenu.OnFloatingActionsMenuUpdateListener {
             override fun onMenuExpanded() {
+                isopen = "open"
                 binding.dark.setBackgroundColor(Color.parseColor("#80000000"))
-                binding.dark.visibility = View.VISIBLE
-                //binding.drawerLayout.isEnabled = false;
-                //binding.background.isEnabled = false;
+                binding.dark.visibility = View.VISIBLE;
+                binding.all.isEnabled = false;
+                binding.button4.isEnabled = false;
+                binding.button9.isEnabled = false;
+                binding.button10.isEnabled = false;
+                binding.button11.isEnabled = false;
+                binding.chicken.isEnabled = false;
+                binding.pizza.isEnabled = false;
+                binding.bunsik.isEnabled = false;
+                binding.desert.isEnabled = false;
+                binding.meat.isEnabled = false;
+                binding.fast.isEnabled = false;
+                binding.delGita.isEnabled = false;
+                binding.coupang.isEnabled = false;
+                binding.emart.isEnabled = false;
+                binding.marketkurly.isEnabled = false;
+                binding.lotte.isEnabled = false;
+                binding.bunga11.isEnabled = false;
+                binding.gmarket.isEnabled = false;
+                binding.auction.isEnabled = false;
+                binding.gita.isEnabled = false;
+                binding.all2.isEnabled = false;
             }
 
             override fun onMenuCollapsed() {
-                binding.dark.setBackgroundColor(Color.parseColor("#00000000"))
-                binding.dark.visibility = View.GONE
-                //binding.background.isEnabled = true;
+                isopen = "close"
+                binding.dark.visibility = View.GONE;
+                binding.drawerLayout.isEnabled = true;
+                binding.all.isEnabled = true;
+                binding.button4.isEnabled = true;
+                binding.button9.isEnabled = true;
+                binding.button10.isEnabled = true;
+                binding.button11.isEnabled = true;
+                binding.chicken.isEnabled = true;
+                binding.pizza.isEnabled = true;
+                binding.bunsik.isEnabled = true;
+                binding.desert.isEnabled = true;
+                binding.meat.isEnabled = true;
+                binding.fast.isEnabled = true;
+                binding.delGita.isEnabled = true;
+                binding.coupang.isEnabled = true;
+                binding.emart.isEnabled = true;
+                binding.marketkurly.isEnabled = true;
+                binding.lotte.isEnabled = true;
+                binding.bunga11.isEnabled = true;
+                binding.gmarket.isEnabled = true;
+                binding.auction.isEnabled = true;
+                binding.gita.isEnabled = true;
+                binding.all2.isEnabled = true;
             }
         })
         binding.fragment2RecyclerView.addItemDecoration(
@@ -299,7 +350,26 @@ class Fragment2 : Fragment() {
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
     }
+    private inner class MyDrawerListener() : DrawerLayout.DrawerListener{
+        override fun onDrawerClosed(drawerView: View) {
+            drawerView.visibility = View.GONE;
+            drawerLayout.visibility = View.GONE;
+        }
 
+        override fun onDrawerOpened(drawerView: View) {
+            drawerView.visibility = View.VISIBLE
+            drawerLayout.visibility = View.VISIBLE;
+
+        }
+
+        override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
+
+        }
+
+        override fun onDrawerStateChanged(newState: Int) {
+
+        }
+    }
     inner class DeliveryViewHolder(var binding: FoodItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
@@ -504,21 +574,25 @@ class Fragment2 : Fragment() {
                 .into(viewHolder.foodimage)
 
             //click
-            viewHolder.fooditemCardView.setOnClickListener {
-                Toast.makeText(context, "1", Toast.LENGTH_LONG).show()
-                Intent(context, Delivery::class.java).apply {
-                    putExtra("store", deliveryDTOs[position].store.toString())
-                    putExtra("name", deliveryDTOs[position].name.toString())
-                    putExtra("delivery", deliveryDTOs[position].delivery.toString())
-                    putExtra("orderPrice", deliveryDTOs[position].order_price.toString())
-                    putExtra("deliveryPrice", deliveryDTOs[position].delivery_price.toString())
-                    putExtra("deliveryid", deliveryUidList[position])
-                    putExtra("deliveryuid", deliveryDTOs[position].delivery_uid)
-                    putExtra("detail", deliveryDTOs[position].delivery_detail)
-                    putExtra("address", deliveryDTOs[position].delivery_address)
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }.run { context?.startActivity(this) }
-            }
+                viewHolder.fooditemCardView.setOnClickListener {
+                    if(isopen == "close"){
+                        Intent(context, Delivery::class.java).apply {
+                            putExtra("store", deliveryDTOs[position].store.toString())
+                            putExtra("name", deliveryDTOs[position].name.toString())
+                            putExtra("delivery", deliveryDTOs[position].delivery.toString())
+                            putExtra("orderPrice", deliveryDTOs[position].order_price.toString())
+                            putExtra("deliveryPrice", deliveryDTOs[position].delivery_price.toString())
+                            putExtra("deliveryid", deliveryUidList[position])
+                            putExtra("deliveryuid", deliveryDTOs[position].delivery_uid)
+                            putExtra("detail", deliveryDTOs[position].delivery_detail)
+                            putExtra("address", deliveryDTOs[position].delivery_address)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }.run { context?.startActivity(this) }
+                    }
+                    else{
+
+                    }
+                }
         }
 
         override fun getItemCount(): Int {
