@@ -173,8 +173,8 @@ class Product : AppCompatActivity() {
 
         binding.productInfoParticipation.setOnClickListener(){
 
-            var str =binding.productInfoProduct.text.toString()+" 공동 구매에 " + nickname + "님이 참여하셨습니다."
-            FcmPush.instance.sendMessage(regist_userid!!,"공동 구매 참여", str)
+            var str =binding.productInfoProduct.text.toString()+" 공동구매에 " + nickname + "님이 참여하셨습니다."
+            FcmPush.instance.sendMessage(regist_userid!!,"공동구매 참여", str)
 
             item.ParticipationCount+=1
             item.Participation[uid] = true
