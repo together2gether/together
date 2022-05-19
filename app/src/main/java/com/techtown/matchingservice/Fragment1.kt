@@ -97,6 +97,7 @@ class Fragment1 : Fragment() {
                         Log.e("product loc", lat.toString() + ", " + lon.toString())
                         //Log.e("product", item!!.place + ", " + distance.toString())
                     }
+                    contentList.reverse()
                     //LoadingDialog(requireContext()).dismiss()
                 }
             }
