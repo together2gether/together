@@ -75,6 +75,33 @@ class Fragment1 : Fragment() {
         geocoder = Geocoder(context)
         val userRef = infoRef.child(uid.toString())
 
+        firestore?.collection("images")
+            ?.orderBy("timestamp")
+            ?.addSnapshotListener { value, error ->
+                //contentDTOs.clear()
+                //contentUidList.clear()
+
+                contentList.clear()
+                if (value?.documents != null) {
+                    //LoadingDialog(requireContext()).show()
+                    for (snapshot in value!!.documents) {
+                        item = snapshot.toObject(ContentDTO::class.java)
+
+                        /*if (distance <= 3000!!.toInt()) {
+                            //contentDTOs.add(item!!)
+                            //contentUidList.add(snapshot.id)
+                            contentList.add(Triple(snapshot.id, item, distance))
+                        }*/
+                        contentList.add(Triple(snapshot.id, item, null) as Triple<String, ContentDTO, Double>)
+                        Log.e("product my loc", mylat.toString() + ", " + mylon.toString())
+                        Log.e("product loc", lat.toString() + ", " + lon.toString())
+                        //Log.e("product", item!!.place + ", " + distance.toString())
+                    }
+                    //LoadingDialog(requireContext()).dismiss()
+                }
+            }
+
+
         userRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
 
@@ -88,7 +115,19 @@ class Fragment1 : Fragment() {
                 mylat = mycor[0].latitude
                 mylon = mycor[0].longitude
                 Log.e("mylat", mylat.toString() + ", " + mylon.toString())
-                firestore?.collection("images")
+                contentList2.clear()
+                for(content in contentList!!){
+                    item = content.second
+                    var cor = geocoder.getFromLocationName(item!!.place.toString(), 1)
+                    lat = cor[0].latitude
+                    lon = cor[0].longitude
+                    var distance = Fragment2.DistanceManager.getDistance(mylat!!, mylon!!, lat!!, lon!!).toDouble()
+                    contentList2.add(Triple(content.first, item, distance) as Triple<String, ContentDTO, Double>)
+                    Log.e("product my loc", mylat.toString() + ", " + mylon.toString())
+                    Log.e("product loc", lat.toString() + ", " + lon.toString())
+                    Log.e("product", item!!.place + ", " + distance.toString())
+                }
+                /*firestore?.collection("images")
                     ?.orderBy("timestamp")
                     ?.addSnapshotListener { value, error ->
                         //contentDTOs.clear()
@@ -115,35 +154,10 @@ class Fragment1 : Fragment() {
                             }
                             //LoadingDialog(requireContext()).dismiss()
                         }
-                    }
+                    }*/
             }
 
         })
-        firestore?.collection("images")
-            ?.orderBy("timestamp")
-            ?.addSnapshotListener { value, error ->
-                //contentDTOs.clear()
-                //contentUidList.clear()
-
-                contentList.clear()
-                if (value?.documents != null) {
-                    //LoadingDialog(requireContext()).show()
-                    for (snapshot in value!!.documents) {
-                        item = snapshot.toObject(ContentDTO::class.java)
-
-                        /*if (distance <= 3000!!.toInt()) {
-                            //contentDTOs.add(item!!)
-                            //contentUidList.add(snapshot.id)
-                            contentList.add(Triple(snapshot.id, item, distance))
-                        }*/
-                        contentList.add(Triple(snapshot.id, item, null) as Triple<String, ContentDTO, Double>)
-                        Log.e("product my loc", mylat.toString() + ", " + mylon.toString())
-                        Log.e("product loc", lat.toString() + ", " + lon.toString())
-                        //Log.e("product", item!!.place + ", " + distance.toString())
-                    }
-                    //LoadingDialog(requireContext()).dismiss()
-                }
-            }
 
 
 
@@ -378,11 +392,11 @@ class Fragment1 : Fragment() {
             for(i in TimeValue.values()){
                 diffTime /= i.value
                 if(diffTime < i.maximum){
-                    msg = i.msg
+                    msg = diffTime.toString() + i.msg
                     break
                 }
             }
         }
-        return diffTime.toString() + msg
+        return msg
     }
 }
