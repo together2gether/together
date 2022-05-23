@@ -120,6 +120,7 @@ class Delivery : AppCompatActivity() {
 
         if(deliveryuid == uid){
             binding.foodInfoChat.setVisibility(View.INVISIBLE)
+            binding.foodInfoCancel.setVisibility(View.INVISIBLE)
             binding.foodInfoParticipation.setVisibility(View.INVISIBLE)
             binding.foodInfoParticipation.isEnabled = false;
             binding.foodInfoRevice.setVisibility(View.VISIBLE)
@@ -163,7 +164,11 @@ class Delivery : AppCompatActivity() {
 
                     if(item.deliveryParticipation[uid] == true){
                         binding.foodInfoParticipation.visibility = View.INVISIBLE
-                        binding.foodInfoCancel.visibility = View.VISIBLE
+                        if(deliveryuid == uid){
+                            binding.foodInfoCancel.visibility = View.INVISIBLE
+                        }else {
+                            binding.foodInfoCancel.visibility = View.VISIBLE
+                        }
                     }
 
                 }
@@ -267,6 +272,7 @@ class Delivery : AppCompatActivity() {
                 putExtra("deliveryid", deliveryid)
                 putExtra("deliveryuid", deliveryuid)
                 putExtra("detail", binding.foodinfoDeliverydetail.text)
+                putExtra("category", intent.getStringExtra("category").toString())
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.run { startActivity(this) }
             finish()
