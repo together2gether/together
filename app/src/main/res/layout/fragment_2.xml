@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tab2_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment2">
@@ -24,6 +25,19 @@
                 android:background="@drawable/item_chat"
                 android:paddingBottom="12dp">
 
+                <TextView
+                    android:id="@+id/textView25"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:drawableLeft="@drawable/warningxml"
+                    android:drawablePadding="3dp"
+                    android:gravity="right"
+                    android:text="2km 이내의 상품들입니다."
+                    android:textSize="10sp" />
+
                 <LinearLayout
                     android:id="@+id/label"
                     android:layout_width="match_parent"
@@ -35,16 +49,14 @@
                     android:layout_marginBottom="5dp">
 
                     <TextView
-                        android:id="@+id/textView25"
+                        android:id="@+id/category_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="10dp"
-                        android:drawableLeft="@drawable/warningxml"
-                        android:drawablePadding="3dp"
-                        android:gravity="right"
-                        android:text="2km 이내의 상품들입니다."
-                        android:textSize="10sp" />
+                        android:layout_weight="2.7"
+                        android:text="TextView"
+                        android:textColor="#000000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/textView183"
@@ -52,7 +64,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
+                        android:layout_weight="0.9"
+                        android:gravity="center_horizontal"
                         android:text="필요 주문 금액"
                         android:textColor="#000000"
                         android:textSize="15sp"
@@ -65,7 +78,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="28dp"
+                        android:layout_weight="0.8"
+                        android:gravity="center_horizontal"
                         android:text="총 배달비"
                         android:textColor="#000000"
                         android:textSize="15sp"
