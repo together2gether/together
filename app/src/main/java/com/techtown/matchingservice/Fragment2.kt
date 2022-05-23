@@ -62,7 +62,6 @@ class Fragment2 : Fragment() {
     var delivery_location: String = ""
     lateinit var delivery_cor: List<Address>
     var isopen : String = "close"
-    var cate_open : String = ""
     private var database =
         Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -83,15 +82,16 @@ class Fragment2 : Fragment() {
         val userRef = infoRef.child(uid.toString())
         drawerLayout = binding.drawerLayout
         drawerView = binding.drawer
-        drawerLayout.openDrawer(drawerView)
-        cate_open = (activity as MainActivity).open
         drawerLayout.addDrawerListener(MyDrawerListener())
+        drawerLayout.openDrawer(Gravity.LEFT)
 
-        if(drawerLayout.isDrawerOpen(Gravity.LEFT)==true){
+        /*if(drawerLayout.isDrawerOpen(Gravity.LEFT)==true){
+            Toast.makeText(context, "보임", Toast.LENGTH_LONG).show()
             drawerLayout.visibility = View.VISIBLE;
         }else {
+            Toast.makeText(context, "안 보임", Toast.LENGTH_LONG).show()
             drawerLayout.visibility =View.GONE;
-        }
+        }*/
 
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {
@@ -200,7 +200,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.button4.setOnClickListener {
             deliverycheck = 1
@@ -208,7 +208,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.button9.setOnClickListener {
             deliverycheck = 1
@@ -216,7 +216,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.button10.setOnClickListener {
             deliverycheck = 1
@@ -224,7 +224,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.button11.setOnClickListener {
             deliverycheck = 1
@@ -232,7 +232,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.chicken.setOnClickListener {
             deliverycheck = 1
@@ -240,7 +240,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.pizza.setOnClickListener {
             deliverycheck = 1
@@ -248,7 +248,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.bunsik.setOnClickListener {
             deliverycheck = 1
@@ -256,7 +256,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.desert.setOnClickListener {
             deliverycheck = 1
@@ -264,7 +264,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.meat.setOnClickListener {
             deliverycheck = 1
@@ -272,7 +272,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.fast.setOnClickListener {
             deliverycheck = 1
@@ -280,7 +280,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.delGita.setOnClickListener {
             deliverycheck = 1
@@ -288,7 +288,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
 
         binding.coupang.setOnClickListener {
@@ -297,7 +297,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.emart.setOnClickListener {
             deliverycheck = 2
@@ -305,7 +305,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.marketkurly.setOnClickListener {
             deliverycheck = 2
@@ -313,7 +313,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.lotte.setOnClickListener {
             deliverycheck = 2
@@ -321,7 +321,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.bunga11.setOnClickListener {
             deliverycheck = 2
@@ -329,7 +329,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.gmarket.setOnClickListener {
             deliverycheck = 2
@@ -337,7 +337,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.auction.setOnClickListener {
             deliverycheck = 2
@@ -345,7 +345,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.gita.setOnClickListener {
             deliverycheck = 2
@@ -353,7 +353,7 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.all2.setOnClickListener {
             deliverycheck = 2
@@ -361,25 +361,24 @@ class Fragment2 : Fragment() {
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-            cate_open = "close"
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
     }
     fun open(){
         drawerLayout.openDrawer(drawerView)
+        drawerLayout.openDrawer(Gravity.LEFT)
     }
     private inner class MyDrawerListener() : DrawerLayout.DrawerListener{
         override fun onDrawerClosed(drawerView: View) {
             drawerView.visibility = View.GONE;
             drawerLayout.visibility = View.GONE;
-            cate_open="open"
         }
 
         override fun onDrawerOpened(drawerView: View) {
             drawerView.visibility = View.VISIBLE
             drawerLayout.visibility = View.VISIBLE;
-            cate_open = "close"
         }
 
         override fun onDrawerSlide(drawerView: View, slideOffset: Float) {

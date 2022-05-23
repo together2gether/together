@@ -18,12 +18,12 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.techtown.matchingservice.databinding.ActivityMainBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import okhttp3.internal.wait
 import java.security.MessageDigest
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
-    var open : String = "close"
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.categoryOpen.setOnClickListener {
             var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
+            fragment?.drawerLayout?.visibility = View.VISIBLE
                 fragment?.open()
             binding.categoryOpen.visibility = View.GONE;
         }
@@ -70,13 +71,12 @@ class MainActivity : AppCompatActivity() {
                 var fragment2 = Fragment2()
                 var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
                 fragment?.open()
-                open = "close"
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, fragment2).commit()
                 changeTitle("배달")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.VISIBLE)
-                binding.categoryOpen.visibility = View.VISIBLE
+                binding.categoryOpen.visibility = View.GONE;
             }
             "3" -> {
                 val fragment3 = ChatFragment()
@@ -120,10 +120,9 @@ class MainActivity : AppCompatActivity() {
                         var fragment2 = Fragment2()
                         var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
                         fragment?.open()
-                        open = "close"
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment2).commit()
-                        binding.categoryOpen.visibility = View.VISIBLE
+                        binding.categoryOpen.visibility = View.GONE;
                     }
                     R.id.tab3-> {
                         changeTitle("채팅")
