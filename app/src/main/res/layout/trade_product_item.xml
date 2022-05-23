@@ -7,17 +7,17 @@
     android:layout_marginRight="4dp"
     android:layout_marginBottom="4dp"
     app:cardBackgroundColor="#FFFFFFFF"
-    app:cardElevation="5dp">
+    app:cardElevation="0dp"
+    android:id="@+id/list_card">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/item_layout"
         android:orientation="horizontal"
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/moodImageView"
+            android:id="@+id/list_img"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_gravity="center_vertical"
@@ -32,38 +32,61 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/list_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical">
+                android:layout_marginBottom="10dp"
+                android:text="제품1"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:maxLines="2"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
+                    android:id="@+id/textView16"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="제품1"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:text="등록 일자"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="15dp"/>
 
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/rdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2022년 5월 20일 16:31"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView16"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="거래 일자 : "
-                android:textSize="16sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text="구매 가격 : 3000원/5개"
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="1인당 가격"
+                    android:textSize="13sp"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:id="@+id/list_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3000 원"
+                    android:layout_marginBottom="10dp"/>
+            </LinearLayout>
 
 
         </LinearLayout>

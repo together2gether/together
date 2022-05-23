@@ -175,7 +175,7 @@ class GroupActivity : AppCompatActivity() {
 
         inner class GroupViewHolder(view : View) : RecyclerView.ViewHolder(view){
             val tv_product: TextView = view.findViewById(R.id.productName)
-            val image : ImageView = view.findViewById(R.id.moodImageView)
+            val image : ImageView = view.findViewById(R.id.list_img)
             val tv_price : TextView = view.findViewById(R.id.price)
             val tv_cycle : TextView = view.findViewById(R.id.cycle)
             val btn_drop : Button = view.findViewById(R.id.button_drop)

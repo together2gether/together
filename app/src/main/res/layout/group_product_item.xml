@@ -18,7 +18,7 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/moodImageView"
+            android:id="@+id/list_img"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:layout_gravity="center_vertical"

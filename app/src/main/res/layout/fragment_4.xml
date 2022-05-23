@@ -6,47 +6,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment4">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             >
-
-            <ImageView
-                android:id="@+id/profile_img"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:src="@drawable/man" />
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp">
+                <ImageView
+                    android:id="@+id/profile_img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:src="@drawable/man" />
 
-            <TextView
-                android:id="@+id/textView_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|center_horizontal"
-                android:text="눈송이 님"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/textView_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|center_horizontal"
+                    android:text="눈송이 님"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="50dp">
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="50dp"
+                android:layout_margin="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <android.widget.Button
@@ -73,7 +74,7 @@
                         android:layout_weight="1"
                         android:drawableTop="@drawable/listxml"
                         android:background="@drawable/setting_button"
-                        android:text="거래 내역"
+                        android:text="등록 내역"
                         android:drawablePadding="10dp"
                         android:textSize="12sp"
                         android:textStyle="bold"
@@ -84,7 +85,7 @@
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <android.widget.Button
@@ -121,7 +122,6 @@
                         android:paddingBottom="20dp"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </LinearLayout>
-        </LinearLayout>
 
     </LinearLayout>
 
