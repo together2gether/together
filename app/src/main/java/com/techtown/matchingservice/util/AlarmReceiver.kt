@@ -1,5 +1,6 @@
 package com.techtown.matchingservice.util
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -72,13 +73,15 @@ class AlarmReceiver : BroadcastReceiver() {
         Log.e("알림", "성공")
     }
 
+    @SuppressLint("ResourceAsColor")
     private fun notifyNotification(context: Context) {
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle("공동구매 알림")
                 .setContentText("다음 공동구매가 3일 남았습니다. 참여자들에게 연락을 해주세요.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setSmallIcon(R.drawable.icon_message)
+                .setColor(R.color.icon_color)
 
             notify(NOTIFICATION_ID, build.build())
         }
