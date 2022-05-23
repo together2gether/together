@@ -69,8 +69,6 @@ class MainActivity : AppCompatActivity() {
             "2" -> {
                 binding.bottomNavigation.selectedItemId = R.id.tab2
                 var fragment2 = Fragment2()
-                var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
-                fragment?.open()
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, fragment2).commit()
                 changeTitle("배달")
@@ -118,8 +116,6 @@ class MainActivity : AppCompatActivity() {
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.VISIBLE)
                         var fragment2 = Fragment2()
-                        var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
-                        fragment?.open()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment2).commit()
                         binding.categoryOpen.visibility = View.GONE;

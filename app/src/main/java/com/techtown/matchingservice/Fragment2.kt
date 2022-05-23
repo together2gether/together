@@ -367,8 +367,8 @@ class Fragment2 : Fragment() {
         return binding.root
     }
     fun open(){
-        drawerLayout.openDrawer(drawerView)
-        drawerLayout.openDrawer(Gravity.LEFT)
+        binding.drawerLayout.openDrawer(drawerView)
+        //drawerLayout.openDrawer(Gravity.LEFT)
     }
     private inner class MyDrawerListener() : DrawerLayout.DrawerListener{
         override fun onDrawerClosed(drawerView: View) {
