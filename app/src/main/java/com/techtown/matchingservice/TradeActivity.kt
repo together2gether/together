@@ -36,8 +36,11 @@ class TradeActivity : AppCompatActivity() {
     val delRef = db.collection("delivery")
     var firestore : FirebaseFirestore? = null
 
-    var items = ArrayList<Triple<Int, Triple<String, Long, Int>, String>>()
+    //var items = ArrayList<Triple<Int, Triple<String, Long, Int>, String>>()
+    var items = ArrayList<Triple<Int, String, Long>>()
 
+    val intent_p = Intent(this, Product::class.java)
+    val intent_d = Intent(this, Delivery::class.java)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.trade)
@@ -57,7 +60,8 @@ class TradeActivity : AppCompatActivity() {
                 for(document in documents){
                     item_p = document.toObject(ContentDTO::class.java)
                     if(item_p.uid == uid){
-                        items.add(Triple(1,Triple(item_p.product, item_p.timestamp, item_p.price / item_p.ParticipationTotal),item_p.imageUrl.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
+                        items.add(Triple(1, document.id, item_p.timestamp) as Triple<Int, String, Long>)
+                        //items.add(Triple(1,Triple(item_p.product, item_p.timestamp, item_p.price / item_p.ParticipationTotal),item_p.imageUrl.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
                     }
                 }
                 delRef.get()
@@ -66,13 +70,15 @@ class TradeActivity : AppCompatActivity() {
                             item_d = document.toObject(DeliveryDTO::class.java)
                             if(item_d.delivery_uid == uid){
                                 if(item_d.delivery == true){
-                                    items.add(Triple(2,Triple(item_d.store, item_d.delivery_timestamp, null),item_d.imageURL.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
+                                    items.add(Triple(2, document.id, item_d.delivery_timestamp) as Triple<Int, String, Long>)
+                                    //items.add(Triple(2,Triple(item_d.store, item_d.delivery_timestamp, null),item_d.imageURL.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
                                 } else if(item_d.delivery == false){
-                                    items.add(Triple(3,Triple(item_d.store, item_d.delivery_timestamp, null),item_d.imageURL.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
+                                    items.add(Triple(3, document.id, item_d.delivery_timestamp) as Triple<Int, String, Long>)
+                                    //items.add(Triple(3,Triple(item_d.store, item_d.delivery_timestamp, null),item_d.imageURL.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
                                 }
                             }
                         }
-                        items.sortBy { it.second.second }
+                        items.sortBy { it.third }
                         items.reverse()
                         recyclerView!!.adapter!!.notifyDataSetChanged()
                     }
@@ -93,21 +99,64 @@ class TradeActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: RecyclerViewAdapter.ListViewHolder, position: Int) {
-            Glide.with(holder.itemView.context)
-                .load(items[position].third)
-                .apply(RequestOptions().circleCrop())
-                .into(holder.img)
-            holder.title.text = items[position].second.first
-            val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
-            holder.date.text = dateFormat.format(Date(items[position].second.second))
-            if(items[position].first != 1) {
-                holder.price.text = ""
-                holder.textv.visibility = View.INVISIBLE
-            } else {
-                holder.price.text = items[position].second.third.toString() + " 원"
+            var productitem = ContentDTO()
+            var deliveryitem = DeliveryDTO()
+            if(items[position].first == 1){
+                docRef.get()
+                    .addOnSuccessListener { documents ->
+                        for(document in documents){
+                            if(items[position].second == document.id){
+                                productitem = document.toObject(ContentDTO::class.java)
+                                Glide.with(holder.itemView.context)
+                                    .load(productitem.imageUrl)
+                                    .apply(RequestOptions().circleCrop())
+                                    .into(holder.img)
+                                holder.title.text = productitem.product
+                                val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                                holder.date.text = dateFormat.format(Date(items[position].third))
+                                var price : Int = productitem.price / productitem.ParticipationTotal!!
+                                holder.price.text = price.toString() + " 원"
+                            }
+                        }
+                    }
+
+            } else{
+                delRef.get()
+                    .addOnSuccessListener { documents ->
+                        for(document in documents){
+                            if(items[position].second == document.id){
+                                deliveryitem = document.toObject(DeliveryDTO::class.java)
+                                Glide.with(holder.itemView.context)
+                                    .load(deliveryitem.imageURL)
+                                    .apply(RequestOptions().circleCrop())
+                                    .into(holder.img)
+                                holder.title.text = deliveryitem.store
+                                val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                                holder.date.text = dateFormat.format(Date(items[position].third))
+                                holder.price.text = ""
+                                holder.textv.visibility = View.INVISIBLE
+                            }
+                        }
+                    }
             }
+
             holder.card.setOnClickListener {
                 if (items[position].first == 1){
+                    intent_p.putExtra("product", productitem.product.toString())
+                    intent_p.putExtra("imageUrl", productitem.imageUrl.toString())
+                    intent_p.putExtra("price", productitem.price.toString())
+                    intent_p.putExtra("totalNumber", productitem.totalNumber.toString())
+                    intent_p.putExtra("cycle", productitem.cycle.toString())
+                    intent_p.putExtra("unit", productitem.unit.toString())
+                    intent_p.putExtra("URL", productitem.url)
+                    intent_p.putExtra("place", productitem.place)
+                    intent_p.putExtra("timestamp", productitem.timestamp.toString())
+                    intent_p.putExtra("participationCount", productitem.ParticipationCount)
+                    intent_p.putExtra("id", items[position].second )
+                    intent_p.putExtra("uidkey", productitem.Participation.containsKey(uid).toString())
+                    intent_p.putExtra("participationTotal", productitem.ParticipationTotal.toString())
+                    intent_p.putExtra("Uid", productitem.uid.toString())
+                    startActivity(intent_p)
 
                 }
             }
