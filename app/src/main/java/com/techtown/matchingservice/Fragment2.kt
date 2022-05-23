@@ -13,6 +13,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.graphics.drawable.toDrawable
@@ -60,12 +62,14 @@ class Fragment2 : Fragment() {
     var delivery_location: String = ""
     lateinit var delivery_cor: List<Address>
     var isopen : String = "close"
+    var cate_open : String = ""
     private var database =
         Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var geocoder: Geocoder
     lateinit var infoRef: DatabaseReference
     lateinit var drawerLayout: DrawerLayout
+    lateinit var drawerView : RelativeLayout
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -78,21 +82,13 @@ class Fragment2 : Fragment() {
         infoRef = database.getReference("usersInfo")
         val userRef = infoRef.child(uid.toString())
         drawerLayout = binding.drawerLayout
-        val drawerView = binding.drawer
-        var cate: String = arguments?.getString("category").toString()
-        if (cate == "open") {
-            if(drawerLayout.isDrawerOpen(Gravity.LEFT)){
-                drawerLayout.closeDrawers()
-            }else{
-                drawerLayout.openDrawer(Gravity.LEFT)
-            }
-        }
+        drawerView = binding.drawer
+        drawerLayout.openDrawer(drawerView)
+        cate_open = (activity as MainActivity).open
         drawerLayout.addDrawerListener(MyDrawerListener())
-
 
         if(drawerLayout.isDrawerOpen(Gravity.LEFT)==true){
             drawerLayout.visibility = View.VISIBLE;
-
         }else {
             drawerLayout.visibility =View.GONE;
         }
@@ -196,148 +192,194 @@ class Fragment2 : Fragment() {
             binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
         }*/
+
+        binding.categoryLabel.text = "[ " + deliverycate + " ]"
         binding.all.setOnClickListener {
             deliverycheck = 1
             deliverycate = "전체"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
-
+            cate_open = "close"
         }
         binding.button4.setOnClickListener {
             deliverycheck = 1
             deliverycate = "한식"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.button9.setOnClickListener {
             deliverycheck = 1
             deliverycate = "중식"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.button10.setOnClickListener {
             deliverycheck = 1
             deliverycate = "일식"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.button11.setOnClickListener {
             deliverycheck = 1
             deliverycate = "양식"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.chicken.setOnClickListener {
             deliverycheck = 1
             deliverycate = "치킨"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.pizza.setOnClickListener {
             deliverycheck = 1
             deliverycate = "피자"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.bunsik.setOnClickListener {
             deliverycheck = 1
             deliverycate = "분식"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.desert.setOnClickListener {
             deliverycheck = 1
             deliverycate = "디저트"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.meat.setOnClickListener {
             deliverycheck = 1
             deliverycate = "고기"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.fast.setOnClickListener {
             deliverycheck = 1
             deliverycate = "패스트푸드"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.delGita.setOnClickListener {
             deliverycheck = 1
             deliverycate = "기타"
+            binding.categoryLabel.text = "[ " + deliverycate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
 
         binding.coupang.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "쿠팡"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.emart.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "이마트몰"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.marketkurly.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "마켓컬리"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.lotte.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "롯데ON"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.bunga11.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "11번가"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.gmarket.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "G마켓"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.auction.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "옥션"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.gita.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "기타"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
         binding.all2.setOnClickListener {
             deliverycheck = 2
             shoppingcate = "전체"
+            binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)
+            cate_open = "close"
         }
-
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
+    }
+    fun open(){
+        drawerLayout.openDrawer(drawerView)
     }
     private inner class MyDrawerListener() : DrawerLayout.DrawerListener{
         override fun onDrawerClosed(drawerView: View) {
             drawerView.visibility = View.GONE;
             drawerLayout.visibility = View.GONE;
+            cate_open="open"
         }
 
         override fun onDrawerOpened(drawerView: View) {
             drawerView.visibility = View.VISIBLE
             drawerLayout.visibility = View.VISIBLE;
-
+            cate_open = "close"
         }
 
         override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
@@ -577,7 +619,6 @@ class Fragment2 : Fragment() {
             return deliveryDTOs.size
         }
     }
-
     object DistanceManager {
         private const val R = 6372.8 * 1000
         fun getDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Int {

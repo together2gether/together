@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Base64.encode
 import android.util.Log
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -22,7 +23,7 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
-
+    var open : String = "close"
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         val ab = supportActionBar!!
         ab.setDisplayShowTitleEnabled(false)
         //ab.setDisplayHomeAsUpEnabled(true)
-
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
         //changeTitle("공동구매")
 
@@ -44,14 +44,14 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, SearchFood::class.java)
             startActivity(intent)
         }
-        binding.category.setOnClickListener{
-            var fragment2 = Fragment2()
-            var bundle = Bundle()
-            bundle.putString("category","open")
-            fragment2.arguments = bundle
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_content, fragment2).commit()
+
+
+        binding.categoryOpen.setOnClickListener {
+            var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
+                fragment?.open()
+            binding.categoryOpen.visibility = View.GONE;
         }
+
         binding.search.setVisibility(View.VISIBLE)
         var page= intent.getStringExtra("page")
         binding.bottomNavigation.itemIconTintList = null
@@ -63,20 +63,20 @@ class MainActivity : AppCompatActivity() {
                 changeTitle("공동구매")
                 binding.search.setVisibility(View.VISIBLE)
                 binding.search2.setVisibility(View.INVISIBLE)
-                binding.category.setVisibility(View.INVISIBLE)
+                binding.categoryOpen.visibility = View.INVISIBLE
             }
             "2" -> {
                 binding.bottomNavigation.selectedItemId = R.id.tab2
                 var fragment2 = Fragment2()
-                binding.category.setVisibility(View.VISIBLE)
-                var bundle = Bundle()
-                bundle.putString("category","open")
-                fragment2.arguments = bundle
+                var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
+                fragment?.open()
+                open = "close"
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_content, fragment2).commit()
                 changeTitle("배달")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.VISIBLE)
+                binding.categoryOpen.visibility = View.VISIBLE
             }
             "3" -> {
                 val fragment3 = ChatFragment()
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 changeTitle("채팅")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.INVISIBLE)
-                binding.category.setVisibility(View.INVISIBLE)
+                binding.categoryOpen.visibility = View.INVISIBLE
             }
             "4" -> {
                 val fragment4 = Fragment4()
@@ -94,13 +94,12 @@ class MainActivity : AppCompatActivity() {
                 changeTitle("마이페이지")
                 binding.search.setVisibility(View.INVISIBLE)
                 binding.search2.setVisibility(View.INVISIBLE)
-                binding.category.setVisibility(View.INVISIBLE)
+                binding.categoryOpen.visibility = View.INVISIBLE
             }
         }
         //supportFragmentManager.beginTransaction().add(R.id.main_content, fragment1).commit()
         initNavigationBar()
     }
-
     fun initNavigationBar() {
         binding.bottomNavigation.run {
             setOnItemSelectedListener { item ->
@@ -109,40 +108,40 @@ class MainActivity : AppCompatActivity() {
                         changeTitle("공동구매")
                         binding.search.setVisibility(View.VISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
-                        binding.category.setVisibility(View.INVISIBLE)
                         var fragment1 = Fragment1()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment1).commit()
+                        binding.categoryOpen.visibility = View.INVISIBLE
                     }
                     R.id.tab2 -> {
                         changeTitle("배달")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.VISIBLE)
-                        binding.category.setVisibility(View.VISIBLE)
                         var fragment2 = Fragment2()
-                        var bundle = Bundle()
-                        bundle.putString("category","open")
-                        fragment2.arguments = bundle
+                        var fragment : Fragment2? = supportFragmentManager.findFragmentById(R.id.main_content) as Fragment2?
+                        fragment?.open()
+                        open = "close"
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment2).commit()
+                        binding.categoryOpen.visibility = View.VISIBLE
                     }
                     R.id.tab3-> {
                         changeTitle("채팅")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
-                        binding.category.setVisibility(View.INVISIBLE)
                         var chatFragment = ChatFragment()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, chatFragment).commit()
+                        binding.categoryOpen.visibility = View.INVISIBLE
                     }
                     R.id.tab4 -> {
                         changeTitle("마이페이지")
                         binding.search.setVisibility(View.INVISIBLE)
                         binding.search2.setVisibility(View.INVISIBLE)
-                        binding.category.setVisibility(View.INVISIBLE)
                         var fragment4 = Fragment4()
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_content, fragment4).commit()
+                        binding.categoryOpen.visibility = View.INVISIBLE
                     }
 
                 }

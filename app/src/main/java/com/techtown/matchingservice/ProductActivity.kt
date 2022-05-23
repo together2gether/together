@@ -57,7 +57,6 @@ class ProductActivity : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
         bol = intent.getStringExtra("bol").toString()
         if(bol=="shop"){
-            Toast.makeText(this, "1", Toast.LENGTH_LONG).show()
             var title = intent.getStringExtra("title").toString()
             var imageURL = intent.getStringExtra("imageURL").toString()
             var lprice = intent.getStringExtra("lprice").toString()
