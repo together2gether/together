@@ -402,8 +402,9 @@ class Fragment2 : Fragment() {
     inner class Fragment2DeliveryRecyclerviewAdapter() :
         RecyclerView.Adapter<DeliveryViewHolder>() {
 
-        var deliveryDTOs: ArrayList<DeliveryDTO> = arrayListOf()
-        var deliveryUidList: ArrayList<String> = arrayListOf()
+        //var deliveryDTOs: ArrayList<DeliveryDTO> = arrayListOf()
+        //var deliveryUidList: ArrayList<String> = arrayListOf()
+        var deliveryList : ArrayList<Triple<String, DeliveryDTO, Double>> = arrayListOf()
 
         init {
             if (deliverycheck == 1) {
@@ -412,8 +413,9 @@ class Fragment2 : Fragment() {
                     firestore?.collection("delivery")
                         ?.orderBy("delivery_timestamp")
                         ?.addSnapshotListener { value, error ->
-                            deliveryDTOs.clear()
-                            deliveryUidList.clear()
+                            //deliveryDTOs.clear()
+                            //deliveryUidList.clear()
+                            deliveryList.clear()
                             if (value?.documents != null) {
                                 for (snapshot in value!!.documents) {
                                     var item = snapshot.toObject(DeliveryDTO::class.java)
@@ -430,13 +432,15 @@ class Fragment2 : Fragment() {
                                     ).toDouble()
                                     if (item!!.delivery) {
                                         if (distance <= 2000) {
-                                            deliveryDTOs.add(item)
-                                            deliveryUidList.add(snapshot.id)
+                                            deliveryList.add(Triple(snapshot.id, item, distance))
+                                            //deliveryDTOs.add(item)
+                                            //deliveryUidList.add(snapshot.id)
                                         }
                                     }
                                 }
-                                deliveryDTOs.reverse()
-                                deliveryUidList.reverse()
+                                deliveryList.sortBy { it.third }
+                                //deliveryDTOs.reverse()
+                                //deliveryUidList.reverse()
                                 notifyDataSetChanged()
                             }
 
@@ -446,8 +450,9 @@ class Fragment2 : Fragment() {
                     firestore?.collection("delivery")
                         ?.orderBy("delivery_timestamp")
                         ?.addSnapshotListener { value, error ->
-                            deliveryDTOs.clear()
-                            deliveryUidList.clear()
+                            //deliveryDTOs.clear()
+                            //deliveryUidList.clear()
+                            deliveryList.clear()
                             if (value?.documents != null) {
                                 for (snapshot in value!!.documents) {
                                     var item = snapshot.toObject(DeliveryDTO::class.java)
@@ -475,13 +480,15 @@ class Fragment2 : Fragment() {
                                     ).toDouble()
                                     if (item!!.category == deliverycate) {
                                         if (distance <= 2000) {
-                                            deliveryDTOs.add(item)
-                                            deliveryUidList.add(snapshot.id)
+                                            //deliveryDTOs.add(item)
+                                            //deliveryUidList.add(snapshot.id)
+                                            deliveryList.add(Triple(snapshot.id, item, distance))
                                         }
                                     }
                                 }
-                                deliveryDTOs.reverse()
-                                deliveryUidList.reverse()
+                                deliveryList.sortBy { it.third }
+                                //deliveryDTOs.reverse()
+                                //deliveryUidList.reverse()
                                 notifyDataSetChanged()
                             }
 
@@ -492,8 +499,9 @@ class Fragment2 : Fragment() {
                     firestore?.collection("delivery")
                         ?.orderBy("delivery_timestamp")
                         ?.addSnapshotListener { value, error ->
-                            deliveryDTOs.clear()
-                            deliveryUidList.clear()
+                            deliveryList.clear()
+                            //deliveryDTOs.clear()
+                            //deliveryUidList.clear()
                             for (snapshot in value!!.documents) {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
                                 var delivery_uid = item!!.delivery_uid
@@ -520,13 +528,15 @@ class Fragment2 : Fragment() {
                                 ).toDouble()
                                 if (!item!!.delivery) {
                                     if (distance <= 2000) {
-                                        deliveryDTOs.add(item)
-                                        deliveryUidList.add(snapshot.id)
+                                        //deliveryDTOs.add(item)
+                                        //deliveryUidList.add(snapshot.id)
+                                        deliveryList.add(Triple(snapshot.id, item, distance))
                                     }
                                 }
                             }
-                            deliveryDTOs.reverse()
-                            deliveryUidList.reverse()
+                            //deliveryDTOs.reverse()
+                            //deliveryUidList.reverse()
+                            deliveryList.sortBy { it.third }
                             notifyDataSetChanged()
                         }
 
@@ -534,8 +544,9 @@ class Fragment2 : Fragment() {
                     firestore?.collection("delivery")
                         ?.orderBy("delivery_timestamp")
                         ?.addSnapshotListener { value, error ->
-                            deliveryDTOs.clear()
-                            deliveryUidList.clear()
+                            //deliveryDTOs.clear()
+                            //deliveryUidList.clear()
+                            deliveryList.clear()
                             for (snapshot in value!!.documents) {
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
                                 var delivery_uid = item!!.delivery_uid
@@ -562,13 +573,15 @@ class Fragment2 : Fragment() {
                                 ).toDouble()
                                 if (item!!.category == shoppingcate) {
                                     if (distance <= 2000) {
-                                        deliveryDTOs.add(item)
-                                        deliveryUidList.add(snapshot.id)
+                                        //deliveryDTOs.add(item)
+                                        //deliveryUidList.add(snapshot.id)
+                                        deliveryList.add(Triple(snapshot.id, item, distance))
                                     }
                                 }
                             }
-                            deliveryDTOs.reverse()
-                            deliveryUidList.reverse()
+                            //deliveryDTOs.reverse()
+                            //deliveryUidList.reverse()
+                            deliveryList.sortBy { it.third }
                             notifyDataSetChanged()
                         }
                 }
@@ -585,14 +598,14 @@ class Fragment2 : Fragment() {
         override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
             var viewHolder = holder.binding
             //store
-            viewHolder.fooditemTextviewstore.text = deliveryDTOs[position].store
+            viewHolder.fooditemTextviewstore.text = deliveryList[position].second.store
             //order price
             viewHolder.fooditemTextvieworderprice.text =
-                deliveryDTOs[position].order_price.toString()
+                deliveryList[position].second.order_price.toString()
             //delivery price
-            var pdel : Int = deliveryDTOs[position].delivery_price / 2
+            var pdel : Int = deliveryList[position].second.delivery_price / 2
             viewHolder.fooditemTextviewdeliveryprice.text = pdel.toString()
-            Glide.with(viewHolder.foodimage.context).load(deliveryDTOs[position]?.imageURL)
+            Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
                 .apply(RequestOptions().circleCrop())
                 .into(viewHolder.foodimage)
 
@@ -600,16 +613,16 @@ class Fragment2 : Fragment() {
                 viewHolder.fooditemCardView.setOnClickListener {
                     if(isopen == "close"){
                         Intent(context, Delivery::class.java).apply {
-                            putExtra("store", deliveryDTOs[position].store.toString())
-                            putExtra("name", deliveryDTOs[position].name.toString())
-                            putExtra("delivery", deliveryDTOs[position].delivery.toString())
-                            putExtra("orderPrice", deliveryDTOs[position].order_price.toString())
-                            putExtra("deliveryPrice", deliveryDTOs[position].delivery_price.toString())
-                            putExtra("deliveryid", deliveryUidList[position])
-                            putExtra("deliveryuid", deliveryDTOs[position].delivery_uid)
-                            putExtra("detail", deliveryDTOs[position].delivery_detail)
-                            putExtra("address", deliveryDTOs[position].delivery_address)
-                            putExtra("category", deliveryDTOs[position].category)
+                            putExtra("store", deliveryList[position].second.store.toString())
+                            putExtra("name", deliveryList[position].second.name.toString())
+                            putExtra("delivery", deliveryList[position].second.delivery.toString())
+                            putExtra("orderPrice", deliveryList[position].second.order_price.toString())
+                            putExtra("deliveryPrice", deliveryList[position].second.delivery_price.toString())
+                            putExtra("deliveryid", deliveryList[position].first)
+                            putExtra("deliveryuid", deliveryList[position].second.delivery_uid)
+                            putExtra("detail", deliveryList[position].second.delivery_detail)
+                            putExtra("address", deliveryList[position].second.delivery_address)
+                            putExtra("category", deliveryList[position].second.category)
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }.run { context?.startActivity(this) }
                     }
@@ -620,7 +633,7 @@ class Fragment2 : Fragment() {
         }
 
         override fun getItemCount(): Int {
-            return deliveryDTOs.size
+            return deliveryList.size
         }
     }
     object DistanceManager {

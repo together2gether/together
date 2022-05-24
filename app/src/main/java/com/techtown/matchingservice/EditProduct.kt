@@ -13,10 +13,13 @@ import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.techtown.matchingservice.databinding.RegisterProductBinding
 import com.techtown.matchingservice.model.ContentDTO
+import kotlinx.android.synthetic.main.product_info.*
 import kotlinx.android.synthetic.main.register_product.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,6 +34,10 @@ class EditProduct : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     var productid: String? = null
     var contentdto = ContentDTO()
+    var item = ContentDTO()
+
+    val db = Firebase.firestore
+    val docRef = db.collection("images")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,15 +48,23 @@ class EditProduct : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        Glide.with(this).load(intent.getStringExtra("imageUrl").toString())
+        productid = intent.getStringExtra("productid").toString()
+
+        docRef.document("$productid").get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    item = document.toObject(ContentDTO::class.java)!!
+                }
+            }
+
+        Glide.with(this).load(item.imageUrl.toString())
             .into(binding.imageViewAddPhotoImage)
-        binding.editTextProduct.setText(intent.getStringExtra("product").toString())
-        binding.editTextTotalNumber.setText(intent.getStringExtra("totalNumber").toString())
-        binding.editTextPrice.setText(intent.getStringExtra("price").toString())
-        binding.editTextUnit.setText(intent.getStringExtra("unit").toString())
-        binding.editTextURL.setText(intent.getStringExtra("URL").toString())
-        binding.editTextPlace.setText(intent.getStringExtra("place").toString())
-        productid = intent.getStringExtra("id").toString()
+        binding.editTextProduct.setText(item.product.toString())
+        binding.editTextTotalNumber.setText(item.totalNumber.toString())
+        binding.editTextPrice.setText(item.price.toString())
+        binding.editTextUnit.setText(item.unit.toString())
+        binding.editTextURL.setText(item.url.toString())
+        binding.editTextPlace.setText(item.place.toString())
 
         binding.button49.setOnClickListener {
             finish()
@@ -90,7 +105,7 @@ class EditProduct : AppCompatActivity() {
         NP_cycle?.maxValue = data1.size-1
         NP_cycle?.wrapSelectorWheel = true
         NP_cycle?.displayedValues = data1
-        NP_cycle?.value= Integer.parseInt(intent.getStringExtra("cycle").toString())
+        NP_cycle?.value= Integer.parseInt(item.cycle.toString())
     }
 
     private fun numberPickerListener(){

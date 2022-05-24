@@ -35,7 +35,7 @@
                     android:drawableLeft="@drawable/warningxml"
                     android:drawablePadding="3dp"
                     android:gravity="right"
-                    android:text="2km 이내의 상품들입니다."
+                    android:text="2km 이내의 상품들 입니다. ( 거리순 )"
                     android:textSize="10sp" />
 
                 <LinearLayout

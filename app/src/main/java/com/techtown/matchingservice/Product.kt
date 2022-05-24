@@ -52,25 +52,45 @@ class Product : AppCompatActivity() {
         uid = FirebaseAuth.getInstance().uid!!
         firestore = FirebaseFirestore.getInstance()
 
-        Glide.with(this).load(intent.getStringExtra("imageUrl").toString())
-            .into(binding.productInfoPhoto)
-        binding.productInfoProduct.text = intent.getStringExtra("product").toString()
-        binding.productInfoTotal.text = "총 " +intent.getStringExtra("totalNumber").toString() + " 개"
-        var price:Int = Integer.parseInt(intent.getStringExtra("price").toString())/Integer.parseInt(intent.getStringExtra("participationTotal").toString())
-        binding.productInfoUnit.text =price.toString() + "원 ( "+intent.getStringExtra("unit").toString()+ " 개 )"
-        var URL : String = intent.getStringExtra("URL").toString()
-        binding.productInfoURL.text = URL
-        binding.productInfoPlace.text = intent.getStringExtra("place").toString()
-        binding.productInfoCycle.text = intent.getStringExtra("cycle").toString()
-        binding.productInfoParticipationNumber.text = intent.getStringExtra("participationCount").toString()+" / "+intent.getStringExtra("participationTotal").toString()
-        regist_userid = intent.getStringExtra("Uid").toString()
-        productid = intent.getStringExtra("id").toString()
-        product_name = intent.getStringExtra("product").toString()
+        productid = intent.getStringExtra("productid").toString()
 
-        binding.productInfoURL.setOnClickListener{
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse(URL))
-            startActivity(intent)
-        }
+        docRef.document("$productid").get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    item = document.toObject(ContentDTO::class.java)!!
+                    if(item?.Participation?.get(uid) == true) binding.productInfoParticipation.isEnabled=false
+                    if(item?.ParticipationCount == item?.ParticipationTotal){
+                        binding.productInfoParticipation.isEnabled=false
+                    }
+                    val time = item?.timestamp
+                    val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                    val timeStr = dateFormat.format(Date(time!!)).toString()
+                    ProductregisterTime.setText(timeStr)
+
+                    product_name = item.product.toString()
+                    Glide.with(this).load(item.imageUrl).into(binding.productInfoPhoto)
+                    binding.productInfoProduct.text = product_name
+                    binding.productInfoTotal.text = "총 " +item.totalNumber + " 개"
+                    var price:Int = Integer.parseInt(item.price.toString())/Integer.parseInt(item.ParticipationTotal.toString())
+                    binding.productInfoUnit.text =price.toString() + "원 ( "+item.unit.toString()+ " 개 )"
+                    var URL : String = item.url.toString()
+                    binding.productInfoURL.text = URL
+                    binding.productInfoPlace.text = item.place.toString()
+                    binding.productInfoCycle.text = item.cycle.toString()
+                    binding.productInfoParticipationNumber.text = item.ParticipationCount.toString()+" / "+item.ParticipationTotal.toString()
+                    regist_userid = item.uid.toString()
+
+                    binding.productInfoURL.setOnClickListener{
+                        var intent = Intent(Intent.ACTION_VIEW, Uri.parse(URL))
+                        startActivity(intent)
+                    }
+
+                }
+            }
+
+
+
+
 
         usersRef.child(regist_userid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onCancelled(error: DatabaseError) {
@@ -109,7 +129,8 @@ class Product : AppCompatActivity() {
 
         binding.productInfoRevice.setOnClickListener(){
             Intent(this, EditProduct::class.java).apply{
-                putExtra("product", binding.productInfoProduct.text)
+                putExtra("productid", productid)
+                /*putExtra("product", binding.productInfoProduct.text)
                 putExtra("imageUrl", intent.getStringExtra("imageUrl").toString())
                 putExtra("price", intent.getStringExtra("price").toString())
                 putExtra("totalNumber", intent.getStringExtra("totalNumber").toString())
@@ -117,7 +138,7 @@ class Product : AppCompatActivity() {
                 putExtra("unit", intent.getStringExtra("unit").toString())
                 putExtra("URL", binding.productInfoURL.text)
                 putExtra("place", binding.productInfoPlace.text)
-                putExtra("id", productid)
+                putExtra("id", productid)*/
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.run { startActivity(this) }
             finish()

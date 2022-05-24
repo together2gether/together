@@ -142,21 +142,12 @@ class TradeActivity : AppCompatActivity() {
 
             holder.card.setOnClickListener {
                 if (items[position].first == 1){
-                    intent_p.putExtra("product", productitem.product.toString())
-                    intent_p.putExtra("imageUrl", productitem.imageUrl.toString())
-                    intent_p.putExtra("price", productitem.price.toString())
-                    intent_p.putExtra("totalNumber", productitem.totalNumber.toString())
-                    intent_p.putExtra("cycle", productitem.cycle.toString())
-                    intent_p.putExtra("unit", productitem.unit.toString())
-                    intent_p.putExtra("URL", productitem.url)
-                    intent_p.putExtra("place", productitem.place)
-                    intent_p.putExtra("timestamp", productitem.timestamp.toString())
-                    intent_p.putExtra("participationCount", productitem.ParticipationCount)
-                    intent_p.putExtra("id", items[position].second )
-                    intent_p.putExtra("uidkey", productitem.Participation.containsKey(uid).toString())
-                    intent_p.putExtra("participationTotal", productitem.ParticipationTotal.toString())
-                    intent_p.putExtra("Uid", productitem.uid.toString())
-                    startActivity(intent_p)
+                    //intent_p.putExtra("productid", items[position].second)
+                    //startActivity(intent_p)
+                    Intent(applicationContext, Product::class.java).apply {
+                        putExtra("productid", items[position].second)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.run {applicationContext?.startActivity(this)}
 
                 }
             }
