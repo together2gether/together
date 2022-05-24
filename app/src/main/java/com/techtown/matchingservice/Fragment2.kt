@@ -125,6 +125,9 @@ class Fragment2 : Fragment() {
                 isopen = "open"
                 binding.dark.setBackgroundColor(Color.parseColor("#80000000"))
                 binding.dark.visibility = View.VISIBLE;
+                binding.dark.setOnClickListener{
+                    binding.menu2.collapse()
+                }
                 binding.all.isEnabled = false;
                 binding.button4.isEnabled = false;
                 binding.button9.isEnabled = false;
@@ -150,6 +153,7 @@ class Fragment2 : Fragment() {
 
             override fun onMenuCollapsed() {
                 isopen = "close"
+
                 binding.dark.visibility = View.GONE;
                 binding.drawerLayout.isEnabled = true;
                 binding.all.isEnabled = true;

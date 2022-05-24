@@ -30,6 +30,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.databinding.Fragment1Binding
+import com.techtown.matchingservice.databinding.Fragment2Binding
 import com.techtown.matchingservice.databinding.ProductItemBinding
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
@@ -41,10 +42,6 @@ class Fragment1 : Fragment() {
     private lateinit var binding: Fragment1Binding
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
-    var mylat : Double = 0.0
-    var mylon : Double = 0.0
-    var mylocation : String = ""
-    lateinit var mycor : List<Address>
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     var items = arrayOf(" 최신 순 ", " 가격 순 ", " 거리 순 ")
@@ -59,7 +56,9 @@ class Fragment1 : Fragment() {
     //var cor : String? = null
     var lat : Double? = null
     var lon : Double? = null
-
+    var mylat : Double? = null
+    var mylon : Double? = null
+    lateinit var mylocation : String
     //var contentDTOs: ArrayList<ContentDTO> = arrayListOf()
     //var contentUidList: ArrayList<String> = arrayListOf()
     @SuppressLint("UseRequireInsteadOfGet")
@@ -111,8 +110,7 @@ class Fragment1 : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 var userInfo = snapshot.getValue<UsersInfo>()
                 mylocation = userInfo!!.address.toString()
-                Log.e("mylocation", mylocation!!)
-                mycor = geocoder.getFromLocationName(mylocation,1)
+                var mycor = geocoder.getFromLocationName(mylocation,1)
                 mylat = mycor[0].latitude
                 mylon = mycor[0].longitude
                 Log.e("mylat", mylat.toString() + ", " + mylon.toString())
@@ -162,10 +160,7 @@ class Fragment1 : Fragment() {
 
 
 
-        binding.api.setOnClickListener {
-            val lowpriceitemIntent = Intent(context, RecommendActivity::class.java)
-            startActivity(lowpriceitemIntent)
-        }
+
 
         //LoadingDialog(requireContext()).show()
         //LoadingDialog(requireContext()).dismiss()
@@ -175,14 +170,17 @@ class Fragment1 : Fragment() {
             val intent = Intent(context, ProductActivity::class.java)
             startActivity(intent)
         }
-        /*binding.low.setOnClickListener {
+        binding.low.setOnClickListener {
             val lowpriceitemIntent = Intent(context, RecommendActivity::class.java)
             startActivity(lowpriceitemIntent)
 
-        }*/
-        /*binding.menu.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
+        }
+        binding.menu.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
             override fun onMenuExpanded() {
                 binding.background.setBackgroundColor(Color.parseColor("#80000000"))
+                binding.background.setOnClickListener {
+                    binding.menu.collapse()
+                }
                 isopen = "open"
             }
 
@@ -190,7 +188,7 @@ class Fragment1 : Fragment() {
                 binding.background.setBackgroundColor(Color.parseColor("#00000000"))
                 isopen = "close"
             }
-        })*/
+        })
 
 
         binding.button3.setOnClickListener {
