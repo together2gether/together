@@ -140,6 +140,8 @@ class ProductActivity : AppCompatActivity() {
                 var contentDTO = ContentDTO()
                 //Insert douwnloadUrl of image
                 contentDTO.imageUrl = uri.toString()
+
+                contentDTO.button = 0
                 //Insert uid of user
                 contentDTO.uid = auth?.currentUser?.uid
                 //Insert userId

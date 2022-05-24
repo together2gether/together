@@ -24,7 +24,9 @@ class AlarmReceiver : BroadcastReceiver() {
     val db = Firebase.firestore
     val docRef = db.collection("images")
     var id : String? = null
+    var productid : String? = null
     var item = ContentDTO()
+    var product : String? = null
     private var uid : String? = null
 
     companion object {
@@ -36,6 +38,7 @@ class AlarmReceiver : BroadcastReceiver() {
         firestore = FirebaseFirestore.getInstance()
         uid = Firebase.auth.currentUser?.uid.toString()
         id = intent.getStringExtra("id").toString()
+        productid = intent.getStringExtra("productid").toString()
 
         docRef.document("$id" ).get()
             .addOnSuccessListener { document ->
@@ -44,6 +47,7 @@ class AlarmReceiver : BroadcastReceiver() {
                     for (users in item!!.Participation) {
                         if (users.value == true) {
                             if (users.key != uid) {
+                                product = item.product.toString()
                                 var str = item.product.toString()+"의 다음 공동 구매가 3일 남았습니다."
                                 FcmPush.instance.sendMessage(users.key, "공동구매 알림",str)
                             }
@@ -51,6 +55,14 @@ class AlarmReceiver : BroadcastReceiver() {
                     }
                 }
             }
+
+        Log.e("알림", productid.toString())
+
+        var tsDoc = firestore?.collection("images")?.document(productid.toString())
+        firestore?.runTransaction { transition ->
+            item.button = 0
+            transition.set(tsDoc!!, item)
+        }
 
         // 채널 생성
         createNotificationChannel(context)
@@ -78,7 +90,7 @@ class AlarmReceiver : BroadcastReceiver() {
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle("공동구매 알림")
-                .setContentText("다음 공동구매가 3일 남았습니다. 참여자들에게 연락을 해주세요.")
+                .setContentText(product+"의 다음 공동구매가 3일 남았습니다. 참여자들에게 연락을 해주세요.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(R.drawable.icon_message)
                 .setColor(R.color.icon_color)

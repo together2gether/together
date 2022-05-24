@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -106,6 +107,11 @@ class GroupActivity : AppCompatActivity() {
             }
             //pid = idlist[position]
 
+            if(groups[position].first.button == 1){
+                holder.btn_cp.isEnabled = false
+            }
+
+
             holder.tv_product.text = groups[position].first.product
             holder.tv_cycle.text = "구매주기 : "+groups[position].first.cycle+" 일"
             holder.tv_price.text = "가격 : "+groups[position].first.price + " 원"
@@ -118,7 +124,7 @@ class GroupActivity : AppCompatActivity() {
             holder.btn_cp.setOnClickListener{
                 pid = groups[position].second
                 cycle = Integer.parseInt(groups[position].first.cycle.toString())
-                complete(holder.btn_cp)
+                complete(position)
             }
 
             holder.btn_drop.setOnClickListener {
@@ -187,20 +193,21 @@ class GroupActivity : AppCompatActivity() {
         }
     }
 
-    fun setAlarm() {
+    fun setAlarm(productid:String) {
         val calender = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 9)
-            set(Calendar.MINUTE, 30)
+            set(Calendar.HOUR_OF_DAY, 21)
+            set(Calendar.MINUTE, 2)
         }
-        Log.d("cycle",cycle.toString())
-        calender.add(Calendar.DATE, cycle!!-3)
-        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-        Log.e("날짜", "current: ${df.format(calender.time)}")
+//        Log.d("cycle",cycle.toString())
+//        calender.add(Calendar.DATE, cycle!!-3)
+//        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+//        Log.e("날짜", "current: ${df.format(calender.time)}")
         //알람 매니저 가져오기.
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(this, AlarmReceiver::class.java)
         intent.putExtra("id",pid)
+        intent.putExtra("productid", productid)
         val pendingIntent = PendingIntent.getBroadcast(
             this,
             M_ALARM_REQUEST_CODE,
@@ -220,16 +227,21 @@ class GroupActivity : AppCompatActivity() {
         private val M_ALARM_REQUEST_CODE = 1000
     }
 
-    fun complete(button:Button){
+    fun complete(position:Int){
         val calender = Calendar.getInstance()
-        calender.add(Calendar.DATE, cycle!!-3)
+        calender.add(Calendar.DATE, cycle!!)
         val builder = AlertDialog.Builder(this)
         val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         builder.setTitle("거래 완료")
             .setMessage("거래 완료 하시겠습니까?\n 다음 거래 날짜는 ${df.format(calender.time)} 입니다.\n다음 거래를 원하지 않을 시 해당 게시물을 삭제해주세요!")
             .setPositiveButton("예",
                 DialogInterface.OnClickListener{ dialog, id->
-                    setAlarm()
+                    var tsDoc = firestore?.collection("images")?.document(groups[position].second.toString())
+                    firestore?.runTransaction { transition ->
+                        groups[position].first.button = 1
+                        transition.set(tsDoc!!, groups[position].first)
+                    }
+                    setAlarm(groups[position].second.toString())
                 })
             .setNegativeButton("아니요",
                 DialogInterface.OnClickListener{ dialog, id->

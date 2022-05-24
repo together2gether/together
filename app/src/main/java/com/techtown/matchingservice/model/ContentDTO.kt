@@ -15,6 +15,7 @@ data class ContentDTO(
     var uid : String? = null,
     var userId : String? = null,
     var timestamp : Long? = null,
+    var button : Int? = 0,
     var ParticipationCount : Int = 0,
     var ParticipationTotal :Int = 0,
     var location : GeoPoint = GeoPoint(37.5466,126.9661),
