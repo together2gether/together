@@ -11,7 +11,8 @@ class ProductViewHolder (v: View) : RecyclerView.ViewHolder(v) {
         //view.productitem_textview_userId.text = item.userId
         view.productitem_textview_product_name.text = item.name
         //view.productitem_participation.text = item.participation
-        view.productitem_textview_place.text = item.price + " / " + item.participationCount + "개"
+
+        view.productitem_textview_place.text = (Integer.parseInt(item.price)/Integer.parseInt(item.participationTotal)).toString() + " / " + item.participationCount + "개"
         Glide.with(view.context).load(item.imageUri).into(view.productItem_photo)
         view.text_numofProduct.text = "1인당 " + item.unit.toString() + "개"
         var timeLong : Long? = item.timestamp.toLong()

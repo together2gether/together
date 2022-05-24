@@ -162,7 +162,10 @@ class Fragment1 : Fragment() {
 
 
 
-
+        binding.api.setOnClickListener {
+            val lowpriceitemIntent = Intent(context, RecommendActivity::class.java)
+            startActivity(lowpriceitemIntent)
+        }
 
         //LoadingDialog(requireContext()).show()
         //LoadingDialog(requireContext()).dismiss()
@@ -172,12 +175,12 @@ class Fragment1 : Fragment() {
             val intent = Intent(context, ProductActivity::class.java)
             startActivity(intent)
         }
-        binding.low.setOnClickListener {
+        /*binding.low.setOnClickListener {
             val lowpriceitemIntent = Intent(context, RecommendActivity::class.java)
             startActivity(lowpriceitemIntent)
 
-        }
-        binding.menu.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
+        }*/
+        /*binding.menu.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
             override fun onMenuExpanded() {
                 binding.background.setBackgroundColor(Color.parseColor("#80000000"))
                 isopen = "open"
@@ -187,7 +190,7 @@ class Fragment1 : Fragment() {
                 binding.background.setBackgroundColor(Color.parseColor("#00000000"))
                 isopen = "close"
             }
-        })
+        })*/
 
 
         binding.button3.setOnClickListener {

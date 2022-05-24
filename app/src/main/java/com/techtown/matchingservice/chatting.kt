@@ -255,6 +255,7 @@ class chatting : AppCompatActivity() {
             })
         } else if(groupchat == "DY"){
             val image = findViewById<ImageButton>(R.id.imageButton2)
+            image.setVisibility(View.VISIBLE)
             roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }

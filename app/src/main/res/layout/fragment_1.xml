@@ -18,7 +18,7 @@
 
             <LinearLayout
                 android:id="@+id/layout1"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
@@ -43,10 +43,28 @@
                     android:textAlignment="gravity"
                     android:visibility="visible" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="10dp">
+
+                    <android.widget.Button
+                        android:id="@+id/api"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/button"
+                        android:backgroundTint="@color/purple_200"
+                        android:text="추천제품"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
                 <View
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/img_filter"
@@ -55,7 +73,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="1dp"
                     android:layout_marginRight="3dp"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/filter" />
 
 
@@ -69,7 +87,8 @@
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:textAlignment="gravity"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
+
 
             </LinearLayout>
 
@@ -158,37 +177,21 @@
 
         </RelativeLayout>
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/menu"
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fragment1ProductRegistration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
-            app:fab_addButtonColorNormal="#143F6B"
-            app:fab_addButtonColorPressed="#ffffff"
-            app:fab_labelStyle="@style/LabelStyle"
-            app:fab_labelsPosition="left">
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/low"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#FFF"
-                app:fab_colorPressed="@color/purple_200"
-                app:fab_icon="@drawable/cart"
-                app:fab_title="추천 제품 보기" />
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fragment1ProductRegistration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:fab_colorNormal="#FFF"
-                app:fab_colorPressed="@color/purple_200"
-                app:fab_icon="@drawable/add"
-                app:fab_title="등록하기" />
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+            android:layout_marginRight="7dp"
+            android:layout_marginBottom="7dp"
+            android:backgroundTint="@color/purple_200"
+            android:src="@drawable/addbutton"
+            android:tint="#ffffff"
+            app:fab_colorNormal="#FFF"
+            app:fab_colorPressed="#ffffff"
+            app:fab_title="등록하기" />
 
     </RelativeLayout>
 </layout>

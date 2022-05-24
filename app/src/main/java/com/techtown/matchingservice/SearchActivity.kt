@@ -41,6 +41,7 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.UsersInfo
 import kotlinx.android.synthetic.main.condition.*
+import java.sql.Types.NULL
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -217,7 +218,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         try{
             mMap = p0
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            updateLocation()
+            setLastLocation(LatLng(mylat, mylon))
             mMap.uiSettings.isMyLocationButtonEnabled = true
             mMap.uiSettings.isZoomControlsEnabled = true
 
@@ -237,7 +238,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 latlngList.clear()
                 mClusterManager.clearItems()
                 adapter.notifyDataSetChanged()
-                updateLocation()
+                //updateLocation()
             }
 
             clusterItemClick(mMap)
@@ -258,7 +259,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     }
                 }
             boundmap()
-            updateLocation()
+            //updateLocation()
 
         } catch (e:Exception){
 
@@ -266,7 +267,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     }
 
     @SuppressLint("MissingPermission")
-    fun updateLocation(){
+    /*fun updateLocation(){
         val locationRequest = com.google.android.gms.location.LocationRequest.create()
         locationRequest.run {
             priority = com.google.android.gms.location.LocationRequest.PRIORITY_HIGH_ACCURACY
@@ -285,8 +286,8 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             }
         }
         fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, Looper.myLooper())
-    }
-    fun setLastLocation(lastLocation : Location){
+    }*/
+    fun setLastLocation(lastLocation : LatLng){
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
         val resources : Resources = this!!.resources
         val bitmap2 = BitmapFactory.decodeResource(resources,R.drawable.red_pin)
@@ -441,7 +442,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             productsList.clear()
             i=0
             for(item in List){
-                var product_price = item.price.toInt()
+                var product_price = (item.price.toInt()/item.participationTotal.toInt())
                 var product_day = item.unit.toInt()
                 var location = item.place
                 var cor = geocoder.getFromLocationName(location,1)
@@ -472,7 +473,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(ContentDTO::class.java)
                     var id = item!!.userId as String
-                    var product_price = item.price as Int
+                    var product_price = (item.price.toInt()/item.ParticipationTotal.toInt())
                     var product_day = item.unit.toInt()
                     var pro_lat = item.location.latitude
                     var pro_lon = item.location.longitude
@@ -537,7 +538,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(ContentDTO::class.java)
                     if(snapshot.getString("product")?.contains(searchWord)==true){
-                        var product_price = item!!.price.toInt()
+                        var product_price = item!!.price.toInt()/item!!.ParticipationTotal
                         var product_day = item.unit.toInt()
                         var pro_lat = item.location.latitude
                         var pro_lon = item.location.longitude
