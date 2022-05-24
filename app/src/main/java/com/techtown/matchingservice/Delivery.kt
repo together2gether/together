@@ -232,8 +232,8 @@ class Delivery : AppCompatActivity() {
                 .addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
                     }
-
                     override fun onDataChange(snapshot: DataSnapshot) {
+
                         val time = System.currentTimeMillis()
                         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
                         val curTime = dateFormat.format(Date(time)).toString()
@@ -252,6 +252,7 @@ class Delivery : AppCompatActivity() {
             Intent(this, chatting::class.java).apply {
                 putExtra("groupchat","DY")
                 putExtra("productid", deliveryid.toString())
+                putExtra("destinationUid", deliveryuid.toString())
             }.run { startActivity(this) }
         }
 

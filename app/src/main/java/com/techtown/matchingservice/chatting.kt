@@ -93,6 +93,17 @@ class chatting : AppCompatActivity() {
         if(groupchat == "N"){
             destinationUid = intent.getStringExtra("destinationUid")
             productid = ""
+        } else if (groupchat == "Y"){
+            productid = intent.getStringExtra("productid")
+            destinationUid = ""
+            recommend.visibility = View.GONE
+        } else if(groupchat == "DY"){
+            productid = intent.getStringExtra("productid")
+            destinationUid = intent.getStringExtra("destinationUid")
+        } else {
+            Toast.makeText(this, "오류", Toast.LENGTH_LONG).show()
+        }
+        if(groupchat != "Y"){
             val destinationRef = usersRef.child(destinationUid.toString())
             destinationRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
@@ -132,15 +143,8 @@ class chatting : AppCompatActivity() {
                     textView_topName.setText(destinationInfo.nickname.toString())
                 }
             })
-        } else if (groupchat == "Y"){
-            productid = intent.getStringExtra("productid")
-            destinationUid = ""
-        } else if(groupchat == "DY"){
-            productid = intent.getStringExtra("productid")
-            destinationUid = ""
-        } else {
-            Toast.makeText(this, "오류", Toast.LENGTH_LONG).show()
         }
+
 
         firestore = FirebaseFirestore.getInstance()
 
@@ -213,8 +217,8 @@ class chatting : AppCompatActivity() {
     }
     private fun checkChatRoom(){
         if(groupchat == "N"){
-            val image = findViewById<ImageButton>(R.id.imageButton2)
-            image.setVisibility(View.VISIBLE)
+            //val image = findViewById<ImageButton>(R.id.imageButton2)
+            //image.setVisibility(View.VISIBLE)
             roomsRef.orderByChild("users/$uid").equalTo(true)
                 .addListenerForSingleValueEvent(object : ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
@@ -234,8 +238,8 @@ class chatting : AppCompatActivity() {
                     }
                 })
         } else if(groupchat == "Y"){
-            val image = findViewById<ImageButton>(R.id.imageButton2)
-            image.setVisibility(View.GONE)
+            //val image = findViewById<ImageButton>(R.id.imageButton2)
+            //image.setVisibility(View.GONE)
             roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
@@ -254,8 +258,8 @@ class chatting : AppCompatActivity() {
                 }
             })
         } else if(groupchat == "DY"){
-            val image = findViewById<ImageButton>(R.id.imageButton2)
-            image.setVisibility(View.VISIBLE)
+            //val image = findViewById<ImageButton>(R.id.imageButton2)
+            //image.setVisibility(View.VISIBLE)
             roomsRef.addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }

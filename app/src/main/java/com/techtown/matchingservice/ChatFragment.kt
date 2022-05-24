@@ -162,6 +162,7 @@ class ChatFragment : Fragment() {
                             Glide.with(holder.itemView.context).load(item?.imageURL)
                                 .apply(RequestOptions().circleCrop())
                                 .into(holder.imageView)
+                            destinationUid = item!!.delivery_uid.toString()
                         }
                     }
             }
@@ -185,6 +186,7 @@ class ChatFragment : Fragment() {
                 } else if ( delivery == true){
                     intent.putExtra("groupchat", "DY")
                     intent.putExtra("productid", p_id)
+                    intent.putExtra("destinationUid", destinationUid.toString() )
                 }
                 context?.startActivity(intent)
             }
