@@ -85,47 +85,51 @@ class Product : AppCompatActivity() {
                         startActivity(intent)
                     }
 
-                }
-            }
+                    regist_userid = item.uid
+                    if(regist_userid == uid){
+                        binding.buttonChat.setVisibility(View.INVISIBLE)
+                        binding.productInfoParticipation.setVisibility(View.INVISIBLE)
+                        binding.productInfoParticipation.isEnabled = false;
+                        binding.productInfoParticipationuser.setVisibility(View.VISIBLE)
+                        binding.productInfoGarbage.setVisibility(View.VISIBLE)
+                        binding.productInfoRevice.setVisibility(View.VISIBLE)
 
-
-
-
-
-        usersRef.child(regist_userid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onCancelled(error: DatabaseError) {
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val userInfo = snapshot.getValue<UsersInfo>()
-                if(userInfo != null){
-                    if(userInfo!!.profileImageUrl.toString() != "") {
-                        Glide.with(product_register_profile.context).load(userInfo?.profileImageUrl)
-                            .apply(RequestOptions().circleCrop())
-                            .into(product_register_profile)
-
+                    }else{
+                        binding.buttonChat.setVisibility(View.VISIBLE)
+                        binding.productInfoParticipation.setVisibility(View.VISIBLE)
+                        binding.productInfoParticipation.isEnabled = true;
+                        binding.productInfoParticipationuser.setVisibility(View.INVISIBLE)
+                        binding.productInfoGarbage.setVisibility(View.INVISIBLE)
+                        binding.productInfoRevice.setVisibility(View.INVISIBLE)
                     }
-                    ProductregisterUserName.setText(userInfo.nickname.toString())
+                    usersRef.child(regist_userid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val userInfo = snapshot.getValue<UsersInfo>()
+                            if(userInfo != null){
+                                if(userInfo!!.profileImageUrl.toString() != "") {
+                                    Glide.with(product_register_profile.context).load(userInfo?.profileImageUrl)
+                                        .apply(RequestOptions().circleCrop())
+                                        .into(product_register_profile)
+
+                                }
+                                ProductregisterUserName.setText(userInfo.nickname.toString())
+                            }
+                        }
+                    })
+
                 }
             }
-        })
 
-        if(regist_userid == uid){
-            binding.buttonChat.setVisibility(View.INVISIBLE)
-            binding.productInfoParticipation.setVisibility(View.INVISIBLE)
-            binding.productInfoParticipation.isEnabled = false;
-            binding.productInfoParticipationuser.setVisibility(View.VISIBLE)
-            binding.productInfoGarbage.setVisibility(View.VISIBLE)
-            binding.productInfoRevice.setVisibility(View.VISIBLE)
 
-        }else{
-            binding.buttonChat.setVisibility(View.VISIBLE)
-            binding.productInfoParticipation.setVisibility(View.VISIBLE)
-            binding.productInfoParticipation.isEnabled = true;
-            binding.productInfoParticipationuser.setVisibility(View.INVISIBLE)
-            binding.productInfoGarbage.setVisibility(View.INVISIBLE)
-            binding.productInfoRevice.setVisibility(View.INVISIBLE)
-        }
+
+
+
+
+
+
 
         binding.productInfoRevice.setOnClickListener(){
             Intent(this, EditProduct::class.java).apply{
@@ -170,6 +174,7 @@ class Product : AppCompatActivity() {
                     val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
                     val timeStr = dateFormat.format(Date(time!!)).toString()
                     ProductregisterTime.setText(timeStr)
+
                 }
             }
 

@@ -54,17 +54,21 @@ class EditProduct : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(ContentDTO::class.java)!!
+                    Glide.with(this).load(item.imageUrl.toString())
+                        .into(binding.imageViewAddPhotoImage)
+                    binding.editTextProduct.setText(item.product.toString())
+                    binding.editTextTotalNumber.setText(item.totalNumber.toString())
+                    binding.editTextPrice.setText(item.price.toString())
+                    binding.editTextUnit.setText(item.unit.toString())
+                    binding.editTextURL.setText(item.url.toString())
+                    binding.editTextPlace.setText(item.place.toString())
+
+                    initNumberPicker()
+                    numberPickerListener()
                 }
             }
 
-        Glide.with(this).load(item.imageUrl.toString())
-            .into(binding.imageViewAddPhotoImage)
-        binding.editTextProduct.setText(item.product.toString())
-        binding.editTextTotalNumber.setText(item.totalNumber.toString())
-        binding.editTextPrice.setText(item.price.toString())
-        binding.editTextUnit.setText(item.unit.toString())
-        binding.editTextURL.setText(item.url.toString())
-        binding.editTextPlace.setText(item.place.toString())
+
 
         binding.button49.setOnClickListener {
             finish()
@@ -92,8 +96,7 @@ class EditProduct : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        initNumberPicker()
-        numberPickerListener()
+
     }
 
     private fun initNumberPicker(){
