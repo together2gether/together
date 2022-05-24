@@ -196,7 +196,7 @@ class GroupActivity : AppCompatActivity() {
     fun setAlarm(productid:String) {
         val calender = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, 21)
-            set(Calendar.MINUTE, 2)
+            set(Calendar.MINUTE, 35)
         }
 //        Log.d("cycle",cycle.toString())
 //        calender.add(Calendar.DATE, cycle!!-3)
@@ -208,6 +208,7 @@ class GroupActivity : AppCompatActivity() {
         val intent = Intent(this, AlarmReceiver::class.java)
         intent.putExtra("id",pid)
         intent.putExtra("productid", productid)
+
         val pendingIntent = PendingIntent.getBroadcast(
             this,
             M_ALARM_REQUEST_CODE,

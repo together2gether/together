@@ -26,6 +26,7 @@ class AlarmReceiver : BroadcastReceiver() {
     var id : String? = null
     var productid : String? = null
     var item = ContentDTO()
+    var contentDTO = ContentDTO()
     var product : String? = null
     private var uid : String? = null
 
@@ -56,12 +57,12 @@ class AlarmReceiver : BroadcastReceiver() {
                 }
             }
 
-        Log.e("알림", productid.toString())
 
         var tsDoc = firestore?.collection("images")?.document(productid.toString())
         firestore?.runTransaction { transition ->
-            item.button = 0
-            transition.set(tsDoc!!, item)
+            contentDTO = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
+            contentDTO.button = 0
+            transition.set(tsDoc!!, contentDTO)
         }
 
         // 채널 생성
@@ -90,7 +91,7 @@ class AlarmReceiver : BroadcastReceiver() {
         with(NotificationManagerCompat.from(context)) {
             val build = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
                 .setContentTitle("공동구매 알림")
-                .setContentText(product+"의 다음 공동구매가 3일 남았습니다. 참여자들에게 연락을 해주세요.")
+                .setContentText("다음 공동구매가 3일 남았습니다. 참여자들에게 연락을 해주세요.")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(R.drawable.icon_message)
                 .setColor(R.color.icon_color)
