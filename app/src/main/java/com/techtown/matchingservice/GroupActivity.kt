@@ -195,14 +195,12 @@ class GroupActivity : AppCompatActivity() {
 
     fun setAlarm(productid:String) {
         val calender = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 21)
-            set(Calendar.MINUTE, 35)
+            set(Calendar.HOUR_OF_DAY, 9)
+            set(Calendar.MINUTE, 30)
         }
-//        Log.d("cycle",cycle.toString())
-//        calender.add(Calendar.DATE, cycle!!-3)
-//        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
-//        Log.e("날짜", "current: ${df.format(calender.time)}")
-        //알람 매니저 가져오기.
+
+        calender.add(Calendar.DATE, cycle!!-3)
+
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(this, AlarmReceiver::class.java)
@@ -211,7 +209,7 @@ class GroupActivity : AppCompatActivity() {
 
         val pendingIntent = PendingIntent.getBroadcast(
             this,
-            M_ALARM_REQUEST_CODE,
+            (System.currentTimeMillis()).toInt(),
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         ) // 있으면 새로 만든거로 업데이트
@@ -222,10 +220,6 @@ class GroupActivity : AppCompatActivity() {
             AlarmManager.INTERVAL_DAY, // 하루에 한번씩.
             pendingIntent
         )
-    }
-
-    companion object {
-        private val M_ALARM_REQUEST_CODE = 1000
     }
 
     fun complete(position:Int){
