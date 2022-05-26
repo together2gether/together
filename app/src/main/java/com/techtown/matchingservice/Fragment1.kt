@@ -108,9 +108,11 @@ class Fragment1 : Fragment() {
                 var userInfo = snapshot.getValue<UsersInfo>()
                 mylocation = userInfo!!.address.toString()
                 var mycor = geocoder.getFromLocationName(mylocation,1)
-                mylat = mycor[0].latitude
-                mylon = mycor[0].longitude
-                Log.e("mylat", mylat.toString() + ", " + mylon.toString())
+                if(mycor != null){
+                    mylat = mycor[0].latitude
+                    mylon = mycor[0].longitude
+                }
+                Log.e("mylocation", mylat.toString() + ", " + mylon.toString())
                 //contentList2.clear()
                /* for(content in contentList!!){
                     item = content.second

@@ -66,9 +66,10 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     var i=0
     lateinit var uid: String
     var List : ArrayList<ProductData> = ArrayList<ProductData>()
-    var price : Int =0
-    var distance : Int =0
-    var day :  Int =0
+    var LatList : ArrayList<LatLngData> = ArrayList()
+    var price : Float =10000.toFloat()
+    var distance : Float =1000.toFloat()
+    var day :  Float =90.toFloat()
     var product :ArrayList<ContentDTO> = arrayListOf()
     var contentUidList: ArrayList<String?> = arrayListOf()
     var productUid : ArrayList<String> = arrayListOf()
@@ -81,7 +82,6 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     var mylat : Double = 0.0
     var mylon : Double = 0.0
     var mylocation : String = ""
-    lateinit var mycor : List<Address>
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -96,58 +96,23 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             dialog.showDialog()
             dialog.setOnClickListener(object : ConditionDialog.OnDialogClickListener{
                 override fun onClicked(p1: Float, p2: Float, p3: Float) {
-                    price = p1.toInt()
-                    day = p2.toInt()
-                    distance = p3.toInt()
+                    price = p1
+                    day = p2
+                    distance = p3
                     condition()
                 }
             })
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         uid = FirebaseAuth.getInstance().uid!!
-        val geocoder = Geocoder(this)
-        val infoRef = database.getReference("usersInfo")
-        val userRef = infoRef.child(uid.toString())
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
 
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var userInfo = snapshot.getValue<UsersInfo>()
-                mylocation = userInfo!!.address.toString()
-                mycor = geocoder.getFromLocationName(mylocation,1)
-                mylat = mycor[0].latitude
-                mylon = mycor[0].longitude
-            }
-
-        })
         adapter = ProductListAdapter(productsList)
         adapter.setItemClickListener(object :
             ProductListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = productsList[position]
                 Intent(applicationContext, Product::class.java).apply {
-                    putExtra("product", productsList[position].name)
-                    putExtra("imageUrl", productsList[position].imageUri)
-                    putExtra("price", productsList[position].price)
-                    putExtra("totalNumber", productsList[position].totalNumber.toString())
-                    putExtra("cycle", productsList[position].cycle.toString())
-                    putExtra("unit", productsList[position].unit.toString())
-                    putExtra("URL", productsList[position].url)
-                    putExtra("place", productsList[position].place)
-                    putExtra("timestamp", productsList[position].timestamp.toString())
-                    putExtra("participationCount", productsList[position].participationCount)
-                    putExtra(
-                        "uidkey",
-                        productsList[position].uidKey
-                    )
-                    putExtra(
-                        "participationTotal",
-                        productsList[position].participationTotal
-                    )
-                    putExtra("id", productsList[position].Listid)
-                    putExtra("Uid", productsList[position].uid)
+                    putExtra("productid", productsList[position].Listid)
 
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run {applicationContext?.startActivity(this)}
@@ -206,6 +171,28 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
     }
+    fun getAddress(){
+        val geocoder = Geocoder(this)
+        val infoRef = database.getReference("usersInfo")
+        val userRef = infoRef.child(uid.toString())
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+                var mycor = geocoder.getFromLocationName(mylocation,1)
+                if(mycor != null){
+                    mylat = mycor[0].latitude
+                    mylon = mycor[0].longitude
+                    setLastLocation(LatLng(mylat, mylon))
+                }
+            }
+
+        })
+    }
     fun permissionGranted(requestCode: Int){
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -218,10 +205,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         try{
             mMap = p0
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-            setLastLocation(LatLng(mylat, mylon))
             mMap.uiSettings.isMyLocationButtonEnabled = true
             mMap.uiSettings.isZoomControlsEnabled = true
-
+            getAddress()
             mClusterManager = ClusterManager<LatLngData>(this, mMap)
             clusterRenderer = MarkerClusterRenderer(
                 this, mMap, mClusterManager
@@ -238,6 +224,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 latlngList.clear()
                 mClusterManager.clearItems()
                 adapter.notifyDataSetChanged()
+                //setLastLocation(LatLng(mylat, mylon))
                 //updateLocation()
             }
 
@@ -250,14 +237,15 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     contentDTOs.clear()
                     contentUidList.clear()
                     for(document in result){
-                        val cor = geocoder.getFromLocationName(document["place"] as String, 1)
-                        val id = document["id"] as String?
+                        //val cor = geocoder.getFromLocationName(document["place"] as String, 1)
+                        //val id = document["id"] as String?
                         var item = document.toObject(ContentDTO::class.java)
                         contentDTOs.add(item!!)
                         contentUidList.add(document.id)
                         i++
                     }
                 }
+            setLastLocation(LatLng(mylat, mylon))
             boundmap()
             //updateLocation()
 
@@ -318,24 +306,6 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     private fun removeLocationListener(){
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
-    /*private fun changeRenderer(item:LatLngData){
-        val drawable1 = getDrawable(R.drawable.pin)
-        val bitmapDrawable2 = drawable1 as BitmapDrawable
-        val bitmap2 = bitmapDrawable2.bitmap
-        val drawable2 = getDrawable(R.drawable.checked_bluepin)
-        val bitmapDrawable3 = drawable2 as BitmapDrawable
-        val bitmap3 = bitmapDrawable3.bitmap
-        if(selectedMarker != clusterRenderer.getMarker(item)){
-            if(selectedMarker != null){
-                selectedMarker!!.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap2))
-            }
-        }
-        if(clusterRenderer.getMarker(item) != null){
-            clusterRenderer.getMarker(item).setIcon(BitmapDescriptorFactory.fromBitmap(bitmap3))
-        }
-        selectedMarker = clusterRenderer.getMarker(item)
-
-    }*/
     fun boundmap(){
         val bounds : LatLngBounds = builder.build()
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, ZoomLevel))
@@ -436,11 +406,14 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         }
         mClusterManager.clearItems()
         List.clear()
+        LatList.clear()
         if(search == "search"){
             List.addAll(productsList)
+            LatList.addAll(latlngList)
             latlngList.clear()
             productsList.clear()
             i=0
+            var j =0
             for(item in List){
                 var product_price = (item.price.toInt()/item.participationTotal.toInt())
                 var product_day = item.unit.toInt()
@@ -459,9 +432,10 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     )
                     productsList.add(product)
                     var loc :LatLng = LatLng(pro_lat, pro_lon)
-                    addLatLngData(i, item.userId, loc)
+                    addLatLngData(LatList[j].index, item.Listid, loc)
                 }
                 i++
+                j++
             }
             adapter.notifyDataSetChanged()
         }
@@ -519,7 +493,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var lng = item.location.longitude
                         var location: LatLng = LatLng(lat, lng)
                         boundmap()
-                        addLatLngData(i, id, location)
+                        addLatLngData(i, Listid, location)
                     }
                     i++
                 }

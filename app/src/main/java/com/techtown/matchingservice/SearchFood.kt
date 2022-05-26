@@ -91,23 +91,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
         selectbutton.setVisibility(View.GONE)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         uid = FirebaseAuth.getInstance().uid!!
-        val geocoder = Geocoder(this)
-        val infoRef = database.getReference("usersInfo")
-        val userRef = infoRef.child(uid.toString())
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
 
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var userInfo = snapshot.getValue<UsersInfo>()
-                mylocation = userInfo!!.address.toString()
-                mycor = geocoder.getFromLocationName(mylocation,1)
-                mylat = mycor[0].latitude
-                mylon = mycor[0].longitude
-            }
-
-        })
         adapter = DeliveryListAdapter(productsList)
         adapter.setItemClickListener(object :
             DeliveryListAdapter.OnItemClickListener{
@@ -180,6 +164,26 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+    fun getAddress(){
+        val geocoder = Geocoder(this)
+        val infoRef = database.getReference("usersInfo")
+        val userRef = infoRef.child(uid.toString())
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+                mycor = geocoder.getFromLocationName(mylocation,1)
+                mylat = mycor[0].latitude
+                mylon = mycor[0].longitude
+                setLastLocation(LatLng(mylat, mylon))
+            }
+
+        })
+    }
     fun permissionGranted(requestCode: Int){
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -195,7 +199,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             setLastLocation(LatLng(mylat, mylon))
             mMap.uiSettings.isMyLocationButtonEnabled = true
             mMap.uiSettings.isZoomControlsEnabled = true
-
+            getAddress()
             mClusterManager = ClusterManager<LatLngData>(this, mMap)
             clusterRenderer = MarkerClusterRenderer(
                 this, mMap, mClusterManager
@@ -208,15 +212,10 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
 
             mMap.setOnInfoWindowClickListener {  }
             mMap.setOnMapClickListener{
-                //card_view.visibility = View.GONE
                 productsList.clear()
-                /*for(i in latlngList){
-                    mClusterManager.removeItem(i)
-                }*/
                 latlngList.clear()
                 mClusterManager.clearItems()
                 adapter.notifyDataSetChanged()
-                setLastLocation(LatLng(mylat, mylon))
             }
 
             clusterItemClick(mMap)
@@ -249,8 +248,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
         val resources : Resources = this!!.resources
         val bitmap2 = BitmapFactory.decodeResource(resources,R.drawable.red_pin)
-        val markerOptions = MarkerOptions().position(LATLNG).title("현재 위치").icon(
-            BitmapDescriptorFactory.fromBitmap(bitmap2))
+        val markerOptions = MarkerOptions().position(LATLNG).title("현재 위치").icon(BitmapDescriptorFactory.fromBitmap(bitmap2))
 
         val cameraPosition = CameraPosition.Builder().target(LATLNG).zoom(15.0f).build()
         //mMap.clear()
@@ -324,8 +322,9 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                     var email = contentDTOs[item.index].delivery_userId as String
                     var delivery = contentDTOs[item.index].delivery as String
                     val uidkey = contentDTOs[item.index].deliveryParticipation.containsKey(uid).toString()
+                    val imageurl = contentDTOs[item.index].imageURL.toString()
                     var product = DeliveryData(id, store, place, orderprice, deliverprice, detail, Listid,
-                    category, participationCount, address, timestamp, email, delivery, uidkey)
+                    category, participationCount, address, timestamp, email, delivery, uidkey, imageurl)
                     productsList.add(product)
                     adapter.notifyDataSetChanged()
                 }
@@ -359,9 +358,10 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             var delivery = contentDTOs[p0.index].delivery.toString()
             var Listid = contentDTOs[p0.index].toString()
             var uidkey = contentDTOs[p0.index].deliveryParticipation.containsKey(uid).toString()
+            var imageurl = contentDTOs[p0.index].imageURL.toString()
             var product = DeliveryData(
                 id, store, name, orderprice, deliverprice, detail,
-                Listid, category, participationCount, address, timestamp, email, delivery, uidkey
+                Listid, category, participationCount, address, timestamp, email, delivery, uidkey, imageurl
             )
             productsList.add(product)
             adapter.notifyDataSetChanged()
@@ -397,9 +397,10 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                     var delivery = item.delivery.toString()
                     var Listid = snapshot.id
                     var uidkey = item.deliveryParticipation.containsKey(uid).toString()
+                    var imageurl = item.imageURL.toString()
                     var product = DeliveryData(
                         id, store, name, orderprice, deliverprice, detail,
-                        Listid, category, participationCount, address, timestamp, email, delivery, uidkey
+                        Listid, category, participationCount, address, timestamp, email, delivery, uidkey, imageurl
                     )
                     productsList.add(product)
                     var lat = cor[0].latitude
