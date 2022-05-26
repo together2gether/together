@@ -8,7 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/relativeLayout">
+        android:layout_above="@id/relativeLayout"
+        android:background="@color/skyBlue">
 
         <RelativeLayout
             android:id="@+id/relative"
@@ -23,7 +24,7 @@
                 android:layout_centerVertical="false"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
-                android:background="@drawable/ic_back" />
+                android:background="@drawable/ic_back_chat" />
 
             <TextView
                 android:id="@+id/textView_topName"
@@ -34,7 +35,7 @@
                 android:gravity="center_horizontal"
                 android:padding="15dp"
                 android:text="눈송이"
-                android:textColor="#000000"
+                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -43,7 +44,8 @@
             android:id="@+id/msg_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/relative">
+            android:layout_below="@id/relative"
+            android:background="@color/skyBlue">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -54,18 +56,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp">
+        android:background="@drawable/send">
 
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:background="#ffffffff"
-            android:src="@drawable/location_marker"
+            android:background="#00ffffff"
+            android:src="@drawable/locationxml"
             android:visibility="visible" />
 
         <EditText
@@ -76,20 +76,18 @@
             android:layout_marginLeft="7dp"
             android:layout_toLeftOf="@id/btn_input"
             android:layout_toRightOf="@id/imageButton2"
-            android:background="@drawable/send"
             android:ems="10"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/black" />
 
-        <android.widget.Button
+        <ImageButton
             android:id="@+id/btn_input"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:layout_height="30dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="7dp"
-            android:background="@drawable/button"
-            android:backgroundTint="@color/purple_200"
-            android:text="입력"
-            android:textColor="#ffffff" />
+            android:layout_marginLeft="2dp"
+            android:background="#00ffffff"
+            android:src="@drawable/sendiconxml" />
     </RelativeLayout>
 </RelativeLayout>

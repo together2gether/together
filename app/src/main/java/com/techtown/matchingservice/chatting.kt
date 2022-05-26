@@ -2,6 +2,7 @@ package com.techtown.matchingservice
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
@@ -62,7 +63,7 @@ class chatting : AppCompatActivity() {
         setContentView(R.layout.chatting)
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
 
-        val imageView = findViewById<Button>(R.id.btn_input)
+        val imageView = findViewById<ImageButton>(R.id.btn_input)
         val editText = findViewById<EditText>(R.id.editText_msg)
         val recommend = findViewById<ImageButton>(R.id.imageButton2)
 
@@ -229,7 +230,7 @@ class chatting : AppCompatActivity() {
                             val chatModel = item.getValue<ChatModel>()
                             if(chatModel?.users!!.containsKey(destinationUid) && chatModel.productid == ""){
                                 chatRoomUid = item.key
-                                val button = findViewById<Button>(R.id.btn_input)
+                                val button = findViewById<ImageButton>(R.id.btn_input)
                                 button.isEnabled = true
                                 recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
                                 recyclerView?.adapter = RecyclerViewAdapter()
@@ -249,7 +250,7 @@ class chatting : AppCompatActivity() {
                         val chatModel = item.getValue<ChatModel>()
                         if(chatModel?.productid == productid){
                             chatRoomUid = item.key
-                            val button = findViewById<Button>(R.id.btn_input)
+                            val button = findViewById<ImageButton>(R.id.btn_input)
                             button.isEnabled = true
                             recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
                             recyclerView?.adapter = RecyclerViewAdapter()
@@ -269,7 +270,7 @@ class chatting : AppCompatActivity() {
                         val chatModel = item.getValue<ChatModel>()
                         if(chatModel?.productid == productid){
                             chatRoomUid = item.key
-                            val button = findViewById<Button>(R.id.btn_input)
+                            val button = findViewById<ImageButton>(R.id.btn_input)
                             button.isEnabled = true
                             recyclerView?.layoutManager = LinearLayoutManager(this@chatting)
                             recyclerView?.adapter = RecyclerViewAdapter()
@@ -345,7 +346,7 @@ class chatting : AppCompatActivity() {
             return MessageViewHolder(view)
         }
 
-        @SuppressLint("RtlHardcoded")
+        @SuppressLint("RtlHardcoded", "ResourceAsColor")
         override fun onBindViewHolder(
             holder: RecyclerViewAdapter.MessageViewHolder,
             position: Int
@@ -394,6 +395,7 @@ class chatting : AppCompatActivity() {
                 holder.layout_destination.visibility=View.VISIBLE
                 holder.textView_name.visibility = View.VISIBLE
                 holder.textView_message.setBackgroundResource(R.drawable.left_item_message)
+                holder.textView_message.setTextColor(Color.WHITE)
                 //holder.layout_main.gravity = Gravity.LEFT
                 //margin값 설정
                 val layoutParams = LinearLayout.LayoutParams(
