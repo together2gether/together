@@ -68,6 +68,12 @@ class ConditionDialog : DialogFragment() {
             format.format(value.toInt())
         }
 
+        binding.slider.setValue(arguments?.getInt("price")!!.toFloat())
+        binding.edittextConditionPrice.setText(arguments?.getInt("price").toString())
+        binding.slider1.setValue(arguments?.getInt("distance")!!.toFloat())
+        binding.edittextConditionDistance.setText(arguments?.getInt("distance").toString())
+        binding.slider2.setValue(arguments?.getInt("day")!!.toFloat())
+        binding.edittextConditionDay.setText(arguments?.getInt("day").toString())
 
         binding.slider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
             @SuppressLint("RestrictedApi")

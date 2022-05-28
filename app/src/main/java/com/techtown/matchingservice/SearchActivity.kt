@@ -67,9 +67,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
     lateinit var uid: String
     var List : ArrayList<ProductData> = ArrayList<ProductData>()
     var LatList : ArrayList<LatLngData> = ArrayList()
-    var price : Int? = null
-    var distance : Int? = null
-    var day :  Int? = null
+    var price : Int = 15000
+    var distance : Int = 1000
+    var day :  Int = 90
     var product :ArrayList<ContentDTO> = arrayListOf()
     var contentUidList: ArrayList<String?> = arrayListOf()
     var productUid : ArrayList<String> = arrayListOf()
@@ -97,6 +97,12 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
         var selectbutton = findViewById<Button>(R.id.btn_select)
         selectbutton.setOnClickListener{
             val dialog = ConditionDialog()
+            var bundle = Bundle()
+            bundle.putInt("price", price)
+            bundle.putInt("distance", distance)
+            bundle.putInt("day", day)
+
+            dialog.arguments = bundle
             dialog.show(supportFragmentManager, "ConditionDialog")
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
