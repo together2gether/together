@@ -1,6 +1,7 @@
 package com.techtown.matchingservice
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -17,13 +18,16 @@ import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.slider.RangeSlider
 import com.google.android.material.slider.Slider
 import com.techtown.matchingservice.databinding.ConditionBinding
+import kotlinx.android.synthetic.main.group_product_item.*
 import java.text.NumberFormat
 import java.util.*
+
 
 class ConditionDialog(context:Context) {
     //private var _binding: ConditionBinding? = null
@@ -38,16 +42,26 @@ class ConditionDialog(context:Context) {
     }
 
     fun showDialog(){
+
         dialog.setContentView(R.layout.condition)
         dialog.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT,
         WindowManager.LayoutParams.WRAP_CONTENT)
         dialog.setCanceledOnTouchOutside(true)
         dialog.setCancelable(true)
         dialog.show()
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.findViewById<Button>(R.id.back).setOnClickListener(){
-            dialog?.cancel()
+            dialog.cancel()
         }
+
+        var search = SearchActivity()
+        dialog.findViewById<Slider>(R.id.slider).setValue(search.price.toFloat())
+        dialog.findViewById<EditText>(R.id.edittext_condition_price).setText(search.price.toInt().toString())
+        dialog.findViewById<Slider>(R.id.slider1).setValue(search.distance.toFloat())
+        dialog.findViewById<EditText>(R.id.edittext_condition_distance).setText(search.distance.toInt().toString())
+        dialog.findViewById<Slider>(R.id.slider2).setValue(search.day.toFloat())
+        dialog.findViewById<EditText>(R.id.edittext_condition_day).setText(search.day.toInt().toString())
+
 
         dialog.findViewById<Slider>(R.id.slider).setLabelFormatter { value: Float ->
             val format = NumberFormat.getCurrencyInstance()

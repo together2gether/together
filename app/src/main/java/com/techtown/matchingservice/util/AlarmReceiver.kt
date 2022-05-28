@@ -44,7 +44,7 @@ class AlarmReceiver : BroadcastReceiver() {
             .addOnSuccessListener { document ->
                 if (document != null) {
                     item = document.toObject(ContentDTO::class.java)!!
-                    for (users in item!!.Participation) {
+                    for (users in item.Participation) {
                         if (users.value == true) {
                             if (users.key != uid) {
                                 var str = item.product.toString()+"의 다음 공동 구매가 3일 남았습니다."
@@ -59,8 +59,12 @@ class AlarmReceiver : BroadcastReceiver() {
                     }
                 }
             }
-
-
+        var tsDoc = firestore?.collection("images")?.document(productid.toString())
+        firestore?.runTransaction { transition ->
+            contentDTO = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
+            contentDTO.button = 0
+            transition.set(tsDoc, contentDTO)
+        }
     }
 
     private fun createNotificationChannel(context: Context) {

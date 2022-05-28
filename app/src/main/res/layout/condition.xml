@@ -55,7 +55,6 @@
                 android:id="@+id/slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:value="15000"
                 android:valueFrom="0"
                 android:valueTo="30000"/>
 
@@ -63,35 +62,34 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginRight="20dp"
-            android:layout_centerHorizontal="true">
-
-            <TextView
-                android:id="@+id/condition_0"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0원 ~ "
-                android:textSize="15dp" />
+                android:layout_height="40dp"
+                android:layout_marginRight="20dp"
+                android:layout_centerHorizontal="true">
 
-            <EditText
-                android:id="@+id/edittext_condition_price"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:background="@drawable/edittext"
-                android:paddingRight="5dp"
-                android:gravity="right"
-                android:inputType="numberSigned"
-                android:text="10000"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 원"
-                android:textSize="15dp"/>
+                <TextView
+                    android:id="@+id/condition_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0원 ~ "
+                    android:textSize="15dp" />
 
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/edittext_condition_price"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/edittext"
+                    android:paddingRight="5dp"
+                    android:gravity="right"
+                    android:inputType="numberSigned"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 원"
+                    android:textSize="15dp"/>
+
+            </LinearLayout>
         </RelativeLayout>
 
         <LinearLayout
@@ -113,7 +111,6 @@
                 android:id="@+id/slider1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:value="1000"
                 android:valueFrom="0"
                 android:valueTo="2000"
                 android:stepSize="1"/>
@@ -142,8 +139,7 @@
                     android:background="@drawable/edittext"
                     android:paddingRight="5dp"
                     android:gravity="right"
-                    android:inputType="numberSigned"
-                    android:text="1000"/>
+                    android:inputType="numberSigned"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -172,7 +168,6 @@
                 android:id="@+id/slider2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:value="90"
                 android:valueFrom="0"
                 android:valueTo="180"
                 android:stepSize="1"/>
@@ -200,8 +195,7 @@
                     android:background="@drawable/edittext"
                     android:paddingRight="5dp"
                     android:gravity="right"
-                    android:inputType="numberSigned"
-                    android:text="90"/>
+                    android:inputType="numberSigned"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
