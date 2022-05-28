@@ -45,7 +45,7 @@ import java.sql.Types.NULL
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
+class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.OnDataPassListener{
     var search : String = "none"
     var condition : String = "none"
     private val ZoomLevel : Int = 12
@@ -67,9 +67,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     lateinit var uid: String
     var List : ArrayList<ProductData> = ArrayList<ProductData>()
     var LatList : ArrayList<LatLngData> = ArrayList()
-    var price : Int =0
-    var distance : Int =0
-    var day :  Int =0
+    var price : Int? = null
+    var distance : Int? = null
+    var day :  Int? = null
     var product :ArrayList<ContentDTO> = arrayListOf()
     var contentUidList: ArrayList<String?> = arrayListOf()
     var productUid : ArrayList<String> = arrayListOf()
@@ -85,24 +85,19 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     lateinit var mycor : List<Address>
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
+    override fun onDataPass(p1 : Float?, p2 : Float?, p3 : Float?) {
+        price = p1!!.toInt()
+        distance = p2!!.toInt()
+        day = p3!!.toInt()
+        condition()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         var selectbutton = findViewById<Button>(R.id.btn_select)
         selectbutton.setOnClickListener{
-            mClusterManager.hashCode()
-            mClusterManager.clearItems()
-            val dialog = ConditionDialog(this)
-            dialog.showDialog()
-            dialog.setOnClickListener(object : ConditionDialog.OnDialogClickListener{
-                override fun onClicked(p1: Float, p2: Float, p3: Float) {
-                    price = p1.toInt()
-                    day = p2.toInt()
-                    distance = p3.toInt()
-                    condition()
-                }
-            })
+            val dialog = ConditionDialog()
+            dialog.show(supportFragmentManager, "ConditionDialog")
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         uid = FirebaseAuth.getInstance().uid!!
@@ -442,7 +437,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 var pro_lon = cor[0].longitude
                 var product_distance =
                     Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
-                if(price.toInt() >= product_price && day.toInt() >= product_day && distance.toInt() >= product_distance){
+                if(price!!.toInt() >= product_price && day!!.toInt() >= product_day && distance!!.toInt() >= product_distance){
                     n++
                     var product = ProductData(
                         item.userId, item.name, item.place, item.imageUri, item.participation,
@@ -476,7 +471,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     var pro_lon = item.location.longitude
                     var product_distance =
                         Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
-                    if (price>= product_price && day >= product_day && distance >= product_distance) {
+                    if (price!!>= product_price && day!! >= product_day && distance!! >= product_distance) {
                         n++
                         var name = item.product as String
                         var place = item.place as String
@@ -547,7 +542,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var pro_lon = item.location.longitude
                         var product_distance =
                             Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
-                        if (price.toInt() >= product_price && day.toInt() >= product_day && distance.toInt() >= product_distance) {
+                        if (price!!.toInt() >= product_price && day!!.toInt() >= product_day && distance!!.toInt() >= product_distance) {
                             j++
                             var item = snapshot.toObject(ContentDTO::class.java)
                             var id = item!!.userId as String
