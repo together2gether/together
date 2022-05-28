@@ -22,8 +22,7 @@
             <ImageView
                 android:id="@+id/participantitem_img"
                 android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/man" />
+                android:layout_height="60dp" />
 
             <TextView
                 android:id="@+id/nickname"
