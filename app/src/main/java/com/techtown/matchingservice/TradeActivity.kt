@@ -135,6 +135,7 @@ class TradeActivity : AppCompatActivity() {
                                 holder.date.text = dateFormat.format(Date(items[position].third))
                                 holder.price.text = ""
                                 holder.textv.visibility = View.INVISIBLE
+                                holder.btn_cp.visibility = View.INVISIBLE
                             }
                         }
                     }
@@ -160,6 +161,7 @@ class TradeActivity : AppCompatActivity() {
             val price : TextView = view.findViewById(R.id.list_price)
             val textv : TextView = view.findViewById(R.id.textView3)
             val card : CardView = view.findViewById(R.id.list_card)
+            val btn_cp : Button = view.findViewById(R.id.button_complete)
         }
 
         override fun getItemCount(): Int {
