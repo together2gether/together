@@ -191,7 +191,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:background="@drawable/location_marker"
-                        android:backgroundTint="#143F6B" />
+                        />
 
                     <TextView
                         android:id="@+id/productInfo_place"

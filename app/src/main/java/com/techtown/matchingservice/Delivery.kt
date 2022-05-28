@@ -77,7 +77,7 @@ class Delivery : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
-                    if(item?.deliveryParticipation?.get(uid) == true) {
+                    if(item?.delivery_uid == uid) {
                         binding.foodInfoChat.setVisibility(View.INVISIBLE)
                         binding.foodInfoCancel.setVisibility(View.INVISIBLE)
                         binding.foodInfoParticipation.setVisibility(View.INVISIBLE)
@@ -91,6 +91,14 @@ class Delivery : AppCompatActivity() {
                         //binding.foodInfoParticipation.isEnabled = true;
                         binding.foodInfoRevice.setVisibility(View.INVISIBLE)
                         binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
+                        if(item.deliveryParticipation[uid] == true){
+                            binding.foodInfoParticipation.visibility = View.INVISIBLE
+                            if(deliveryuid == uid){
+                                binding.foodInfoCancel.visibility = View.INVISIBLE
+                            }else {
+                                binding.foodInfoCancel.visibility = View.VISIBLE
+                            }
+                        }
                     }
                     if(item.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
                     val time = item.delivery_timestamp
@@ -98,14 +106,7 @@ class Delivery : AppCompatActivity() {
                     val timeStr = dateFormat.format(Date(time!!)).toString()
                     foodregisterTime.setText(timeStr)
 
-                    if(item.deliveryParticipation[uid] == true){
-                        binding.foodInfoParticipation.visibility = View.INVISIBLE
-                        if(deliveryuid == uid){
-                            binding.foodInfoCancel.visibility = View.INVISIBLE
-                        }else {
-                            binding.foodInfoCancel.visibility = View.VISIBLE
-                        }
-                    }
+
                     binding.foodInfoStore.text = item.store
                     binding.foodInfoName.text = item.name
                     binding.foodInfoOrderprice.text = item.order_price.toString()
