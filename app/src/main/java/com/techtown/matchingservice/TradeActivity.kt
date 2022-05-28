@@ -1,5 +1,9 @@
 package com.techtown.matchingservice
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,6 +26,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.techtown.matchingservice.model.ContentDTO
 import com.techtown.matchingservice.model.DeliveryDTO
+import com.techtown.matchingservice.util.AlarmReceiver
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -31,6 +38,8 @@ class TradeActivity : AppCompatActivity() {
     var pid : String? = null
     var item_p = ContentDTO()
     var item_d = DeliveryDTO()
+    var cycle : Int? = null
+    var contentDTO = ContentDTO()
     val db = Firebase.firestore
     val docRef = db.collection("images")
     val delRef = db.collection("delivery")
@@ -38,7 +47,7 @@ class TradeActivity : AppCompatActivity() {
 
     //var items = ArrayList<Triple<Int, Triple<String, Long, Int>, String>>()
     //var items = ArrayList<Triple<Int, String, Long>>()
-    var items = ArrayList<Triple<Pair<Int, Int>, String, Long>>()
+    var items = ArrayList<Triple<Triple<Int, Int, Int>, String, Long>>()
 
     val intent_p = Intent(this, Product::class.java)
     val intent_d = Intent(this, Delivery::class.java)
@@ -61,7 +70,7 @@ class TradeActivity : AppCompatActivity() {
                 for(document in documents){
                     item_p = document.toObject(ContentDTO::class.java)
                     if(item_p.uid == uid){
-                        items.add(Triple( Pair(1, item_p.cycle), document.id, item_p.timestamp) as Triple<Pair<Int, Int>, String, Long>)
+                        items.add(Triple( Triple(1, item_p.cycle, item_p.button), document.id, item_p.timestamp) as Triple<Triple<Int,Int,Int>, String, Long>)
                         //items.add(Triple(1,Triple(item_p.product, item_p.timestamp, item_p.price / item_p.ParticipationTotal),item_p.imageUrl.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
                     }
                 }
@@ -71,10 +80,10 @@ class TradeActivity : AppCompatActivity() {
                             item_d = document.toObject(DeliveryDTO::class.java)
                             if(item_d.delivery_uid == uid){
                                 if(item_d.delivery == true){
-                                    items.add(Triple(Pair(2, 0), document.id, item_d.delivery_timestamp) as Triple<Pair<Int, Int>, String, Long>)
+                                    items.add(Triple(Triple(2, 0, 0), document.id, item_d.delivery_timestamp) as Triple<Triple<Int, Int, Int>, String, Long>)
                                     //items.add(Triple(2,Triple(item_d.store, item_d.delivery_timestamp, null),item_d.imageURL.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
                                 } else if(item_d.delivery == false){
-                                    items.add(Triple(Pair(3,0), document.id, item_d.delivery_timestamp) as Triple<Pair<Int, Int>, String, Long>)
+                                    items.add(Triple(Triple(3,0,0), document.id, item_d.delivery_timestamp) as Triple<Triple<Int, Int,Int>, String, Long>)
                                     //items.add(Triple(3,Triple(item_d.store, item_d.delivery_timestamp, null),item_d.imageURL.toString()) as Triple<Int, Triple<String, Long, Int>, String>)
                                 }
                             }
@@ -103,6 +112,9 @@ class TradeActivity : AppCompatActivity() {
             var productitem = ContentDTO()
             var deliveryitem = DeliveryDTO()
             if(items[position].first.first == 1){
+                if(items[position].first.third == 1){
+                    holder.btn_cp.isEnabled = false
+                }
                 docRef.get()
                     .addOnSuccessListener { documents ->
                         for(document in documents){
@@ -120,6 +132,11 @@ class TradeActivity : AppCompatActivity() {
                             }
                         }
                     }
+                holder.btn_cp.setOnClickListener{
+                    pid = items[position].second
+                    cycle = Integer.parseInt(items[position].first.second.toString())
+                    complete(position)
+                }
 
             } else{
                 delRef.get()
@@ -168,5 +185,58 @@ class TradeActivity : AppCompatActivity() {
         override fun getItemCount(): Int {
             return items.size
         }
+    }
+
+    fun setAlarm(productid:String) {
+        val calender = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, 15)
+            set(Calendar.MINUTE, 53)
+        }
+
+        calender.add(Calendar.DATE, cycle!!-3)
+
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(this, AlarmReceiver::class.java)
+        intent.putExtra("id",pid)
+        intent.putExtra("productid", productid)
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            this,
+            (System.currentTimeMillis()).toInt(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        ) // 있으면 새로 만든거로 업데이트
+
+        alarmManager.setInexactRepeating( // 정시에 반복
+            AlarmManager.RTC_WAKEUP, // RTC_WAKEUP : 실제 시간 기준으로 wakeup , ELAPSED_REALTIME_WAKEUP : 부팅 시간 기준으로 wakeup
+            calender.timeInMillis, // 언제 알람이 발동할지.
+            AlarmManager.INTERVAL_DAY, // 하루에 한번씩.
+            pendingIntent
+        )
+    }
+
+    fun complete(position:Int){
+        val calender = Calendar.getInstance()
+        calender.add(Calendar.DATE, cycle!!)
+        val builder = AlertDialog.Builder(this)
+        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        builder.setTitle("거래 완료")
+            .setMessage("거래 완료 하시겠습니까?\n 다음 거래 날짜는 ${df.format(calender.time)} 입니다.\n다음 거래를 원하지 않을 시 해당 게시물을 삭제해주세요!")
+            .setPositiveButton("예",
+                DialogInterface.OnClickListener{ dialog, id->
+                    var tsDoc = firestore?.collection("images")?.document(items[position].second.toString())
+                    firestore?.runTransaction { transition ->
+                        contentDTO = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
+                        contentDTO.button = 1
+                        transition.set(tsDoc, contentDTO)
+                    }
+                    setAlarm(items[position].second.toString())
+                })
+            .setNegativeButton("아니요",
+                DialogInterface.OnClickListener{ dialog, id->
+                })
+        builder.show()
+
     }
 }

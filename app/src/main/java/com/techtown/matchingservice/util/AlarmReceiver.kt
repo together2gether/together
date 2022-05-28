@@ -49,11 +49,11 @@ class AlarmReceiver : BroadcastReceiver() {
                             if (users.key != uid) {
                                 var str = item.product.toString()+"의 다음 공동 구매가 3일 남았습니다."
                                 if(product != item.product.toString() ){
-                                        product = item.product.toString()
-                                        FcmPush.instance.sendMessage(users.key, "공동구매 알림", str)
-                                        createNotificationChannel(context)
-                                        notifyNotification(context, product.toString())
-                                    }
+                                    product = item.product.toString()
+                                    FcmPush.instance.sendMessage(users.key, "공동구매 알림", str)
+                                    createNotificationChannel(context)
+                                    notifyNotification(context, product.toString())
+                                }
                             }
                         }
                     }
