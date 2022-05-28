@@ -159,26 +159,27 @@ class Delivery : AppCompatActivity() {
                     if(myuid == uid){
                         binding.recommend.visibility = View.GONE
                     }
+                    usersRef.child(deliveryuid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val userInfo = snapshot.getValue<UsersInfo>()
+                            if(userInfo != null){
+                                if(userInfo.profileImageUrl.toString() != ""){
+                                    Glide.with(food_register_profile.context).load(userInfo.profileImageUrl)
+                                        .apply(RequestOptions().circleCrop())
+                                        .into(food_register_profile)
+                                }
+                                foodregisterUserName.setText(userInfo.nickname.toString())
+                            }
+                        }
+                    })
                 }
             }
 
 
-        usersRef.child(deliveryuid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
-            override fun onCancelled(error: DatabaseError) {
-            }
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val userInfo = snapshot.getValue<UsersInfo>()
-                if(userInfo != null){
-                    if(userInfo.profileImageUrl.toString() != ""){
-                        Glide.with(food_register_profile.context).load(userInfo.profileImageUrl)
-                            .apply(RequestOptions().circleCrop())
-                            .into(food_register_profile)
-                    }
-                    foodregisterUserName.setText(userInfo.nickname.toString())
-                }
-            }
-        })
 
         
         binding.foodInfoCancel.setOnClickListener {
