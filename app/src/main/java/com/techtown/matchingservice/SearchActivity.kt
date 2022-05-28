@@ -121,7 +121,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 if(mycor != null){
                     mylat = mycor[0].latitude
                     mylon = mycor[0].longitude
-                    setLastLocation(LatLng(mylat, mylon))
+                    if(mylat !=0.0 && ::mMap.isInitialized){
+                        setLastLocation(LatLng(mylat, mylon))
+                    }
                 }
             }
 
@@ -277,7 +279,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
         val resources : Resources = this!!.resources
         val bitmap2 = BitmapFactory.decodeResource(resources,R.drawable.red_pin)
-        val markerOptions = MarkerOptions().position(LATLNG).title("현재 위치").icon(BitmapDescriptorFactory.fromBitmap(bitmap2))
+        val markerOptions = MarkerOptions().position(LATLNG).title("주소 상의 위치").icon(BitmapDescriptorFactory.fromBitmap(bitmap2))
 
         val cameraPosition = CameraPosition.Builder().target(LATLNG).zoom(15.0f).build()
         //mMap.clear()
@@ -416,6 +418,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
 
     }
     fun condition(){
+        var n=0
         condition = "condition"
         for(z in latlngList){
             mClusterManager.removeItem(z)
@@ -440,6 +443,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 var product_distance =
                     Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
                 if(price.toInt() >= product_price && day.toInt() >= product_day && distance.toInt() >= product_distance){
+                    n++
                     var product = ProductData(
                         item.userId, item.name, item.place, item.imageUri, item.participation,
                         item.price, item.totalNumber, item.cycle, item.unit, item.url,
@@ -449,10 +453,12 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     productsList.add(product)
                     var loc :LatLng = LatLng(pro_lat, pro_lon)
                     addLatLngData(LatList[j].index, item.Listid, loc)
-                    Toast.makeText(applicationContext, i.toString(), Toast.LENGTH_LONG).show()
                 }
                 i++
                 j++
+            }
+            if(n==0){
+                Toast.makeText(this, "조건에 맞는 상품이 없습니다.",Toast.LENGTH_LONG).show()
             }
             adapter.notifyDataSetChanged()
         }
@@ -471,6 +477,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     var product_distance =
                         Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
                     if (price>= product_price && day >= product_day && distance >= product_distance) {
+                        n++
                         var name = item.product as String
                         var place = item.place as String
                         var image = item.imageUrl as String
@@ -514,11 +521,16 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     }
                     i++
                 }
+                if(n==0) {
+                    Toast.makeText(this, "조건에 맞는 상품이 없습니다.", Toast.LENGTH_LONG).show()
+                }
+                adapter.notifyDataSetChanged()
             }
-            adapter.notifyDataSetChanged()
+
         }
     }
     fun search(searchWord : String){
+        var j=0
         search = "search"
         mClusterManager.clearItems()
         latlngList.clear()
@@ -536,6 +548,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var product_distance =
                             Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
                         if (price.toInt() >= product_price && day.toInt() >= product_day && distance.toInt() >= product_distance) {
+                            j++
                             var item = snapshot.toObject(ContentDTO::class.java)
                             var id = item!!.userId as String
                             var name = item.product as String
@@ -577,10 +590,12 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                             var lng = item.location.longitude
                             var location: LatLng = LatLng(lat, lng)
                             addLatLngData(i, Listid, location)
-                            Log.e("product", i.toString() + " : " + name)
                         }
                     }
                     i++
+                }
+                if(j==0){
+                    Toast.makeText(this, "해당 상품에 대한 정보가 없습니다.",Toast.LENGTH_LONG).show()
                 }
                 adapter.notifyDataSetChanged()
             }
@@ -591,6 +606,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(ContentDTO::class.java)
                     if(snapshot.getString("product")?.contains(searchWord)==true){
+                        j++
                         var id = item!!.userId as String
                         var name = item.product as String
                         var place = item.place as String
@@ -631,9 +647,11 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var lng = item.location.longitude
                         var location= LatLng(lat, lng)
                         addLatLngData(i, Listid, location)
-                        Log.e("product", i.toString() + " : " + name)
                     }
                     i++
+                }
+                if(j==0){
+                    Toast.makeText(this, "해당 상품에 대한 정보가 없습니다.",Toast.LENGTH_LONG).show()
                 }
                 adapter.notifyDataSetChanged()
             }

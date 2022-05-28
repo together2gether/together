@@ -248,7 +248,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
         val LATLNG = LatLng(lastLocation.latitude, lastLocation.longitude)
         val resources : Resources = this!!.resources
         val bitmap2 = BitmapFactory.decodeResource(resources,R.drawable.red_pin)
-        val markerOptions = MarkerOptions().position(LATLNG).title("현재 위치").icon(BitmapDescriptorFactory.fromBitmap(bitmap2))
+        val markerOptions = MarkerOptions().position(LATLNG).title("주소 상의 위치").icon(BitmapDescriptorFactory.fromBitmap(bitmap2))
 
         val cameraPosition = CameraPosition.Builder().target(LATLNG).zoom(15.0f).build()
         //mMap.clear()
@@ -373,6 +373,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
     }
 
     fun search(searchWord : String){
+        var n=0
         mClusterManager.clearItems()
         productsList.clear()
         latlngList.clear()
@@ -381,6 +382,7 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             for(snapshot in querySnapshot!!.documents){
                 var item = snapshot.toObject(DeliveryDTO::class.java)
                 if(snapshot.getString("store")?.contains(searchWord)==true){
+                    n++
                     var id = item!!.delivery_uid as String
                     var name = item.name as String
                     var store = item.store as String
@@ -409,6 +411,9 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
                     addLatLngData(i, id, loc)
                 }
                 i++
+            }
+            if(n==0){
+                Toast.makeText(this, "해당 상품에 대한 정보가 없습니다.",Toast.LENGTH_LONG).show()
             }
             adapter.notifyDataSetChanged()
         }
