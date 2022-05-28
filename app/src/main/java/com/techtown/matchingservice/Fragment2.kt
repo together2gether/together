@@ -378,6 +378,7 @@ class Fragment2 : Fragment() {
         override fun onDrawerClosed(drawerView: View) {
             drawerView.visibility = View.GONE;
             drawerLayout.visibility = View.GONE;
+            (activity as MainActivity).category_open.visibility = View.VISIBLE
         }
 
         override fun onDrawerOpened(drawerView: View) {
@@ -613,16 +614,7 @@ class Fragment2 : Fragment() {
                 viewHolder.fooditemCardView.setOnClickListener {
                     if(isopen == "close"){
                         Intent(context, Delivery::class.java).apply {
-                            putExtra("store", deliveryList[position].second.store.toString())
-                            putExtra("name", deliveryList[position].second.name.toString())
-                            putExtra("delivery", deliveryList[position].second.delivery.toString())
-                            putExtra("orderPrice", deliveryList[position].second.order_price.toString())
-                            putExtra("deliveryPrice", deliveryList[position].second.delivery_price.toString())
                             putExtra("deliveryid", deliveryList[position].first)
-                            putExtra("deliveryuid", deliveryList[position].second.delivery_uid)
-                            putExtra("detail", deliveryList[position].second.delivery_detail)
-                            putExtra("address", deliveryList[position].second.delivery_address)
-                            putExtra("category", deliveryList[position].second.category)
                             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                         }.run { context?.startActivity(this) }
                     }

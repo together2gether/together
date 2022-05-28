@@ -30,12 +30,14 @@ import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
 import com.techtown.matchingservice.util.FcmPush
 import kotlinx.android.synthetic.main.food_info.*
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class Delivery : AppCompatActivity() {
     private lateinit var binding: FoodInfoBinding
     lateinit var uid: String
+    var deliverid : String? = null
     var firestore: FirebaseFirestore? = null
     var deliveryid : String? = null
     var deliveryuid : String? = null
@@ -61,77 +63,104 @@ class Delivery : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.food_info)
         uid = FirebaseAuth.getInstance().uid!!
         firestore = FirebaseFirestore.getInstance()
-        val myuid = intent.getStringExtra("deliveryuid")
-        if(myuid == uid){
-            binding.recommend.visibility = View.GONE
-        }
+
+        deliverid = intent.getStringExtra("deliveryid")
+
         binding.foodInfoBack.setOnClickListener(){
             finish()
         }
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        val geocoder = Geocoder(this)
         val infoRef = database.getReference("usersInfo")
-        val userRef = infoRef.child(uid.toString())
+        val userRef = infoRef.child(uid)
 
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
 
-            }
+        docRef.document("$deliverid").get()
+            .addOnSuccessListener { document ->
+                if(document != null){
+                    item = document.toObject(DeliveryDTO::class.java)!!
+                    if(item?.deliveryParticipation?.get(uid) == true) {
+                        binding.foodInfoChat.setVisibility(View.INVISIBLE)
+                        binding.foodInfoCancel.setVisibility(View.INVISIBLE)
+                        binding.foodInfoParticipation.setVisibility(View.INVISIBLE)
+                        binding.foodInfoParticipation.isEnabled = false;
+                        binding.foodInfoRevice.setVisibility(View.VISIBLE)
+                        binding.foodInfoGarbage.setVisibility(View.VISIBLE)
+                    }
+                    else{
+                        binding.foodInfoChat.setVisibility(View.VISIBLE)
+                        binding.foodInfoParticipation.setVisibility(View.VISIBLE)
+                        //binding.foodInfoParticipation.isEnabled = true;
+                        binding.foodInfoRevice.setVisibility(View.INVISIBLE)
+                        binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
+                    }
+                    if(item.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
+                    val time = item.delivery_timestamp
+                    val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
+                    val timeStr = dateFormat.format(Date(time!!)).toString()
+                    foodregisterTime.setText(timeStr)
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var userInfo = snapshot.getValue<UsersInfo>()
-                nickname = userInfo!!.nickname.toString()
-                mylocation = userInfo.address.toString()
-                mycor = geocoder.getFromLocationName(mylocation,1)
-                mylat = mycor[0].latitude
-                mylng = mycor[0].longitude
-                yourlocation = intent.getStringExtra("address").toString()
-                yourcor = geocoder.getFromLocationName(yourlocation, 1)
-                yourlat = yourcor[0].latitude
-                yourlng = yourcor[0].longitude
-                val lat = ((mylat+ yourcor[0].latitude)/2).toString()
-                val lng = ((mylng + yourcor[0].longitude)/2).toString()
-                binding.recommend.setOnClickListener {
-                    Intent(applicationContext, RecommandLocation::class.java).apply {
-                        putExtra("mylat", mylat.toString())
-                        putExtra("mylng", mylng.toString())
-                        putExtra("yourlat", yourlat.toString())
-                        putExtra("yourlng", yourlng.toString())
-                        putExtra("lat", lat)
-                        putExtra("lng", lng)
-                        putExtra("delivery", "delivery")
-                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                    }.run {applicationContext?.startActivity(this)}
+                    if(item.deliveryParticipation[uid] == true){
+                        binding.foodInfoParticipation.visibility = View.INVISIBLE
+                        if(deliveryuid == uid){
+                            binding.foodInfoCancel.visibility = View.INVISIBLE
+                        }else {
+                            binding.foodInfoCancel.visibility = View.VISIBLE
+                        }
+                    }
+                    binding.foodInfoStore.text = item.store
+                    binding.foodInfoName.text = item.name
+                    binding.foodInfoOrderprice.text = item.order_price.toString()
+                    binding.foodInfoDeliveryprice.text = item.delivery_price.toString()
+                    binding.foodinfoDeliverydetail.text = item.delivery_detail
+                    deliveryuid = item.delivery_uid
+                    deliverid = document.id
+                    yourlocation = item.delivery_address.toString()
+                    fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+                    val geocoder = Geocoder(this)
+
+                    userRef.addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
+
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            try{
+                                var userInfo = snapshot.getValue<UsersInfo>()
+                                nickname = userInfo!!.nickname.toString()
+                                mylocation = userInfo.address.toString()
+                                mycor = geocoder.getFromLocationName(mylocation,1)
+                                mylat = mycor[0].latitude
+                                mylng = mycor[0].longitude
+                                yourcor = geocoder.getFromLocationName(yourlocation, 1)
+                                yourlat = yourcor[0].latitude
+                                yourlng = yourcor[0].longitude
+                                val lat = ((mylat+ yourcor[0].latitude)/2).toString()
+                                val lng = ((mylng + yourcor[0].longitude)/2).toString()
+                                binding.recommend.setOnClickListener {
+                                    Intent(applicationContext, RecommandLocation::class.java).apply {
+                                        putExtra("mylat", mylat.toString())
+                                        putExtra("mylng", mylng.toString())
+                                        putExtra("yourlat", yourlat.toString())
+                                        putExtra("yourlng", yourlng.toString())
+                                        putExtra("lat", lat)
+                                        putExtra("lng", lng)
+                                        putExtra("delivery", "delivery")
+                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                    }.run {applicationContext?.startActivity(this)}
+                                }
+                            }catch(e : IOException){
+                                e.printStackTrace()
+
+                            }                }
+
+
+
+                    })
+                    val myuid = item.delivery_uid
+                    if(myuid == uid){
+                        binding.recommend.visibility = View.GONE
+                    }
                 }
             }
-
-        })
-
-
-
-        foodName = intent.getStringExtra("store").toString()
-        binding.foodInfoStore.text = foodName
-        binding.foodInfoName.text = intent.getStringExtra("name").toString()
-        binding.foodInfoOrderprice.text = intent.getStringExtra("orderPrice").toString()
-        binding.foodInfoDeliveryprice.text = intent.getStringExtra("deliveryPrice").toString()
-        binding.foodinfoDeliverydetail.text = intent.getStringExtra("detail").toString()
-        deliveryuid = intent.getStringExtra("deliveryuid").toString()
-        deliveryid = intent.getStringExtra("deliveryid").toString()
-
-        if(deliveryuid == uid){
-            binding.foodInfoChat.setVisibility(View.INVISIBLE)
-            binding.foodInfoCancel.setVisibility(View.INVISIBLE)
-            binding.foodInfoParticipation.setVisibility(View.INVISIBLE)
-            binding.foodInfoParticipation.isEnabled = false;
-            binding.foodInfoRevice.setVisibility(View.VISIBLE)
-            binding.foodInfoGarbage.setVisibility(View.VISIBLE)
-        }else{
-            binding.foodInfoChat.setVisibility(View.VISIBLE)
-            binding.foodInfoParticipation.setVisibility(View.VISIBLE)
-            //binding.foodInfoParticipation.isEnabled = true;
-            binding.foodInfoRevice.setVisibility(View.INVISIBLE)
-            binding.foodInfoGarbage.setVisibility(View.INVISIBLE)
-        }
 
 
         usersRef.child(deliveryuid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
@@ -151,28 +180,7 @@ class Delivery : AppCompatActivity() {
             }
         })
 
-        docRef.document("$deliveryid" ).get()
-            .addOnSuccessListener { document ->
-                if(document != null){
-                    item = document.toObject(DeliveryDTO::class.java)!!
-                    //if(item?.deliveryParticipation!!.containsKey(uid)) binding.foodInfoParticipation.isEnabled = false
-                    if(item.delivery_ParticipationCount == 2 ) binding.foodInfoParticipation.isEnabled = false
-                    val time = item.delivery_timestamp
-                    val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
-                    val timeStr = dateFormat.format(Date(time!!)).toString()
-                    foodregisterTime.setText(timeStr)
-
-                    if(item.deliveryParticipation[uid] == true){
-                        binding.foodInfoParticipation.visibility = View.INVISIBLE
-                        if(deliveryuid == uid){
-                            binding.foodInfoCancel.visibility = View.INVISIBLE
-                        }else {
-                            binding.foodInfoCancel.visibility = View.VISIBLE
-                        }
-                    }
-
-                }
-            }
+        
         binding.foodInfoCancel.setOnClickListener {
             docRef.document(deliveryid.toString()).get()
                 .addOnSuccessListener { document ->
@@ -265,15 +273,7 @@ class Delivery : AppCompatActivity() {
 
         binding.foodInfoRevice.setOnClickListener(){
             Intent(this, EditFood::class.java).apply{
-                putExtra("store", binding.foodInfoStore.text)
-                putExtra("name", binding.foodInfoName.text)
-                putExtra("delivery",  intent.getStringExtra("delivery").toString())
-                putExtra("orderPrice", binding.foodInfoOrderprice.text)
-                putExtra("deliveryPrice", binding.foodInfoDeliveryprice.text)
-                putExtra("deliveryid", deliveryid)
-                putExtra("deliveryuid", deliveryuid)
-                putExtra("detail", binding.foodinfoDeliverydetail.text)
-                putExtra("category", intent.getStringExtra("category").toString())
+                putExtra("deliveryid", deliverid)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.run { startActivity(this) }
             finish()

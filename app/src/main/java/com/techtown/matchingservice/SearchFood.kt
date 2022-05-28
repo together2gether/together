@@ -98,15 +98,15 @@ class SearchFood : AppCompatActivity(), OnMapReadyCallback {
             override fun onClick(v: View, position: Int) {
                 val item = productsList[position]
                 Intent(this@SearchFood, Delivery::class.java).apply {
-                    putExtra("store", productsList[position].store.toString())
-                    putExtra("name", productsList[position].place.toString())
-                    putExtra("delivery", productsList[position].delivery.toString())
-                    putExtra("orderPrice", productsList[position].orderprice.toString())
-                    putExtra("deliveryPrice", productsList[position].deliverprice.toString())
+                    //putExtra("store", productsList[position].store.toString())
+                    //putExtra("name", productsList[position].place.toString())
+                    //putExtra("delivery", productsList[position].delivery.toString())
+                    //putExtra("orderPrice", productsList[position].orderprice.toString())
+                    //putExtra("deliveryPrice", productsList[position].deliverprice.toString())
                     putExtra("deliveryid", productsList[position].Listid)
-                    putExtra("deliveryuid", productsList[position].userId)
-                    putExtra("detail", productsList[position].detail)
-                    putExtra("address", productsList[position].address)
+                    //putExtra("deliveryuid", productsList[position].userId)
+                    //putExtra("detail", productsList[position].detail)
+                    //putExtra("address", productsList[position].address)
                     addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }.run {this@SearchFood?.startActivity(this)}
                 adapter.notifyDataSetChanged()

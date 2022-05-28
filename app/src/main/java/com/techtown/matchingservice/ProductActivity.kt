@@ -32,7 +32,7 @@ class ProductActivity : AppCompatActivity() {
     var firestore: FirebaseFirestore? = null
     lateinit var uid: String
     var thisTime : Long? = null
-    var NP_value : String? = null
+    var NP_value : String? = "0"
     var bol : String ?= ""
     var bo : String = ""
     //private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")

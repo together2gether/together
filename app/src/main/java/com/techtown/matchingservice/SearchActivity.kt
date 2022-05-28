@@ -67,9 +67,9 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     lateinit var uid: String
     var List : ArrayList<ProductData> = ArrayList<ProductData>()
     var LatList : ArrayList<LatLngData> = ArrayList()
-    var price : Float =10000.toFloat()
-    var distance : Float =1000.toFloat()
-    var day :  Float =90.toFloat()
+    var price : Int =0
+    var distance : Int =0
+    var day :  Int =0
     var product :ArrayList<ContentDTO> = arrayListOf()
     var contentUidList: ArrayList<String?> = arrayListOf()
     var productUid : ArrayList<String> = arrayListOf()
@@ -82,6 +82,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     var mylat : Double = 0.0
     var mylon : Double = 0.0
     var mylocation : String = ""
+    lateinit var mycor : List<Address>
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -96,16 +97,35 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             dialog.showDialog()
             dialog.setOnClickListener(object : ConditionDialog.OnDialogClickListener{
                 override fun onClicked(p1: Float, p2: Float, p3: Float) {
-                    price = p1
-                    day = p2
-                    distance = p3
+                    price = p1.toInt()
+                    day = p2.toInt()
+                    distance = p3.toInt()
                     condition()
                 }
             })
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         uid = FirebaseAuth.getInstance().uid!!
+        val geocoder = Geocoder(this)
+        val infoRef = database.getReference("usersInfo")
+        val userRef = infoRef.child(uid.toString())
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
 
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+                mycor = geocoder.getFromLocationName(mylocation,1)
+                if(mycor != null){
+                    mylat = mycor[0].latitude
+                    mylon = mycor[0].longitude
+                    setLastLocation(LatLng(mylat, mylon))
+                }
+            }
+
+        })
         adapter = ProductListAdapter(productsList)
         adapter.setItemClickListener(object :
             ProductListAdapter.OnItemClickListener{
@@ -171,28 +191,6 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
         }
 
     }
-    fun getAddress(){
-        val geocoder = Geocoder(this)
-        val infoRef = database.getReference("usersInfo")
-        val userRef = infoRef.child(uid.toString())
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                var userInfo = snapshot.getValue<UsersInfo>()
-                mylocation = userInfo!!.address.toString()
-                var mycor = geocoder.getFromLocationName(mylocation,1)
-                if(mycor != null){
-                    mylat = mycor[0].latitude
-                    mylon = mycor[0].longitude
-                    setLastLocation(LatLng(mylat, mylon))
-                }
-            }
-
-        })
-    }
     fun permissionGranted(requestCode: Int){
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -207,7 +205,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
             mMap.uiSettings.isMyLocationButtonEnabled = true
             mMap.uiSettings.isZoomControlsEnabled = true
-            getAddress()
+
             mClusterManager = ClusterManager<LatLngData>(this, mMap)
             clusterRenderer = MarkerClusterRenderer(
                 this, mMap, mClusterManager
@@ -306,6 +304,24 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
     private fun removeLocationListener(){
         fusedLocationClient.removeLocationUpdates(locationCallback)
     }
+    /*private fun changeRenderer(item:LatLngData){
+        val drawable1 = getDrawable(R.drawable.pin)
+        val bitmapDrawable2 = drawable1 as BitmapDrawable
+        val bitmap2 = bitmapDrawable2.bitmap
+        val drawable2 = getDrawable(R.drawable.checked_bluepin)
+        val bitmapDrawable3 = drawable2 as BitmapDrawable
+        val bitmap3 = bitmapDrawable3.bitmap
+        if(selectedMarker != clusterRenderer.getMarker(item)){
+            if(selectedMarker != null){
+                selectedMarker!!.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap2))
+            }
+        }
+        if(clusterRenderer.getMarker(item) != null){
+            clusterRenderer.getMarker(item).setIcon(BitmapDescriptorFactory.fromBitmap(bitmap3))
+        }
+        selectedMarker = clusterRenderer.getMarker(item)
+
+    }*/
     fun boundmap(){
         val bounds : LatLngBounds = builder.build()
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, ZoomLevel))
@@ -433,6 +449,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                     productsList.add(product)
                     var loc :LatLng = LatLng(pro_lat, pro_lon)
                     addLatLngData(LatList[j].index, item.Listid, loc)
+                    Toast.makeText(applicationContext, i.toString(), Toast.LENGTH_LONG).show()
                 }
                 i++
                 j++
@@ -492,7 +509,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback{
                         var lat = item.location.latitude
                         var lng = item.location.longitude
                         var location: LatLng = LatLng(lat, lng)
-                        boundmap()
+                        //boundmap()
                         addLatLngData(i, Listid, location)
                     }
                     i++
