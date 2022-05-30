@@ -132,14 +132,16 @@ class Fragment1 : Fragment() {
         binding.fragment1ProductRegistration.setOnClickListener {
             val intent = Intent(context, ProductActivity::class.java)
             startActivity(intent)
+            isopen = "close"
         }
         binding.low.setOnClickListener {
             val lowpriceitemIntent = Intent(context, RecommendActivity::class.java)
             startActivity(lowpriceitemIntent)
-
+            isopen = "close"
         }
         binding.menu.setOnFloatingActionsMenuUpdateListener(object: FloatingActionsMenu.OnFloatingActionsMenuUpdateListener{
             override fun onMenuExpanded() {
+                binding.background.visibility = View.VISIBLE
                 binding.background.setBackgroundColor(Color.parseColor("#80000000"))
                 binding.background.setOnClickListener {
                     binding.menu.collapse()
@@ -149,6 +151,7 @@ class Fragment1 : Fragment() {
 
             override fun onMenuCollapsed() {
                 binding.background.setBackgroundColor(Color.parseColor("#00000000"))
+                binding.background.visibility = View.GONE
                 isopen = "close"
             }
         })

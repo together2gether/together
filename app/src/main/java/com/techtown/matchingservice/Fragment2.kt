@@ -341,7 +341,7 @@ class Fragment2 : Fragment() {
         }
         binding.emart.setOnClickListener {
             deliverycheck = 2
-            shoppingcate = "이마트몰"
+            shoppingcate = "SSG.COM"
             binding.categoryLabel.text = "[ " + shoppingcate + " ]"
             binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
             drawerLayout.closeDrawer(drawerView)

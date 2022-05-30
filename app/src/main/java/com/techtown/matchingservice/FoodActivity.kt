@@ -33,7 +33,7 @@ class FoodActivity : AppCompatActivity() {
     private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     var items = arrayOf("")
     val del_items = arrayOf("한식", "중식","일식","양식", "치킨", "피자","분식","디저트","고기","패스트푸드", "기타")
-    val shop_items = arrayOf("쿠팡","이마트몰","마켓컬리","롯데ON","11번가","G마켓","옥션","기타")
+    val shop_items = arrayOf("쿠팡","SSG.COM","마켓컬리","롯데ON","11번가","G마켓","옥션","기타")
     var address : String= ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -192,8 +192,8 @@ class FoodActivity : AppCompatActivity() {
             if(category_st == "쿠팡"){
                 deliveryDTO.imageURL = "https://firebasestorage.googleapis.com/v0/b/matchingservice-ac54b.appspot.com/o/categoryImage%2Fcou.png?alt=media&token=d17e4494-09a6-4da5-8221-7176b41bb284"
             }
-            else if(category_st == "이마트몰"){
-                deliveryDTO.imageURL = "https://firebasestorage.googleapis.com/v0/b/matchingservice-ac54b.appspot.com/o/categoryImage%2Femart.png?alt=media&token=8b5e04f9-3ef2-40b8-8c44-b37019c6c492"
+            else if(category_st == "SSG.COM"){
+                deliveryDTO.imageURL = "https://firebasestorage.googleapis.com/v0/b/matchingservice-ac54b.appspot.com/o/categoryImage%2Fssg.png?alt=media&token=4b287690-da10-45b9-b058-b684a0429968"
             }
             else if(category_st == "마켓컬리"){
                 deliveryDTO.imageURL = "https://firebasestorage.googleapis.com/v0/b/matchingservice-ac54b.appspot.com/o/categoryImage%2Fkurly.png?alt=media&token=c3f8e525-4372-4366-91c3-f69d3b71b8f5"
