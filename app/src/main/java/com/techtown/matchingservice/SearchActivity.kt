@@ -368,6 +368,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                     var totalNumber = contentDTOs[item.index].totalNumber.toString()
                     var cycle = contentDTOs[item.index].cycle.toString()
                     var unit = contentDTOs[item.index].unit.toString()
+                    var s_unit = contentDTOs[item.index].s_unit.toString()
                     var url = contentDTOs[item.index].url as String
                     var uid = contentDTOs[item.index].uid as String
                     var timestamp = contentDTOs[item.index].timestamp.toString()
@@ -375,7 +376,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                     var uidkey = contentDTOs[item.index].Participation.containsKey(uid).toString()
                     var participationTotal = contentDTOs[item.index].ParticipationTotal.toString()
                     var Listid = contentUidList[item.index] as String
-                    var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
+                    var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, s_unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
                     productsList.add(product)
                     adapter.notifyDataSetChanged()
                 }
@@ -402,6 +403,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
             var totalNumber = contentDTOs[p0.index].totalNumber.toString()
             var cycle = contentDTOs[p0.index].cycle.toString()
             var unit = contentDTOs[p0.index].unit.toString()
+            var s_unit = contentDTOs[p0.index].s_unit.toString()
             var url = contentDTOs[p0.index].url as String
             var uid = contentDTOs[p0.index].uid as String
             var timestamp = contentDTOs[p0.index].timestamp.toString()
@@ -409,7 +411,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
             var uidkey = contentDTOs[p0.index].Participation.containsKey(uid).toString()
             var participationTotal = contentDTOs[p0.index].ParticipationTotal.toString()
             var Listid = contentUidList[p0.index] as String
-            var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
+            var product = ProductData(id, name, place, image,participation , price, totalNumber, cycle, unit, s_unit, url, uid, timestamp, participationCount, uidkey, participationTotal,Listid)
             productsList.add(product)
             adapter.notifyDataSetChanged()
             Log.d("qweqwe","wqe")
@@ -447,7 +449,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                     n++
                     var product = ProductData(
                         item.userId, item.name, item.place, item.imageUri, item.participation,
-                        item.price, item.totalNumber, item.cycle, item.unit, item.url,
+                        item.price, item.totalNumber, item.cycle, item.unit, item.s_unit, item.url,
                         item.uid, item.timestamp, item.participationCount,
                         item.uidKey, item.participationTotal, item.Listid
                     )
@@ -488,6 +490,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                         var totalNumber = item.totalNumber.toString()
                         var cycle = item.cycle.toString()
                         var unit = item.unit.toString()
+                        var s_unit = item.s_unit.toString()
                         var url = item.url as String
                         var uid = item.uid as String
                         var timestamp = item.timestamp.toString()
@@ -505,6 +508,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                             totalNumber,
                             cycle,
                             unit,
+                            s_unit,
                             url,
                             uid,
                             timestamp,
@@ -561,6 +565,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                             var totalNumber = item.totalNumber.toString()
                             var cycle = item.cycle.toString()
                             var unit = item.unit.toString()
+                            var s_unit = item.s_unit.toString()
                             var url = item.url as String
                             var uid = item.uid as String
                             var timestamp = item.timestamp.toString()
@@ -578,6 +583,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                                 totalNumber,
                                 cycle,
                                 unit,
+                                s_unit,
                                 url,
                                 uid,
                                 timestamp,
@@ -618,6 +624,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                         var totalNumber = item.totalNumber.toString()
                         var cycle = item.cycle.toString()
                         var unit = item.unit.toString()
+                        var s_unit = item.s_unit.toString()
                         var url = item.url as String
                         var uid = item.uid as String
                         var timestamp = item.timestamp.toString()
@@ -635,6 +642,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                             totalNumber,
                             cycle,
                             unit,
+                            s_unit,
                             url,
                             uid,
                             timestamp,

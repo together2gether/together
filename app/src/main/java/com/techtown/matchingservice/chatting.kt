@@ -280,6 +280,8 @@ class chatting : AppCompatActivity() {
             })
         }
     }
+
+
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MessageViewHolder>(){
         private val comments = ArrayList<ChatModel.Comment>()
         private var user : UsersInfo? = null

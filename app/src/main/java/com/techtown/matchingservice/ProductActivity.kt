@@ -6,6 +6,9 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -37,6 +40,8 @@ class ProductActivity : AppCompatActivity() {
     var bo : String = ""
     //private var database = Firebase.database("https://matchingservice-ac54b-default-rtdb.asia-southeast1.firebasedatabase.app/")
     //private val roomsRef = database.getReference("chatrooms")
+
+    val s_unit = arrayOf( " 개 ", " g ", " l ", " 박스 ", " 봉지 ", " 묶음 ", " 기타 " )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +89,40 @@ class ProductActivity : AppCompatActivity() {
             binding.registerProductStorage.setOnClickListener {
                 contentUpload()
                 finish()
+            }
+        }
+
+        val myAdapter = ArrayAdapter(this, R.layout.item_spinner, s_unit)
+        binding.unitSpinner.adapter = myAdapter
+        binding.unitSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                when(p2) {
+                    0->{
+                        binding.textView15.setText(" 개")
+                    }
+                    1->{
+                        binding.textView15.setText(" g")
+                    }
+                    2->{
+                        binding.textView15.setText(" l")
+                    }
+                    3->{
+                        binding.textView15.setText(" 박스")
+                    }
+                    4 ->{
+                        binding.textView15.setText(" 봉지")
+                    }
+                    5 -> {
+                        binding.textView15.setText(" 묶음")
+                    }
+                    6->{
+                        binding.textView15.setText(" ")
+                    }
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                binding.unitSpinner.selectedItem == " 개"
             }
         }
     }
@@ -156,6 +195,7 @@ class ProductActivity : AppCompatActivity() {
                 contentDTO.totalNumber =Integer.parseInt(binding.editTextTotalNumber.text.toString())
                 //Insert unit
                 contentDTO.unit =Integer.parseInt(binding.editTextUnit.text.toString())
+                contentDTO.s_unit = binding.unitSpinner.selectedItem.toString()
                 //Insert cycle
                 contentDTO.cycle =Integer.parseInt(NP_value)
                 //Insert url

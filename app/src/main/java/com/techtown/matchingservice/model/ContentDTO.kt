@@ -9,6 +9,7 @@ data class ContentDTO(
     var price : Int = 0,
     var totalNumber : Int = 0,
     var unit : Int = 0,
+    var s_unit : String? = null,
     var cycle : Int = 0 ,
     var url : String? = null,
     var place : String? = null,

@@ -71,7 +71,7 @@ class Fragment1 : Fragment() {
         geocoder = Geocoder(context)
         val userRef = infoRef.child(uid.toString())
 
-        firestore?.collection("images")
+        /*firestore?.collection("images")
             ?.orderBy("timestamp")
             ?.addSnapshotListener { value, error ->
                 //contentDTOs.clear()
@@ -96,7 +96,7 @@ class Fragment1 : Fragment() {
                     contentList.reverse()
                     //LoadingDialog(requireContext()).dismiss()
                 }
-            }
+            }*/
 
 
         userRef.addListenerForSingleValueEvent(object : ValueEventListener{
@@ -199,6 +199,33 @@ class Fragment1 : Fragment() {
 
     inner class Fragment1RecyclerviewAdapter() : RecyclerView.Adapter<CustomViewHolder>() {
         init {
+            firestore?.collection("images")
+                ?.orderBy("timestamp")
+                ?.addSnapshotListener { value, error ->
+                    //contentDTOs.clear()
+                    //contentUidList.clear()
+
+                    contentList.clear()
+                    if (value?.documents != null) {
+                        //LoadingDialog(requireContext()).show()
+                        for (snapshot in value!!.documents) {
+                            item = snapshot.toObject(ContentDTO::class.java)
+
+                            /*if (distance <= 3000!!.toInt()) {
+                                //contentDTOs.add(item!!)
+                                //contentUidList.add(snapshot.id)
+                                contentList.add(Triple(snapshot.id, item, distance))
+                            }*/
+                            contentList.add(Triple(snapshot.id, item, null) as Triple<String, ContentDTO, Double>)
+                            Log.e("product my loc", mylat.toString() + ", " + mylon.toString())
+                            Log.e("product loc", lat.toString() + ", " + lon.toString())
+                            //Log.e("product", item!!.place + ", " + distance.toString())
+                        }
+                        contentList.reverse()
+                        //LoadingDialog(requireContext()).dismiss()
+                    }
+                    notifyDataSetChanged()
+                }
             contentList.sortBy { it.second.timestamp }
             contentList.reverse()
             notifyDataSetChanged()
@@ -215,7 +242,7 @@ class Fragment1 : Fragment() {
             //UserId
             //ProductName
             viewHolder.productitemTextviewProductName.text = contentList[position].second.product.toString()
-            viewHolder.textNumofProduct.text = "1인당 " +contentList[position].second.unit.toString() + "개"
+            viewHolder.textNumofProduct.text = "1인당 " +contentList[position].second.unit.toString() + contentList[position].second.s_unit.toString()
             //place
             viewHolder.productitemTextviewPlace.text =
                 (Integer.parseInt(contentList[position].second.price.toString())/Integer.parseInt(contentList[position].second.ParticipationTotal.toString())).toString() + "원"

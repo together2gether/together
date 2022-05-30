@@ -126,7 +126,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="6dp"
                             android:gravity="center"
-                            android:text="총 개수"
+                            android:text="총량"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 
@@ -143,14 +143,17 @@
                             android:paddingRight="10dp"
                             android:textSize="14sp" />
 
-                        <TextView
-                            android:id="@+id/textView10"
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/unit_spinner"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
+                            android:layout_height="32dp"
+                            android:layout_centerInParent="true"
                             android:layout_toRightOf="@id/editTextTotalNumber"
-                            android:text="  개"
-                            android:textSize="14sp" />
+                            android:background="@drawable/spinner_background"
+                            android:fadeScrollbars="true"
+                            android:gravity="center"
+                            android:textAlignment="gravity"
+                            android:visibility="visible" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -165,7 +168,8 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="6dp"
                             android:gravity="center"
-                            android:text="구매단위"
+                            android:text="1인당
+                            구매량"
                             android:textSize="16sp"
                             android:textStyle="bold" />
 

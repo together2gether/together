@@ -14,7 +14,7 @@ class ProductViewHolder (v: View) : RecyclerView.ViewHolder(v) {
 
         view.productitem_textview_place.text = (Integer.parseInt(item.price)/Integer.parseInt(item.participationTotal)).toString() + " / " + item.participationCount + "개"
         Glide.with(view.context).load(item.imageUri).into(view.productItem_photo)
-        view.text_numofProduct.text = "1인당 " + item.unit.toString() + "개"
+        view.text_numofProduct.text = "1인당 " + item.unit.toString() + item.s_unit.toString()
         var timeLong : Long? = item.timestamp.toLong()
         view.text_time.text = timeDiff(timeLong!!)
     }
