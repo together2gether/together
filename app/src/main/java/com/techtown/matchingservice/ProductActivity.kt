@@ -237,6 +237,7 @@ class ProductActivity : AppCompatActivity() {
             contentDTO.totalNumber =Integer.parseInt(binding.editTextTotalNumber.text.toString())
             //Insert unit
             contentDTO.unit =Integer.parseInt(binding.editTextUnit.text.toString())
+            contentDTO.s_unit = binding.unitSpinner.selectedItem.toString()
             //Insert cycle
             contentDTO.cycle =Integer.parseInt(NP_value)
             //Insert url

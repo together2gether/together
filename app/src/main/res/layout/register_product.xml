@@ -147,7 +147,7 @@
                             android:id="@+id/unit_spinner"
                             android:layout_width="wrap_content"
                             android:layout_height="32dp"
-                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
                             android:layout_toRightOf="@id/editTextTotalNumber"
                             android:background="@drawable/spinner_background"
                             android:fadeScrollbars="true"

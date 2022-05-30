@@ -12,7 +12,7 @@ class ProductViewHolder (v: View) : RecyclerView.ViewHolder(v) {
         view.productitem_textview_product_name.text = item.name
         //view.productitem_participation.text = item.participation
 
-        view.productitem_textview_place.text = (Integer.parseInt(item.price)/Integer.parseInt(item.participationTotal)).toString() + " / " + item.participationCount + "개"
+        view.productitem_textview_place.text = "1인당 가격 : "+(Integer.parseInt(item.price)/Integer.parseInt(item.participationTotal)).toString() + " 원"
         Glide.with(view.context).load(item.imageUri).into(view.productItem_photo)
         view.text_numofProduct.text = "1인당 " + item.unit.toString() + item.s_unit.toString()
         var timeLong : Long? = item.timestamp.toLong()
@@ -36,11 +36,11 @@ class ProductViewHolder (v: View) : RecyclerView.ViewHolder(v) {
             for(i in TimeValue.values()){
                 diffTime /= i.value
                 if(diffTime < i.maximum){
-                    msg = i.msg
+                    msg = diffTime.toString() + i.msg
                     break
                 }
             }
         }
-        return diffTime.toString() + msg
+        return msg
     }
 }
