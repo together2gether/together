@@ -43,6 +43,7 @@ import com.techtown.matchingservice.model.DeliveryDTO
 import com.techtown.matchingservice.model.UsersInfo
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_2.*
+import okhttp3.internal.notify
 import java.lang.Math.*
 import kotlin.math.pow
 
@@ -69,6 +70,9 @@ class Fragment2 : Fragment() {
     lateinit var infoRef: DatabaseReference
     lateinit var drawerLayout: DrawerLayout
     lateinit var drawerView : RelativeLayout
+    var deliveryList : ArrayList<Triple<String, DeliveryDTO, Double>> = arrayListOf()
+    var deliveryDTOs : ArrayList<Triple<String, DeliveryDTO, Double>> = arrayListOf()
+    var shoppingDTOs : ArrayList<Triple<String, DeliveryDTO, Double>> = arrayListOf()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -104,8 +108,38 @@ class Fragment2 : Fragment() {
                 mycor = geocoder.getFromLocationName(mylocation, 1)
                 mylat = mycor[0].latitude
                 mylon = mycor[0].longitude
+                if(mylat != 0.0)
+                firestore?.collection("delivery")
+                    ?.orderBy("delivery_timestamp")
+                    ?.addSnapshotListener{ value, error ->
+                        deliveryDTOs.clear()
+                        shoppingDTOs.clear()
+                        if(value?.documents != null){
+                            for(snapshot in value!!.documents){
+                                var item = snapshot.toObject(DeliveryDTO::class.java)
+                                var location = item!!.delivery_address
+                                var cor = geocoder.getFromLocationName(location, 1)
+                                delivery_lat = cor[0].latitude
+                                delivery_lon = cor[0].longitude
+                                var distance = DistanceManager.getDistance(
+                                    mylat,
+                                    mylon,
+                                    delivery_lat,
+                                    delivery_lon
+                                ).toDouble()
+                                if(item!!.delivery){
+                                    deliveryDTOs.add(Triple(snapshot.id, item, distance))
+                                } else{
+                                    shoppingDTOs.add(Triple(snapshot.id, item, distance))
+                                }
+
+                            }
+                        }
+                    }
             }
         })
+
+
 
         binding.fragment2ProductRegistration.setOnClickListener {
             Intent(context, FoodActivity::class.java).apply {
@@ -185,7 +219,7 @@ class Fragment2 : Fragment() {
                 DividerItemDecoration.VERTICAL
             )
         )
-        binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
+        //binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
         /*binding.deliver.setOnClickListener {
             deliverycheck = 1
             binding.fragment2RecyclerView.adapter =Fragment2DeliveryRecyclerviewAdapter()
@@ -199,12 +233,14 @@ class Fragment2 : Fragment() {
 
         binding.categoryLabel.text = "[ " + deliverycate + " ]"
         binding.all.setOnClickListener {
+            drawerLayout.closeDrawer(drawerView)
             deliverycheck = 1
             deliverycate = "전체"
             binding.categoryLabel.text = "[ " + deliverycate + " ]"
-            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
-            drawerLayout.closeDrawer(drawerView)
             (activity as MainActivity).category_open.visibility = View.VISIBLE
+            binding.fragment2RecyclerView.adapter = Fragment2DeliveryRecyclerviewAdapter()
+            Fragment2DeliveryRecyclerviewAdapter().notifyDataSetChanged()
+
         }
         binding.button4.setOnClickListener {
             deliverycheck = 1
@@ -397,196 +433,53 @@ class Fragment2 : Fragment() {
     inner class DeliveryViewHolder(var binding: FoodItemBinding) :
         RecyclerView.ViewHolder(binding.root)
 
-    inner class ShoppingViewHolder(var binding: FoodItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
     inner class Fragment2DeliveryRecyclerviewAdapter() :
         RecyclerView.Adapter<DeliveryViewHolder>() {
 
-        //var deliveryDTOs: ArrayList<DeliveryDTO> = arrayListOf()
-        //var deliveryUidList: ArrayList<String> = arrayListOf()
-        var deliveryList : ArrayList<Triple<String, DeliveryDTO, Double>> = arrayListOf()
-
         init {
-            if (deliverycheck == 1) {
-                if (deliverycate == "전체") {
-                    //Toast.makeText(context, "1", Toast.LENGTH_LONG).show()
-                    firestore?.collection("delivery")
-                        ?.orderBy("delivery_timestamp")
-                        ?.addSnapshotListener { value, error ->
-                            //deliveryDTOs.clear()
-                            //deliveryUidList.clear()
-                            deliveryList.clear()
-                            if (value?.documents != null) {
-                                for (snapshot in value!!.documents) {
-                                    var item = snapshot.toObject(DeliveryDTO::class.java)
-                                    //Toast.makeText(context, item!!.delivery_address.toString(), Toast.LENGTH_LONG).show()
-                                    var location = item!!.delivery_address
-                                    var cor = geocoder.getFromLocationName(location, 1)
-                                    delivery_lat = cor[0].latitude
-                                    delivery_lon = cor[0].longitude
-                                    var distance = DistanceManager.getDistance(
-                                        mylat,
-                                        mylon,
-                                        delivery_lat,
-                                        delivery_lon
-                                    ).toDouble()
-                                    if (item!!.delivery) {
-                                        if (distance <= 2000) {
-                                            deliveryList.add(Triple(snapshot.id, item, distance))
-                                            //deliveryDTOs.add(item)
-                                            //deliveryUidList.add(snapshot.id)
-                                        }
-                                    }
-                                }
-                                deliveryList.sortBy { it.third }
-                                //deliveryDTOs.reverse()
-                                //deliveryUidList.reverse()
-                                notifyDataSetChanged()
+            deliveryList.clear()
+            if(deliverycheck == 1){
+                if(deliverycate == "전체"){
+                    for(i in deliveryDTOs){
+                        //Toast.makeText(context, i.second.delivery_address.toString(), Toast.LENGTH_LONG).show()
+                            if(i.third <= 2000){
+                                deliveryList.add(i)
                             }
-
-                        }
-
-                } else {
-                    firestore?.collection("delivery")
-                        ?.orderBy("delivery_timestamp")
-                        ?.addSnapshotListener { value, error ->
-                            //deliveryDTOs.clear()
-                            //deliveryUidList.clear()
-                            deliveryList.clear()
-                            if (value?.documents != null) {
-                                for (snapshot in value!!.documents) {
-                                    var item = snapshot.toObject(DeliveryDTO::class.java)
-                                    var delivery_uid = item!!.delivery_uid
-                                    var deliveryRef = infoRef.child(delivery_uid.toString())
-                                    deliveryRef.addValueEventListener(object : ValueEventListener {
-                                        override fun onCancelled(error: DatabaseError) {
-
-                                        }
-
-                                        override fun onDataChange(snapshot: DataSnapshot) {
-                                            var deliveryInfo = snapshot.getValue<UsersInfo>()
-                                            delivery_location = deliveryInfo!!.address.toString()
-                                            delivery_cor =
-                                                geocoder.getFromLocationName(delivery_location, 1)
-                                            delivery_lat = delivery_cor[0].latitude
-                                            delivery_lon = delivery_cor[0].longitude
-                                        }
-                                    })
-                                    var distance = DistanceManager.getDistance(
-                                        mylat,
-                                        mylon,
-                                        delivery_lat,
-                                        delivery_lon
-                                    ).toDouble()
-                                    if (item!!.category == deliverycate) {
-                                        if (distance <= 2000) {
-                                            //deliveryDTOs.add(item)
-                                            //deliveryUidList.add(snapshot.id)
-                                            deliveryList.add(Triple(snapshot.id, item, distance))
-                                        }
-                                    }
+                    }
+                    deliveryList.sortBy { it.third }
+                    notifyDataSetChanged()
+                }else{
+                    for(i in deliveryDTOs) {
+                            if (i.second.category == deliverycate) {
+                                if (i.third <= 2000) {
+                                    deliveryList.add(i)
                                 }
-                                deliveryList.sortBy { it.third }
-                                //deliveryDTOs.reverse()
-                                //deliveryUidList.reverse()
-                                notifyDataSetChanged()
                             }
-
-                        }
+                    }
+                    deliveryList.sortBy {it.third}
+                    notifyDataSetChanged()
                 }
-            } else {
-                if (shoppingcate == "전체") {
-                    firestore?.collection("delivery")
-                        ?.orderBy("delivery_timestamp")
-                        ?.addSnapshotListener { value, error ->
-                            deliveryList.clear()
-                            //deliveryDTOs.clear()
-                            //deliveryUidList.clear()
-                            for (snapshot in value!!.documents) {
-                                var item = snapshot.toObject(DeliveryDTO::class.java)
-                                var delivery_uid = item!!.delivery_uid
-                                var deliveryRef = infoRef.child(delivery_uid.toString())
-                                deliveryRef.addValueEventListener(object : ValueEventListener {
-                                    override fun onCancelled(error: DatabaseError) {
-
-                                    }
-
-                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                        var deliveryInfo = snapshot.getValue<UsersInfo>()
-                                        delivery_location = deliveryInfo!!.address.toString()
-                                        delivery_cor =
-                                            geocoder.getFromLocationName(delivery_location, 1)
-                                        delivery_lat = delivery_cor[0].latitude
-                                        delivery_lon = delivery_cor[0].longitude
-                                    }
-                                })
-                                var distance = DistanceManager.getDistance(
-                                    mylat,
-                                    mylon,
-                                    delivery_lat,
-                                    delivery_lon
-                                ).toDouble()
-                                if (!item!!.delivery) {
-                                    if (distance <= 2000) {
-                                        //deliveryDTOs.add(item)
-                                        //deliveryUidList.add(snapshot.id)
-                                        deliveryList.add(Triple(snapshot.id, item, distance))
-                                    }
-                                }
-                            }
-                            //deliveryDTOs.reverse()
-                            //deliveryUidList.reverse()
-                            deliveryList.sortBy { it.third }
-                            notifyDataSetChanged()
+            }else {
+                if(shoppingcate == "전체"){
+                    for(i in shoppingDTOs){
+                        if(i.third <= 2000){
+                            deliveryList.add(i)
                         }
-
-                } else {
-                    firestore?.collection("delivery")
-                        ?.orderBy("delivery_timestamp")
-                        ?.addSnapshotListener { value, error ->
-                            //deliveryDTOs.clear()
-                            //deliveryUidList.clear()
-                            deliveryList.clear()
-                            for (snapshot in value!!.documents) {
-                                var item = snapshot.toObject(DeliveryDTO::class.java)
-                                var delivery_uid = item!!.delivery_uid
-                                var deliveryRef = infoRef.child(delivery_uid.toString())
-                                deliveryRef.addValueEventListener(object : ValueEventListener {
-                                    override fun onCancelled(error: DatabaseError) {
-
-                                    }
-
-                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                        var deliveryInfo = snapshot.getValue<UsersInfo>()
-                                        delivery_location = deliveryInfo!!.address.toString()
-                                        delivery_cor =
-                                            geocoder.getFromLocationName(delivery_location, 1)
-                                        delivery_lat = delivery_cor[0].latitude
-                                        delivery_lon = delivery_cor[0].longitude
-                                    }
-                                })
-                                var distance = DistanceManager.getDistance(
-                                    mylat,
-                                    mylon,
-                                    delivery_lat,
-                                    delivery_lon
-                                ).toDouble()
-                                if (item!!.category == shoppingcate) {
-                                    if (distance <= 2000) {
-                                        //deliveryDTOs.add(item)
-                                        //deliveryUidList.add(snapshot.id)
-                                        deliveryList.add(Triple(snapshot.id, item, distance))
-                                    }
-                                }
-                            }
-                            //deliveryDTOs.reverse()
-                            //deliveryUidList.reverse()
-                            deliveryList.sortBy { it.third }
-                            notifyDataSetChanged()
-                        }
+                    }
+                    deliveryList.sortBy { it.third }
+                    notifyDataSetChanged()
                 }
-
+                else{
+                    for(i in shoppingDTOs){
+                        if(i.second.category == shoppingcate){
+                            if(i.third <= 2000){
+                                deliveryList.add(i)
+                            }
+                        }
+                    }
+                    deliveryList.sortBy { it.third }
+                    notifyDataSetChanged()
+                }
             }
         }
 
@@ -611,17 +504,17 @@ class Fragment2 : Fragment() {
                 .into(viewHolder.foodimage)
 
             //click
-                viewHolder.fooditemCardView.setOnClickListener {
-                    if(isopen == "close"){
-                        Intent(context, Delivery::class.java).apply {
-                            putExtra("deliveryid", deliveryList[position].first)
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        }.run { context?.startActivity(this) }
-                    }
-                    else{
-
-                    }
+            viewHolder.fooditemCardView.setOnClickListener {
+                if(isopen == "close"){
+                    Intent(context, Delivery::class.java).apply {
+                        putExtra("deliveryid", deliveryList[position].first)
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }.run { context?.startActivity(this) }
                 }
+                else{
+
+                }
+            }
         }
 
         override fun getItemCount(): Int {
