@@ -103,43 +103,50 @@ class GroupActivity : AppCompatActivity() {
                     DialogInterface.OnClickListener{dialog, id->
                         docRef.get()
                             .addOnSuccessListener { documents ->
-                                for(document in documents){
-                                    var thisId : String?
+                                for (document in documents) {
+                                    var thisId: String?
                                     item = document.toObject(ContentDTO::class.java)!!
-                                    if(item == groups[position]){
+                                    if (item == groups[position]) {
                                         thisId = document.id
-                                        var tsDoc = firestore?.collection("images")?.document(thisId)
+                                        var tsDoc =
+                                            firestore?.collection("images")?.document(thisId)
                                         firestore?.runTransaction { transition ->
-                                            var contentDTO = transition.get(tsDoc!!).toObject(ContentDTO::class.java)!!
+                                            var contentDTO = transition.get(tsDoc!!)
+                                                .toObject(ContentDTO::class.java)!!
                                             contentDTO.Participation[uid.toString()] = false
                                             contentDTO.ParticipationCount -= 1
                                             transition.set(tsDoc, contentDTO)
                                         }
-                                        roomsRef.orderByChild("productid").equalTo(thisId).addListenerForSingleValueEvent(object : ValueEventListener{
-                                            override fun onCancelled(error: DatabaseError) {
-                                            }
-                                            override fun onDataChange(snapshot: DataSnapshot) {
-                                                for(room in snapshot.children){
-                                                    val chatroom = room.getValue<ChatModel>()
-                                                    var roomId = room.key
-                                                    if(item?.ParticipationCount == 2){
-                                                        roomsRef.child(roomId.toString()).removeValue()
-                                                    } else {
-                                                        chatroom!!.users[uid.toString()] = false
-                                                        roomsRef.child(roomId.toString()).setValue(chatroom)
+                                        roomsRef.orderByChild("productid").equalTo(thisId)
+                                            .addListenerForSingleValueEvent(object :
+                                                ValueEventListener {
+                                                override fun onCancelled(error: DatabaseError) {
+                                                }
+
+                                                override fun onDataChange(snapshot: DataSnapshot) {
+                                                    for (room in snapshot.children) {
+                                                        val chatroom = room.getValue<ChatModel>()
+                                                        var roomId = room.key
+                                                        if (item?.ParticipationCount == 2) {
+                                                            roomsRef.child(roomId.toString())
+                                                                .removeValue()
+                                                        } else {
+                                                            chatroom!!.users[uid.toString()] = false
+                                                            roomsRef.child(roomId.toString())
+                                                                .setValue(chatroom)
+                                                        }
                                                     }
                                                 }
-                                            }
-                                        })
+                                            })
                                     }
                                 }
                             }
-
+                        finish()
                     })
                     .setNegativeButton("아니오",
-                    DialogInterface.OnClickListener { dialog, id ->  })
+                    DialogInterface.OnClickListener { dialog, id ->
+                    })
                 builder.show()
-                notifyDataSetChanged()
                 recyclerView?.adapter = RecyclerViewAdapter()
             }
         }

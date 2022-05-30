@@ -232,6 +232,7 @@ class TradeActivity : AppCompatActivity() {
                         transition.set(tsDoc, contentDTO)
                     }
                     setAlarm(items[position].second.toString())
+                    finish()
                 })
             .setNegativeButton("아니요",
                 DialogInterface.OnClickListener{ dialog, id->
