@@ -2,6 +2,7 @@ package com.techtown.matchingservice
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -9,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.techtown.matchingservice.databinding.RegisterFoodBinding
 import com.techtown.matchingservice.model.ContentDTO
@@ -21,12 +24,17 @@ class EditFood : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var firestore: FirebaseFirestore? = null
     var deliverydto = DeliveryDTO()
+    var item = DeliveryDTO()
     var deliveryid: String? = null
     var items = arrayOf("")
     lateinit var kind : String
     val del_items = arrayOf("한식", "중식","일식","양식", "치킨", "피자","분식","디저트","고기","패스트푸드", "기타")
     val shop_items = arrayOf("쿠팡","이마트몰","마켓컬리","롯데ON","11번가","G마켓","옥션","기타")
     var kind_num : Int =0
+
+    val db = Firebase.firestore
+    val docRef = db.collection("delivery")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.register_food)
@@ -36,31 +44,38 @@ class EditFood : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        binding.registerFoodStoreName.setText(intent.getStringExtra("store").toString())
-        binding.registerFoodName.setText(intent.getStringExtra("name").toString())
-        binding.registerFoodOrderPrice.setText(intent.getStringExtra("orderPrice").toString())
-        binding.registerFoodDeliveryPrice.setText(intent.getStringExtra("deliveryPrice").toString())
-        binding.registerFoodDetail.setText(intent.getStringExtra("detail").toString())
         deliveryid = intent.getStringExtra("deliveryid").toString()
-        items = del_items
-        kind = "delivery"
-        if (intent.getStringExtra("delivery").toString() == "false") {
-            binding.registerFoodName.setText("쇼핑몰 이름")
-            items = shop_items
-            kind = "shopping"
-            for(i in 0..shop_items.size-1){
-                if(intent.getStringExtra("category").toString()==shop_items[i]){
-                    kind_num = i
-                }
-            }
-        }else{
-            for(i in  0..del_items.size-1){
-                if(intent.getStringExtra("category").toString()==del_items[i]){
-                    kind_num = i
-                }
-            }
 
-        }
+        docRef.document("$deliveryid").get()
+            .addOnSuccessListener { document ->
+                item = document.toObject(DeliveryDTO::class.java)!!
+                binding.registerFoodStoreName.setText(item.store.toString())
+                binding.registerFoodName.setText(item.name.toString())
+                binding.registerFoodOrderPrice.setText(item.order_price.toString())
+                binding.registerFoodDeliveryPrice.setText(item.delivery_price.toString())
+                binding.registerFoodDetail.setText(item.delivery_detail.toString())
+                if(item.delivery == false){
+                    binding.registerFoodName.setText("쇼핑몰 이름")
+                    items = shop_items
+                    kind = "shopping"
+                    binding.editTextStore.visibility = View.GONE
+                    for(i in 0..shop_items.size-1){
+                        if(item.category.toString() ==shop_items[i]){
+                            kind_num = i
+                        }
+                    }
+                }
+                else {
+                    items = del_items
+                    kind = "delivery"
+                    for(i in  0..del_items.size-1){
+                        if(item.category.toString()==del_items[i]){
+                            kind_num = i
+                        }
+                    }
+                }
+                Log.d("deliveryid2", kind_num.toString())
+            }
 
         val myAdapter = ArrayAdapter(this, R.layout.item_spinner, items)
         binding.shoppingSpinner.adapter = myAdapter

@@ -37,9 +37,8 @@ import java.util.*
 class Delivery : AppCompatActivity() {
     private lateinit var binding: FoodInfoBinding
     lateinit var uid: String
-    var deliverid : String? = null
-    var firestore: FirebaseFirestore? = null
     var deliveryid : String? = null
+    var firestore: FirebaseFirestore? = null
     var deliveryuid : String? = null
     var item = DeliveryDTO()
     val db = Firebase.firestore
@@ -64,7 +63,7 @@ class Delivery : AppCompatActivity() {
         uid = FirebaseAuth.getInstance().uid!!
         firestore = FirebaseFirestore.getInstance()
 
-        deliverid = intent.getStringExtra("deliveryid")
+        deliveryid = intent.getStringExtra("deliveryid")
 
         binding.foodInfoBack.setOnClickListener(){
             finish()
@@ -73,7 +72,7 @@ class Delivery : AppCompatActivity() {
         val userRef = infoRef.child(uid)
 
 
-        docRef.document("$deliverid").get()
+        docRef.document("$deliveryid").get()
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
@@ -113,7 +112,7 @@ class Delivery : AppCompatActivity() {
                     binding.foodInfoDeliveryprice.text = item.delivery_price.toString()
                     binding.foodinfoDeliverydetail.text = item.delivery_detail
                     deliveryuid = item.delivery_uid
-                    deliverid = document.id
+                    deliveryid = document.id
                     yourlocation = item.delivery_address.toString()
                     fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
                     val geocoder = Geocoder(this)
@@ -275,7 +274,7 @@ class Delivery : AppCompatActivity() {
 
         binding.foodInfoRevice.setOnClickListener(){
             Intent(this, EditFood::class.java).apply{
-                putExtra("deliveryid", deliverid)
+                putExtra("deliveryid", deliveryid)
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }.run { startActivity(this) }
             finish()
@@ -284,6 +283,8 @@ class Delivery : AppCompatActivity() {
         binding.foodInfoGarbage.setOnClickListener(){
             RemovePopup()
         }
+
+
     }
     private fun RemovePopup(){
         val builder = AlertDialog.Builder(this)
@@ -291,6 +292,22 @@ class Delivery : AppCompatActivity() {
             .setMessage("이 게시물을 삭제하시겠습니까?")
             .setPositiveButton("예",
                 DialogInterface.OnClickListener{ dialog, id->
+                    var roomId : String? = null
+                    roomsRef.orderByChild("users/$uid").equalTo(true)
+                        .addListenerForSingleValueEvent(object : ValueEventListener{
+                            override fun onCancelled(error: DatabaseError) {
+                            }
+
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for(item in snapshot.children){
+                                    val chatmodel = item.getValue<ChatModel>()
+                                    if(chatmodel?.productid == deliveryid){
+                                        roomId = item.key
+                                        roomsRef.child(roomId.toString()).removeValue()
+                                    }
+                                }
+                            }
+                        })
                     db.collection("delivery").document("$deliveryid").delete()
                     finish()
                 })

@@ -119,9 +119,11 @@
         <entry key="..\:/Users/rhkds/Desktop/together/app/src/main/res/menu/menu_bottom.xml" value="0.19814814814814816" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable-v24/item_chat.xml" value="0.1755" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable-v24/layer_button_checked.xml" value="0.166" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable-v24/number.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/allbutton.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/background_rounding.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/bottom_icon_color.xml" value="0.1835" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/bunga.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/button_change.xml" value="0.169" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/button_checked.xml" value="0.169" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/button_red.xml" value="0.1" />
@@ -142,6 +144,7 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/logout.xml" value="0.1835" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/logoutxml.xml" value="0.1835" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/lotteon.xml" value="0.1835" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/market.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/navigation_bar.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/navigation_text.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/drawable/page1.xml" value="0.1125" />
@@ -187,7 +190,7 @@
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend_item.xml" value="0.18" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend_location.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/recommend_product.xml" value="0.33" />
-        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/register_food.xml" value="0.1" />
+        <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/register_food.xml" value="0.22" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/register_product.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/shopping_item.xml" value="0.1" />
         <entry key="..\:/Users/sub yebin/Desktop/together/app/src/main/res/layout/trade.xml" value="0.1" />
