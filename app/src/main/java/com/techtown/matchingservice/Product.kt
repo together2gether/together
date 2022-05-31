@@ -70,9 +70,9 @@ class Product : AppCompatActivity() {
                     product_name = item.product.toString()
                     Glide.with(this).load(item.imageUrl).into(binding.productInfoPhoto)
                     binding.productInfoProduct.text = product_name
-                    binding.productInfoTotal.text = "총 " +item.totalNumber + " 개"
+                    binding.productInfoTotal.text = "총 " +item.totalNumber + item.s_unit.toString()
                     var price:Int = Integer.parseInt(item.price.toString())/Integer.parseInt(item.ParticipationTotal.toString())
-                    binding.productInfoUnit.text =price.toString() + "원 ( "+item.unit.toString()+ " 개 )"
+                    binding.productInfoUnit.text =price.toString() + "원 ( "+item.unit.toString()+ item.s_unit.toString() + ")"
                     var URL : String = item.url.toString()
                     binding.productInfoURL.text = URL
                     binding.productInfoPlace.text = item.place.toString()

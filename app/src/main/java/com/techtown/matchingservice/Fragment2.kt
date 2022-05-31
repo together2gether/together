@@ -499,10 +499,15 @@ class Fragment2 : Fragment() {
             //delivery price
             var pdel : Int = deliveryList[position].second.delivery_price / 2
             viewHolder.fooditemTextviewdeliveryprice.text = pdel.toString()
-            Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
-                .apply(RequestOptions().circleCrop())
-                .into(viewHolder.foodimage)
-
+            if(deliveryList[position].second.category == "G마켓"){
+                Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
+                    .apply(RequestOptions().circleCrop())
+                    .into(viewHolder.foodimage)
+            }else{
+                Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
+                    .apply(RequestOptions().circleCrop())
+                    .into(viewHolder.foodimage)
+            }
             //click
             viewHolder.fooditemCardView.setOnClickListener {
                 if(isopen == "close"){

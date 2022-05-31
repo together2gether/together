@@ -275,9 +275,11 @@
                         android:background="@drawable/button"
                         android:backgroundTint="#F4F4F4"
                         android:ems="10"
-                        android:inputType="textLongMessage"
+                        android:inputType="textMultiLine"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp" />
+                        android:paddingRight="10dp"
+                        android:singleLine="false"
+                        android:lines="10"/>
                 </LinearLayout>
 
 
