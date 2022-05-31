@@ -24,9 +24,9 @@ import java.util.*
 class ConditionDialog : DialogFragment() {
     private var _binding: ConditionBinding? = null
     private val binding get() = _binding!!
-    var editPricevalue: Float = 0.toFloat()
-    var editDistancevalue: Float = 0.toFloat()
-    var editDayvalue: Float = 0.toFloat()
+    var editPricevalue: Float? = null
+    var editDistancevalue: Float? = null
+    var editDayvalue: Float? = null
 
     interface OnDataPassListener{
         fun onDataPass(price : Float?, distance : Float?, day : Float?)
@@ -51,6 +51,9 @@ class ConditionDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = ConditionBinding.inflate(inflater, container, false)
+        editPricevalue = arguments?.getInt("price")!!.toFloat()
+        editDistancevalue = arguments?.getInt("distance")!!.toFloat()
+        editDayvalue = arguments?.getInt("day")!!.toFloat()
         val view = binding.root
         // 레이아웃 배경을 투명하게 해줌, 필수 아님
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -79,7 +82,7 @@ class ConditionDialog : DialogFragment() {
             @SuppressLint("RestrictedApi")
             override fun onStartTrackingTouch(slider: Slider) {
                 var value = slider.value.toInt()
-                if (value <= 30000 && editPricevalue <= 30000) {
+                if (value <= 30000 && editPricevalue!! <= 30000) {
                     binding.edittextConditionPrice.setText(value.toString())
                 }
             }
@@ -87,7 +90,7 @@ class ConditionDialog : DialogFragment() {
             @SuppressLint("RestrictedApi")
             override fun onStopTrackingTouch(slider: Slider) {
                 var value = slider.value.toInt()
-                if (value <= 30000 && editPricevalue <= 30000) {
+                if (value <= 30000 && editPricevalue!! <= 30000) {
                     binding.edittextConditionPrice.setText(value.toString())
                 }
             }
@@ -95,7 +98,7 @@ class ConditionDialog : DialogFragment() {
 
         binding.slider.addOnChangeListener { slider, value, fromUser ->
             var sliderV = value.toInt()
-            if (sliderV <= 30000 && editPricevalue <= 30000) {
+            if (sliderV <= 30000 && editPricevalue!! <= 30000) {
                 binding.edittextConditionPrice.setText(sliderV.toString())
             }
         }
@@ -108,9 +111,9 @@ class ConditionDialog : DialogFragment() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (binding.edittextConditionPrice.text.toString() != "") {
                     editPricevalue = (binding.edittextConditionPrice.text.toString()).toFloat()
-                    if (editPricevalue <= 30000) {
-                        binding.slider.setValue(editPricevalue)
-                    } else if (editPricevalue > 30000) {
+                    if (editPricevalue!! <= 30000) {
+                        binding.slider.setValue(editPricevalue!!)
+                    } else if (editPricevalue!! > 30000) {
                         binding.slider.setValue(30000.toFloat())
                     }
 
@@ -128,7 +131,7 @@ class ConditionDialog : DialogFragment() {
             @SuppressLint("RestrictedApi")
             override fun onStartTrackingTouch(slider: Slider) {
                 var value = slider.value.toInt()
-                if (value <= 2000 && editDistancevalue <= 2000) {
+                if (value <= 2000 && editDistancevalue!! <= 2000) {
                     binding.edittextConditionDistance.setText(value.toString())
                 }
             }
@@ -136,7 +139,7 @@ class ConditionDialog : DialogFragment() {
             @SuppressLint("RestrictedApi")
             override fun onStopTrackingTouch(slider: Slider) {
                 var value = slider.value.toInt()
-                if (value <= 2000 && editDistancevalue <= 2000) {
+                if (value <= 2000 && editDistancevalue!! <= 2000) {
                     binding.edittextConditionDistance.setText(value.toString())
                 }
             }
@@ -144,7 +147,7 @@ class ConditionDialog : DialogFragment() {
 
         binding.slider1.addOnChangeListener { slider, value, fromUser ->
             var sliderV = value.toInt()
-            if (sliderV <= 2000 && editDistancevalue <= 2000) {
+            if (sliderV <= 2000 && editDistancevalue!! <= 2000) {
                 binding.edittextConditionDistance.setText(sliderV.toString())
             }
         }
@@ -158,9 +161,9 @@ class ConditionDialog : DialogFragment() {
                 if (binding.edittextConditionDistance.text.toString() != "") {
                     editDistancevalue =
                         (binding.edittextConditionDistance.text.toString()).toFloat()
-                    if (editDistancevalue <= 2000) {
-                        binding.slider1.setValue(editDistancevalue)
-                    } else if (editDistancevalue > 2000) {
+                    if (editDistancevalue!! <= 2000) {
+                        binding.slider1.setValue(editDistancevalue!!)
+                    } else if (editDistancevalue!! > 2000) {
                         binding.slider1.setValue(2000.toFloat())
                     }
 
@@ -177,7 +180,7 @@ class ConditionDialog : DialogFragment() {
             @SuppressLint("RestrictedApi")
             override fun onStartTrackingTouch(slider: Slider) {
                 var value = slider.value.toInt()
-                if (value <= 180 && editDayvalue <= 180) {
+                if (value <= 180 && editDayvalue!! <= 180) {
                     binding.edittextConditionDay.setText(value.toString())
                 }
             }
@@ -185,7 +188,7 @@ class ConditionDialog : DialogFragment() {
             @SuppressLint("RestrictedApi")
             override fun onStopTrackingTouch(slider: Slider) {
                 var value = slider.value.toInt()
-                if (value <= 180 && editDayvalue <= 180) {
+                if (value <= 180 && editDayvalue!! <= 180) {
                     binding.edittextConditionDay.setText(value.toString())
                 }
             }
@@ -193,7 +196,7 @@ class ConditionDialog : DialogFragment() {
 
         binding.slider2.addOnChangeListener { slider, value, fromUser ->
             var valueV = value.toInt()
-            if (valueV <= 180 && editDayvalue <= 180) {
+            if (valueV <= 180 && editDayvalue!! <= 180) {
                 binding.edittextConditionDay.setText(valueV.toString())
             }
         }
@@ -206,9 +209,9 @@ class ConditionDialog : DialogFragment() {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (binding.edittextConditionDay.text.toString() != "") {
                     editDayvalue = (binding.edittextConditionDay.text.toString()).toFloat()
-                    if (editDayvalue <= 180) {
-                        binding.slider2.setValue(editDayvalue)
-                    } else if (editDayvalue > 180) {
+                    if (editDayvalue!! <= 180) {
+                        binding.slider2.setValue(editDayvalue!!)
+                    } else if (editDayvalue!! > 180) {
                         binding.slider2.setValue(180.toFloat())
                     }
 

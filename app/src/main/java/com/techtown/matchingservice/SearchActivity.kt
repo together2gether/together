@@ -438,14 +438,18 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
             var j =0
             for(item in List){
                 var product_price = (item.price.toInt()/item.participationTotal.toInt())
-                var product_day = item.unit.toInt()
+
+                var product_day = item.cycle.toInt()
                 var location = item.place
                 var cor = geocoder.getFromLocationName(location,1)
                 var pro_lat = cor[0].latitude
                 var pro_lon = cor[0].longitude
                 var product_distance =
                     Fragment2.DistanceManager.getDistance(pro_lat, pro_lon, mylat, mylon)
+                Log.e("conitem", price.toString() + ", " + day.toString() + ", " + distance.toString())
+                Log.e("item", i.toString() +" -> " + item.price + ", " + product_day.toString() + ", " + product_distance.toString() )
                 if(price!!.toInt() >= product_price && day!!.toInt() >= product_day && distance!!.toInt() >= product_distance){
+                    Log.e("item", i.toString() + item.price )
                     n++
                     var product = ProductData(
                         item.userId, item.name, item.place, item.imageUri, item.participation,
@@ -474,7 +478,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                     var item = snapshot.toObject(ContentDTO::class.java)
                     var id = item!!.userId as String
                     var product_price = (item.price.toInt()/item.ParticipationTotal.toInt())
-                    var product_day = item.unit.toInt()
+                    var product_day = item.cycle.toInt()
                     var pro_lat = item.location.latitude
                     var pro_lon = item.location.longitude
                     var product_distance =
@@ -549,7 +553,7 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
                     var item = snapshot.toObject(ContentDTO::class.java)
                     if(snapshot.getString("product")?.contains(searchWord)==true){
                         var product_price = item!!.price.toInt()/item!!.ParticipationTotal
-                        var product_day = item.unit.toInt()
+                        var product_day = item.cycle.toInt()
                         var pro_lat = item.location.latitude
                         var pro_lon = item.location.longitude
                         var product_distance =
