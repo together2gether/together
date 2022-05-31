@@ -543,6 +543,8 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
         if(condition == "condition"){
             i=0
             firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                latlngList.clear()
+                productsList.clear()
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(ContentDTO::class.java)
                     if(snapshot.getString("product")?.contains(searchWord)==true){
@@ -610,6 +612,8 @@ class SearchActivity : AppCompatActivity(), OnMapReadyCallback, ConditionDialog.
         else{
             i=0
             firestore?.collection("images")?.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+                latlngList.clear()
+                productsList.clear()
                 for(snapshot in querySnapshot!!.documents){
                     var item = snapshot.toObject(ContentDTO::class.java)
                     if(snapshot.getString("product")?.contains(searchWord)==true){
