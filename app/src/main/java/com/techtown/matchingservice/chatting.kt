@@ -358,6 +358,7 @@ class chatting : AppCompatActivity() {
             holder.textView_time.text = comments[position].time
             if(comments[position].uid.equals(uid)){
                 holder.textView_message.setBackgroundResource(R.drawable.right_item_message)
+                holder.textView_message.setTextColor(Color.BLACK)
                 holder.layout_destination.visibility = View.INVISIBLE
                 holder.textView_name.visibility = View.INVISIBLE
                 holder.layout_main.gravity = Gravity.RIGHT
