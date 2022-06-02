@@ -190,11 +190,11 @@ class TradeActivity : AppCompatActivity() {
 
     fun setAlarm(productid:String) {
         val calender = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 21)
-            set(Calendar.MINUTE, 55)
+            set(Calendar.HOUR_OF_DAY, 9)
+            set(Calendar.MINUTE, 30)
         }
 
-        //calender.add(Calendar.DATE, cycle!!-3)
+        calender.add(Calendar.DATE, cycle!!-3)
         val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         Log.e("날짜", "current: ${df.format(calender.time)}")
 
