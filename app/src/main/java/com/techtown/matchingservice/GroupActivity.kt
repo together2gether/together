@@ -3,6 +3,7 @@ package com.techtown.matchingservice
 import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -106,16 +107,18 @@ class GroupActivity : AppCompatActivity() {
                                 for (document in documents) {
                                     var thisId: String?
                                     item = document.toObject(ContentDTO::class.java)!!
+                                    var count : Int = item.Participation.size
                                     if (item == groups[position]) {
+                                        Log.d("partcoount1", count.toString())
                                         thisId = document.id
                                         var tsDoc =
                                             firestore?.collection("images")?.document(thisId)
                                         firestore?.runTransaction { transition ->
                                             var contentDTO = transition.get(tsDoc!!)
                                                 .toObject(ContentDTO::class.java)!!
-                                            contentDTO.Participation[uid.toString()] = false
-                                            contentDTO.ParticipationCount -= 1
-                                            transition.set(tsDoc, contentDTO)
+                                            contentDTO.Participation.remove(uid.toString())
+                                            contentDTO.ParticipationCount = count-1
+                                            transition.set(tsDoc, contentDTO!!)
                                         }
                                         roomsRef.orderByChild("productid").equalTo(thisId)
                                             .addListenerForSingleValueEvent(object :
@@ -127,7 +130,8 @@ class GroupActivity : AppCompatActivity() {
                                                     for (room in snapshot.children) {
                                                         val chatroom = room.getValue<ChatModel>()
                                                         var roomId = room.key
-                                                        if (item?.ParticipationCount == 2) {
+                                                        Log.d("partcoount2", count.toString())
+                                                        if (count == 2) {
                                                             roomsRef.child(roomId.toString())
                                                                 .removeValue()
                                                         } else {
