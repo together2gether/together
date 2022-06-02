@@ -29,7 +29,7 @@ class EditFood : AppCompatActivity() {
     var items = arrayOf("")
     lateinit var kind : String
     val del_items = arrayOf("한식", "중식","일식","양식", "치킨", "피자","분식","디저트","고기","패스트푸드", "기타")
-    val shop_items = arrayOf("쿠팡","이마트몰","마켓컬리","롯데ON","11번가","G마켓","옥션","기타")
+    val shop_items = arrayOf("쿠팡","SSG.COM","마켓컬리","롯데ON","11번가","G마켓","옥션","기타")
     var kind_num : Int =0
 
     val db = Firebase.firestore
@@ -54,9 +54,11 @@ class EditFood : AppCompatActivity() {
                 binding.registerFoodOrderPrice.setText(item.order_price.toString())
                 binding.registerFoodDeliveryPrice.setText(item.delivery_price.toString())
                 binding.registerFoodDetail.setText(item.delivery_detail.toString())
-                if(item.delivery == false){
-                    binding.registerFoodName.setText("쇼핑몰 이름")
+                if(!item.delivery){
+                    binding.registerFood.setText("쇼핑몰 이름")
                     items = shop_items
+                    binding.deliverSpinner.visibility = View.GONE
+                    binding.shoppingSpinner.visibility = View.VISIBLE
                     kind = "shopping"
                     binding.editTextStore.visibility = View.GONE
                     for(i in 0..shop_items.size-1){
@@ -64,43 +66,27 @@ class EditFood : AppCompatActivity() {
                             kind_num = i
                         }
                     }
+                    val myAdapter = ArrayAdapter(this, R.layout.item_spinner, items)
+                    binding.shoppingSpinner.adapter = myAdapter
+                    binding.shoppingSpinner.setSelection(kind_num)
                 }
                 else {
                     items = del_items
+                    binding.deliverSpinner.visibility = View.VISIBLE
+                    binding.shoppingSpinner.visibility = View.GONE
                     kind = "delivery"
                     for(i in  0..del_items.size-1){
                         if(item.category.toString()==del_items[i]){
                             kind_num = i
                         }
                     }
-                }
-                Log.d("deliveryid2", kind_num.toString())
-            }
-
-        val myAdapter = ArrayAdapter(this, R.layout.item_spinner, items)
-        binding.shoppingSpinner.adapter = myAdapter
-        binding.deliverSpinner.adapter = myAdapter
-
-        binding.deliverSpinner.setSelection(kind_num)
-        if(intent.getStringExtra("delivery").toString() == "false"){
-            binding.shoppingSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-                override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                    when(p2) {
-                        7 -> {
-                            binding.registerFoodStoreName.setText("")
-                        }
-                        else -> {
-                            binding.registerFoodStoreName.setText(shop_items[p2])
-                        }
-                    }
-                }
-
-                override fun onNothingSelected(p0: AdapterView<*>?) {
-
+                    val myAdapter = ArrayAdapter(this, R.layout.item_spinner, items)
+                    binding.deliverSpinner.adapter = myAdapter
+                    binding.deliverSpinner.setSelection(kind_num)
                 }
             }
-            binding.shoppingSpinner.setSelection(kind_num)
-        }
+
+
         binding.button48.setOnClickListener() {
             finish()
         }

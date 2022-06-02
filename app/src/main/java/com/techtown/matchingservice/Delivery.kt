@@ -105,7 +105,9 @@ class Delivery : AppCompatActivity() {
                     val timeStr = dateFormat.format(Date(time!!)).toString()
                     foodregisterTime.setText(timeStr)
 
-
+                    if(!item.delivery){
+                        binding.foodInfoName.visibility = View.GONE
+                    }
                     binding.foodInfoStore.text = item.store
                     binding.foodInfoName.text = item.name
                     binding.foodInfoOrderprice.text = item.order_price.toString()
