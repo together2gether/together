@@ -76,7 +76,7 @@ class Delivery : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
-                    if(item?.delivery_uid == uid) {
+                    if(item.delivery_uid == uid) {
                         binding.foodInfoChat.setVisibility(View.INVISIBLE)
                         binding.foodInfoCancel.setVisibility(View.INVISIBLE)
                         binding.foodInfoParticipation.setVisibility(View.INVISIBLE)
@@ -191,7 +191,7 @@ class Delivery : AppCompatActivity() {
                     var tsDoc = docRef.document(deliveryid.toString())
                     firestore?.runTransaction {
                         transition->
-                        transition.set(tsDoc!!, thisItem)
+                        transition.set(tsDoc, thisItem)
                     }
                 }
             roomsRef.orderByChild("users/$uid").equalTo(true).addListenerForSingleValueEvent(object : ValueEventListener{

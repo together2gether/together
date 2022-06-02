@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -189,11 +190,13 @@ class TradeActivity : AppCompatActivity() {
 
     fun setAlarm(productid:String) {
         val calender = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 15)
-            set(Calendar.MINUTE, 53)
+            set(Calendar.HOUR_OF_DAY, 21)
+            set(Calendar.MINUTE, 55)
         }
 
-        calender.add(Calendar.DATE, cycle!!-3)
+        //calender.add(Calendar.DATE, cycle!!-3)
+        val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
+        Log.e("날짜", "current: ${df.format(calender.time)}")
 
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 

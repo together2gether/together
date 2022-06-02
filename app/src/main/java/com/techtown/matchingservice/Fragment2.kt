@@ -115,7 +115,7 @@ class Fragment2 : Fragment() {
                         deliveryDTOs.clear()
                         shoppingDTOs.clear()
                         if(value?.documents != null){
-                            for(snapshot in value!!.documents){
+                            for(snapshot in value.documents){
                                 var item = snapshot.toObject(DeliveryDTO::class.java)
                                 var location = item!!.delivery_address
                                 var cor = geocoder.getFromLocationName(location, 1)
@@ -127,7 +127,7 @@ class Fragment2 : Fragment() {
                                     delivery_lat,
                                     delivery_lon
                                 ).toDouble()
-                                if(item!!.delivery){
+                                if(item.delivery){
                                     deliveryDTOs.add(Triple(snapshot.id, item, distance))
                                 } else{
                                     shoppingDTOs.add(Triple(snapshot.id, item, distance))

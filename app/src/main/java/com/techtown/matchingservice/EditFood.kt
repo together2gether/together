@@ -194,7 +194,7 @@ class EditFood : AppCompatActivity() {
                 }
 
             }
-            transition.set(tsDoc!!, deliverydto)
+            transition.set(tsDoc, deliverydto)
         }
         setResult(Activity.RESULT_OK)
     }
