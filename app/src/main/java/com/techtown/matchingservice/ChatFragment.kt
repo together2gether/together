@@ -159,9 +159,19 @@ class ChatFragment : Fragment() {
                             var item = document.toObject(DeliveryDTO::class.java)
                             //holder.textView_title.text = item?.name
                             holder.textView_title.text = item?.store
-                            Glide.with(holder.itemView.context).load(item?.imageURL)
-                                .apply(RequestOptions().circleCrop())
-                                .into(holder.imageView)
+                            if(item!!.category == "G마켓"){
+                                holder.imageView.setImageResource(R.drawable.market)
+                            }else if(item!!.category == "쿠팡"){
+                                holder.imageView.setImageResource(R.drawable.coupang)
+                            } else if(item!!.category == "롯데ON"){
+                                holder.imageView.setImageResource(R.drawable.lotteon)
+                            } else if(item!!.category == "11번가"){
+                                holder.imageView.setImageResource(R.drawable.bunga)
+                            } else{
+                                Glide.with(holder.itemView.context).load(item?.imageURL)
+                                    .apply(RequestOptions().circleCrop())
+                                    .into(holder.imageView)
+                            }
                             destinationUid = item!!.delivery_uid.toString()
                         }
                     }
