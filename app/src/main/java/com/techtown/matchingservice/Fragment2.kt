@@ -7,7 +7,9 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,10 +21,13 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.graphics.drawable.toDrawable
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Glide.init
 import com.bumptech.glide.request.RequestOptions
 import com.getbase.floatingactionbutton.FloatingActionsMenu
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -83,11 +88,11 @@ class Fragment2 : Fragment() {
             LocationServices.getFusedLocationProviderClient(requireContext())
         geocoder = Geocoder(context)
         infoRef = database.getReference("usersInfo")
-        val userRef = infoRef.child(uid.toString())
         drawerLayout = binding.drawerLayout
         drawerView = binding.drawer
         drawerLayout.addDrawerListener(MyDrawerListener())
         drawerLayout.openDrawer(Gravity.LEFT)
+        Log.e("hereiam", "여ㅣ")
 
         /*if(drawerLayout.isDrawerOpen(Gravity.LEFT)==true){
             Toast.makeText(context, "보임", Toast.LENGTH_LONG).show()
@@ -97,49 +102,8 @@ class Fragment2 : Fragment() {
             drawerLayout.visibility =View.GONE;
         }*/
 
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
 
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val userInfo = snapshot.getValue<UsersInfo>()
-                mylocation = userInfo!!.address.toString()
-                mycor = geocoder.getFromLocationName(mylocation, 1)
-                mylat = mycor[0].latitude
-                mylon = mycor[0].longitude
-                if(mylat != 0.0)
-                firestore?.collection("delivery")
-                    ?.orderBy("delivery_timestamp")
-                    ?.addSnapshotListener{ value, error ->
-                        deliveryDTOs.clear()
-                        shoppingDTOs.clear()
-                        if(value?.documents != null){
-                            for(snapshot in value.documents){
-                                var item = snapshot.toObject(DeliveryDTO::class.java)
-                                var location = item!!.delivery_address
-                                var cor = geocoder.getFromLocationName(location, 1)
-                                delivery_lat = cor[0].latitude
-                                delivery_lon = cor[0].longitude
-                                var distance = DistanceManager.getDistance(
-                                    mylat,
-                                    mylon,
-                                    delivery_lat,
-                                    delivery_lon
-                                ).toDouble()
-                                if(item.delivery){
-                                    deliveryDTOs.add(Triple(snapshot.id, item, distance))
-                                } else{
-                                    shoppingDTOs.add(Triple(snapshot.id, item, distance))
-                                }
-
-                            }
-                        }
-                    }
-            }
-        })
-
-
+        fire()
 
         binding.fragment2ProductRegistration.setOnClickListener {
             Intent(context, FoodActivity::class.java).apply {
@@ -406,9 +370,64 @@ class Fragment2 : Fragment() {
         binding.fragment2RecyclerView.layoutManager = LinearLayoutManager(activity)
         return binding.root
     }
+    fun fire(){
+        val userRef = infoRef.child(uid.toString())
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userInfo = snapshot.getValue<UsersInfo>()
+                mylocation = userInfo!!.address.toString()
+                mycor = geocoder.getFromLocationName(mylocation, 1)
+                mylat = mycor[0].latitude
+                mylon = mycor[0].longitude
+                if(mylat != 0.0)
+                    firestore?.collection("delivery")
+                        ?.orderBy("delivery_timestamp")
+                        ?.addSnapshotListener{ value, error ->
+                            deliveryDTOs.clear()
+                            shoppingDTOs.clear()
+                            if(value?.documents != null){
+                                for(snapshot in value!!.documents){
+                                    var item = snapshot.toObject(DeliveryDTO::class.java)
+                                    var location = item!!.delivery_address
+                                    var cor = geocoder.getFromLocationName(location, 1)
+                                    delivery_lat = cor[0].latitude
+                                    delivery_lon = cor[0].longitude
+                                    var distance = DistanceManager.getDistance(
+                                        mylat,
+                                        mylon,
+                                        delivery_lat,
+                                        delivery_lon
+                                    ).toDouble()
+                                    if(item!!.delivery){
+                                        deliveryDTOs.add(Triple(snapshot.id, item, distance))
+                                    } else{
+                                        shoppingDTOs.add(Triple(snapshot.id, item, distance))
+                                    }
+
+                                }
+                                Fragment2DeliveryRecyclerviewAdapter().notifyDataSetChanged()
+                            }
+                        }
+            }
+        })
+    }
+    override fun onResume() {
+        super.onResume()
+        binding.menu2.collapse()
+        drawerLayout.visibility = View.VISIBLE
+        drawerLayout.openDrawer(drawerView)
+    }
     fun open(){
         binding.drawerLayout.openDrawer(drawerView)
-        //drawerLayout.openDrawer(Gravity.LEFT)
+        drawerLayout.openDrawer(Gravity.LEFT)
+    }
+    fun refreshFragment(fragment:Fragment, fragmentManager: FragmentManager){
+        var ft : FragmentTransaction = fragmentManager.beginTransaction()
+        ft.detach(fragment).attach(fragment).commit()
     }
     private inner class MyDrawerListener() : DrawerLayout.DrawerListener{
         override fun onDrawerClosed(drawerView: View) {
@@ -435,26 +454,25 @@ class Fragment2 : Fragment() {
 
     inner class Fragment2DeliveryRecyclerviewAdapter() :
         RecyclerView.Adapter<DeliveryViewHolder>() {
-
         init {
             deliveryList.clear()
             if(deliverycheck == 1){
                 if(deliverycate == "전체"){
                     for(i in deliveryDTOs){
                         //Toast.makeText(context, i.second.delivery_address.toString(), Toast.LENGTH_LONG).show()
-                            if(i.third <= 2000){
-                                deliveryList.add(i)
-                            }
+                        if(i.third <= 2000){
+                            deliveryList.add(i)
+                        }
                     }
                     deliveryList.sortBy { it.third }
                     notifyDataSetChanged()
                 }else{
                     for(i in deliveryDTOs) {
-                            if (i.second.category == deliverycate) {
-                                if (i.third <= 2000) {
-                                    deliveryList.add(i)
-                                }
+                        if (i.second.category == deliverycate) {
+                            if (i.third <= 2000) {
+                                deliveryList.add(i)
                             }
+                        }
                     }
                     deliveryList.sortBy {it.third}
                     notifyDataSetChanged()
@@ -481,7 +499,6 @@ class Fragment2 : Fragment() {
                     notifyDataSetChanged()
                 }
             }
-            notifyDataSetChanged()
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeliveryViewHolder {
@@ -500,19 +517,10 @@ class Fragment2 : Fragment() {
             //delivery price
             var pdel : Int = deliveryList[position].second.delivery_price / 2
             viewHolder.fooditemTextviewdeliveryprice.text = pdel.toString()
-            if(deliveryList[position].second.category == "G마켓"){
-                viewHolder.foodimage.setImageResource(R.drawable.market)
-            } else if(deliveryList[position].second.category == "쿠팡"){
-                viewHolder.foodimage.setImageResource(R.drawable.coupang)
-            } else if(deliveryList[position].second.category == "롯데ON"){
-                viewHolder.foodimage.setImageResource(R.drawable.lotteon)
-            } else if(deliveryList[position].second.category == "11번가"){
-                viewHolder.foodimage.setImageResource(R.drawable.bunga)
-            } else{
-                Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
-                    .apply(RequestOptions().circleCrop())
-                    .into(viewHolder.foodimage)
-            }
+            Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
+                .apply(RequestOptions().circleCrop())
+                .into(viewHolder.foodimage)
+
             //click
             viewHolder.fooditemCardView.setOnClickListener {
                 if(isopen == "close"){

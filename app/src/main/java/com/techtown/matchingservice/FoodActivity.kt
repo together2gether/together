@@ -2,10 +2,12 @@ package com.techtown.matchingservice
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
@@ -80,6 +82,8 @@ class FoodActivity : AppCompatActivity() {
         binding.registerFoodStorage.setOnClickListener {
             contentUpload()
             finish()
+            //var activity = MainActivity()
+            //activity.findViewById<Button>(R.id.category_open).visibility = View.GONE
         }
 
         if(kind == "delivery"){
