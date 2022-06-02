@@ -517,9 +517,19 @@ class Fragment2 : Fragment() {
             //delivery price
             var pdel : Int = deliveryList[position].second.delivery_price / 2
             viewHolder.fooditemTextviewdeliveryprice.text = pdel.toString()
-            Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
-                .apply(RequestOptions().circleCrop())
-                .into(viewHolder.foodimage)
+            if(deliveryList[position].second.category == "G마켓"){
+                viewHolder.foodimage.setImageResource(R.drawable.market)
+            }else if(deliveryList[position].second.category == "쿠팡"){
+                viewHolder.foodimage.setImageResource(R.drawable.coupang)
+            } else if(deliveryList[position].second.category == "롯데ON"){
+                viewHolder.foodimage.setImageResource(R.drawable.lotteon)
+            } else if(deliveryList[position].second.category == "11번가"){
+                viewHolder.foodimage.setImageResource(R.drawable.bunga)
+            } else{
+                Glide.with(viewHolder.foodimage.context).load(deliveryList[position].second.imageURL)
+                    .apply(RequestOptions().circleCrop())
+                    .into(viewHolder.foodimage)
+            }
 
             //click
             viewHolder.fooditemCardView.setOnClickListener {
