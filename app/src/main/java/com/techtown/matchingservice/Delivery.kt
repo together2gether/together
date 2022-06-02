@@ -76,6 +76,7 @@ class Delivery : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 if(document != null){
                     item = document.toObject(DeliveryDTO::class.java)!!
+                    foodName = item.store.toString()
                     if(item.delivery_uid == uid) {
                         binding.foodInfoChat.setVisibility(View.INVISIBLE)
                         binding.foodInfoCancel.setVisibility(View.INVISIBLE)
