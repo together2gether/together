@@ -16,4 +16,4 @@
 <h3>📌 시스템 구성도 </h3>
 <img src="https://user-images.githubusercontent.com/100889562/199181552-436a92df-2220-457d-a2d3-eba18185d5d4.png" width = "500px">
 <h3>📌 서비스 예시 </h3>
-<img src="https://user-images.githubusercontent.com/100889562/199181774-522c82e1-3e08-4cfb-a63b-c13b27a558ba.png" width="1000px" height = "400px">
+<img src="https://user-images.githubusercontent.com/100889562/199181774-522c82e1-3e08-4cfb-a63b-c13b27a558ba.png" width="1100px" height = "400px">
