@@ -17,4 +17,12 @@
 <h3>📌 시스템 구성도 </h3>
 <img src="https://user-images.githubusercontent.com/100889562/199181552-436a92df-2220-457d-a2d3-eba18185d5d4.png" width = "500px">
 <h3>📌 서비스 예시 </h3>
-<img src="https://user-images.githubusercontent.com/100889562/199181774-522c82e1-3e08-4cfb-a63b-c13b27a558ba.png" width="1100px" height = "400px">
+<p>
+<img src="https://user-images.githubusercontent.com/100889562/223295013-34d33ed1-ab3a-4247-8ea0-8d5c4cf2b5d7.gif" width="30%"/>
+<img src="https://user-images.githubusercontent.com/100889562/223295010-e29be330-1689-4b9f-8715-52bb2737c232.gif" width="30%"/>
+<img src="https://user-images.githubusercontent.com/100889562/223295019-74d0b5a0-39e8-41bc-80ee-d90b006c70ee.gif" width="30%"/>
+<img src="https://user-images.githubusercontent.com/100889562/223295017-5dd79531-0ad2-4e4f-a16d-95f93a42944e.gif" width="30%"/>
+<img src="https://user-images.githubusercontent.com/100889562/223295001-0770bb37-bc94-490f-9c05-3e44ca0e192a.gif" width="30%"/>
+<img src="https://user-images.githubusercontent.com/100889562/223295022-33a96843-21f0-4720-a154-23e8999122c5.gif" width="30%"/>
+<img src="https://user-images.githubusercontent.com/100889562/223295025-0ee576ba-8396-409e-a4dc-44ce93d551bf.gif" width="30%"/>
+</p>
